@@ -48,62 +48,18 @@ class PermissionsTableSeeder extends Seeder
 
         $modules = [             
             'DMASTER-TA',     
-            'DMASTER-FAKULTAS',     
-            'DMASTER-PRODI',     
-            'DMASTER-KELAS',     
-            'DMASTER-RUANGAN-KELAS',                 
-            
-            'SPMB-PMB',                 
-            'SPMB-PMB-FORMULIR-PENDAFTARAN',     
-            'SPMB-PMB-PERSYARATAN',                                
-            'SPMB-PMB-SOAL',     
-            'SPMB-PMB-JADWAL-UJIAN',     
-            'SPMB-PMB-PASSING-GRADE',     
-            'SPMB-PMB-UJIAN-ONLINE',     
-            'SPMB-PMB-NILAI-UJIAN',   
-            'SPMB-PMB-KELULUSAN-UJIAN',   
-            
-            'KEUANGAN-STATUS-TRANSAKSI',                 
-            'KEUANGAN-BIAYA-KOMPONEN-PERIODE',                 
-            'KEUANGAN-METODE-TRANSFER-BANK',                 
-            'KEUANGAN-METODE-IB',                 
-            'KEUANGAN-TRANSAKSI',                 
-            'KEUANGAN-KONFIRMASI-PEMBAYARAN',                                                  
-            
-            'AKADEMIK-MATAKULIAH',
-            'AKADEMIK-DULANG-BARU',
-            'AKADEMIK-DULANG-LAMA',
-            'AKADEMIK-DULANG-AKTIF',
-            'AKADEMIK-DULANG-CUTI',
-            'AKADEMIK-DULANG-DO',
-            'AKADEMIK-DULANG-NON-AKTIF',
-            'AKADEMIK-DULANG-LULUS',
-            'AKADEMIK-DULANG-KELUAR',
-
-            'AKADEMIK-PERKULIAHAN-PENYELENGGARAAN',
-            'AKADEMIK-PERKULIAHAN-KRS',
-            'AKADEMIK-PERKULIAHAN-PKRS',
+            'DMASTER-JENIS-KEGIATAN',                 
             
             'SYSTEM-SETTING-PERMISSIONS',
             'SYSTEM-SETTING-ROLES',
             'SYSTEM-SETTING-IDENTITAS-DIRI',
             'SYSTEM-SETTING-VARIABLES',
-            'SYSTEM-USERS-SUPERADMIN',
-            'SYSTEM-USERS-AKADEMIK',
-            'SYSTEM-USERS-PROGRAM-STUDI',
+            'SYSTEM-USERS-SUPERADMIN',            
+            'SYSTEM-USERS-KADES',
+            'SYSTEM-USERS-KUMHAM',
+            'SYSTEM-USERS-LEGAL',
+            'SYSTEM-USERS-OBH',
             'SYSTEM-USERS-PMB',
-            'SYSTEM-USERS-KEUANGAN',
-            'SYSTEM-USERS-PERPUSTAKAAN',
-            'SYSTEM-USERS-LPPM',
-            'SYSTEM-USERS-PUSLAHTA',
-            'SYSTEM-USERS-DOSEN',
-            'SYSTEM-USERS-DOSEN-WALI',
-            'SYSTEM-USERS-MAHASISWA',
-            'SYSTEM-USERS-MAHASISWA-BARU',
-            'SYSTEM-USERS-ALUMNI',
-            'SYSTEM-USERS-ORANG-TUA-WALI',  
-            
-            'SYSTEM-MIGRATION'
         ];
         $records=[];
         foreach($modules as $v)

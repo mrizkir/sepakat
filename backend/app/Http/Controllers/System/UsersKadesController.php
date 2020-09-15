@@ -6,12 +6,12 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\Controller;
 use App\Models\User;
-use App\Models\UserDosen;
+use App\Models\UserKades;
 use Spatie\Permission\Models\Role;
 use Ramsey\Uuid\Uuid;
 use Illuminate\Validation\Rule;
 
-class UsersDosenController extends Controller {         
+class UsersKadesController extends Controller {         
     /**
      * Show the form for creating a new resource.
      *
@@ -45,7 +45,7 @@ class UsersDosenController extends Controller {
                                 'pid'=>'fetchdata',
                                 'role'=>$role,
                                 'users'=>$data,
-                                'message'=>'Fetch data users Dosen berhasil diperoleh'
+                                'message'=>'Fetch data users Kades berhasil diperoleh'
                             ],200);  
     }    
     /**
@@ -98,7 +98,7 @@ class UsersDosenController extends Controller {
                 $user->givePermissionTo($permissions);
             }
             
-            UserDosen::create([
+            UserKades::create([
                 'user_id'=>$user->id,
                 'nama_dosen'=>$request->input('name'),                                
                 'nidn'=>$request->input('nidn'),                                
@@ -113,14 +113,14 @@ class UsersDosenController extends Controller {
                                         'object' => $this->guard()->user(), 
                                         'object_id' => $this->guard()->user()->id, 
                                         'user_id' => $this->getUserid(), 
-                                        'message' => 'Menambah user Dosen ('.$user->username.') berhasil'
+                                        'message' => 'Menambah user Kades ('.$user->username.') berhasil'
                                     ]);
 
         return Response()->json([
                                     'status'=>1,
                                     'pid'=>'store',
                                     'user'=>$user,                                    
-                                    'message'=>'Data user Dosen berhasil disimpan.'
+                                    'message'=>'Data user Kades berhasil disimpan.'
                                 ],200); 
 
     }
@@ -174,7 +174,7 @@ class UsersDosenController extends Controller {
                 $user->updated_at = \Carbon\Carbon::now()->toDateTimeString();                
                 $user->save();
 
-                $user_dosen=UserDosen::find($user->id);
+                $user_dosen=UserKades::find($user->id);
                 $user_dosen->nama_dosen=$request->input('name');
                 $user_dosen->nidn = $request->input('nidn');
                 $user_dosen->nipy = $request->input('nipy');
@@ -202,14 +202,14 @@ class UsersDosenController extends Controller {
                                                         'object' => $this->guard()->user(), 
                                                         'object_id' => $this->guard()->user()->id, 
                                                         'user_id' => $this->getUserid(), 
-                                                        'message' => 'Mengubah data user Dosen ('.$user->username.') berhasil'
+                                                        'message' => 'Mengubah data user Kades ('.$user->username.') berhasil'
                                                     ]);
 
             return Response()->json([
                                     'status'=>1,
                                     'pid'=>'update',
                                     'user'=>$user,      
-                                    'message'=>'Data user Dosen '.$user->username.' berhasil diubah.'
+                                    'message'=>'Data user Kades '.$user->username.' berhasil diubah.'
                                 ],200); 
         }
         else
@@ -253,13 +253,13 @@ class UsersDosenController extends Controller {
                                                                 'object' => $this->guard()->user(), 
                                                                 'object_id' => $this->guard()->user()->id, 
                                                                 'user_id' => $this->getUserid(), 
-                                                                'message' => 'Menghapus user Dosen ('.$username.') berhasil'
+                                                                'message' => 'Menghapus user Kades ('.$username.') berhasil'
                                                             ]);
         
             return Response()->json([
                                         'status'=>1,
                                         'pid'=>'destroy',                
-                                        'message'=>"User Dosen ($username) berhasil dihapus"
+                                        'message'=>"User Kades ($username) berhasil dihapus"
                                     ],200);         
         }
                   

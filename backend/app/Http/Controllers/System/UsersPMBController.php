@@ -11,7 +11,7 @@ use Spatie\Permission\Models\Role;
 use Ramsey\Uuid\Uuid;
 use Illuminate\Validation\Rule;
 
-class UsersPMBController extends Controller {         
+class UsersKeuanganController extends Controller {         
     /**
      * Show the form for creating a new resource.
      *
@@ -19,18 +19,18 @@ class UsersPMBController extends Controller {
      */
     public function index(Request $request)
     {           
-        $this->hasPermissionTo('SYSTEM-USERS-PMB_BROWSE');
-        $data = User::where('default_role','pmb')
+        $this->hasPermissionTo('SYSTEM-USERS-KEUANGAN_BROWSE');
+        $data = User::where('default_role','keuangan')
                     ->orderBy('username','ASC')
                     ->get();       
                     
-        $role = Role::findByName('pmb');
+        $role = Role::findByName('keuangan');
         return Response()->json([
                                 'status'=>1,
                                 'pid'=>'fetchdata',
                                 'role'=>$role,
                                 'users'=>$data,
-                                'message'=>'Fetch data users PMB berhasil diperoleh'
+                                'message'=>'Fetch data users Keuangan berhasil diperoleh'
                             ],200);  
     }    
     /**
@@ -41,7 +41,7 @@ class UsersPMBController extends Controller {
      */
     public function store(Request $request)
     {
-        $this->hasPermissionTo('SYSTEM-USERS-PMB_STORE');
+        $this->hasPermissionTo('SYSTEM-USERS-KEUANGAN_STORE');
         $this->validate($request, [
             'name'=>'required',
             'email'=>'required|string|email|unique:users',
@@ -50,7 +50,7 @@ class UsersPMBController extends Controller {
             'password'=>'required',            
             'prodi_id'=>'required',
         ]);
-        
+
         $user = \DB::transaction(function () use ($request){
             $now = \Carbon\Carbon::now()->toDateTimeString();        
             $user=User::create([
@@ -61,15 +61,15 @@ class UsersPMBController extends Controller {
                 'username'=> $request->input('username'),
                 'password'=>Hash::make($request->input('password')),                        
                 'theme'=>'default',
-                'default_role'=>'pmb',            
+                'default_role'=>'keuangan',            
                 'foto'=> 'storage/images/users/no_photo.png',
                 'created_at'=>$now, 
                 'updated_at'=>$now
             ]);            
-            $role='pmb';   
+            $role='keuangan';   
             $user->assignRole($role);               
             
-            $permission=Role::findByName('pmb')->permissions;
+            $permission=Role::findByName('keuangan')->permissions;
             $permissions=$permission->pluck('name');
             $user->givePermissionTo($permissions);
 
@@ -132,22 +132,18 @@ class UsersPMBController extends Controller {
                     }                    
                 }
             }
-
             \App\Models\System\ActivityLog::log($request,[
                                             'object' => $this->guard()->user(), 
                                             'object_id' => $this->guard()->user()->id, 
                                             'user_id' => $this->getUserid(), 
-                                            'message' => 'Menambah user PMB('.$user->username.') berhasil'
+                                            'message' => 'Menambah user Keuangan('.$user->username.') berhasil'
                                         ]);
-
-            return $user;
         });
-
         return Response()->json([
                                     'status'=>1,
                                     'pid'=>'store',
                                     'user'=>$user,                                    
-                                    'message'=>'Data user PMB berhasil disimpan.'
+                                    'message'=>'Data user Keuangan berhasil disimpan.'
                                 ],200); 
 
     }
@@ -160,7 +156,7 @@ class UsersPMBController extends Controller {
      */
     public function update(Request $request, $id)
     {
-        $this->hasPermissionTo('SYSTEM-USERS-PMB_UPDATE');
+        $this->hasPermissionTo('SYSTEM-USERS-KEUANGAN_UPDATE');
 
         $user = User::find($id);
         if (is_null($user))
@@ -173,18 +169,17 @@ class UsersPMBController extends Controller {
         }
         else
         {
+            $this->validate($request, [
+                                        'username'=>[
+                                                        'required',
+                                                        'unique:users,username,'.$user->id
+                                                    ],           
+                                        'name'=>'required',            
+                                        'email'=>'required|string|email|unique:users,email,'.$user->id,
+                                        'nomor_hp'=>'required|string|unique:users,nomor_hp,'.$user->id,   
+                                        'prodi_id'=>'required',           
+                                    ]); 
             $user = \DB::transaction(function () use ($request,$user){
-                $this->validate($request, [
-                                            'username'=>[
-                                                            'required',
-                                                            'unique:users,username,'.$user->id
-                                                        ],           
-                                            'name'=>'required',            
-                                            'email'=>'required|string|email|unique:users,email,'.$user->id,
-                                            'nomor_hp'=>'required|string|unique:users,nomor_hp,'.$user->id,   
-                                            'prodi_id'=>'required',           
-                                        ]); 
-                                        
                 $user->name = $request->input('name');
                 $user->email = $request->input('email');
                 $user->nomor_hp = $request->input('nomor_hp');
@@ -231,12 +226,12 @@ class UsersPMBController extends Controller {
 
                 $daftar_roles=json_decode($request->input('role_id'),true);                
                 if (($key= array_search('dosen',$daftar_roles))===false)
-                {                    
-                    $key= array_search('dosenwali',$daftar_roles);                    
+                {
+                    $key= array_search('dosenwali',$daftar_roles);
                     if (isset($daftar_roles[$key]))
                     {
                         unset($daftar_roles[$key]);
-                    }                    
+                    }
                 }
                 $user->syncRoles($daftar_roles);
                 $dosen=UserDosen::find($user->id);
@@ -281,23 +276,20 @@ class UsersPMBController extends Controller {
                         }
                     }
                 }
-
+                
                 \App\Models\System\ActivityLog::log($request,[
                                                             'object' => $this->guard()->user(), 
                                                             'object_id' => $this->guard()->user()->id, 
                                                             'user_id' => $this->getUserid(), 
-                                                            'message' => 'Mengubah data user PMB ('.$user->username.') berhasil'
+                                                            'message' => 'Mengubah data user Keuangan ('.$user->username.') berhasil'
                                                         ]);
-
                 return $user;
-                
             });
-
             return Response()->json([
                                     'status'=>1,
                                     'pid'=>'update',
                                     'user'=>$user,      
-                                    'message'=>'Data user PMB '.$user->username.' berhasil diubah.'
+                                    'message'=>'Data user Keuangan '.$user->username.' berhasil diubah.'
                                 ],200); 
         }
     }
@@ -309,7 +301,7 @@ class UsersPMBController extends Controller {
      */
     public function destroy(Request $request,$id)
     { 
-        $this->hasPermissionTo('SYSTEM-USERS-PMB_DESTROY');
+        $this->hasPermissionTo('SYSTEM-USERS-KEUANGAN_DESTROY');
 
         $user = User::where('isdeleted','1')
                     ->find($id); 
@@ -331,13 +323,13 @@ class UsersPMBController extends Controller {
                                                                 'object' => $this->guard()->user(), 
                                                                 'object_id' => $this->guard()->user()->id, 
                                                                 'user_id' => $this->getUserid(), 
-                                                                'message' => 'Menghapus user PMB ('.$username.') berhasil'
+                                                                'message' => 'Menghapus user Keuangan ('.$username.') berhasil'
                                                             ]);
         
             return Response()->json([
                                         'status'=>1,
                                         'pid'=>'destroy',                
-                                        'message'=>"User PMB ($username) berhasil dihapus"
+                                        'message'=>"User Keuangan ($username) berhasil dihapus"
                                     ],200);         
         }
                   

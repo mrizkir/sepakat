@@ -20,11 +20,11 @@ class UsersProdiController extends Controller {
     public function index(Request $request)
     {           
         $this->hasPermissionTo('SYSTEM-USERS-PROGRAM-STUDI_BROWSE');
-        $data = User::where('default_role','programstudi')
+        $data = User::where('default_role','kumham')
                     ->orderBy('username','ASC')
                     ->get();       
                     
-        $role = Role::findByName('programstudi');
+        $role = Role::findByName('kumham');
         return Response()->json([
                                 'status'=>1,
                                 'pid'=>'fetchdata',
@@ -60,12 +60,12 @@ class UsersProdiController extends Controller {
                 'username'=> $request->input('username'),
                 'password'=>Hash::make($request->input('password')),                        
                 'theme'=>'default',
-                'default_role'=>'programstudi',            
+                'default_role'=>'kumham',            
                 'foto'=> 'storage/images/users/no_photo.png',
                 'created_at'=>$now, 
                 'updated_at'=>$now
             ]);            
-            $role='programstudi';   
+            $role='kumham';   
             $user->assignRole($role);               
             
             $user_id=$user->id;
