@@ -117,6 +117,80 @@
                         </v-list-item-title>
                     </v-list-item-content>
                 </v-list-item>                
+                <v-subheader>SETTING</v-subheader>
+                <v-list-item link v-if="CAN_ACCESS('SYSTEM-SETTING-PERMISSIONS')" to="/system-users/permissions">
+                    <v-list-item-icon class="mr-2">
+                        <v-icon>mdi-account-key</v-icon>
+                    </v-list-item-icon>
+                    <v-list-item-content>
+                        <v-list-item-title>
+                            HAK AKSES PENGGUNA
+                        </v-list-item-title>
+                    </v-list-item-content>
+                </v-list-item>  
+                <v-list-item link v-if="CAN_ACCESS('SYSTEM-SETTING-ROLES')" to="/system-users/roles">
+                    <v-list-item-icon class="mr-2">
+                        <v-icon>mdi-account-group</v-icon>
+                    </v-list-item-icon>
+                    <v-list-item-content>
+                        <v-list-item-title>
+                            ROLE PENGGUNA
+                        </v-list-item-title>
+                    </v-list-item-content>                    
+                </v-list-item>  
+                <v-divider/>
+                <v-list-group group="/setting/pengguna" active-class="yellow" no-action v-if="CAN_ACCESS('AKADEMIK-PERKULIAHAN-PENYELENGGARAAN_BROWSE')" color="green">
+                    <template v-slot:activator>
+                        <v-list-item-icon class="mr-2">
+                            <v-icon>mdi-home-floor-b</v-icon>
+                        </v-list-item-icon>
+                        <v-list-item-content>								
+                            <v-list-item-title>PENGGUNA</v-list-item-title>
+                        </v-list-item-content>							
+                    </template>
+					<div>
+						<v-list-item link v-if="CAN_ACCESS('SYSTEM-USERS-SUPERADMIN_BROWSE')" to="/system-users/superadmin">
+                            <v-list-item-icon class="mr-2">
+                                <v-icon>mdi-account</v-icon>
+                            </v-list-item-icon>
+                            <v-list-item-content>
+                                <v-list-item-title>
+                                    SUPERADMIN
+                                </v-list-item-title>
+                            </v-list-item-content>
+                        </v-list-item>  
+                        <v-list-item link v-if="CAN_ACCESS('SYSTEM-USERS-KEUANGAN_BROWSE')" to="/system-users/keuangan">
+                            <v-list-item-icon class="mr-2">
+                                <v-icon>mdi-account</v-icon>
+                            </v-list-item-icon>
+                            <v-list-item-content>
+                                <v-list-item-title>
+                                    KEUANGAN
+                                </v-list-item-title>
+                            </v-list-item-content>
+                        </v-list-item>    
+                        <v-list-item link v-if="CAN_ACCESS('SYSTEM-USERS-PMB_BROWSE')" to="/system-users/pmb">
+                            <v-list-item-icon class="mr-2">
+                                <v-icon>mdi-account</v-icon>
+                            </v-list-item-icon>
+                            <v-list-item-content>
+                                <v-list-item-title>
+                                    TIM PMB
+                                </v-list-item-title>
+                            </v-list-item-content>
+                        </v-list-item>    
+                        <v-list-item link v-if="CAN_ACCESS('SYSTEM-USERS-AKADEMIK_BROWSE')" to="/system-users/akademik">
+                            <v-list-item-icon class="mr-2">
+                                <v-icon>mdi-account</v-icon>
+                            </v-list-item-icon>
+                            <v-list-item-content>
+                                <v-list-item-title>
+                                    AKADEMIK
+                                </v-list-item-title>
+                            </v-list-item-content>
+                        </v-list-item>                       
+					</div>
+                </v-list-group>                
             </v-list>
         </v-navigation-drawer>
         <v-navigation-drawer v-model="drawerRight" width="300" app fixed right temporary>
