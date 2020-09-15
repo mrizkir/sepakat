@@ -2,13 +2,11 @@
 const getDefaultState = () => 
 {
     return {      
-        loaded:false,  
-        captcha_site_key:'',
-        tahun_pendaftaran:new Date().getFullYear(),
-        semester_pendaftaran:1,
+        loaded:false,          
+        tahun_data:new Date().getFullYear(),        
         identitas:{
-            nama_pt:'',
-            nama_pt_alias:''
+            nama_app:'',
+            nama_app_alias:''
         },        
     }
 }
@@ -19,18 +17,10 @@ const mutations = {
     setLoaded(state,loaded)
     {
         state.loaded=loaded;
-    },
-    setCaptchaSiteKey(state,key)
-    {
-        state.captcha_site_key = key;
     },    
-    setTahunPendaftaran(state,tahun)
+    setTahunData(state,tahun)
     {
-        state.tahun_pendaftaran = tahun;
-    },    
-    setSemesterPendaftaran(state,semester)
-    {
-        state.semester_pendaftaran = semester;
+        state.tahun_data = tahun;
     },    
     setIdentitas(state,identitas)
     {
@@ -43,30 +33,18 @@ const mutations = {
 const getters= {
     isLoaded : state => {
         return state.loaded;
-    },
-    getCaptchaKey: state => 
-    {   
-        return state.captcha_site_key;
-    },
-    getTahunPendaftaran: state => 
-    {             
-        return state.tahun_pendaftaran;
-    },
-    getSemesterPendaftaran: state => 
-    {             
-        return parseInt(state.semester_pendaftaran);
-    },
-    getNamaPT: state => 
-    {             
-        return state.identitas.nama_pt;
     },    
-    getNamaPTAlias: state => 
-    {
-        return state.identitas.nama_pt_alias;
-    },
-    getBentukPT: state => 
+    getTahunData: state => 
     {             
-        return state.identitas.bentuk_pt;
+        return state.tahun_data;
+    },
+    getNamaAPP: state => 
+    {             
+        return state.identitas.nama_app;
+    },    
+    getNamaAPPAlias: state => 
+    {
+        return state.identitas.nama_app_alias;
     },
 }
 const actions = {
@@ -76,10 +54,9 @@ const actions = {
         commit('setLoaded',false);              
         if (!state.loaded)
         {            
-            await ajax.get('/system/setting/uifront').then(({data})=>{                  
-                commit('setCaptchaSiteKey',data.captcha_site_key);                                         
-                commit('setTahunPendaftaran',data.tahun_pendaftaran);                                         
-                commit('setSemesterPendaftaran',data.semester_pendaftaran);                                         
+            await ajax.get('/system/setting/uifront').then(({data})=>{  
+                console.log(data);                                                                     
+                commit('setTahunData',data.tahun_data);                                                                                            
                 commit('setIdentitas',data.identitas);                                                         
                 commit('setLoaded',true);
             })

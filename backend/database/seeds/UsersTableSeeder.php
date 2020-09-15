@@ -25,6 +25,7 @@ class UsersTableSeeder extends Seeder
             'nomor_hp'=>'081214553388',                
             'email'=>'support@yacanet.com',                
             'theme'=>'default',
+            'default_role'=>'superadmin',
             'code'=>0,
             'isdeleted'=>false,
             'created_at'=>Carbon::now(),

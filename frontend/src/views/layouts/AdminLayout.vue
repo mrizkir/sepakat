@@ -3,16 +3,12 @@
         <v-system-bar app dark class="green lighten-2 white--text">
             
 		</v-system-bar>	
-        <v-app-bar app>            
+        <v-app-bar app>
+            <v-app-bar-nav-icon @click.stop="drawer = !drawer" class="grey--text"></v-app-bar-nav-icon>
             <v-toolbar-title class="headline clickable" @click.stop="$router.push('/dashboard/'+$store.getters['auth/AccessToken']).catch(err => {})">
 				<span class="hidden-sm-and-down">{{APP_NAME}}</span>
 			</v-toolbar-title>
-            <v-spacer></v-spacer>            
-            <v-divider
-                class="mx-4"
-                inset
-                vertical
-            ></v-divider>
+            <v-spacer></v-spacer>
             <v-menu 
                 :close-on-content-click="true"
                 origin="center center"
@@ -54,8 +50,99 @@
                         <v-list-item-title>Logout</v-list-item-title>
                     </v-list-item>
                 </v-list>
-            </v-menu>			
-        </v-app-bar>                    
+            </v-menu>
+            <v-divider
+                class="mx-4"
+                inset
+                vertical
+            ></v-divider>
+			<v-app-bar-nav-icon @click.stop="drawerRight = !drawerRight">
+                <v-icon>mdi-menu-open</v-icon>
+			</v-app-bar-nav-icon>            
+        </v-app-bar>    
+        <v-navigation-drawer v-model="drawer" width="300" dark class="green darken-1" :temporary="isReportPage" app>
+			<v-list-item>
+				<v-list-item-avatar>
+					<v-img :src="photoUser" @click.stop="toProfile"></v-img>
+				</v-list-item-avatar>
+				<v-list-item-content>					
+					<v-list-item-title class="title">
+						{{ATTRIBUTE_USER('username')}}
+					</v-list-item-title>
+					<v-list-item-subtitle>
+						{{ROLE}}
+					</v-list-item-subtitle>
+				</v-list-item-content>
+			</v-list-item>
+			<v-divider></v-divider>
+            <v-list expand>
+                <v-list-item :to="{path:'/dashboard/'+ACCESS_TOKEN}" link class="yellow" color="green" v-if="CAN_ACCESS('AKADEMIK-GROUP')">
+                    <v-list-item-icon class="mr-2">
+                        <v-icon>mdi-monitor-dashboard</v-icon>
+                    </v-list-item-icon>
+                    <v-list-item-content>
+                        <v-list-item-title>DASHBOARD</v-list-item-title>
+                    </v-list-item-content>
+                </v-list-item>      
+                <v-subheader>DATA MASTER</v-subheader>             
+                <v-list-item link to="/dmaster/jeniskegiatan" v-if="CAN_ACCESS('SYSTEM-USERS-DOSEN-WALI_BROWSE')">
+                    <v-list-item-icon class="mr-2">
+                        <v-icon>mdi-format-list-bulleted</v-icon>
+                    </v-list-item-icon>
+                    <v-list-item-content>
+                        <v-list-item-title>
+                            JENIS KEGIATAN
+                        </v-list-item-title>
+                    </v-list-item-content>
+                </v-list-item>               
+                <v-subheader>KONSULTASI</v-subheader>
+                <v-list-item link to="/konsultasi/kegiatan" v-if="CAN_ACCESS('AKADEMIK-DULANG-BARU_BROWSE')">
+                    <v-list-item-icon class="mr-2">
+                        <v-icon>mdi-clipboard-list-outline</v-icon>
+                    </v-list-item-icon>
+                    <v-list-item-content>
+                        <v-list-item-title>
+                            KEGIATAN
+                        </v-list-item-title>
+                    </v-list-item-content>
+                </v-list-item>                
+                <v-subheader>LAPORAN</v-subheader>                                         
+                <v-list-item link to="/laporan/kegiatan" v-if="CAN_ACCESS('AKADEMIK-DULANG-BARU_BROWSE')">
+                    <v-list-item-icon class="mr-2">
+                        <v-icon>mdi-clipboard-list-outline</v-icon>
+                    </v-list-item-icon>
+                    <v-list-item-content>
+                        <v-list-item-title>
+                            LAPORAN KEGIATAN
+                        </v-list-item-title>
+                    </v-list-item-content>
+                </v-list-item>                
+            </v-list>
+        </v-navigation-drawer>
+        <v-navigation-drawer v-model="drawerRight" width="300" app fixed right temporary>
+            <v-list dense>
+                <v-list-item>		
+                    <v-list-item-icon class="mr-2">
+                        <v-icon>mdi-menu-open</v-icon>
+                    </v-list-item-icon>			
+                    <v-list-item-content>									
+                        <v-list-item-title class="title">
+                            OPTIONS
+                        </v-list-item-title>
+                    </v-list-item-content>
+                </v-list-item>
+                <v-divider></v-divider>
+                <v-list-item class="teal lighten-5 mb-5">
+                    <v-list-item-icon class="mr-2">
+                        <v-icon>mdi-filter</v-icon>
+                    </v-list-item-icon>
+                    <v-list-item-content>								
+                        <v-list-item-title>FILTER</v-list-item-title>
+                    </v-list-item-content>		
+                </v-list-item>
+                <slot name="filtersidebar"/>		                	
+            </v-list>
+		</v-navigation-drawer>
         <v-main class="mx-4 mb-4">			
 			<slot />
 		</v-main>
@@ -64,11 +151,17 @@
 <script>
 import {mapGetters} from 'vuex';
 export default {
-    name:'AdminLayout',        
+    name:'AdminLayout',     
+    created()
+    {
+        this.dashboard = this.$store.getters['uiadmin/getDefaultDashboard'];        
+    },
     data:()=>({
         loginTime:0,
         drawer:null,
-        drawerRight:null,   
+        drawerRight:null, 
+        
+        dashboard:null,
     }),       
     methods: {        
         logout ()
