@@ -11,7 +11,7 @@ use Spatie\Permission\Models\Role;
 use Ramsey\Uuid\Uuid;
 use Illuminate\Validation\Rule;
 
-class UsersPMBController extends Controller {         
+class UsersOBHController extends Controller {         
     /**
      * Show the form for creating a new resource.
      *

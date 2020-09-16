@@ -1,5 +1,5 @@
 <template>
-    <SystemUserLayout>
+    <AdminLayout>
 		<ModuleHeader>
             <template v-slot:icon>
                 mdi-account-group
@@ -222,11 +222,11 @@
                 </v-dialog>
             </v-row>
         </v-container>
-    </SystemUserLayout>
+    </AdminLayout>
 </template>
 <script>
 import {mapGetters} from 'vuex';
-import SystemUserLayout from '@/views/layouts/SystemUserLayout';
+import AdminLayout from '@/views/layouts/AdminLayout';
 import ModuleHeader from '@/components/ModuleHeader';
 import RolePermissions from '@/views/pages/admin/system/RolePermissions';
 export default {
@@ -450,7 +450,7 @@ export default {
         },
     },   
     components:{
-		SystemUserLayout,
+		AdminLayout,
         ModuleHeader,
         RolePermissions
 	}

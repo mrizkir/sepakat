@@ -76,7 +76,7 @@
 			</v-list-item>
 			<v-divider></v-divider>
             <v-list expand>
-                <v-list-item :to="{path:'/dashboard/'+ACCESS_TOKEN}" link class="yellow" color="green" v-if="CAN_ACCESS('AKADEMIK-GROUP')">
+                <v-list-item :to="{path:'/dashboard/'+ACCESS_TOKEN}" link active-class="yellow" color="green" v-if="CAN_ACCESS('AKADEMIK-GROUP')">
                     <v-list-item-icon class="mr-2">
                         <v-icon>mdi-monitor-dashboard</v-icon>
                     </v-list-item-icon>
@@ -139,7 +139,7 @@
                     </v-list-item-content>                    
                 </v-list-item>  
                 <v-divider/>
-                <v-list-group group="/setting/pengguna" active-class="yellow" no-action v-if="CAN_ACCESS('AKADEMIK-PERKULIAHAN-PENYELENGGARAAN_BROWSE')" color="green">
+                <v-list-group group="/system-users" active-class="yellow" no-action v-if="CAN_ACCESS('SYSTEM-USERS-GROUP')" color="green">
                     <template v-slot:activator>
                         <v-list-item-icon class="mr-2">
                             <v-icon>mdi-home-floor-b</v-icon>
@@ -159,7 +159,7 @@
                                 </v-list-item-title>
                             </v-list-item-content>
                         </v-list-item>  
-                        <v-list-item link v-if="CAN_ACCESS('SYSTEM-USERS-KEUANGAN_BROWSE')" to="/system-users/keuangan">
+                        <v-list-item link v-if="CAN_ACCESS('SYSTEM-USERS-LEGAL_BROWSE')" to="/system-users/legal">
                             <v-list-item-icon class="mr-2">
                                 <v-icon>mdi-account</v-icon>
                             </v-list-item-icon>
@@ -169,7 +169,7 @@
                                 </v-list-item-title>
                             </v-list-item-content>
                         </v-list-item>    
-                        <v-list-item link v-if="CAN_ACCESS('SYSTEM-USERS-PMB_BROWSE')" to="/system-users/pmb">
+                        <v-list-item link v-if="CAN_ACCESS('SYSTEM-USERS-KADES_BROWSE')" to="/system-users/kades">
                             <v-list-item-icon class="mr-2">
                                 <v-icon>mdi-account</v-icon>
                             </v-list-item-icon>
@@ -179,7 +179,7 @@
                                 </v-list-item-title>
                             </v-list-item-content>
                         </v-list-item>    
-                        <v-list-item link v-if="CAN_ACCESS('SYSTEM-USERS-AKADEMIK_BROWSE')" to="/system-users/akademik">
+                        <v-list-item link v-if="CAN_ACCESS('SYSTEM-USERS-AKADEMIK_BROWSE')" to="/system-users/pmb">
                             <v-list-item-icon class="mr-2">
                                 <v-icon>mdi-account</v-icon>
                             </v-list-item-icon>
@@ -189,7 +189,7 @@
                                 </v-list-item-title>
                             </v-list-item-content>
                         </v-list-item>                       
-                        <v-list-item link v-if="CAN_ACCESS('SYSTEM-USERS-AKADEMIK_BROWSE')" to="/system-users/akademik">
+                        <v-list-item link v-if="CAN_ACCESS('SYSTEM-USERS-OBH_BROWSE')" to="/system-users/obh">
                             <v-list-item-icon class="mr-2">
                                 <v-icon>mdi-account</v-icon>
                             </v-list-item-icon>
@@ -199,13 +199,13 @@
                                 </v-list-item-title>
                             </v-list-item-content>
                         </v-list-item>                       
-                        <v-list-item link v-if="CAN_ACCESS('SYSTEM-USERS-AKADEMIK_BROWSE')" to="/system-users/akademik">
+                        <v-list-item link v-if="CAN_ACCESS('SYSTEM-USERS-HUMKAM_BROWSE')" to="/system-users/humkam">
                             <v-list-item-icon class="mr-2">
                                 <v-icon>mdi-account</v-icon>
                             </v-list-item-icon>
                             <v-list-item-content>
                                 <v-list-item-title>
-                                    KUMHAM
+                                    HUMKAM
                                 </v-list-item-title>
                             </v-list-item-content>
                         </v-list-item>                       

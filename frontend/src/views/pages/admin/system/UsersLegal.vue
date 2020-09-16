@@ -1,11 +1,11 @@
 <template>
-    <SystemUserLayout>
+    <AdminLayout>
         <ModuleHeader>
             <template v-slot:icon>
                 mdi-account
             </template>
             <template v-slot:name>
-                USERS AKADEMIK
+                USERS LEGAL
             </template>
             <template v-slot:breadcrumbs>
                 <v-breadcrumbs :items="breadcrumbs" class="pa-0">
@@ -21,7 +21,7 @@
                     colored-border
                     type="info"
                     >
-                     User dengan role AKADEMIK bertanggungjawab terhadap proses akademik mahasiswa.
+                     User dengan role Legal bertanggungjawab terhadap proses konsultasi hukum.
                 </v-alert>
             </template>
         </ModuleHeader>        
@@ -59,7 +59,7 @@
                     >
                         <template v-slot:top>
                             <v-toolbar flat color="white">
-                                <v-toolbar-title>DAFTAR USERS AKADEMIK</v-toolbar-title>
+                                <v-toolbar-title>DAFTAR USERS LEGAL</v-toolbar-title>
                                 <v-divider
                                     class="mx-4"
                                     inset
@@ -78,7 +78,7 @@
                                     class="mb-2" 
                                     :loading="btnLoading"
                                     :disabled="btnLoading"
-                                    @click.stop="showDialogTambahUserAkademik">
+                                    @click.stop="showDialogTambahUserLegal">
                                     TAMBAH
                                 </v-btn>
                                 <v-dialog v-model="dialog" max-width="500px" persistent>                                    
@@ -88,7 +88,7 @@
                                                 <span class="headline">{{ formTitle }}</span>
                                             </v-card-title>
                                             <v-card-subtitle>
-                                                Bila program studi, tidak dipilih artinya user ini dapat mengakses seluruh data akademik.
+                                                Bila desa, tidak dipilih artinya user ini tidak dapat mengakses seluruh data desa manapun.
                                             </v-card-subtitle>
                                             <v-card-text>     
                                                 <v-text-field 
@@ -122,16 +122,26 @@
                                                     outlined
                                                     :rules="rule_user_password">
                                                 </v-text-field>
+                                                <v-select
+                                                    label="KECAMATAN"
+                                                    :items="daftar_kecamatan"
+                                                    v-model="kecamatan_id"
+                                                    item-text="nama"
+                                                    item-value="id" 
+                                                    :loading="selectLoadingKec" 
+                                                    return-object                      
+                                                    outlined
+                                                />                                                
                                                 <v-autocomplete 
-                                                    :items="daftar_prodi" 
-                                                    v-model="editedItem.prodi_id"
-                                                    label="PROGRAM STUDI" 
-                                                    item-text="text"
+                                                    :items="daftar_desa" 
+                                                    v-model="editedItem.desa_id"
+                                                    label="DESA/KELURAHAN" 
+                                                    item-text="nama"
                                                     item-value="id"
                                                     multiple 
                                                     small-chips
                                                     outlined>                                                                                
-                                                </v-autocomplete>
+                                                </v-autocomplete>     
                                                 <v-autocomplete 
                                                     :items="daftar_roles" 
                                                     v-model="editedItem.role_id"
@@ -139,7 +149,7 @@
                                                     multiple 
                                                     small-chips
                                                     outlined>                                                                                
-                                                </v-autocomplete>
+                                                </v-autocomplete>                                           
                                             </v-card-text>
                                             <v-card-actions>
                                                 <v-spacer></v-spacer>
@@ -163,7 +173,7 @@
                                                 <span class="headline">{{ formTitle }}</span>
                                             </v-card-title>
                                             <v-card-subtitle>
-                                                Bila program studi, tidak dipilih artinya user ini dapat mengakses seluruh data akademik
+                                                Bila desa, tidak dipilih artinya user ini tidak dapat mengakses seluruh data desa manapun.
                                             </v-card-subtitle>
                                             <v-card-text>                                                                                                
                                                 <v-text-field 
@@ -197,16 +207,26 @@
                                                     outlined
                                                     :rules="rule_user_passwordEdit">
                                                 </v-text-field>   
+                                                <v-select
+                                                    label="KECAMATAN"
+                                                    :items="daftar_kecamatan"
+                                                    v-model="kecamatan_id"
+                                                    item-text="nama"
+                                                    item-value="id" 
+                                                    :loading="selectLoadingKec" 
+                                                    return-object                      
+                                                    outlined
+                                                />                                                
                                                 <v-autocomplete 
-                                                    :items="daftar_prodi" 
-                                                    v-model="editedItem.prodi_id"
-                                                    label="PROGRAM STUDI" 
-                                                    item-text="text"
+                                                    :items="daftar_desa" 
+                                                    v-model="editedItem.desa_id"
+                                                    label="DESA/KELURAHAN" 
+                                                    item-text="nama"
                                                     item-value="id"
                                                     multiple 
                                                     small-chips
                                                     outlined>                                                                                
-                                                </v-autocomplete>
+                                                </v-autocomplete>   
                                                 <v-autocomplete 
                                                     :items="daftar_roles" 
                                                     v-model="editedItem.role_id"
@@ -214,7 +234,7 @@
                                                     multiple 
                                                     small-chips
                                                     outlined>                                                                                
-                                                </v-autocomplete>
+                                                </v-autocomplete>                                             
                                             </v-card-text>
                                             <v-card-actions>
                                                 <v-spacer></v-spacer>
@@ -283,15 +303,15 @@
                 </v-col>
             </v-row>
         </v-container>
-    </SystemUserLayout>
+    </AdminLayout>
 </template>
 <script>
 import {mapGetters} from 'vuex';
-import SystemUserLayout from '@/views/layouts/SystemUserLayout';
+import AdminLayout from '@/views/layouts/AdminLayout';
 import ModuleHeader from '@/components/ModuleHeader';
 import UserPermissions from '@/views/pages/admin/system/UserPermissions';
 export default {
-    name: 'UsersAkademik',  
+    name: 'UsersLegal',  
     created () {
         this.breadcrumbs = [
             {
@@ -305,7 +325,7 @@ export default {
                 href:'/system-users'
             },
             {
-                text:'USERS AKADEMIK',
+                text:'USERS LEGAL',
                 disabled:true,
                 href:'#'
             }
@@ -316,6 +336,7 @@ export default {
     data: () => ({ 
         role_id:0,
         datatableLoading:false,
+        selectLoadingKec:false,
         btnLoading:false,      
         //tables
         headers: [                        
@@ -339,7 +360,11 @@ export default {
         dialogEdit: false,
         dialogUserPermission: false,
         editedIndex: -1,
-        daftar_prodi:[],
+        
+        daftar_kecamatan:[],
+        kecamatan_id:null,
+
+        daftar_desa:[],
         editedItem: {
             id:0,
             username: '',           
@@ -347,8 +372,8 @@ export default {
             name: '',           
             email: '',           
             nomor_hp:'',           
-            prodi_id:[],
-            role_id:['akademik'], 
+            desa_id:[], 
+            role_id:['legal'],                            
             created_at: '',           
             updated_at: '',   
         },
@@ -359,8 +384,8 @@ export default {
             name: '',           
             email: '',           
             nomor_hp: '',  
-            prodi_id:[],       
-            role_id:['akademik'], 
+            desa_id:[],  
+            role_id:['legal'],                                              
             created_at: '',           
             updated_at: '',        
         },
@@ -393,9 +418,21 @@ export default {
                 }
             }
         ], 
+        rule_desa:[
+            value => !!value||"Mohon untuk dipilih desa tempat bertugas para legal !!!",
+            value => {
+                if (value && typeof value !== 'undefined' && value.length > 0){
+                    return 'Mohon untuk dipilih desa tempat bertugas para legal ';
+                }
+                else
+                {
+                    return true;
+                }
+            }
+        ], 
         rule_user_passwordEdit:[
             value => {
-                if (value && value.length > 0){
+                if (value && typeof value !== 'undefined' && value.length > 0){
                     return value.length >= 8 || 'Minimial Password 8 karaketer';
                 }
                 else
@@ -409,7 +446,7 @@ export default {
         initialize:async function () 
         {
             this.datatableLoading=true;
-            await this.$ajax.get('/system/usersakademik',{
+            await this.$ajax.get('/system/userslegal',{
                 headers: {
                     Authorization:this.TOKEN
                 }
@@ -436,7 +473,7 @@ export default {
             this.btnLoading=true;
             await this.$ajax.post('/system/users/syncallpermissions',
                 {
-                    role_name:'akademik',                    
+                    role_name:'legal',                    
                 },
                 {
                     headers:{
@@ -449,8 +486,12 @@ export default {
                 this.btnLoading=false;
             });     
         },
-        showDialogTambahUserAkademik:async function ()
+        showDialogTambahUserLegal:async function ()
         {
+            this.$ajax.get('/datamaster/kabupaten/2102/kecamatan').then(({data})=>{
+                this.daftar_kecamatan=data.kecamatan;                
+            });
+
             await this.$ajax.get('/system/setting/roles',{
                 headers: {
                     Authorization:this.TOKEN
@@ -459,23 +500,15 @@ export default {
                 let roles = data.roles;
                 var daftar_roles=[];
                 roles.forEach(element => {
-                    if (element.name=='akademik')
+                    if (element.name=='legal')
                     {                        
                         daftar_roles.push({
                             text:element.name,
                             disabled:true,
                         });                        
-                    }
-                    else if (element.name=='dosen'||element.name=='dosenwali')
-                    {
-                        daftar_roles.push({
-                            text:element.name,
-                            disabled:false,                            
-                        });                        
-                    }                    
+                    }                  
                 });        
-                this.daftar_roles=daftar_roles;                     
-                this.daftar_prodi=this.$store.getters['uiadmin/getDaftarProdi'];                          
+                this.daftar_roles=daftar_roles;                                                              
                 this.dialog = true;            
             });               
         },
@@ -483,22 +516,29 @@ export default {
             this.editedIndex = this.daftar_users.indexOf(item)
             item.password='';            
             this.editedItem = Object.assign({}, item);      
-            this.daftar_prodi=this.$store.getters['uiadmin/getDaftarProdi'];  
-            await this.$ajax.get('/system/users/'+item.id+'/prodi',               
+
+            this.$ajax.get('/datamaster/kabupaten/2102/kecamatan').then(({data})=>{
+                this.daftar_kecamatan=data.kecamatan;                
+            });
+
+            await this.$ajax.get('/system/users/'+item.id+'/desa',               
                 {
                     headers:{
                         Authorization:this.TOKEN
                     }
                 }
             ).then(({data})=>{                                   
-                let daftar_prodi = data.daftar_prodi;
-                var prodi=[];
-                daftar_prodi.forEach(element => {
-                    prodi.push(element.id);                        
+                let daftar_desa = data.daftar_desa;
+                var desa=[];
+                daftar_desa.forEach(element => {
+                    desa.push(element.desa_id);                        
+                    this.kecamatan_id={
+                        id:element.kecamatan_id,
+                        nama:element.nama_kecamatan
+                    }
                 });   
-                this.editedItem.prodi_id=prodi;                 
-            });                         
-            
+                this.editedItem.desa_id=desa;                 
+            });           
             await this.$ajax.get('/system/setting/roles',{
                 headers: {
                     Authorization:this.TOKEN
@@ -507,20 +547,13 @@ export default {
                 let roles = data.roles;
                 var daftar_roles=[];
                 roles.forEach(element => {
-                    if (element.name=='akademik')
+                    if (element.name=='legal')
                     {                        
                         daftar_roles.push({
                             text:element.name,
                             disabled:true,
                         });                        
-                    }
-                    else if (element.name=='dosen'||element.name=='dosenwali')
-                    {
-                        daftar_roles.push({
-                            text:element.name,
-                            disabled:false,                            
-                        });                        
-                    }                    
+                    }                              
                 });        
                 this.daftar_roles=daftar_roles;                                                
             });    
@@ -586,7 +619,7 @@ export default {
                 this.btnLoading=true;
                 if (this.editedIndex > -1) 
                 {
-                    this.$ajax.post('/system/usersakademik/'+this.editedItem.id,
+                    this.$ajax.post('/system/userslegal/'+this.editedItem.id,
                         {
                             '_method':'PUT',
                             name:this.editedItem.name,
@@ -594,7 +627,7 @@ export default {
                             nomor_hp:this.editedItem.nomor_hp,     
                             username:this.editedItem.username,
                             password:this.editedItem.password,   
-                            prodi_id:JSON.stringify(Object.assign({},this.editedItem.prodi_id)),                                                                                                          
+                            desa_id:JSON.stringify(Object.assign({},this.editedItem.desa_id)),
                             role_id:JSON.stringify(Object.assign({},this.editedItem.role_id)),
                         },
                         {
@@ -610,15 +643,15 @@ export default {
                     });                    
                     
                 } else {
-                    this.$ajax.post('/system/usersakademik/store',
+                    this.$ajax.post('/system/userslegal/store',
                         {
                             name:this.editedItem.name,
                             email:this.editedItem.email,
                             nomor_hp:this.editedItem.nomor_hp,     
                             username:this.editedItem.username,
                             password:this.editedItem.password,            
-                            prodi_id:JSON.stringify(Object.assign({},this.editedItem.prodi_id)),                             
-                            role_id:JSON.stringify(Object.assign({},this.editedItem.role_id)),
+                            desa_id:JSON.stringify(Object.assign({},this.editedItem.desa_id)),    
+                            role_id:JSON.stringify(Object.assign({},this.editedItem.role_id)),                         
                         },
                         {
                             headers:{
@@ -639,7 +672,7 @@ export default {
                 if (confirm)
                 {
                     this.btnLoading=true;
-                    this.$ajax.post('/system/usersakademik/'+item.id,
+                    this.$ajax.post('/system/userslegal/'+item.id,
                         {
                             '_method':'DELETE',
                         },
@@ -661,7 +694,7 @@ export default {
     },
     computed: {
         formTitle () {
-            return this.editedIndex === -1 ? 'TAMBAH USER AKADEMIK' : 'EDIT USER AKADEMIK'
+            return this.editedIndex === -1 ? 'TAMBAH USER LEGAL' : 'EDIT USER LEGAL'
         },
         ...mapGetters('auth',{            
             ACCESS_TOKEN:'AccessToken',          
@@ -675,10 +708,22 @@ export default {
         },
         dialogEdit (val) {
             val || this.close()
-        },        
+        },      
+        kecamatan_id(val)
+        {
+            if (val.id != null && val.id != '')
+            {
+                this.selectLoadingKec=true;
+                this.$ajax.get('/datamaster/kecamatan/'+val.id+'/desa').then(({data})=>{
+                    this.daftar_desa=data.desa;
+                    this.selectLoadingKec=false;
+                });
+                editedItem.desa_id=[];
+            }
+        },  
     },    
     components:{
-        SystemUserLayout,
+        AdminLayout,
         ModuleHeader,
         UserPermissions
     },

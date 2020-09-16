@@ -11,7 +11,7 @@ use Spatie\Permission\Models\Role;
 use Ramsey\Uuid\Uuid;
 use Illuminate\Validation\Rule;
 
-class UsersProdiController extends Controller {         
+class UsersKumhamController extends Controller {         
     /**
      * Show the form for creating a new resource.
      *

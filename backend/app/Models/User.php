@@ -78,8 +78,8 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     {
         return [];
     }
-    public function prodi()
+    public function desa()
     {
-        return $this->hasMany('App\Models\UserProdi','user_id','id')->select(\DB::raw('prodi_id AS id,kode_prodi,nama_prodi,nama_prodi_alias,kode_jenjang,nama_jenjang'));
+        return $this->hasMany('App\Models\UserDesa','user_id','id');
     }
 }

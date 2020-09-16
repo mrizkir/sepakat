@@ -1,5 +1,5 @@
 <template>
-    <SystemUserLayout>
+    <AdminLayout>
 		<ModuleHeader>
             <template v-slot:icon>
                 mdi-account-key
@@ -129,11 +129,11 @@
                 </v-col>
             </v-row>
         </v-container>
-    </SystemUserLayout>
+    </AdminLayout>
 </template>
 <script>
 import {mapGetters} from 'vuex';
-import SystemUserLayout from '@/views/layouts/SystemUserLayout';
+import AdminLayout from '@/views/layouts/AdminLayout';
 import ModuleHeader from '@/components/ModuleHeader';
 export default {
     name: 'Permissions',
@@ -301,7 +301,7 @@ export default {
         },
     },   
     components:{
-		SystemUserLayout,
+		AdminLayout,
 		ModuleHeader,
 	}
 }

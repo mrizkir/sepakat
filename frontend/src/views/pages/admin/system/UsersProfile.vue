@@ -1,5 +1,5 @@
 <template>
-    <SystemUserLayout>
+    <AdminLayout>
         <ModuleHeader>
             <template v-slot:icon>
                 mdi-account
@@ -88,10 +88,10 @@
                 </v-col>
             </v-row>
         </v-container>
-    </SystemUserLayout>
+    </AdminLayout>
 </template>
 <script>
-import SystemUserLayout from '@/views/layouts/SystemUserLayout';
+import AdminLayout from '@/views/layouts/AdminLayout';
 import ModuleHeader from '@/components/ModuleHeader';
 export default {
     name:'UsersProfile',
@@ -263,7 +263,7 @@ export default {
 		}
     },
     components:{
-        SystemUserLayout,
+        AdminLayout,
         ModuleHeader,
     },
 }

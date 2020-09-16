@@ -6,12 +6,12 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\Controller;
 use App\Models\User;
-use App\Models\UserDosen;
+use App\Models\UserDesa;
 use Spatie\Permission\Models\Role;
 use Ramsey\Uuid\Uuid;
 use Illuminate\Validation\Rule;
 
-class UsersAkademikController extends Controller {         
+class UsersLegalController extends Controller {         
     /**
      * Show the form for creating a new resource.
      *
@@ -19,18 +19,18 @@ class UsersAkademikController extends Controller {
      */
     public function index(Request $request)
     {           
-        $this->hasPermissionTo('SYSTEM-USERS-AKADEMIK_BROWSE');
-        $data = User::where('default_role','akademik')
+        $this->hasPermissionTo('SYSTEM-USERS-LEGAL_BROWSE');
+        $data = User::where('default_role','legal')
                     ->orderBy('username','ASC')
                     ->get();       
                     
-        $role = Role::findByName('akademik');
+        $role = Role::findByName('legal');
         return Response()->json([
                                 'status'=>1,
                                 'pid'=>'fetchdata',
                                 'role'=>$role,
                                 'users'=>$data,
-                                'message'=>'Fetch data users Akademik berhasil diperoleh'
+                                'message'=>'Fetch data users LEGAL berhasil diperoleh'
                             ],200);  
     }    
     /**
@@ -41,14 +41,14 @@ class UsersAkademikController extends Controller {
      */
     public function store(Request $request)
     {
-        $this->hasPermissionTo('SYSTEM-USERS-AKADEMIK_STORE');
+        $this->hasPermissionTo('SYSTEM-USERS-LEGAL_STORE');
         $this->validate($request, [
             'name'=>'required',
             'email'=>'required|string|email|unique:users',
             'nomor_hp'=>'required|string|unique:users',
             'username'=>'required|string|unique:users',
             'password'=>'required',            
-            'prodi_id'=>'required',
+            'desa_id'=>'required',
         ]);
         $user = \DB::transaction(function () use ($request){
             $now = \Carbon\Carbon::now()->toDateTimeString();        
@@ -60,47 +60,40 @@ class UsersAkademikController extends Controller {
                 'username'=> $request->input('username'),
                 'password'=>Hash::make($request->input('password')),                        
                 'theme'=>'default',
-                'default_role'=>'akademik',
+                'default_role'=>'legal',            
                 'foto'=> 'storage/images/users/no_photo.png',
                 'created_at'=>$now, 
                 'updated_at'=>$now
             ]);            
-            $role='akademik';   
+            $role='legal';   
             $user->assignRole($role);               
             
-            $permission=Role::findByName('akademik')->permissions;
-            $permissions=$permission->pluck('name');
-            $user->givePermissionTo($permissions);    
-
             $user_id=$user->id;
-            $daftar_prodi=json_decode($request->input('prodi_id'),true);
-            foreach($daftar_prodi as $v)
+            $daftar_desa=json_decode($request->input('desa_id'),true);
+            foreach($daftar_desa as $v)
             {
+                $desa_id=$v;
                 $sql = "
-                    INSERT INTO usersprodi (                    
+                    INSERT INTO usersdesa (                    
                         user_id, 
-                        prodi_id,
-                        kode_prodi,
-                        nama_prodi,
-                        nama_prodi_alias,
-                        kode_jenjang,
-                        nama_jenjang,                                                        
+                        desa_id,
+                        kecamatan_id,
+                        nama_kecamatan,
+                        nama_desa,                        
                         created_at, 
                         updated_at
                     ) 
                     SELECT
                         '$user_id',                    
-                        id,
-                        kode_prodi,
-                        nama_prodi,
-                        nama_prodi_alias,
-                        kode_jenjang,
-                        nama_jenjang,                          
+                        A.id,                        
+                        A.kecamatan_id,
+                        B.nama,
+                        A.nama,                        
                         NOW() AS created_at,
                         NOW() AS updated_at
-                    FROM pe3_prodi                    
+                    FROM wilayah_desa A JOIN wilayah_kecamatan B ON (A.kecamatan_id=B.ID)                    
                     WHERE 
-                        id='$v' 
+                        A.id='$desa_id' 
                 ";
 
                 \DB::statement($sql); 
@@ -109,34 +102,18 @@ class UsersAkademikController extends Controller {
             $daftar_roles=json_decode($request->input('role_id'),true);
             foreach($daftar_roles as $v)
             {
-                if ($v=='dosen' || $v=='dosenwali' )
-                {
-                    $user->assignRole($v);               
-                    $permission=Role::findByName($v)->permissions;
-                    $permissions=$permission->pluck('name');
-                    $user->givePermissionTo($permissions);
-
-                    if ($v=='dosen')
-                    {
-                        UserDosen::create([
-                            'user_id'=>$user->id,
-                            'nama_dosen'=>$request->input('name'),                                                            
-                        ]);
-                        if ($v=='dosenwali')
-                        {
-                            \DB::table('pe3_dosen')
-                                ->where('user_id',$user->id)
-                                ->update(['is_dw'=>true]);
-                        }
-                    }                    
-                }
+                $user->assignRole($v);               
+                $permission=Role::findByName($v)->permissions;
+                $permissions=$permission->pluck('name');
+                $user->givePermissionTo($permissions);                            
             }
+            $user->syncRoles($daftar_roles);
 
             \App\Models\System\ActivityLog::log($request,[
                                             'object' => $this->guard()->user(), 
                                             'object_id' => $this->guard()->user()->id, 
                                             'user_id' => $this->getUserid(), 
-                                            'message' => 'Menambah user Akademik('.$user->username.') berhasil'
+                                            'message' => 'Menambah user LEGAL ('.$user->username.') berhasil'
                                         ]);
 
             return $user;
@@ -146,8 +123,35 @@ class UsersAkademikController extends Controller {
                                     'status'=>1,
                                     'pid'=>'store',
                                     'user'=>$user,                                    
-                                    'message'=>'Data user Akademik berhasil disimpan.'
+                                    'message'=>'Data user LEGAL berhasil disimpan.'
                                 ],200); 
+
+    }
+    /**
+     * digunakan untuk mendapatkan informasi detail user dengan role program studi
+     */
+    public function show(Request $request, $id)
+    {
+        $this->hasPermissionTo('SYSTEM-USERS-LEGAL_SHOW');
+
+        $user = User::find($id);
+        if (is_null($user))
+        {
+            return Response()->json([
+                                    'status'=>1,
+                                    'pid'=>'update',                
+                                    'message'=>["User ID ($id) gagal diperoleh"]
+                                ],422); 
+        }
+        else
+        {
+            return Response()->json([
+                                    'status'=>1,
+                                    'pid'=>'fetchdata',
+                                    'user'=>$user,                                       
+                                    'message'=>'Data user '.$user->username.' berhasil diperoleh.'
+                                ],200); 
+        }
 
     }
     /**
@@ -159,7 +163,7 @@ class UsersAkademikController extends Controller {
      */
     public function update(Request $request, $id)
     {
-        $this->hasPermissionTo('SYSTEM-USERS-AKADEMIK_UPDATE');
+        $this->hasPermissionTo('SYSTEM-USERS-LEGAL_UPDATE');
 
         $user = User::find($id);
         if (is_null($user))
@@ -180,9 +184,8 @@ class UsersAkademikController extends Controller {
                                         'name'=>'required',            
                                         'email'=>'required|string|email|unique:users,email,'.$user->id,
                                         'nomor_hp'=>'required|string|unique:users,nomor_hp,'.$user->id,   
-                                        'prodi_id'=>'required',           
+                                        'desa_id'=>'required',           
                                     ]); 
-            
             $user = \DB::transaction(function () use ($request,$user){
                 $user->name = $request->input('name');
                 $user->email = $request->input('email');
@@ -194,40 +197,50 @@ class UsersAkademikController extends Controller {
                 $user->updated_at = \Carbon\Carbon::now()->toDateTimeString();
                 $user->save();
 
-                $user_id=$user->id;
-                \DB::table('usersprodi')->where('user_id',$user_id)->delete();
-                $daftar_prodi=json_decode($request->input('prodi_id'),true);
-                foreach($daftar_prodi as $v)
+                if ($request->input('role_dosen')=='true')
                 {
+                    $user->assignRole('dosen'); 
+                    $permission=Role::findByName('dosen')->permissions;
+                    $permissions=$permission->pluck('name');
+                    $user->givePermissionTo($permissions);
+                }
+                elseif ($user->hasRole('dosen'))
+                {
+                    $user->removeRole('dosen');
+                    $permission=Role::findByName('dosen')->permissions;
+                    $permissions=$permission->pluck('name');
+                    $user->revokePermissionTo($permissions);
+                }    
+                $user_id=$user->id;
+                \DB::table('usersdesa')->where('user_id',$user_id)->delete();
+                $daftar_desa=json_decode($request->input('desa_id'),true);
+                foreach($daftar_desa as $v)
+                {
+                    $desa_id=$v;
                     $sql = "
-                        INSERT INTO usersprodi (                    
+                        INSERT INTO usersdesa (                    
                             user_id, 
-                            prodi_id,
-                            kode_prodi,
-                            nama_prodi,
-                            nama_prodi_alias,
-                            kode_jenjang,
-                            nama_jenjang,                                                        
+                            desa_id,
+                            kecamatan_id,
+                            nama_kecamatan,
+                            nama_desa,                            
                             created_at, 
                             updated_at
                         ) 
                         SELECT
                             '$user_id',                    
-                            id,
-                            kode_prodi,
-                            nama_prodi,
-                            nama_prodi_alias,
-                            kode_jenjang,
-                            nama_jenjang,                          
+                            A.id,                        
+                            A.kecamatan_id,
+                            B.nama,
+                            A.nama,                        
                             NOW() AS created_at,
                             NOW() AS updated_at
-                        FROM pe3_prodi                    
+                        FROM wilayah_desa A JOIN wilayah_kecamatan B ON (A.kecamatan_id=B.ID)                    
                         WHERE 
-                            id='$v' 
+                            A.id='$desa_id' 
                     ";
                     \DB::statement($sql); 
                 }
-
                 $daftar_roles=json_decode($request->input('role_id'),true);                
                 if (($key= array_search('dosen',$daftar_roles))===false)
                 {                    
@@ -238,7 +251,7 @@ class UsersAkademikController extends Controller {
                     }                    
                 }
                 $user->syncRoles($daftar_roles);
-                $dosen=UserDosen::find($user->id);
+                $dosen=UserDesa::find($user->id);
 
                 foreach($daftar_roles as $v)
                 {
@@ -250,7 +263,7 @@ class UsersAkademikController extends Controller {
 
                         if ($v=='dosen' && is_null($dosen))
                         {
-                            UserDosen::create([
+                            UserDesa::create([
                                 'user_id'=>$user->id,
                                 'nama_dosen'=>$request->input('name'),                                                            
                             ]);
@@ -280,20 +293,21 @@ class UsersAkademikController extends Controller {
                         }
                     }
                 }
+
                 \App\Models\System\ActivityLog::log($request,[
                                                             'object' => $this->guard()->user(), 
                                                             'object_id' => $this->guard()->user()->id, 
                                                             'user_id' => $this->getUserid(), 
-                                                            'message' => 'Mengubah data user Akademik ('.$user->username.') berhasil'
+                                                            'message' => 'Mengubah data user LEGAL ('.$user->username.') berhasil'
                                                         ]);
                 return $user;
             });
-            
+
             return Response()->json([
                                     'status'=>1,
                                     'pid'=>'update',
                                     'user'=>$user,      
-                                    'message'=>'Data user Akademik '.$user->username.' berhasil diubah.'
+                                    'message'=>'Data user LEGAL '.$user->username.' berhasil diubah.'
                                 ],200); 
         }
     }
@@ -305,7 +319,7 @@ class UsersAkademikController extends Controller {
      */
     public function destroy(Request $request,$id)
     { 
-        $this->hasPermissionTo('SYSTEM-USERS-AKADEMIK_DESTROY');
+        $this->hasPermissionTo('SYSTEM-USERS-LEGAL_DESTROY');
 
         $user = User::where('isdeleted','1')
                     ->find($id); 
@@ -327,13 +341,13 @@ class UsersAkademikController extends Controller {
                                                                 'object' => $this->guard()->user(), 
                                                                 'object_id' => $this->guard()->user()->id, 
                                                                 'user_id' => $this->getUserid(), 
-                                                                'message' => 'Menghapus user Akademik ('.$username.') berhasil'
+                                                                'message' => 'Menghapus user LEGAL ('.$username.') berhasil'
                                                             ]);
         
             return Response()->json([
                                         'status'=>1,
                                         'pid'=>'destroy',                
-                                        'message'=>"User Akademik ($username) berhasil dihapus"
+                                        'message'=>"User LEGAL ($username) berhasil dihapus"
                                     ],200);         
         }
                   

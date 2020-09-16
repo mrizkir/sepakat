@@ -162,42 +162,7 @@ class UsersController extends Controller {
         $role_name=$request->input('role_name');
         $permission=Role::findByName($role_name)->permissions;
         $permissions=$permission->pluck('name');
-        switch($role_name)
-        {
-            case 'mahasiswabaru':
-                $this->validate($request, [           
-                    'TA'=>'required',
-                    'prodi_id'=>'required'
-                ]);                
-
-                $ta=$request->input('TA');
-                $prodi_id=$request->input('prodi_id');
-                $data = User::where('default_role','mahasiswabaru')
-                        ->select(\DB::raw('users.id'))
-                        ->join('pe3_formulir_pendaftaran','pe3_formulir_pendaftaran.user_id','users.id')
-                        ->where('users.ta',$ta)
-                        ->where('kjur1',$prodi_id)
-                        ->get();
-
-                foreach ($data as $user)
-                {
-                    \DB::table('model_has_permissions')->where('model_id',$user->id)->delete();
-                    $user->givePermissionTo($permissions);                 
-                }                
-            break;
-            case 'pmb':
-                $data = User::role('pmb')
-                        ->select(\DB::raw('users.id'))                        
-                        ->where('active',1)
-                        ->get();
-
-                foreach ($data as $user)
-                {
-                    \DB::table('model_has_permissions')->where('model_id',$user->id)->delete();
-                    $user->givePermissionTo($permissions);                 
-                }                
-            break;
-        }       
+        
         return Response()->json([
                                     'status'=>1,
                                     'pid'=>'update',                                                                                                     
@@ -594,7 +559,7 @@ class UsersController extends Controller {
                                     ],200); 
         }
     }
-    public function usersprodi (Request $request,$id)
+    public function usersdesa (Request $request,$id)
     {
         $user = User::find($id); 
 
@@ -609,12 +574,12 @@ class UsersController extends Controller {
         else
         {
             $username = $user->username;            
-            $prodi=$user->prodi;            
+            $desa=$user->desa;            
             return Response()->json([
                                         'status'=>1,
                                         'pid'=>'fetchdata',
-                                        'daftar_prodi'=>$prodi,                
-                                        'message'=>"Daftar Prodi dari username ($username)  berhasil diperoleh"
+                                        'daftar_desa'=>$desa,                
+                                        'message'=>"Daftar Desa dari username ($username)  berhasil diperoleh"
                                     ],200); 
         }
     }

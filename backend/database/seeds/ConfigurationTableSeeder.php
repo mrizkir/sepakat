@@ -59,7 +59,43 @@ class ConfigurationTableSeeder extends Seeder
             'created_at'=>Carbon::now(),
             'updated_at'=>Carbon::now()
         ]);
-   
+        
+        \DB::table('configuration')->insert([
+            'config_id'=>"301",
+            'config_group'=>'wilayah',
+            'config_key'=>'DEFAULT_PROVINSI',
+            'config_value'=>21,
+            'created_at'=>Carbon::now(),
+            'updated_at'=>Carbon::now()
+        ]);  
+        
+        \DB::table('configuration')->insert([
+            'config_id'=>"302",
+            'config_group'=>'wilayah',
+            'config_key'=>'DEFAULT_KABUPATEN',
+            'config_value'=>2102,
+            'created_at'=>Carbon::now(),
+            'updated_at'=>Carbon::now()
+        ]);  
+
+        \DB::table('configuration')->insert([
+            'config_id'=>"303",
+            'config_group'=>'wilayah',
+            'config_key'=>'DEFAULT_KECAMATAN',
+            'config_value'=>null,
+            'created_at'=>Carbon::now(),
+            'updated_at'=>Carbon::now()
+        ]);  
+
+        \DB::table('configuration')->insert([
+            'config_id'=>"304",
+            'config_group'=>'wilayah',
+            'config_key'=>'DEFAULT_DESA',
+            'config_value'=>null,
+            'created_at'=>Carbon::now(),
+            'updated_at'=>Carbon::now()
+        ]);  
+
         \DB::table('pe3_configuration')->insert([
             'config_id'=>"901",
             'config_group'=>'server',

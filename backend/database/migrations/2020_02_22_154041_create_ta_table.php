@@ -14,7 +14,7 @@ class CreateTaTable extends Migration
     public function up()
     {   
         Schema::defaultStringLength(191);
-        Schema::create('pe3_ta', function (Blueprint $table) {
+        Schema::create('ta', function (Blueprint $table) {
             $table->year('tahun')->primary();            
             $table->string('tahun_akademik')->unique();            
         });
@@ -27,6 +27,6 @@ class CreateTaTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('pe3_ta');
+        Schema::dropIfExists('ta');
     }
 }
