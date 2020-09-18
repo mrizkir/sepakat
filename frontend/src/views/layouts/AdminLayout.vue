@@ -1,6 +1,6 @@
 <template>
     <div>
-        <v-system-bar app dark class="green lighten-2 white--text">
+        <v-system-bar app dark class="yellow">
             
 		</v-system-bar>	
         <v-app-bar app>
@@ -60,7 +60,7 @@
                 <v-icon>mdi-menu-open</v-icon>
 			</v-app-bar-nav-icon>            
         </v-app-bar>    
-        <v-navigation-drawer v-model="drawer" width="300" dark class="green darken-1" :temporary="isReportPage" app>
+        <v-navigation-drawer v-model="drawer" width="300" dark class="indigo darken-4" :temporary="isReportPage" app>
 			<v-list-item>
 				<v-list-item-avatar>
 					<v-img :src="photoUser" @click.stop="toProfile"></v-img>
@@ -85,9 +85,9 @@
                     </v-list-item-content>
                 </v-list-item>      
                 <v-subheader>DATA MASTER</v-subheader>             
-                <v-list-item link to="/dmaster/jeniskegiatan" v-if="CAN_ACCESS('SYSTEM-USERS-DOSEN-WALI_BROWSE')">
+                <v-list-item link active-class="yellow darken-4" to="/dmaster/jeniskegiatan" v-if="CAN_ACCESS('SYSTEM-USERS-DOSEN-WALI_BROWSE')">
                     <v-list-item-icon class="mr-2">
-                        <v-icon>mdi-format-list-bulleted</v-icon>
+                        <v-icon>mdi-format-list-bulleted-triangle</v-icon>
                     </v-list-item-icon>
                     <v-list-item-content>
                         <v-list-item-title>

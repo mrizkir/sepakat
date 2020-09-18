@@ -10,7 +10,7 @@ class TAModel extends Model {
      *
      * @var string
      */
-    protected $table = 'pe3_ta';
+    protected $table = 'ta';
     /**
      * primary key tabel ini.
      *
@@ -23,7 +23,7 @@ class TAModel extends Model {
      * @var array
      */
     protected $fillable = [
-        'tahun', 'tahun_akademik'
+        'tahun', 'tahun_data'
     ];
     /**
      * enable auto_increment.

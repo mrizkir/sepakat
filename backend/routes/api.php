@@ -20,32 +20,10 @@ $router->group(['prefix'=>'v1'], function () use ($router)
     $router->get('/datamaster/kecamatan/{id}/desa',['uses'=>'DMaster\KecamatanController@desa','as'=>'kecamatan.desa']);
 
     //dmaster - tahun akademik
-    $router->get('/datamaster/tahunakademik',['uses'=>'DMaster\TahunAkademikController@index','as'=>'tahunakademik.index']);
-
-    //data master - persyaratan
-    $router->post('/datamaster/persyaratan',['uses'=>'DMaster\PersyaratanController@index','as'=>'persyaratan.index']);
-    $router->post('/datamaster/persyaratan/{id}/proses',['uses'=>'DMaster\PersyaratanController@proses','as'=>'persyaratan.proses']);
-
-    //data master - fakultas
-    $router->get('/datamaster/fakultas',['uses'=>'DMaster\FakultasController@index','as'=>'fakultas.index']);
-    $router->get('/datamaster/fakultas/{id}/programstudi',['uses'=>'DMaster\FakultasController@programstudi','as'=>'fakultas.programstudi']);
-
-    //data master - program studi
-    $router->get('/datamaster/programstudi',['uses'=>'DMaster\ProgramStudiController@index','as'=>'programstudi.index']);
-    $router->get('/datamaster/programstudi/jenjangstudi',['uses'=>'DMaster\ProgramStudiController@jenjangstudi','as'=>'programstudi.jenjangstudi']);
-
-    //data master - kelas
-    $router->get('/datamaster/kelas',['uses'=>'DMaster\JenisKegiatanController@index','as'=>'kelas.index']);
-
-    //pendaftaran mahasiswa baru
-    $router->post('/spmb/pmb/store',['uses'=>'SPMB\PMBController@store','as'=>'pmb.store']);
-    $router->post('/spmb/pmb/konfirmasi',['uses'=>'SPMB\PMBController@konfirmasi','as'=>'pmb.konfirmasi']);
-
-    //keuangan - channel pembayaran
-    $router->get('/keuangan/channelpembayaran',['uses'=>'Keuangan\ChannelPembayaranController@index','as'=>'channelpembayaran.index']);
-
-    //akademik - matakuliah
-    $router->post('/akademik/matakuliah/',['uses'=>'Akademik\MatakuliahController@index','as'=>'matakuliah.index']);
+    $router->get('/datamaster/tahundata',['uses'=>'DMaster\TahunDataController@index','as'=>'tahundata.index']);
+    
+    //dmaster - jenis kegiatan
+    $router->get('/datamaster/jeniskegiatan',['uses'=>'DMaster\JenisKegiatanController@index','as'=>'jeniskegiatan.index']);
 
     //untuk uifront
     $router->get('/system/setting/uifront',['uses'=>'System\UIController@frontend','as'=>'uifront.frontend']);

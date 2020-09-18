@@ -13,11 +13,11 @@ class TATableSeeder extends Seeder
      */
     public function run()
     {
-        \DB::statement('DELETE FROM pe3_ta');
+        \DB::statement('DELETE FROM ta');
         
-        \DB::table('pe3_ta')->insert([
+        \DB::table('ta')->insert([
             'tahun'=>date('Y'),
-            'tahun_akademik'=>date('Y').'/'.(date('Y')+1),            
+            'tahun_data'=>date('Y').'/'.(date('Y')+1),            
         ]);        
 
     }

@@ -16,7 +16,7 @@ class CreateTaTable extends Migration
         Schema::defaultStringLength(191);
         Schema::create('ta', function (Blueprint $table) {
             $table->year('tahun')->primary();            
-            $table->string('tahun_akademik')->unique();            
+            $table->string('tahun_data')->unique();            
         });
     }
 
