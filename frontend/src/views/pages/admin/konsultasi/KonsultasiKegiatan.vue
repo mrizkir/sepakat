@@ -1,0 +1,215 @@
+<template>
+    <AdminLayout>
+        <ModuleHeader>
+            <template v-slot:icon>
+                mdi-calendar-blank-multiple
+            </template>
+            <template v-slot:name>
+                KONSULTASI KEGIATAN
+            </template>
+            <template v-slot:breadcrumbs>
+                <v-breadcrumbs :items="breadcrumbs" class="pa-0">
+                    <template v-slot:divider>
+                        <v-icon>mdi-chevron-right</v-icon>
+                    </template>
+                </v-breadcrumbs>
+            </template>
+            <template v-slot:desc>
+                <v-alert                                        
+                    color="cyan"
+                    border="left"                    
+                    colored-border
+                    type="info"
+                    >
+                    Halaman ini berisi daftar kegiatan konsultasi hukum paralegal
+                </v-alert>
+            </template>
+        </ModuleHeader>   
+        <v-container>   
+            <v-row class="mb-4" no-gutters>
+                <v-col cols="12">
+                    <v-card>
+                        <v-card-text>
+                            <v-text-field
+                                v-model="search"
+                                append-icon="mdi-database-search"
+                                label="Search"
+                                single-line
+                                hide-details
+                            ></v-text-field>
+                        </v-card-text>
+                    </v-card>
+                </v-col>
+            </v-row>
+            <v-row class="mb-4" no-gutters>
+                <v-col cols="12">
+                    <v-data-table
+                        :headers="headers"
+                        :items="datatable"
+                        :search="search"
+                        item-key="id"
+                        sort-by="name"
+                        show-expand
+                        :expanded.sync="expanded"
+                        :single-expand="true"
+                        @click:row="dataTableRowClicked"
+                        class="elevation-1"
+                        :loading="datatableLoading"
+                        loading-text="Loading... Please wait">
+
+                        <template v-slot:top>
+                            <v-toolbar flat color="white">
+                                <v-toolbar-title>DAFTAR KEGIATAN</v-toolbar-title>
+                                <v-divider
+                                    class="mx-4"
+                                    inset
+                                    vertical
+                                ></v-divider>
+                                <v-spacer></v-spacer>
+                                <v-btn color="primary" dark class="mb-2" to="/konsultasi/kegiatan/tambah">TAMBAH</v-btn>
+                            </v-toolbar>
+                        </template>
+                        <template v-slot:item.id="{ item }">    
+                           {{item.id}}
+                        </template>
+                        <template v-slot:item.actions="{ item }">
+                            <v-icon
+                                small
+                                class="mr-2"
+                                @click.stop="viewItem(item)">
+                                mdi-eye
+                            </v-icon>                      
+                            <v-icon
+                                small
+                                :loading="btnLoading"
+                                :disabled="btnLoading"
+                                @click.stop="deleteItem(item)">
+                                mdi-delete
+                            </v-icon>
+                        </template>
+                        <template v-slot:expanded-item="{ headers, item }">
+                            <td :colspan="headers.length" class="text-center">
+                                <v-col cols="12">
+                                    <strong>ID:</strong>{{ item.id }}
+                                    <strong>created_at:</strong>{{ $date(item.created_at).format('DD/MM/YYYY HH:mm') }}
+                                    <strong>updated_at:</strong>{{ $date(item.updated_at).format('DD/MM/YYYY HH:mm') }}
+                                </v-col>                                
+                            </td>
+                        </template>
+                        <template v-slot:no-data>
+                            Data belum tersedia
+                        </template>
+                    </v-data-table>
+                </v-col>
+            </v-row>
+        </v-container>
+    </AdminLayout>
+</template>
+<script>
+import AdminLayout from '@/views/layouts/AdminLayout';
+import ModuleHeader from '@/components/ModuleHeader';
+export default {
+    name:'KonsultasiKegiatan',
+    created () {
+        this.breadcrumbs = [
+            {
+                text:'HOME',
+                disabled:false,
+                href:'/dashboard/'+this.$store.getters['auth/AccessToken']
+            },
+            {
+                text:'KONSULTASI',
+                disabled:false,
+                href:'#'
+            },
+            {
+                text:'KEGIATAN',
+                disabled:true,
+                href:'#'
+            }
+        ];
+        this.initialize()
+    },  
+    data: () => ({ 
+        btnLoading:false,
+        datatableLoading:false,
+        expanded:[],
+        datatable:[],
+        headers: [                        
+            { text: 'PEMOHON', value: 'pemohon' },   
+            { text: 'NAMA KEGIATAN', value: 'nama_kegiatan' },   
+            { text: 'NAMA JENIS', value: 'nama_jenis' },   
+            { text: 'AKSI', value: 'actions', sortable: false,width:100 },
+        ],
+        search:'', 
+
+    }),
+    methods: {
+        initialize:async function () 
+        {
+            this.datatableLoading=true;
+            await this.$ajax.get('/konsultasi/kegiatan',{
+                headers: {
+                    Authorization:this.$store.getters['auth/Token']
+                }
+            }).then(({data})=>{               
+                this.datatable = data.daftar_kegiatan;
+                this.datatableLoading=false;
+            }).catch(()=>{
+                this.datatableLoading=false;
+            });  
+        },
+        dataTableRowClicked(item)
+        {
+            if ( item === this.expanded[0])
+            {
+                this.expanded=[];                
+            }
+            else
+            {
+                this.expanded=[item];
+            }               
+        },
+        viewItem (item) {
+            this.formdata=item;      
+            this.dialogdetailitem=true;              
+            // this.$ajax.get('/konsultasi/kegiatan/'+item.id,{
+            //     headers: {
+            //         Authorization:this.$store.getters['auth/Token']
+            //     }
+            // }).then(({data})=>{               
+                                           
+            // });                      
+        },            
+        deleteItem (item) {           
+            this.$root.$confirm.open('Delete', 'Apakah Anda ingin menghapus data dengan ID '+item.id+' ?', { color: 'red' }).then((confirm) => {
+                if (confirm)
+                {
+                    this.btnLoading=true;
+                    this.$ajax.post('/konsultasi/kegiatan/'+item.id,
+                        {
+                            '_method':'DELETE',
+                        },
+                        {
+                            headers:{
+                                Authorization:this.$store.getters['auth/Token']
+                            }
+                        }
+                    ).then(()=>{   
+                        const index = this.datatable.indexOf(item);
+                        this.datatable.splice(index, 1);
+                        this.btnLoading=false;
+                    }).catch(()=>{
+                        this.btnLoading=false;
+                    });
+                }                
+            });
+        },        
+    },  
+    components:{
+        AdminLayout,
+        ModuleHeader,        
+    },
+
+}
+</script>

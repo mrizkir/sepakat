@@ -96,9 +96,9 @@
                     </v-list-item-content>
                 </v-list-item>               
                 <v-subheader>KONSULTASI</v-subheader>
-                <v-list-item link to="/konsultasi/kegiatan" v-if="CAN_ACCESS('AKADEMIK-DULANG-BARU_BROWSE')">
+                <v-list-item link to="/konsultasi/kegiatan" v-if="CAN_ACCESS('KONSULTASI-KEGIATAN_BROWSE')">
                     <v-list-item-icon class="mr-2">
-                        <v-icon>mdi-clipboard-list-outline</v-icon>
+                        <v-icon>mdi-calendar-blank-multiple</v-icon>
                     </v-list-item-icon>
                     <v-list-item-content>
                         <v-list-item-title>

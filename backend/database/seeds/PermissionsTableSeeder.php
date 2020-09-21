@@ -30,6 +30,28 @@ class PermissionsTableSeeder extends Seeder
             'created_at'=>Carbon::now(),
             'updated_at'=>Carbon::now()
         ]);       
+
+        //konsultasi
+        \DB::table('permissions')->insert([
+            'name'=>"KONSULTASI-GROUP",
+            'guard_name'=>'api',
+            'created_at'=>Carbon::now(),
+            'updated_at'=>Carbon::now()
+        ]);       
+        
+        //laporan
+        \DB::table('permissions')->insert([
+            'name'=>"REPORT-GROUP",
+            'guard_name'=>'api',
+            'created_at'=>Carbon::now(),
+            'updated_at'=>Carbon::now()
+        ]);       
+        \DB::table('permissions')->insert([
+            'name'=>"REPORT-KEGIATAN_BROWSE",
+            'guard_name'=>'api',
+            'created_at'=>Carbon::now(),
+            'updated_at'=>Carbon::now()
+        ]);       
         
         //system
         \DB::table('permissions')->insert([
@@ -50,6 +72,8 @@ class PermissionsTableSeeder extends Seeder
             'DMASTER-TA',     
             'DMASTER-JENIS-KEGIATAN',                 
             
+            'KONSULTASI-KEGIATAN',  
+
             'SYSTEM-SETTING-PERMISSIONS',
             'SYSTEM-SETTING-ROLES',
             'SYSTEM-SETTING-IDENTITAS-DIRI',

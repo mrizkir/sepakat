@@ -40,15 +40,21 @@ $router->group(['prefix'=>'v1','middleware'=>'auth:api'], function () use ($rout
 
     // dashboard
     $router->post('/dashboard/pmb',['middleware'=>['role:superadmin|pmb'],'uses'=>'SPMB\SPMBController@index','as'=>'dashboardspmb.index']);
-    $router->post('/dashboard/keuangan',['middleware'=>['role:superadmin|keuangan'],'uses'=>'Keuangan\KeuanganController@index','as'=>'dashboardkeuangan.index']);
+    $router->post('/dashboard/keuangan',['middleware'=>['role:superadmin'],'uses'=>'Keuangan\KeuanganController@index','as'=>'dashboardkeuangan.index']);
 
     //data master - kelas
     $router->post('/datamaster/kelas/store',['middleware'=>['role:superadmin'],'uses'=>'DMaster\JenisKegiatanController@store','as'=>'kelas.store']);
     $router->put('/datamaster/kelas/{id}',['middleware'=>['role:superadmin'],'uses'=>'DMaster\JenisKegiatanController@update','as'=>'kelas.update']);
     $router->delete('/datamaster/kelas/{id}',['middleware'=>['role:superadmin'],'uses'=>'DMaster\JenisKegiatanController@destroy','as'=>'`kelas`.destroy']);
 
+    //konsultasi - kegiatan
+    $router->get('/konsultasi/kegiatan',['middleware'=>['role:superadmin'],'uses'=>'Konsultasi\KonsultasiKegiatanController@index','as'=>'konsultasikegiatan.index']);
+    $router->post('/konsultasi/kegiatan/store',['middleware'=>['role:superadmin'],'uses'=>'Konsultasi\KonsultasiKegiatanController@store','as'=>'konsultasikegiatan.store']);
+    $router->put('/konsultasi/kegiatan/{id}',['middleware'=>['role:superadmin'],'uses'=>'Konsultasi\KonsultasiKegiatanController@update','as'=>'konsultasikegiatan.update']);
+    $router->delete('/konsultasi/kegiatan/{id}',['middleware'=>['role:superadmin'],'uses'=>'Konsultasi\KonsultasiKegiatanController@destroy','as'=>'konsultasikegiatan.destroy']);
+
     //setting - permissions
-    $router->get('/system/setting/permissions',['middleware'=>['role:superadmin|akademik|pmb'],'uses'=>'System\PermissionsController@index','as'=>'permissions.index']);
+    $router->get('/system/setting/permissions',['middleware'=>['role:superadmin'],'uses'=>'System\PermissionsController@index','as'=>'permissions.index']);
     $router->post('/system/setting/permissions/store',['middleware'=>['role:superadmin'],'uses'=>'System\PermissionsController@store','as'=>'permissions.store']);
     $router->delete('/system/setting/permissions/{id}',['middleware'=>['role:superadmin'],'uses'=>'System\PermissionsController@destroy','as'=>'permissions.destroy']);
 
@@ -85,9 +91,9 @@ $router->group(['prefix'=>'v1','middleware'=>'auth:api'], function () use ($rout
 
     //setting - users legal
     $router->get('/system/userslegal',['middleware'=>['role:superadmin|keuangna'],'uses'=>'System\UsersLegalController@index','as'=>'userslegal.index']);
-    $router->post('/system/userslegal/store',['middleware'=>['role:superadmin|keuangan'],'uses'=>'System\UsersLegalController@store','as'=>'userslegal.store']);
-    $router->put('/system/userslegal/{id}',['middleware'=>['role:superadmin|keuangan'],'uses'=>'System\UsersLegalController@update','as'=>'userslegal.update']);
-    $router->delete('/system/userslegal/{id}',['middleware'=>['role:superadmin|keuangan'],'uses'=>'System\UsersLegalController@destroy','as'=>'userslegal.destroy']);
+    $router->post('/system/userslegal/store',['middleware'=>['role:superadmin'],'uses'=>'System\UsersLegalController@store','as'=>'userslegal.store']);
+    $router->put('/system/userslegal/{id}',['middleware'=>['role:superadmin'],'uses'=>'System\UsersLegalController@update','as'=>'userslegal.update']);
+    $router->delete('/system/userslegal/{id}',['middleware'=>['role:superadmin'],'uses'=>'System\UsersLegalController@destroy','as'=>'userslegal.destroy']);
 
     //setting - users kades
     $router->get('/system/userskades',['middleware'=>['role:superadmin|akademik'],'uses'=>'System\UsersKadesController@index','as'=>'userskades.index']);

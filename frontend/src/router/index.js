@@ -49,6 +49,24 @@ const routes = [
         },
 		component: () => import('../views/pages/admin/konsultasi/KonsultasiKegiatan.vue'),		
 	},
+	{
+		path: '/konsultasi/kegiatan/tambah',
+		name: 'KonsultasiKegiatanTambah',
+		meta:{
+			title: "KONSULTASI - KEGIATAN",
+			requiresAuth:true,
+        },
+		component: () => import('../views/pages/admin/konsultasi/KonsultasiKegiatanTambah.vue'),		
+	},
+	{
+		path: '/konsultasi/kegiatan',
+		name: 'KonsultasiKegiatan',
+		meta:{
+			title: "KONSULTASI - KEGIATAN",
+			requiresAuth:true,
+        },
+		component: () => import('../views/pages/admin/konsultasi/KonsultasiKegiatan.vue'),		
+	},
 	
 	//laporan	
 	{
