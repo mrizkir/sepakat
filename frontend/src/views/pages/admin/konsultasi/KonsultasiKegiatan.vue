@@ -73,19 +73,32 @@
                            {{item.id}}
                         </template>
                         <template v-slot:item.actions="{ item }">
-                            <v-icon
+                            <v-btn
                                 small
-                                class="mr-2"
-                                @click.stop="viewItem(item)">
-                                mdi-eye
-                            </v-icon>                      
-                            <v-icon
+                                icon
+                                @click.stop="$router.push('/konsultasi/kegiatan/'+item.kegiatan_id+'/detail')">
+                                <v-icon>
+                                    mdi-eye
+                                </v-icon>
+                            </v-btn>                               
+                            <v-btn
+                                small      
+                                icon                          
+                                :to="{path:'/konsultasi/kegiatan/'+item.kegiatan_id+'/ubah'}">
+                                <v-icon>
+                                    mdi-pencil
+                                </v-icon>
+                            </v-btn>                                               
+                            <v-btn
                                 small
+                                icon
                                 :loading="btnLoading"
                                 :disabled="btnLoading"
                                 @click.stop="deleteItem(item)">
-                                mdi-delete
-                            </v-icon>
+                                <v-icon>
+                                    mdi-delete
+                                </v-icon>
+                            </v-btn>  
                         </template>
                         <template v-slot:expanded-item="{ headers, item }">
                             <td :colspan="headers.length" class="text-center">
@@ -139,7 +152,7 @@ export default {
             { text: 'PEMOHON', value: 'pemohon' },   
             { text: 'NAMA KEGIATAN', value: 'nama_kegiatan' },   
             { text: 'NAMA JENIS', value: 'nama_jenis' },   
-            { text: 'AKSI', value: 'actions', sortable: false,width:100 },
+            { text: 'AKSI', value: 'actions', sortable: false,width:150 },
         ],
         search:'', 
 

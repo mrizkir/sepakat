@@ -59,6 +59,15 @@ const routes = [
 		component: () => import('../views/pages/admin/konsultasi/KonsultasiKegiatanTambah.vue'),		
 	},
 	{
+		path: '/konsultasi/kegiatan/:kegiatan_id/ubah',
+		name: 'KonsultasiKegiatanUbah',
+		meta:{
+			title: "KONSULTASI - KEGIATAN",
+			requiresAuth:true,
+        },
+		component: () => import('../views/pages/admin/konsultasi/KonsultasiKegiatanUbah.vue'),		
+	},
+	{
 		path: '/konsultasi/kegiatan/:kegiatan_id/files',
 		name: 'KonsultasiKegiatanFiles',
 		meta:{

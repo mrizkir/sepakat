@@ -48,10 +48,11 @@ $router->group(['prefix'=>'v1','middleware'=>'auth:api'], function () use ($rout
     $router->delete('/datamaster/kelas/{id}',['middleware'=>['role:superadmin'],'uses'=>'DMaster\JenisKegiatanController@destroy','as'=>'`kelas`.destroy']);
 
     //konsultasi - kegiatan
-    $router->get('/konsultasi/kegiatan',['middleware'=>['role:superadmin'],'uses'=>'Konsultasi\KonsultasiKegiatanController@index','as'=>'konsultasikegiatan.index']);
-    $router->post('/konsultasi/kegiatan/store',['middleware'=>['role:superadmin'],'uses'=>'Konsultasi\KonsultasiKegiatanController@store','as'=>'konsultasikegiatan.store']);
-    $router->put('/konsultasi/kegiatan/{id}',['middleware'=>['role:superadmin'],'uses'=>'Konsultasi\KonsultasiKegiatanController@update','as'=>'konsultasikegiatan.update']);
-    $router->delete('/konsultasi/kegiatan/{id}',['middleware'=>['role:superadmin'],'uses'=>'Konsultasi\KonsultasiKegiatanController@destroy','as'=>'konsultasikegiatan.destroy']);
+    $router->get('/konsultasi/kegiatan',['middleware'=>['role:superadmin|paralegal'],'uses'=>'Konsultasi\KonsultasiKegiatanController@index','as'=>'konsultasikegiatan.index']);
+    $router->post('/konsultasi/kegiatan/store',['middleware'=>['role:superadmin|paralegal'],'uses'=>'Konsultasi\KonsultasiKegiatanController@store','as'=>'konsultasikegiatan.store']);
+    $router->get('/konsultasi/kegiatan/{id}',['middleware'=>['role:superadmin|paralegal'],'uses'=>'Konsultasi\KonsultasiKegiatanController@show','as'=>'konsultasikegiatan.show']);
+    $router->put('/konsultasi/kegiatan/{id}',['middleware'=>['role:superadmin|paralegal'],'uses'=>'Konsultasi\KonsultasiKegiatanController@update','as'=>'konsultasikegiatan.update']);
+    $router->delete('/konsultasi/kegiatan/{id}',['middleware'=>['role:superadmin|paralegal'],'uses'=>'Konsultasi\KonsultasiKegiatanController@destroy','as'=>'konsultasikegiatan.destroy']);
 
     //setting - permissions
     $router->get('/system/setting/permissions',['middleware'=>['role:superadmin'],'uses'=>'System\PermissionsController@index','as'=>'permissions.index']);

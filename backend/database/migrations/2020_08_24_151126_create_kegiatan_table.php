@@ -16,7 +16,7 @@ class CreateKegiatanTable extends Migration
         Schema::create('kegiatan', function (Blueprint $table) {
             $table->uuid('kegiatan_id')->primary();
             $table->uuid('user_id');
-            $table->date('tanggal');
+            $table->datetime('tanggal');
             $table->string('tempat');
             $table->tinyInteger('id_jenis_kegiatan');
             $table->string('nama_jenis');

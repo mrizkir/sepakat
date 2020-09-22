@@ -25,13 +25,13 @@
                 </v-alert>
             </template>
         </ModuleHeader>   
-        <v-form ref="frmdata" v-model="form_valid" lazy-validation>
+        <v-form ref="frmdata" v-model="form_valid" lazy-validation  v-if="Object.keys(datakegiatan).length">
             <v-container fluid>               
                 <v-row>  
                     <v-col cols="12"> 
                         <v-card>
                             <v-card-title>
-                                <span class="headline">TAMBAH KEGIATAN</span>
+                                <span class="headline">UBAH KEGIATAN</span>
                             </v-card-title>
                             <v-card-text>
                                 <v-select
@@ -164,8 +164,9 @@
 import AdminLayout from '@/views/layouts/AdminLayout';
 import ModuleHeader from '@/components/ModuleHeader';
 export default {
-    name:'KonsultasiKegiatanTambah',
+    name:'KonsultasiKegiatanUbah',
     created () {
+        this.kegiatan_id=this.$route.params.kegiatan_id;
         this.breadcrumbs = [
             {
                 text:'HOME',
@@ -183,7 +184,7 @@ export default {
                 href:'/konsultasi/kegiatan'
             },
             {
-                text:'TAMBAH',
+                text:'UBAH',
                 disabled:true,
                 href:'#'
             }
@@ -191,6 +192,9 @@ export default {
         this.initialize()
     },  
     data: () => ({ 
+        kegiatan_id:null,
+        datakegiatan:{},
+
         btnLoading:false,
         form_valid:true, 
         daftar_paralegal:[],       
@@ -248,6 +252,7 @@ export default {
     methods: {
         initialize:async function () 
         {
+
             await this.$ajax.get('/datamaster/jeniskegiatan',{
                 headers: {
                     Authorization:this.$store.getters['auth/Token']
@@ -262,13 +267,33 @@ export default {
             }).then(({data})=>{               
                 this.daftar_paralegal = data.users;                
             });          
+            await this.$ajax.get('/konsultasi/kegiatan/'+this.kegiatan_id,{
+                headers: {
+                    Authorization:this.$store.getters['auth/Token']
+                }
+            }).then(({data})=>{               
+                this.datakegiatan = data.kegiatan;                
+                this.formdata.user_id=this.datakegiatan.user_id;
+                this.formdata.tanggal_konsultasi=this.$date(this.datakegiatan.tanggal).format('YYYY-MM-DD');
+                this.formdata.jam_konsultasi=this.$date(this.datakegiatan.tanggal).format('HH:mm');
+                this.formdata.tempat=this.datakegiatan.tempat;
+                this.formdata.id_jenis_kegiatan={
+                    id_jenis:this.datakegiatan.id_jenis_kegiatan,
+                    nama_jenis:this.datakegiatan.nama_jenis,
+                };                
+                this.formdata.nama_kegiatan=this.datakegiatan.nama_kegiatan;
+                this.formdata.pemohon=this.datakegiatan.pemohon;                        
+                this.formdata.uraian_kegiatan=this.datakegiatan.pemohon;
+                this.formdata.rekomendasi_kegiatan=this.datakegiatan.rekomendasi_kegiatan;                                                
+            });          
         },
         save:async function () {
             if (this.$refs.frmdata.validate())
             {
                 this.btnLoading=true;                
-                await this.$ajax.post('/konsultasi/kegiatan/store',
+                await this.$ajax.post('/konsultasi/kegiatan/'+this.kegiatan_id,
                     {
+                        _method:'put',
                         user_id:this.formdata.user_id,
                         tanggal_konsultasi:this.formdata.tanggal_konsultasi,
                         jam_konsultasi:this.formdata.jam_konsultasi,
@@ -289,7 +314,7 @@ export default {
                     this.btnLoading=false;               
                     setTimeout(() => {
                         this.formdata = Object.assign({}, this.formdefault);                                
-                        this.$router.push('/konsultasi/kegiatan/'+data.kegiatan.kegiatan_id+'/files')
+                        this.$router.push('/konsultasi/kegiatan/'+data.kegiatan.kegiatan_id+'/detail')
                         }, 300
                     );
                 }).catch(()=>{

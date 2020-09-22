@@ -31,6 +31,39 @@ class KonsultasikegiatanController extends Controller
                                     'message'=>'Fetch data daftar kegiatan berhasil diperoleh.'
                                 ],200);
     }
+    public function show(Request $request,$id)
+    {
+        $this->hasAnyPermission('KONSULTASI-KEGIATAN_SHOW');
+
+        if ($this->hasRole('paralegal'))
+        {
+            $kegiatan = KonsultasiKegiatanModel::where('user_id',$this->getUserid())
+                                            ->find($id);
+        }
+        else
+        {
+            $kegiatan = KonsultasiKegiatanModel::find($id);
+        }
+        
+
+        if (is_null($kegiatan))
+        {
+            return Response()->json([
+                                    'status'=>1,
+                                    'pid'=>'fetchdata',
+                                    'message'=>["kegiatan konsultasi dengan ID ($id) gagal diperoleh"]
+                                ],422);
+        }
+        else
+        {            
+            return Response()->json([
+                                        'status'=>1,
+                                        'pid'=>'fetchdata',
+                                        'kegiatan'=>$kegiatan,
+                                        'message'=>"Kegiatan Konsultasi berhasil diperoleh"
+                                    ],200);
+        }
+    }
     public function store(Request $request)
     {
         $this->hasAnyPermission('KONSULTASI-KEGIATAN_STORE');
@@ -69,6 +102,67 @@ class KonsultasikegiatanController extends Controller
                                     'kegiatan'=>$kegiatan,
                                     'message'=>'Data pasien covid19 baru berhasil disimpan.'
                                 ],200);
+    }
+    
+    public function update(Request $request,$id)
+    {
+        $this->hasAnyPermission('KONSULTASI-KEGIATAN_UPDATE');
+
+        if ($this->hasRole('paralegal'))
+        {
+            $kegiatan = KonsultasiKegiatanModel::where('user_id',$this->getUserid())
+                                            ->find($id);
+        }
+        else
+        {
+            $kegiatan = KonsultasiKegiatanModel::find($id);
+        }
+        
+
+        if (is_null($kegiatan))
+        {
+            return Response()->json([
+                                    'status'=>1,
+                                    'pid'=>'fetchdata',
+                                    'message'=>["kegiatan konsultasi dengan ID ($id) gagal diperoleh"]
+                                ],422);
+        }
+        else
+        {            
+            $this->validate($request, [
+                'id_jenis'=>'required|exists:jenis_kegiatan,id_jenis',
+                'nama_jenis'=>'required',
+                'user_id'=>'required|exists:users,id',
+                'nama_kegiatan'=>'required',
+                'uraian_kegiatan'=>'required',
+                'tanggal_konsultasi'=>'required',
+                'jam_konsultasi'=>'required',
+                'tempat'=>'required',
+                'pemohon'=>'required',
+                'rekomendasi_kegiatan'=>'required',            
+            ]);
+
+            $tanggal_konsultasi=$request->input('tanggal_konsultasi') . ' '.$request->input('jam_konsultasi');
+            $kegiatan->user_id=$request->input('user_id');             
+            $kegiatan->tanggal=$tanggal_konsultasi;               
+            $kegiatan->tempat=$request->input('tempat');                
+            $kegiatan->id_jenis_kegiatan=$request->input('id_jenis');                
+            $kegiatan->nama_jenis=$request->input('nama_jenis');                
+            $kegiatan->nama_kegiatan=$request->input('nama_kegiatan');                
+            $kegiatan->pemohon=$request->input('pemohon');                
+            $kegiatan->uraian_kegiatan=$request->input('uraian_kegiatan');                
+            $kegiatan->rekomendasi_kegiatan=$request->input('rekomendasi_kegiatan');
+            
+            $kegiatan->save();
+            
+
+            return Response()->json([
+                                        'status'=>1,
+                                        'pid'=>'update',
+                                        'kegiatan'=>$kegiatan,
+                                        'message'=>"Update Kegiatan Konsultasi berhasil diperoleh"
+                                    ],200);
+        }
     }
     /**
      * Menghapus calon mahasiwa baru
@@ -120,4 +214,6 @@ class KonsultasikegiatanController extends Controller
         }
 
     }
+
+    
 }
