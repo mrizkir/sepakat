@@ -59,13 +59,22 @@ const routes = [
 		component: () => import('../views/pages/admin/konsultasi/KonsultasiKegiatanTambah.vue'),		
 	},
 	{
-		path: '/konsultasi/kegiatan',
-		name: 'KonsultasiKegiatan',
+		path: '/konsultasi/kegiatan/:kegiatan_id/files',
+		name: 'KonsultasiKegiatanFiles',
 		meta:{
 			title: "KONSULTASI - KEGIATAN",
 			requiresAuth:true,
         },
-		component: () => import('../views/pages/admin/konsultasi/KonsultasiKegiatan.vue'),		
+		component: () => import('../views/pages/admin/konsultasi/KonsultasiKegiatanFiles.vue'),		
+	},
+	{
+		path: '/konsultasi/kegiatan/:kegiatan_id/detail',
+		name: 'KonsultasiKegiatanDetail',
+		meta:{
+			title: "KONSULTASI - KEGIATAN",
+			requiresAuth:true,
+        },
+		component: () => import('../views/pages/admin/konsultasi/KonsultasiKegiatanDetail.vue'),		
 	},
 	
 	//laporan	
@@ -135,13 +144,13 @@ const routes = [
 		component: () => import('../views/pages/admin/system/UsersSuperadmin.vue'),		
 	},
 	{
-		path: '/system-users/legal',
-		name: 'UsersLegal',
+		path: '/system-users/paralegal',
+		name: 'UsersParaLegal',
 		meta:{
 			title: "USERS - LEGAL",
 			requiresAuth:true,
         },
-		component: () => import('../views/pages/admin/system/UsersLegal.vue'),		
+		component: () => import('../views/pages/admin/system/UsersParaLegal.vue'),		
 	},
 	{
 		path: '/system-users/pmb',

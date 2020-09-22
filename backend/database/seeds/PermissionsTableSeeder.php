@@ -81,7 +81,7 @@ class PermissionsTableSeeder extends Seeder
             'SYSTEM-USERS-SUPERADMIN',            
             'SYSTEM-USERS-KADES',
             'SYSTEM-USERS-KUMHAM',
-            'SYSTEM-USERS-LEGAL',
+            'SYSTEM-USERS-PARALEGAL',
             'SYSTEM-USERS-OBH',
             'SYSTEM-USERS-PMB',
         ];

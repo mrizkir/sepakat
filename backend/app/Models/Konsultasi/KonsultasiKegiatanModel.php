@@ -31,11 +31,11 @@ class KonsultasiKegiatanModel extends Model {
         'nama_jenis',
         'nama_kegiatan',        
         'pemohon',                    
-        'daftar_hadir',                    
-        'fotocopy_ktp',
+        'file_daftar_hadir',                    
+        'file_fotocopy_ktp',
         'uraian_kegiatan',
         'rekomendasi_kegiatan',
-        'dokumentasi_kegiatan',
+        'file_dokumentasi_kegiatan',
         'id_status',       
     ];
     /**

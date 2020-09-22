@@ -5,7 +5,7 @@
                 mdi-account
             </template>
             <template v-slot:name>
-                USERS LEGAL
+                USERS PARALEGAL
             </template>
             <template v-slot:breadcrumbs>
                 <v-breadcrumbs :items="breadcrumbs" class="pa-0">
@@ -311,7 +311,7 @@ import AdminLayout from '@/views/layouts/AdminLayout';
 import ModuleHeader from '@/components/ModuleHeader';
 import UserPermissions from '@/views/pages/admin/system/UserPermissions';
 export default {
-    name: 'UsersLegal',  
+    name: 'UsersParaLegal',  
     created () {
         this.breadcrumbs = [
             {
@@ -325,7 +325,7 @@ export default {
                 href:'/system-users'
             },
             {
-                text:'USERS LEGAL',
+                text:'USERS PARALEGAL',
                 disabled:true,
                 href:'#'
             }
@@ -373,7 +373,7 @@ export default {
             email: '',           
             nomor_hp:'',           
             desa_id:[], 
-            role_id:['legal'],                            
+            role_id:['paralegal'],                            
             created_at: '',           
             updated_at: '',   
         },
@@ -385,7 +385,7 @@ export default {
             email: '',           
             nomor_hp: '',  
             desa_id:[],  
-            role_id:['legal'],                                              
+            role_id:['paralegal'],                                              
             created_at: '',           
             updated_at: '',        
         },
@@ -446,7 +446,7 @@ export default {
         initialize:async function () 
         {
             this.datatableLoading=true;
-            await this.$ajax.get('/system/userslegal',{
+            await this.$ajax.get('/system/usersparalegal',{
                 headers: {
                     Authorization:this.TOKEN
                 }
@@ -473,7 +473,7 @@ export default {
             this.btnLoading=true;
             await this.$ajax.post('/system/users/syncallpermissions',
                 {
-                    role_name:'legal',                    
+                    role_name:'paralegal',                    
                 },
                 {
                     headers:{
@@ -500,7 +500,7 @@ export default {
                 let roles = data.roles;
                 var daftar_roles=[];
                 roles.forEach(element => {
-                    if (element.name=='legal')
+                    if (element.name=='paralegal')
                     {                        
                         daftar_roles.push({
                             text:element.name,
@@ -547,7 +547,7 @@ export default {
                 let roles = data.roles;
                 var daftar_roles=[];
                 roles.forEach(element => {
-                    if (element.name=='legal')
+                    if (element.name=='paralegal')
                     {                        
                         daftar_roles.push({
                             text:element.name,
@@ -619,7 +619,7 @@ export default {
                 this.btnLoading=true;
                 if (this.editedIndex > -1) 
                 {
-                    this.$ajax.post('/system/userslegal/'+this.editedItem.id,
+                    this.$ajax.post('/system/usersparalegal/'+this.editedItem.id,
                         {
                             '_method':'PUT',
                             name:this.editedItem.name,
@@ -643,7 +643,7 @@ export default {
                     });                    
                     
                 } else {
-                    this.$ajax.post('/system/userslegal/store',
+                    this.$ajax.post('/system/usersparalegal/store',
                         {
                             name:this.editedItem.name,
                             email:this.editedItem.email,
@@ -672,7 +672,7 @@ export default {
                 if (confirm)
                 {
                     this.btnLoading=true;
-                    this.$ajax.post('/system/userslegal/'+item.id,
+                    this.$ajax.post('/system/usersparalegal/'+item.id,
                         {
                             '_method':'DELETE',
                         },
@@ -718,7 +718,7 @@ export default {
                     this.daftar_desa=data.desa;
                     this.selectLoadingKec=false;
                 });
-                editedItem.desa_id=[];
+                this.editedItem.desa_id=[];
             }
         },  
     },    

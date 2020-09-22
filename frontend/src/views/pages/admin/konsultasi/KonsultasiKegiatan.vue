@@ -47,7 +47,7 @@
                         :headers="headers"
                         :items="datatable"
                         :search="search"
-                        item-key="id"
+                        item-key="kegiatan_id"
                         sort-by="name"
                         show-expand
                         :expanded.sync="expanded"
@@ -182,11 +182,11 @@ export default {
             // });                      
         },            
         deleteItem (item) {           
-            this.$root.$confirm.open('Delete', 'Apakah Anda ingin menghapus data dengan ID '+item.id+' ?', { color: 'red' }).then((confirm) => {
+            this.$root.$confirm.open('Delete', 'Apakah Anda ingin menghapus data konsultasi kegiatan dengan ID '+item.kegiatan_id+' ?', { color: 'red',width:600 }).then((confirm) => {
                 if (confirm)
                 {
                     this.btnLoading=true;
-                    this.$ajax.post('/konsultasi/kegiatan/'+item.id,
+                    this.$ajax.post('/konsultasi/kegiatan/'+item.kegiatan_id,
                         {
                             '_method':'DELETE',
                         },

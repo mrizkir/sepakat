@@ -22,11 +22,11 @@ class CreateKegiatanTable extends Migration
             $table->string('nama_jenis');
             $table->string('nama_kegiatan');
             $table->string('pemohon');
-            $table->string('daftar_hadir');
-            $table->string('fotocopy_ktp');
+            $table->string('file_daftar_hadir')->nullable();
+            $table->string('file_fotocopy_ktp')->nullable();
             $table->text('uraian_kegiatan');
             $table->text('rekomendasi_kegiatan');
-            $table->string('dokumentasi_kegiatan');
+            $table->string('file_dokumentasi_kegiatan')->nullable();
             $table->tinyInteger('id_status');
             $table->timestamps();
 

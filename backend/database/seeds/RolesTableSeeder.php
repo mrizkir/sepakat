@@ -24,7 +24,7 @@ class RolesTableSeeder extends Seeder
                 'updated_at'=>Carbon::now()
             ], 
             [
-                'name'=>'legal',
+                'name'=>'paralegal',
                 'guard_name'=>'api',
                 'created_at'=>Carbon::now(),
                 'updated_at'=>Carbon::now()

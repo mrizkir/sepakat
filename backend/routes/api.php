@@ -89,11 +89,11 @@ $router->group(['prefix'=>'v1','middleware'=>'auth:api'], function () use ($rout
     $router->get('/system/users/{id}/desa',['middleware'=>['role:superadmin'],'uses'=>'System\UsersController@usersdesa','as'=>'users.desa']);
     $router->get('/system/users/{id}/roles',['uses'=>'System\UsersController@roles','as'=>'users.roles']);
 
-    //setting - users legal
-    $router->get('/system/userslegal',['middleware'=>['role:superadmin|keuangna'],'uses'=>'System\UsersLegalController@index','as'=>'userslegal.index']);
-    $router->post('/system/userslegal/store',['middleware'=>['role:superadmin'],'uses'=>'System\UsersLegalController@store','as'=>'userslegal.store']);
-    $router->put('/system/userslegal/{id}',['middleware'=>['role:superadmin'],'uses'=>'System\UsersLegalController@update','as'=>'userslegal.update']);
-    $router->delete('/system/userslegal/{id}',['middleware'=>['role:superadmin'],'uses'=>'System\UsersLegalController@destroy','as'=>'userslegal.destroy']);
+    //setting - users paralegal
+    $router->get('/system/usersparalegal',['middleware'=>['role:superadmin|keuangna'],'uses'=>'System\UsersParaLegalController@index','as'=>'usersparalegal.index']);
+    $router->post('/system/usersparalegal/store',['middleware'=>['role:superadmin'],'uses'=>'System\UsersParaLegalController@store','as'=>'usersparalegal.store']);
+    $router->put('/system/usersparalegal/{id}',['middleware'=>['role:superadmin'],'uses'=>'System\UsersParaLegalController@update','as'=>'usersparalegal.update']);
+    $router->delete('/system/usersparalegal/{id}',['middleware'=>['role:superadmin'],'uses'=>'System\UsersParaLegalController@destroy','as'=>'usersparalegal.destroy']);
 
     //setting - users kades
     $router->get('/system/userskades',['middleware'=>['role:superadmin|akademik'],'uses'=>'System\UsersKadesController@index','as'=>'userskades.index']);

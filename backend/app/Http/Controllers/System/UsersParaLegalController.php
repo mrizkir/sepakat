@@ -11,7 +11,7 @@ use Spatie\Permission\Models\Role;
 use Ramsey\Uuid\Uuid;
 use Illuminate\Validation\Rule;
 
-class UsersLegalController extends Controller {         
+class UsersParaLegalController extends Controller {         
     /**
      * Show the form for creating a new resource.
      *
@@ -19,12 +19,12 @@ class UsersLegalController extends Controller {
      */
     public function index(Request $request)
     {           
-        $this->hasPermissionTo('SYSTEM-USERS-LEGAL_BROWSE');
-        $data = User::where('default_role','legal')
+        $this->hasPermissionTo('SYSTEM-USERS-PARALEGAL_BROWSE');
+        $data = User::where('default_role','paralegal')
                     ->orderBy('username','ASC')
                     ->get();       
                     
-        $role = Role::findByName('legal');
+        $role = Role::findByName('paralegal');
         return Response()->json([
                                 'status'=>1,
                                 'pid'=>'fetchdata',
@@ -41,7 +41,7 @@ class UsersLegalController extends Controller {
      */
     public function store(Request $request)
     {
-        $this->hasPermissionTo('SYSTEM-USERS-LEGAL_STORE');
+        $this->hasPermissionTo('SYSTEM-USERS-PARALEGAL_STORE');
         $this->validate($request, [
             'name'=>'required',
             'email'=>'required|string|email|unique:users',
@@ -60,12 +60,12 @@ class UsersLegalController extends Controller {
                 'username'=> $request->input('username'),
                 'password'=>Hash::make($request->input('password')),                        
                 'theme'=>'default',
-                'default_role'=>'legal',            
+                'default_role'=>'paralegal',            
                 'foto'=> 'storage/images/users/no_photo.png',
                 'created_at'=>$now, 
                 'updated_at'=>$now
             ]);            
-            $role='legal';   
+            $role='paralegal';   
             $user->assignRole($role);               
             
             $user_id=$user->id;
@@ -132,7 +132,7 @@ class UsersLegalController extends Controller {
      */
     public function show(Request $request, $id)
     {
-        $this->hasPermissionTo('SYSTEM-USERS-LEGAL_SHOW');
+        $this->hasPermissionTo('SYSTEM-USERS-PARALEGAL_SHOW');
 
         $user = User::find($id);
         if (is_null($user))
@@ -163,7 +163,7 @@ class UsersLegalController extends Controller {
      */
     public function update(Request $request, $id)
     {
-        $this->hasPermissionTo('SYSTEM-USERS-LEGAL_UPDATE');
+        $this->hasPermissionTo('SYSTEM-USERS-PARALEGAL_UPDATE');
 
         $user = User::find($id);
         if (is_null($user))
@@ -319,7 +319,7 @@ class UsersLegalController extends Controller {
      */
     public function destroy(Request $request,$id)
     { 
-        $this->hasPermissionTo('SYSTEM-USERS-LEGAL_DESTROY');
+        $this->hasPermissionTo('SYSTEM-USERS-PARALEGAL_DESTROY');
 
         $user = User::where('isdeleted','1')
                     ->find($id); 
