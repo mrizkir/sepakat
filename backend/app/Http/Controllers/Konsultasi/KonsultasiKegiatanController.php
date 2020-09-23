@@ -103,7 +103,58 @@ class KonsultasikegiatanController extends Controller
                                     'message'=>'Data pasien covid19 baru berhasil disimpan.'
                                 ],200);
     }
-    
+    public function uploadktppemohon (Request $request,$id)
+    {
+        $this->hasAnyPermission('KONSULTASI-KEGIATAN_STORE');
+
+        $kegiatan = KonsultasiKegiatanModel::find($id); 
+        
+        if ($kegiatan == null)
+        {
+            return Response()->json([
+                                    'status'=>0,
+                                    'pid'=>'store',                
+                                    'message'=>["Data Konsultasi Kegiatan tidak ditemukan."]
+                                ],422);         
+        }
+        else
+        {
+            $this->validate($request, [                      
+                'filektppemohon'=>'required'                        
+            ]);
+            $name=$kegiatan->pemohon;
+            $filektppemohon = $request->file('filektppemohon');
+            $mime_type=$filektppemohon->getMimeType();
+            if ($mime_type=='image/png' || $mime_type=='image/jpeg')
+            {
+                $folder=\App\Helpers\Helper::public_path('images/kegiatan/');
+                $file_name=uniqid('img').".".$filektppemohon->getClientOriginalExtension();
+                if (is_file(\App\Helpers\Helper::public_path($kegiatan->file_fotocopy_ktp)))                
+                {
+                    unlink(\App\Helpers\Helper::public_path($kegiatan->file_fotocopy_ktp));
+                }                
+                $kegiatan->file_fotocopy_ktp="storage/images/kegiatan/$file_name";
+                $kegiatan->save();
+                $filektppemohon->move($folder,$file_name);
+                return Response()->json([
+                                            'status'=>0,
+                                            'pid'=>'store',
+                                            'kegiatan'=>$kegiatan,                
+                                            'message'=>"KTP Pemohon/Peserta ($name) berhasil diupload"
+                                        ],200);    
+            }
+            else
+            {
+                return Response()->json([
+                                        'status'=>1,
+                                        'pid'=>'store',
+                                        'message'=>["Extensi file yang diupload bukan jpg atau png."]
+                                    ],422); 
+                
+
+            }
+        }
+    }
     public function update(Request $request,$id)
     {
         $this->hasAnyPermission('KONSULTASI-KEGIATAN_UPDATE');

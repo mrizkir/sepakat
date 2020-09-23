@@ -52,6 +52,8 @@ $router->group(['prefix'=>'v1','middleware'=>'auth:api'], function () use ($rout
     $router->post('/konsultasi/kegiatan/store',['middleware'=>['role:superadmin|paralegal'],'uses'=>'Konsultasi\KonsultasiKegiatanController@store','as'=>'konsultasikegiatan.store']);
     $router->get('/konsultasi/kegiatan/{id}',['middleware'=>['role:superadmin|paralegal'],'uses'=>'Konsultasi\KonsultasiKegiatanController@show','as'=>'konsultasikegiatan.show']);
     $router->put('/konsultasi/kegiatan/{id}',['middleware'=>['role:superadmin|paralegal'],'uses'=>'Konsultasi\KonsultasiKegiatanController@update','as'=>'konsultasikegiatan.update']);
+    $router->post('/konsultasi/kegiatan/uploadktppemohon/{id}',['middleware'=>['role:superadmin|paralegal'],'uses'=>'Konsultasi\KonsultasiKegiatanController@uploadktppemohon','as'=>'konsultasikegiatan.uploadktppemohon']);
+    $router->post('/konsultasi/kegiatan/hapusktppemohon/{id}',['middleware'=>['role:superadmin|paralegal'],'uses'=>'Konsultasi\KonsultasiKegiatanController@hapusktppemohon','as'=>'konsultasikegiatan.hapusktppemohon']);
     $router->delete('/konsultasi/kegiatan/{id}',['middleware'=>['role:superadmin|paralegal'],'uses'=>'Konsultasi\KonsultasiKegiatanController@destroy','as'=>'konsultasikegiatan.destroy']);
 
     //setting - permissions
