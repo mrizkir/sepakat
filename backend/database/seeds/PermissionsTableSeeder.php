@@ -30,6 +30,13 @@ class PermissionsTableSeeder extends Seeder
             'created_at'=>Carbon::now(),
             'updated_at'=>Carbon::now()
         ]);       
+        
+        \DB::table('permissions')->insert([
+            'name'=>"DMASTER-JENISKEGIATAN_BROWSE",
+            'guard_name'=>'api',
+            'created_at'=>Carbon::now(),
+            'updated_at'=>Carbon::now()
+        ]); 
 
         //konsultasi
         \DB::table('permissions')->insert([
@@ -69,9 +76,8 @@ class PermissionsTableSeeder extends Seeder
         ]);                        
 
         $modules = [             
-            'DMASTER-TA',     
-            'DMASTER-JENIS-KEGIATAN',                 
-            
+            'DMASTER-TA',        
+                     
             'KONSULTASI-KEGIATAN',  
 
             'SYSTEM-SETTING-PERMISSIONS',

@@ -5,7 +5,7 @@
                 mdi-calendar-blank-multiple
             </template>
             <template v-slot:name>
-                KONSULTASI KEGIATAN
+                KONSULTASI KEGIATAN PARALEGAL
             </template>
             <template v-slot:breadcrumbs>
                 <v-breadcrumbs :items="breadcrumbs" class="pa-0">
@@ -76,7 +76,7 @@
                                     <template v-slot:activator="{ on }">
                                         <v-text-field
                                             v-model="formdata.tanggal_konsultasi"
-                                            label="TANGGAL KONSULTASI"                                            
+                                            label="TANGGAL"                                            
                                             readonly
                                             filled
                                             :rules="rule_tanggal_konsultasi"
@@ -106,7 +106,7 @@
                                     <template v-slot:activator="{ on, attrs }">
                                         <v-text-field
                                             v-model="formdata.jam_konsultasi"
-                                            label="JAM KONSULTASI"                                                            
+                                            label="WAKTU"                                                            
                                             readonly
                                             filled
                                             :rules="rule_jam_konsultasi"
@@ -229,10 +229,10 @@ export default {
             value => !!value||"Mohon untuk diisi uraian kegiatan konsultasi !!!",             
         ],
         rule_tanggal_konsultasi:[
-            value => !!value||"Mohon untuk diisi tanggal kegiatan konsultasi !!!",             
+            value => !!value||"Mohon untuk diisi tanggal kegiatan !!!",             
         ],
         rule_jam_konsultasi:[
-            value => !!value||"Mohon untuk diisi jam kegiatan konsultasi !!!",             
+            value => !!value||"Mohon untuk diisi waktu kegiatan !!!",             
         ],
         rule_tempat:[
             value => !!value||"Mohon untuk diisi tempat kegiatan konsultasi !!!",             

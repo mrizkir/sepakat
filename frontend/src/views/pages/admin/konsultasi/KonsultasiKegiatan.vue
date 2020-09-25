@@ -5,7 +5,7 @@
                 mdi-calendar-blank-multiple
             </template>
             <template v-slot:name>
-                KONSULTASI KEGIATAN
+                KONSULTASI KEGIATAN PARALEGAL
             </template>
             <template v-slot:breadcrumbs>
                 <v-breadcrumbs :items="breadcrumbs" class="pa-0">
@@ -150,8 +150,8 @@ export default {
         datatable:[],
         headers: [                        
             { text: 'PEMOHON', value: 'pemohon' },   
-            { text: 'NAMA KEGIATAN', value: 'nama_kegiatan' },   
-            { text: 'NAMA JENIS', value: 'nama_jenis' },   
+            { text: 'JENIS KEGIATAN', value: 'nama_jenis' },   
+            { text: 'NAMA KEGIATAN', value: 'nama_kegiatan' },               
             { text: 'AKSI', value: 'actions', sortable: false,width:150 },
         ],
         search:'', 

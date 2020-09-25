@@ -19,10 +19,21 @@ class UsersParaLegalController extends Controller {
      */
     public function index(Request $request)
     {           
-        $this->hasPermissionTo('SYSTEM-USERS-PARALEGAL_BROWSE');
-        $data = User::where('default_role','paralegal')
-                    ->orderBy('username','ASC')
-                    ->get();       
+        if ($this->hasRole('paralegal'))
+        {
+            $data = User::where('default_role','paralegal')
+                        ->where('id',$this->getUserid())
+                        ->orderBy('username','ASC')
+                        ->get();           
+        }
+        else
+        {
+            $this->hasPermissionTo('SYSTEM-USERS-PARALEGAL_BROWSE');
+            $data = User::where('default_role','paralegal')
+                        ->orderBy('username','ASC')
+                        ->get();       
+        }
+        
                     
         $role = Role::findByName('paralegal');
         return Response()->json([

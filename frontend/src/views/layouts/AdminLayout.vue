@@ -84,8 +84,8 @@
                         <v-list-item-title>DASHBOARD</v-list-item-title>
                     </v-list-item-content>
                 </v-list-item>      
-                <v-subheader>DATA MASTER</v-subheader>             
-                <v-list-item link active-class="yellow darken-4" to="/dmaster/jeniskegiatan" v-if="CAN_ACCESS('SYSTEM-USERS-DOSEN-WALI_BROWSE')">
+                <v-subheader v-if="CAN_ACCESS('DMASTER-GROUP')">DATA MASTER</v-subheader>             
+                <v-list-item link active-class="yellow darken-4" to="/dmaster/jeniskegiatan" v-if="CAN_ACCESS('DMASTER-JENISKEGIATAN_BROWSE')">
                     <v-list-item-icon class="mr-2">
                         <v-icon>mdi-format-list-bulleted-triangle</v-icon>
                     </v-list-item-icon>
@@ -95,7 +95,7 @@
                         </v-list-item-title>
                     </v-list-item-content>
                 </v-list-item>               
-                <v-subheader>KONSULTASI</v-subheader>
+                <v-subheader v-if="CAN_ACCESS('KONSULTASI-GROUP')">KONSULTASI</v-subheader>
                 <v-list-item link to="/konsultasi/kegiatan" v-if="CAN_ACCESS('KONSULTASI-KEGIATAN_BROWSE')">
                     <v-list-item-icon class="mr-2">
                         <v-icon>mdi-calendar-blank-multiple</v-icon>
@@ -106,7 +106,7 @@
                         </v-list-item-title>
                     </v-list-item-content>
                 </v-list-item>                
-                <v-subheader>LAPORAN</v-subheader>                                         
+                <v-subheader v-if="CAN_ACCESS('REPORT-GROUP')">LAPORAN</v-subheader>                                         
                 <v-list-item link to="/laporan/kegiatan" v-if="CAN_ACCESS('AKADEMIK-DULANG-BARU_BROWSE')">
                     <v-list-item-icon class="mr-2">
                         <v-icon>mdi-clipboard-list-outline</v-icon>
@@ -117,7 +117,7 @@
                         </v-list-item-title>
                     </v-list-item-content>
                 </v-list-item>                
-                <v-subheader>SETTING</v-subheader>
+                <v-subheader v-if="CAN_ACCESS('SYSTEM-SETTING-GROUP')">SETTING</v-subheader>
                 <v-list-item link v-if="CAN_ACCESS('SYSTEM-SETTING-PERMISSIONS')" to="/system-users/permissions">
                     <v-list-item-icon class="mr-2">
                         <v-icon>mdi-account-key</v-icon>

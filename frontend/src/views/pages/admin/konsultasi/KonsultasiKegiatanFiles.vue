@@ -5,7 +5,7 @@
                 mdi-calendar-blank-multiple
             </template>
             <template v-slot:name>
-                KONSULTASI KEGIATAN
+                KONSULTASI KEGIATAN PARALEGAL
             </template>
             <template v-slot:breadcrumbs>
                 <v-breadcrumbs :items="breadcrumbs" class="pa-0">

@@ -15,15 +15,31 @@ class KonsultasikegiatanController extends Controller
     {
         $this->hasAnyPermission('KONSULTASI-KEGIATAN_BROWSE');
 
-        $daftar_kegiatan=KonsultasikegiatanModel::select(\DB::raw('
+        if ($this->hasRole('paralegal'))
+        {
+            $daftar_kegiatan=KonsultasikegiatanModel::select(\DB::raw('
                                                         kegiatan_id,
                                                         nama_kegiatan,
                                                         pemohon,                                                                                                                
                                                         nama_jenis,
                                                         created_at,
                                                         updated_at                                                        
-                                                    '))                                                                                                        
+                                                    '))    
+                                                    ->where('user_id',$this->getUserid())                                                                                                    
                                                     ->get();
+        }
+        else
+        {        
+            $daftar_kegiatan=KonsultasikegiatanModel::select(\DB::raw('
+                                                            kegiatan_id,
+                                                            nama_kegiatan,
+                                                            pemohon,                                                                                                                
+                                                            nama_jenis,
+                                                            created_at,
+                                                            updated_at                                                        
+                                                        '))                                                                                                        
+                                                        ->get();
+        }
         return Response()->json([
                                     'status'=>1,
                                     'pid'=>'fetchdata',

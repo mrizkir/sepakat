@@ -93,7 +93,7 @@ $router->group(['prefix'=>'v1','middleware'=>'auth:api'], function () use ($rout
     $router->get('/system/users/{id}/roles',['uses'=>'System\UsersController@roles','as'=>'users.roles']);
 
     //setting - users paralegal
-    $router->get('/system/usersparalegal',['middleware'=>['role:superadmin|keuangna'],'uses'=>'System\UsersParaLegalController@index','as'=>'usersparalegal.index']);
+    $router->get('/system/usersparalegal',['middleware'=>['role:superadmin|paralegal'],'uses'=>'System\UsersParaLegalController@index','as'=>'usersparalegal.index']);
     $router->post('/system/usersparalegal/store',['middleware'=>['role:superadmin'],'uses'=>'System\UsersParaLegalController@store','as'=>'usersparalegal.store']);
     $router->put('/system/usersparalegal/{id}',['middleware'=>['role:superadmin'],'uses'=>'System\UsersParaLegalController@update','as'=>'usersparalegal.update']);
     $router->delete('/system/usersparalegal/{id}',['middleware'=>['role:superadmin'],'uses'=>'System\UsersParaLegalController@destroy','as'=>'usersparalegal.destroy']);
