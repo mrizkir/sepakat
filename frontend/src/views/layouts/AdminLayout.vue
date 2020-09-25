@@ -3,10 +3,15 @@
         <v-system-bar app dark class="yellow">
             
 		</v-system-bar>	
-        <v-app-bar app>
+        <v-app-bar 
+            class="indigo darken-4 yellow--text"
+            dark
+            app>
             <v-app-bar-nav-icon @click.stop="drawer = !drawer" class="grey--text"></v-app-bar-nav-icon>
             <v-toolbar-title class="headline clickable" @click.stop="$router.push('/dashboard/'+$store.getters['auth/AccessToken']).catch(err => {})">
-				<span class="hidden-sm-and-down">{{APP_NAME}}</span>
+				<span class="hidden-sm-and-down">{{APP_NAME}}<br/>
+                [<small>Sistem Elektronik Paralegal Masyarakat</small>]
+                </span>
 			</v-toolbar-title>
             <v-spacer></v-spacer>
             <v-menu 

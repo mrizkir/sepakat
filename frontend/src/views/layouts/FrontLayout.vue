@@ -1,17 +1,23 @@
 <template>
     <div>
-        <v-app-bar app>
+        <v-app-bar 
+            class="indigo darken-4 yellow--text"
+            dark
+            app>
             <v-toolbar-title>
-                <span class="hidden-sm-and-down">{{namaAPPAlias}}</span>
+                <span class="hidden-sm-and-down">
+                {{namaAPPAlias}}<br/>
+                [<small>Sistem Elektronik Paralegal Masyarakat</small>]
+                </span>
             </v-toolbar-title>
             <v-spacer />
-            <v-btn to="/" class="mr-2" color="primary" text large>
+            <v-btn to="/" class="mr-2" color="yellow" text large>
                 Home
             </v-btn>
-            <v-btn to="/about" class="mr-2" color="primary" text large>
+            <v-btn to="/about" class="mr-2" color="yellow" text large>
                 About
             </v-btn>
-            <v-btn to="/login" color="primary" text large>
+            <v-btn to="/login" color="yellow" text large>
                 Login
             </v-btn>
         </v-app-bar>
