@@ -14,6 +14,14 @@ const routes = [
 		component: () => import('../views/pages/front/Home.vue')
 	},
 	{
+		path: '/about',
+		name: 'FrontAbout',
+		meta:{
+			title: "ABOUT"
+		},
+		component: () => import('../views/pages/front/About.vue')
+	},
+	{
 		path: '/login',
 		name: 'FrontLogin',
 		meta:{

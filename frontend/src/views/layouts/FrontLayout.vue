@@ -8,6 +8,9 @@
             <v-btn to="/" class="mr-2" color="primary" text large>
                 Home
             </v-btn>
+            <v-btn to="/about" class="mr-2" color="primary" text large>
+                About
+            </v-btn>
             <v-btn to="/login" color="primary" text large>
                 Login
             </v-btn>
