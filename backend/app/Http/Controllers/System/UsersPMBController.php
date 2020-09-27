@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\Controller;
 use App\Models\User;
-use App\Models\UserDosen;
 use Spatie\Permission\Models\Role;
 use Ramsey\Uuid\Uuid;
 use Illuminate\Validation\Rule;
@@ -19,18 +18,29 @@ class UsersPMBController extends Controller {
      */
     public function index(Request $request)
     {           
-        $this->hasPermissionTo('SYSTEM-USERS-KEUANGAN_BROWSE');
-        $data = User::where('default_role','keuangan')
-                    ->orderBy('username','ASC')
-                    ->get();       
+        if ($this->hasRole('pmb'))
+        {
+            $data = User::where('default_role','pmb')
+                        ->where('id',$this->getUserid())
+                        ->orderBy('username','ASC')
+                        ->get();           
+        }
+        else
+        {
+            $this->hasPermissionTo('SYSTEM-USERS-PMB_BROWSE');
+            $data = User::where('default_role','pmb')
+                        ->orderBy('username','ASC')
+                        ->get();       
+        }
+        
                     
-        $role = Role::findByName('keuangan');
+        $role = Role::findByName('pmb');
         return Response()->json([
                                 'status'=>1,
                                 'pid'=>'fetchdata',
                                 'role'=>$role,
                                 'users'=>$data,
-                                'message'=>'Fetch data users Keuangan berhasil diperoleh'
+                                'message'=>'Fetch data users LEGAL berhasil diperoleh'
                             ],200);  
     }    
     /**
@@ -41,16 +51,14 @@ class UsersPMBController extends Controller {
      */
     public function store(Request $request)
     {
-        $this->hasPermissionTo('SYSTEM-USERS-KEUANGAN_STORE');
+        $this->hasPermissionTo('SYSTEM-USERS-PMB_STORE');
         $this->validate($request, [
             'name'=>'required',
             'email'=>'required|string|email|unique:users',
             'nomor_hp'=>'required|string|unique:users',
             'username'=>'required|string|unique:users',
-            'password'=>'required',            
-            'prodi_id'=>'required',
+            'password'=>'required',                        
         ]);
-
         $user = \DB::transaction(function () use ($request){
             $now = \Carbon\Carbon::now()->toDateTimeString();        
             $user=User::create([
@@ -58,93 +66,60 @@ class UsersPMBController extends Controller {
                 'name'=>$request->input('name'),
                 'email'=>$request->input('email'),
                 'nomor_hp'=>$request->input('nomor_hp'),
-                'username'=> $request->input('username'),
+                'username'=> $request->input('username'),                
                 'password'=>Hash::make($request->input('password')),                        
                 'theme'=>'default',
-                'default_role'=>'keuangan',            
+                'default_role'=>'pmb',            
                 'foto'=> 'storage/images/users/no_photo.png',
                 'created_at'=>$now, 
                 'updated_at'=>$now
             ]);            
-            $role='keuangan';   
-            $user->assignRole($role);               
-            
-            $permission=Role::findByName('keuangan')->permissions;
-            $permissions=$permission->pluck('name');
-            $user->givePermissionTo($permissions);
+            $role='pmb';   
+            $user->assignRole($role);      
 
-            $user_id=$user->id;
-            $daftar_prodi=json_decode($request->input('prodi_id'),true);
-            foreach($daftar_prodi as $v)
-            {
-                $sql = "
-                    INSERT INTO usersprodi (                    
-                        user_id, 
-                        prodi_id,
-                        kode_prodi,
-                        nama_prodi,
-                        nama_prodi_alias,
-                        kode_jenjang,
-                        nama_jenjang,                                                        
-                        created_at, 
-                        updated_at
-                    ) 
-                    SELECT
-                        '$user_id',                    
-                        id,
-                        kode_prodi,
-                        nama_prodi,
-                        nama_prodi_alias,
-                        kode_jenjang,
-                        nama_jenjang,                          
-                        NOW() AS created_at,
-                        NOW() AS updated_at
-                    FROM pe3_prodi                    
-                    WHERE 
-                        id='$v' 
-                ";
-
-                \DB::statement($sql); 
-            }
-
-            $daftar_roles=json_decode($request->input('role_id'),true);
-            foreach($daftar_roles as $v)
-            {
-                if ($v=='dosen' || $v=='dosenwali' )
-                {
-                    $user->assignRole($v);               
-                    $permission=Role::findByName($v)->permissions;
-                    $permissions=$permission->pluck('name');
-                    $user->givePermissionTo($permissions);
-
-                    if ($v=='dosen')
-                    {
-                        UserDosen::create([
-                            'user_id'=>$user->id,
-                            'nama_dosen'=>$request->input('name'),                                                            
-                        ]);
-                        if ($v=='dosenwali')
-                        {
-                            \DB::table('pe3_dosen')
-                                ->where('user_id',$user->id)
-                                ->update(['is_dw'=>true]);
-                        }
-                    }                    
-                }
-            }
             \App\Models\System\ActivityLog::log($request,[
                                             'object' => $this->guard()->user(), 
                                             'object_id' => $this->guard()->user()->id, 
                                             'user_id' => $this->getUserid(), 
-                                            'message' => 'Menambah user Keuangan('.$user->username.') berhasil'
+                                            'message' => 'Menambah user LEGAL ('.$user->username.') berhasil'
                                         ]);
+
+            return $user;
         });
+
         return Response()->json([
                                     'status'=>1,
                                     'pid'=>'store',
                                     'user'=>$user,                                    
-                                    'message'=>'Data user Keuangan berhasil disimpan.'
+                                    'message'=>'Data user LEGAL berhasil disimpan.'
                                 ],200); 
+
+    }
+    /**
+     * digunakan untuk mendapatkan informasi detail user dengan role program studi
+     */
+    public function show(Request $request, $id)
+    {
+        $this->hasPermissionTo('SYSTEM-USERS-PMB_SHOW');
+
+        $user = User::find($id);
+        if (is_null($user))
+        {
+            return Response()->json([
+                                    'status'=>1,
+                                    'pid'=>'update',                
+                                    'message'=>["User ID ($id) gagal diperoleh"]
+                                ],422); 
+        }
+        else
+        {
+            return Response()->json([
+                                    'status'=>1,
+                                    'pid'=>'fetchdata',
+                                    'user'=>$user,                                       
+                                    'message'=>'Data user '.$user->username.' berhasil diperoleh.'
+                                ],200); 
+        }
 
     }
     /**
@@ -156,7 +131,7 @@ class UsersPMBController extends Controller {
      */
     public function update(Request $request, $id)
     {
-        $this->hasPermissionTo('SYSTEM-USERS-KEUANGAN_UPDATE');
+        $this->hasPermissionTo('SYSTEM-USERS-PMB_UPDATE');
 
         $user = User::find($id);
         if (is_null($user))
@@ -176,120 +151,33 @@ class UsersPMBController extends Controller {
                                                     ],           
                                         'name'=>'required',            
                                         'email'=>'required|string|email|unique:users,email,'.$user->id,
-                                        'nomor_hp'=>'required|string|unique:users,nomor_hp,'.$user->id,   
-                                        'prodi_id'=>'required',           
+                                        'nomor_hp'=>'required|string|unique:users,nomor_hp,'.$user->id,                                           
                                     ]); 
             $user = \DB::transaction(function () use ($request,$user){
                 $user->name = $request->input('name');
                 $user->email = $request->input('email');
                 $user->nomor_hp = $request->input('nomor_hp');
-                $user->username = $request->input('username');        
+                $user->username = $request->input('username');                        
                 if (!empty(trim($request->input('password')))) {
                     $user->password = Hash::make($request->input('password'));
                 }    
                 $user->updated_at = \Carbon\Carbon::now()->toDateTimeString();
                 $user->save();
-
-                $user_id=$user->id;
-                \DB::table('usersprodi')->where('user_id',$user_id)->delete();
-                $daftar_prodi=json_decode($request->input('prodi_id'),true);
-                foreach($daftar_prodi as $v)
-                {
-                    $sql = "
-                        INSERT INTO usersprodi (                    
-                            user_id, 
-                            prodi_id,
-                            kode_prodi,
-                            nama_prodi,
-                            nama_prodi_alias,
-                            kode_jenjang,
-                            nama_jenjang,                                                        
-                            created_at, 
-                            updated_at
-                        ) 
-                        SELECT
-                            '$user_id',                    
-                            id,
-                            kode_prodi,
-                            nama_prodi,
-                            nama_prodi_alias,
-                            kode_jenjang,
-                            nama_jenjang,                          
-                            NOW() AS created_at,
-                            NOW() AS updated_at
-                        FROM pe3_prodi                    
-                        WHERE 
-                            id='$v' 
-                    ";
-                    \DB::statement($sql); 
-                }
-
-                $daftar_roles=json_decode($request->input('role_id'),true);                
-                if (($key= array_search('dosen',$daftar_roles))===false)
-                {
-                    $key= array_search('dosenwali',$daftar_roles);
-                    if (isset($daftar_roles[$key]))
-                    {
-                        unset($daftar_roles[$key]);
-                    }
-                }
-                $user->syncRoles($daftar_roles);
-                $dosen=UserDosen::find($user->id);
-
-                foreach($daftar_roles as $v)
-                {
-                    if ($v=='dosen'||$v=='dosenwali') // sementara seperti ini karena kalau bertambah tinggal diganti
-                    {              
-                        $permission=Role::findByName($v)->permissions;
-                        $permissions=$permission->pluck('name');
-                        $user->givePermissionTo($permissions);
-
-                        if ($v=='dosen' && is_null($dosen))
-                        {
-                            UserDosen::create([
-                                'user_id'=>$user->id,
-                                'nama_dosen'=>$request->input('name'),                                                            
-                            ]);
-                        }
-                        else if ($v=='dosen' && !is_null($dosen))
-                        {
-                            $dosen->active=1;
-                            $dosen->save();
-                        }
-                        else if (!is_null($dosen))
-                        {
-                            $dosen->active=0;
-                            $dosen->save();
-                        }
-                        //set dosen wali
-                        if ($v=='dosenwali' && $v=='dosen')
-                        {
-                            \DB::table('pe3_dosen')
-                                ->where('user_id',$user->id)
-                                ->update(['is_dw'=>true]);
-                        }
-                        else
-                        {
-                            \DB::table('pe3_dosen')
-                                ->where('user_id',$user->id)
-                                ->update(['is_dw'=>false]);
-                        }
-                    }
-                }
                 
                 \App\Models\System\ActivityLog::log($request,[
                                                             'object' => $this->guard()->user(), 
                                                             'object_id' => $this->guard()->user()->id, 
                                                             'user_id' => $this->getUserid(), 
-                                                            'message' => 'Mengubah data user Keuangan ('.$user->username.') berhasil'
+                                                            'message' => 'Mengubah data user LEGAL ('.$user->username.') berhasil'
                                                         ]);
                 return $user;
             });
+
             return Response()->json([
                                     'status'=>1,
                                     'pid'=>'update',
                                     'user'=>$user,      
-                                    'message'=>'Data user Keuangan '.$user->username.' berhasil diubah.'
+                                    'message'=>'Data user LEGAL '.$user->username.' berhasil diubah.'
                                 ],200); 
         }
     }
@@ -301,7 +189,7 @@ class UsersPMBController extends Controller {
      */
     public function destroy(Request $request,$id)
     { 
-        $this->hasPermissionTo('SYSTEM-USERS-KEUANGAN_DESTROY');
+        $this->hasPermissionTo('SYSTEM-USERS-PMB_DESTROY');
 
         $user = User::where('isdeleted','1')
                     ->find($id); 
@@ -323,13 +211,13 @@ class UsersPMBController extends Controller {
                                                                 'object' => $this->guard()->user(), 
                                                                 'object_id' => $this->guard()->user()->id, 
                                                                 'user_id' => $this->getUserid(), 
-                                                                'message' => 'Menghapus user Keuangan ('.$username.') berhasil'
+                                                                'message' => 'Menghapus user LEGAL ('.$username.') berhasil'
                                                             ]);
         
             return Response()->json([
                                         'status'=>1,
                                         'pid'=>'destroy',                
-                                        'message'=>"User Keuangan ($username) berhasil dihapus"
+                                        'message'=>"User LEGAL ($username) berhasil dihapus"
                                     ],200);         
         }
                   

@@ -189,9 +189,9 @@ const routes = [
 	},
 	{
 		path: '/system-users/obh',
-		name: 'UsersDosen',
+		name: 'UsersOBH',
 		meta:{
-			title: "USERS - OBH",
+			title: "USERS - ORGANISASI BANTUAN HUKUM",
 			requiresAuth:true,
         },
 		component: () => import('../views/pages/admin/system/UsersOBH.vue'),		
@@ -200,7 +200,7 @@ const routes = [
 		path: '/system-users/kumham',
 		name: 'UsersKumham',
 		meta:{
-			title: "USERS - KANWIL KEMENHUMKAM",
+			title: "USERS - KANWIL HUKUM DAN HAM",
 			requiresAuth:true,
         },
 		component: () => import('../views/pages/admin/system/UsersKumham.vue'),		

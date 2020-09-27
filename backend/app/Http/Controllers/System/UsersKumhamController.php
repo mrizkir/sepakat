@@ -5,11 +5,11 @@ namespace App\Http\Controllers\System;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\Controller;
+use App\Rules\IgnoreIfDataIsEqualValidation;
 use App\Models\User;
-use App\Models\UserDosen;
-use Spatie\Permission\Models\Role;
 use Ramsey\Uuid\Uuid;
 use Illuminate\Validation\Rule;
+use Spatie\Permission\Models\Role;
 
 class UsersKumhamController extends Controller {         
     /**
@@ -19,18 +19,19 @@ class UsersKumhamController extends Controller {
      */
     public function index(Request $request)
     {           
-        $this->hasPermissionTo('SYSTEM-USERS-PROGRAM-STUDI_BROWSE');
+        $this->hasPermissionTo('SYSTEM-USERS-KUMHAM_BROWSE');
         $data = User::where('default_role','kumham')
                     ->orderBy('username','ASC')
-                    ->get();       
-                    
+                    ->get();
+
         $role = Role::findByName('kumham');
+
         return Response()->json([
                                 'status'=>1,
                                 'pid'=>'fetchdata',
                                 'role'=>$role,
                                 'users'=>$data,
-                                'message'=>'Fetch data users PROGRAM STUDI berhasil diperoleh'
+                                'message'=>'Fetch data users berhasil diperoleh'
                             ],200);  
     }    
     /**
@@ -41,14 +42,13 @@ class UsersKumhamController extends Controller {
      */
     public function store(Request $request)
     {
-        $this->hasPermissionTo('SYSTEM-USERS-PROGRAM-STUDI_STORE');
+        $this->hasPermissionTo('SYSTEM-USERS-KUMHAM_STORE');
         $this->validate($request, [
             'name'=>'required',
             'email'=>'required|string|email|unique:users',
             'nomor_hp'=>'required|string|unique:users',
             'username'=>'required|string|unique:users',
-            'password'=>'required',            
-            'prodi_id'=>'required',
+            'password'=>'required',
         ]);
         $user = \DB::transaction(function () use ($request){
             $now = \Carbon\Carbon::now()->toDateTimeString();        
@@ -58,8 +58,9 @@ class UsersKumhamController extends Controller {
                 'email'=>$request->input('email'),
                 'nomor_hp'=>$request->input('nomor_hp'),
                 'username'=> $request->input('username'),
-                'password'=>Hash::make($request->input('password')),                        
-                'theme'=>'default',
+                'password'=>Hash::make($request->input('password')),
+                'email_verified_at'=>\Carbon\Carbon::now(),
+                'theme'=>'default',            
                 'default_role'=>'kumham',            
                 'foto'=> 'storage/images/users/no_photo.png',
                 'created_at'=>$now, 
@@ -68,112 +69,41 @@ class UsersKumhamController extends Controller {
             $role='kumham';   
             $user->assignRole($role);               
             
-            $user_id=$user->id;
-            $daftar_prodi=json_decode($request->input('prodi_id'),true);
-            foreach($daftar_prodi as $v)
-            {
-                $sql = "
-                    INSERT INTO usersprodi (                    
-                        user_id, 
-                        prodi_id,
-                        kode_prodi,
-                        nama_prodi,
-                        nama_prodi_alias,
-                        kode_jenjang,
-                        nama_jenjang,                                                        
-                        created_at, 
-                        updated_at
-                    ) 
-                    SELECT
-                        '$user_id',                    
-                        id,
-                        kode_prodi,
-                        nama_prodi,
-                        nama_prodi_alias,
-                        kode_jenjang,
-                        nama_jenjang,                          
-                        NOW() AS created_at,
-                        NOW() AS updated_at
-                    FROM pe3_prodi                    
-                    WHERE 
-                        id='$v' 
-                ";
-
-                \DB::statement($sql); 
-            }
-
             $daftar_roles=json_decode($request->input('role_id'),true);
             foreach($daftar_roles as $v)
             {
-                if ($v=='dosen' || $v=='dosenwali' )
+                if ($v!='kumham' && $v!='superadmin')
                 {
                     $user->assignRole($v);               
                     $permission=Role::findByName($v)->permissions;
                     $permissions=$permission->pluck('name');
                     $user->givePermissionTo($permissions);
-
-                    if ($v=='dosen')
-                    {
-                        UserDosen::create([
-                            'user_id'=>$user->id,
-                            'nama_dosen'=>$request->input('name'),                                                            
-                        ]);
-                        if ($v=='dosenwali')
-                        {
-                            \DB::table('pe3_dosen')
-                                ->where('user_id',$user->id)
-                                ->update(['is_dw'=>true]);
-                        }
-                    }                    
                 }
             }
-
             \App\Models\System\ActivityLog::log($request,[
                                             'object' => $this->guard()->user(), 
                                             'object_id' => $this->guard()->user()->id, 
                                             'user_id' => $this->getUserid(), 
-                                            'message' => 'Menambah user PROGRAM STUDI('.$user->username.') berhasil'
+                                            'message' => 'Menambah user ('.$user->username.') berhasil'
                                         ]);
 
             return $user;
         });
-
         return Response()->json([
                                     'status'=>1,
                                     'pid'=>'store',
                                     'user'=>$user,                                    
-                                    'message'=>'Data user PROGRAM STUDI berhasil disimpan.'
+                                    'message'=>'Data user berhasil disimpan.'
                                 ],200); 
 
     }
     /**
-     * digunakan untuk mendapatkan informasi detail user dengan role program studi
+     * digunakan untuk mendapatkan detail user
      */
-    public function show(Request $request, $id)
+    public function show(Request $request,$id)
     {
-        $this->hasPermissionTo('SYSTEM-USERS-PROGRAM-STUDI_SHOW');
-
-        $user = User::find($id);
-        if (is_null($user))
-        {
-            return Response()->json([
-                                    'status'=>1,
-                                    'pid'=>'update',                
-                                    'message'=>["User ID ($id) gagal diperoleh"]
-                                ],422); 
-        }
-        else
-        {
-            return Response()->json([
-                                    'status'=>1,
-                                    'pid'=>'fetchdata',
-                                    'user'=>$user,  
-                                    'role_dosen'=>$user->hasRole('dosen'),    
-                                    'message'=>'Data user '.$user->username.' berhasil diperoleh.'
-                                ],200); 
-        }
-
-    }
+        
+    }            
     /**
      * Update the specified resource in storage.
      *
@@ -183,7 +113,7 @@ class UsersKumhamController extends Controller {
      */
     public function update(Request $request, $id)
     {
-        $this->hasPermissionTo('SYSTEM-USERS-PROGRAM-STUDI_UPDATE');
+        $this->hasPermissionTo('SYSTEM-USERS-KUMHAM_UPDATE');
 
         $user = User::find($id);
         if (is_null($user))
@@ -196,144 +126,63 @@ class UsersKumhamController extends Controller {
         }
         else
         {
-            $this->validate($request, [
+             $this->validate($request, [
                                         'username'=>[
                                                         'required',
                                                         'unique:users,username,'.$user->id
                                                     ],           
                                         'name'=>'required',            
                                         'email'=>'required|string|email|unique:users,email,'.$user->id,
-                                        'nomor_hp'=>'required|string|unique:users,nomor_hp,'.$user->id,   
-                                        'prodi_id'=>'required',           
-                                    ]); 
+                                        'nomor_hp'=>'required|string|unique:users,nomor_hp,'.$user->id,                                                   
+                                    ]);  
+            
             $user = \DB::transaction(function () use ($request,$user){
                 $user->name = $request->input('name');
                 $user->email = $request->input('email');
-                $user->nomor_hp = $request->input('nomor_hp');
-                $user->username = $request->input('username');        
+                $user->username = $request->input('username');                        
+                $user->nomor_hp = $request->input('nomor_hp');                        
                 if (!empty(trim($request->input('password')))) {
                     $user->password = Hash::make($request->input('password'));
                 }    
                 $user->updated_at = \Carbon\Carbon::now()->toDateTimeString();
-                $user->save();
-
-                if ($request->input('role_dosen')=='true')
-                {
-                    $user->assignRole('dosen'); 
-                    $permission=Role::findByName('dosen')->permissions;
-                    $permissions=$permission->pluck('name');
-                    $user->givePermissionTo($permissions);
-                }
-                elseif ($user->hasRole('dosen'))
-                {
-                    $user->removeRole('dosen');
-                    $permission=Role::findByName('dosen')->permissions;
-                    $permissions=$permission->pluck('name');
-                    $user->revokePermissionTo($permissions);
-                }    
-                $user_id=$user->id;
-                \DB::table('usersprodi')->where('user_id',$user_id)->delete();
-                $daftar_prodi=json_decode($request->input('prodi_id'),true);
-                foreach($daftar_prodi as $v)
-                {
-                    $sql = "
-                        INSERT INTO usersprodi (                    
-                            user_id, 
-                            prodi_id,
-                            kode_prodi,
-                            nama_prodi,
-                            nama_prodi_alias,
-                            kode_jenjang,
-                            nama_jenjang,                                                        
-                            created_at, 
-                            updated_at
-                        ) 
-                        SELECT
-                            '$user_id',                    
-                            id,
-                            kode_prodi,
-                            nama_prodi,
-                            nama_prodi_alias,
-                            kode_jenjang,
-                            nama_jenjang,                          
-                            NOW() AS created_at,
-                            NOW() AS updated_at
-                        FROM pe3_prodi                    
-                        WHERE 
-                            id='$v' 
-                    ";
-                    \DB::statement($sql); 
-                }
-                $daftar_roles=json_decode($request->input('role_id'),true);                
+                $user->save();                
+                
+                $daftar_roles=json_decode($request->input('role_id'),true);
                 if (($key= array_search('dosen',$daftar_roles))===false)
-                {                    
-                    $key= array_search('dosenwali',$daftar_roles);                    
+                {
+                    $key= array_search('dosenwali',$daftar_roles);
                     if (isset($daftar_roles[$key]))
                     {
                         unset($daftar_roles[$key]);
-                    }                    
+                    }
                 }
-                $user->syncRoles($daftar_roles);
-                $dosen=UserDosen::find($user->id);
-
+                $user->syncRoles($daftar_roles);                
                 foreach($daftar_roles as $v)
                 {
-                    if ($v=='dosen'||$v=='dosenwali') // sementara seperti ini karena kalau bertambah tinggal diganti
+                    if ($v!='kumham' && $v!='superadmin')
                     {              
                         $permission=Role::findByName($v)->permissions;
                         $permissions=$permission->pluck('name');
                         $user->givePermissionTo($permissions);
-
-                        if ($v=='dosen' && is_null($dosen))
-                        {
-                            UserDosen::create([
-                                'user_id'=>$user->id,
-                                'nama_dosen'=>$request->input('name'),                                                            
-                            ]);
-                        }
-                        else if ($v=='dosen' && !is_null($dosen))
-                        {
-                            $dosen->active=1;
-                            $dosen->save();
-                        }
-                        else if (!is_null($dosen))
-                        {
-                            $dosen->active=0;
-                            $dosen->save();
-                        }
-                        //set dosen wali
-                        if ($v=='dosenwali' && $v=='dosen')
-                        {
-                            \DB::table('pe3_dosen')
-                                ->where('user_id',$user->id)
-                                ->update(['is_dw'=>true]);
-                        }
-                        else
-                        {
-                            \DB::table('pe3_dosen')
-                                ->where('user_id',$user->id)
-                                ->update(['is_dw'=>false]);
-                        }
                     }
                 }
-
+                
                 \App\Models\System\ActivityLog::log($request,[
-                                                            'object' => $this->guard()->user(), 
-                                                            'object_id' => $this->guard()->user()->id, 
-                                                            'user_id' => $this->getUserid(), 
-                                                            'message' => 'Mengubah data user PROGRAM STUDI ('.$user->username.') berhasil'
-                                                        ]);
-                return $user;
-            });
+                                                                'object' => $this->guard()->user(), 
+                                                                'object_id' => $this->guard()->user()->id, 
+                                                                'user_id' => $this->getUserid(), 
+                                                                'message' => 'Mengubah data user ('.$user->username.') berhasil'
+                                                            ]);
 
-            return Response()->json([
-                                    'status'=>1,
-                                    'pid'=>'update',
-                                    'user'=>$user,      
-                                    'message'=>'Data user PROGRAM STUDI '.$user->username.' berhasil diubah.'
-                                ],200); 
+                return Response()->json([
+                                            'status'=>1,
+                                            'pid'=>'update',
+                                            'user'=>$user,                                    
+                                            'message'=>'Data user '.$user->username.' berhasil diubah.'
+                                        ],200); 
+            });
         }
-    }
+    }       
     /**
      * Remove the specified resource from storage.
      *
@@ -342,18 +191,18 @@ class UsersKumhamController extends Controller {
      */
     public function destroy(Request $request,$id)
     { 
-        $this->hasPermissionTo('SYSTEM-USERS-PROGRAM-STUDI_DESTROY');
+        $this->hasPermissionTo('SYSTEM-USERS-KUMHAM_DESTROY');
 
-        $user = User::where('isdeleted','1')
+        $user = User::where('isdeleted',true)
                     ->find($id); 
-        
+
         if (is_null($user))
         {
             return Response()->json([
-                                    'status'=>1,
-                                    'pid'=>'destroy',                
-                                    'message'=>["User ID ($id) gagal dihapus"]
-                                ],422); 
+                                    'status'=>0,
+                                    'pid'=>'destroy',                                      
+                                    'message'=>["User dengan id ($id) gagal dihapus"]
+                                ],422);    
         }
         else
         {
@@ -364,15 +213,17 @@ class UsersKumhamController extends Controller {
                                                                 'object' => $this->guard()->user(), 
                                                                 'object_id' => $this->guard()->user()->id, 
                                                                 'user_id' => $this->getUserid(), 
-                                                                'message' => 'Menghapus user PROGRAM STUDI ('.$username.') berhasil'
+                                                                'message' => 'Menghapus user ('.$username.') berhasil'
                                                             ]);
-        
+
             return Response()->json([
-                                        'status'=>1,
-                                        'pid'=>'destroy',                
-                                        'message'=>"User PROGRAM STUDI ($username) berhasil dihapus"
-                                    ],200);         
+                                    'status'=>1,
+                                    'pid'=>'destroy',  
+                                    'user'=>$user,              
+                                    'message'=>"User ($username) berhasil dihapus"
+                                ],200);    
         }
+             
                   
-    }
+    }    
 }

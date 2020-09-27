@@ -105,16 +105,16 @@ $router->group(['prefix'=>'v1','middleware'=>'auth:api'], function () use ($rout
     $router->delete('/system/usersparalegal/{id}',['middleware'=>['role:superadmin'],'uses'=>'System\UsersParaLegalController@destroy','as'=>'usersparalegal.destroy']);
 
     //setting - users kades
-    $router->get('/system/userskades',['middleware'=>['role:superadmin|akademik'],'uses'=>'System\UsersKadesController@index','as'=>'userskades.index']);
-    $router->post('/system/userskades/store',['middleware'=>['role:superadmin|akademik'],'uses'=>'System\UsersKadesController@store','as'=>'userskades.store']);
-    $router->put('/system/userskades/{id}',['middleware'=>['role:superadmin|akademik'],'uses'=>'System\UsersKadesController@update','as'=>'userskades.update']);
-    $router->delete('/system/userskades/{id}',['middleware'=>['role:superadmin|akademik'],'uses'=>'System\UsersKadesController@destroy','as'=>'userskades.destroy']);
+    $router->get('/system/userskades',['middleware'=>['role:superadmin|kumham'],'uses'=>'System\UsersKadesController@index','as'=>'userskades.index']);
+    $router->post('/system/userskades/store',['middleware'=>['role:superadmin|kumham'],'uses'=>'System\UsersKadesController@store','as'=>'userskades.store']);
+    $router->put('/system/userskades/{id}',['middleware'=>['role:superadmin|kumham'],'uses'=>'System\UsersKadesController@update','as'=>'userskades.update']);
+    $router->delete('/system/userskades/{id}',['middleware'=>['role:superadmin|kumham'],'uses'=>'System\UsersKadesController@destroy','as'=>'userskades.destroy']);
 
     //setting - users pmb
-    $router->get('/system/userspmb',['middleware'=>['role:superadmin|pmb'],'uses'=>'System\UsersPMBController@index','as'=>'userspmb.index']);
-    $router->post('/system/userspmb/store',['middleware'=>['role:superadmin|pmb'],'uses'=>'System\UsersPMBController@store','as'=>'userspmb.store']);
-    $router->put('/system/userspmb/{id}',['middleware'=>['role:superadmin|pmb'],'uses'=>'System\UsersPMBController@update','as'=>'userspmb.update']);
-    $router->delete('/system/userspmb/{id}',['middleware'=>['role:superadmin|pmb'],'uses'=>'System\UsersPMBController@destroy','as'=>'userspmb.destroy']);
+    $router->get('/system/userspmb',['middleware'=>['role:superadmin|kumham'],'uses'=>'System\UsersPMBController@index','as'=>'userspmb.index']);
+    $router->post('/system/userspmb/store',['middleware'=>['role:superadmin|kumham'],'uses'=>'System\UsersPMBController@store','as'=>'userspmb.store']);
+    $router->put('/system/userspmb/{id}',['middleware'=>['role:superadmin|kumham'],'uses'=>'System\UsersPMBController@update','as'=>'userspmb.update']);
+    $router->delete('/system/userspmb/{id}',['middleware'=>['role:superadmin|kumham'],'uses'=>'System\UsersPMBController@destroy','as'=>'userspmb.destroy']);
 
     //setting - users obh
     $router->get('/system/usersobh',['middleware'=>['role:superadmin'],'uses'=>'System\UsersOBHController@index','as'=>'usersobh.index']);
@@ -124,14 +124,10 @@ $router->group(['prefix'=>'v1','middleware'=>'auth:api'], function () use ($rout
     $router->delete('/system/usersobh/{id}',['middleware'=>['role:superadmin'],'uses'=>'System\UsersOBHController@destroy','as'=>'usersobh.destroy']);
 
     //setting - users kumham
-    $router->get('/system/userskumham',['middleware'=>['role:superadmin|akademik'],'uses'=>'System\UsersKumhamController@index','as'=>'userskumham.index']);
-    $router->post('/system/userskumham/store',['middleware'=>['role:superadmin|akademik'],'uses'=>'System\UsersKumhamController@store','as'=>'userskumham.store']);
-    $router->put('/system/userskumham/{id}',['middleware'=>['role:superadmin|akademik'],'uses'=>'System\UsersKumhamController@update','as'=>'userskumham.update']);
-    $router->delete('/system/userskumham/{id}',['middleware'=>['role:superadmin|akademik'],'uses'=>'System\UsersKumhamController@destroy','as'=>'userskumham.destroy']);
-
-    //system-migration
-    $router->post('/system/migration',['middleware'=>['role:superadmin|akademik'],'uses'=>'System\SystemMigrationController@index','as'=>'systemmigration.index']);
-    $router->post('/system/migration/store',['middleware'=>['role:superadmin|akademik'],'uses'=>'System\SystemMigrationController@store','as'=>'systemmigration.store']);
+    $router->get('/system/userskumham',['middleware'=>['role:superadmin|kumham'],'uses'=>'System\UsersKumhamController@index','as'=>'userskumham.index']);
+    $router->post('/system/userskumham/store',['middleware'=>['role:superadmin|kumham'],'uses'=>'System\UsersKumhamController@store','as'=>'userskumham.store']);
+    $router->put('/system/userskumham/{id}',['middleware'=>['role:superadmin|kumham'],'uses'=>'System\UsersKumhamController@update','as'=>'userskumham.update']);
+    $router->delete('/system/userskumham/{id}',['middleware'=>['role:superadmin|kumham'],'uses'=>'System\UsersKumhamController@destroy','as'=>'userskumham.destroy']);
 
     //untuk ui admin
     $router->get('/system/setting/uiadmin',['uses'=>'System\UIController@admin','as'=>'ui.admin']);

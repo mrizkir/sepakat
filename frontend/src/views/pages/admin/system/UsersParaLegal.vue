@@ -21,7 +21,7 @@
                     colored-border
                     type="info"
                     >
-                     User dengan role Legal bertanggungjawab terhadap proses konsultasi hukum.
+                     User dengan role PARALEGAL bertanggungjawab terhadap proses konsultasi hukum.
                 </v-alert>
             </template>
         </ModuleHeader>        
@@ -59,7 +59,7 @@
                     >
                         <template v-slot:top>
                             <v-toolbar flat color="white">
-                                <v-toolbar-title>DAFTAR USERS LEGAL</v-toolbar-title>
+                                <v-toolbar-title>DAFTAR USERS PARALEGAL</v-toolbar-title>
                                 <v-divider
                                     class="mx-4"
                                     inset
@@ -78,7 +78,7 @@
                                     class="mb-2" 
                                     :loading="btnLoading"
                                     :disabled="btnLoading"
-                                    @click.stop="showDialogTambahUserLegal">
+                                    @click.stop="showDialogTambahUserPARALEGAL">
                                     TAMBAH
                                 </v-btn>
                                 <v-dialog v-model="dialog" max-width="500px" persistent>                                    
@@ -140,6 +140,7 @@
                                                     item-value="id"
                                                     multiple 
                                                     small-chips
+                                                    :rules="rule_desa"
                                                     outlined>                                                                                
                                                 </v-autocomplete>   
                                                 <v-select 
@@ -154,6 +155,7 @@
                                                     label="ROLES"                                                     
                                                     multiple 
                                                     small-chips
+                                                    :rules="rule_user_roles"
                                                     outlined>                                                                                
                                                 </v-autocomplete>                                                                                          
                                             </v-card-text>
@@ -245,6 +247,7 @@
                                                     label="ROLES"                                                     
                                                     multiple 
                                                     small-chips
+                                                    :rules="rule_user_roles"
                                                     outlined>                                                                                
                                                 </v-autocomplete>                                             
                                             </v-card-text>
@@ -446,13 +449,15 @@ export default {
         ], 
         rule_desa:[
             value => !!value||"Mohon untuk dipilih desa tempat bertugas para legal !!!",
-            value => {
-                if (value && typeof value !== 'undefined' && value.length > 0){
-                    return 'Mohon untuk dipilih desa tempat bertugas para legal ';
+            value => {                
+                if (value.length)
+                {
+                    
+                    return true;
                 }
                 else
                 {
-                    return true;
+                    return 'Mohon untuk dipilih desa tempat bertugas para legal ';
                 }
             }
         ], 
@@ -467,6 +472,9 @@ export default {
                 }
             }
         ],
+        rule_user_roles:[
+            value => !!value||"Mohon untuk dipilih role user ini !!!",
+        ]
     }),
     methods: {
         initialize:async function () 
@@ -512,7 +520,7 @@ export default {
                 this.btnLoading=false;
             });     
         },
-        showDialogTambahUserLegal:async function ()
+        showDialogTambahUserPARALEGAL:async function ()
         {
             this.$ajax.get('/datamaster/kabupaten/2102/kecamatan').then(({data})=>{
                 this.daftar_kecamatan=data.kecamatan;                
@@ -730,7 +738,7 @@ export default {
     },
     computed: {
         formTitle () {
-            return this.editedIndex === -1 ? 'TAMBAH USER LEGAL' : 'EDIT USER LEGAL'
+            return this.editedIndex === -1 ? 'TAMBAH USER PARALEGAL' : 'EDIT USER PARALEGAL'
         },
         ...mapGetters('auth',{            
             ACCESS_TOKEN:'AccessToken',          

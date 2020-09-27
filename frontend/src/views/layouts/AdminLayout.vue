@@ -164,6 +164,16 @@
                                 </v-list-item-title>
                             </v-list-item-content>
                         </v-list-item>  
+                        <v-list-item link v-if="CAN_ACCESS('SYSTEM-USERS-HUMKAM_BROWSE')" to="/system-users/kumham">
+                            <v-list-item-icon class="mr-2">
+                                <v-icon>mdi-account</v-icon>
+                            </v-list-item-icon>
+                            <v-list-item-content>
+                                <v-list-item-title>
+                                    KANWIL HUKUM DAN HAM
+                                </v-list-item-title>
+                            </v-list-item-content>
+                        </v-list-item>                       
                         <v-list-item link v-if="CAN_ACCESS('SYSTEM-USERS-PARALEGAL_BROWSE')" to="/system-users/paralegal">
                             <v-list-item-icon class="mr-2">
                                 <v-icon>mdi-account</v-icon>
@@ -203,17 +213,7 @@
                                     OBH
                                 </v-list-item-title>
                             </v-list-item-content>
-                        </v-list-item>                       
-                        <v-list-item link v-if="CAN_ACCESS('SYSTEM-USERS-HUMKAM_BROWSE')" to="/system-users/humkam">
-                            <v-list-item-icon class="mr-2">
-                                <v-icon>mdi-account</v-icon>
-                            </v-list-item-icon>
-                            <v-list-item-content>
-                                <v-list-item-title>
-                                    HUMKAM
-                                </v-list-item-title>
-                            </v-list-item-content>
-                        </v-list-item>                       
+                        </v-list-item>                                               
 					</div>
                 </v-list-group>                
             </v-list>

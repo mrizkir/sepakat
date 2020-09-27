@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\Controller;
 use App\Rules\IgnoreIfDataIsEqualValidation;
 use App\Models\User;
-use App\Models\UserDosen;
 use App\Helpers\Helper;
 use Ramsey\Uuid\Uuid;
 use Illuminate\Validation\Rule;
@@ -80,22 +79,6 @@ class UsersController extends Controller {
                     $permission=Role::findByName($v)->permissions;
                     $permissions=$permission->pluck('name');
                     $user->givePermissionTo($permissions);
-
-                    if ($v=='dosen')
-                    {
-                        UserDosen::create([
-                            'user_id'=>$user->id,
-                            'nama_dosen'=>$request->input('name'),                                                            
-                        ]);
-
-                        if ($v=='dosenwali')
-                        {
-                            \DB::table('pe3_dosen')
-                                ->where('user_id',$user->id)
-                                ->update(['is_dw'=>true]);
-                        }
-                    }
-                    
                 }
             }
             \App\Models\System\ActivityLog::log($request,[
@@ -285,10 +268,7 @@ class UsersController extends Controller {
                         unset($daftar_roles[$key]);
                     }
                 }
-                $user->syncRoles($daftar_roles);
-                
-                $dosen=UserDosen::find($user->id);
-                
+                $user->syncRoles($daftar_roles);                
                 foreach($daftar_roles as $v)
                 {
                     if ($v!='superadmin')
@@ -296,36 +276,6 @@ class UsersController extends Controller {
                         $permission=Role::findByName($v)->permissions;
                         $permissions=$permission->pluck('name');
                         $user->givePermissionTo($permissions);
-
-                        if ($v=='dosen' && is_null($dosen))
-                        {
-                            UserDosen::create([
-                                'user_id'=>$user->id,
-                                'nama_dosen'=>$request->input('name'),                                                            
-                            ]);
-                        }
-                        else if ($v=='dosen' && !is_null($dosen))
-                        {
-                            $dosen->active=1;
-                            $dosen->save();
-                        }
-                        else if (!is_null($dosen))
-                        {
-                            $dosen->active=0;
-                            $dosen->save();
-                        }
-                        if ($v=='dosenwali' && $v=='dosen')
-                        {
-                            \DB::table('pe3_dosen')
-                                ->where('user_id',$user->id)
-                                ->update(['is_dw'=>true]);
-                        }
-                        else
-                        {
-                            \DB::table('pe3_dosen')
-                                ->where('user_id',$user->id)
-                                ->update(['is_dw'=>false]);
-                        }
                     }
                 }
                 

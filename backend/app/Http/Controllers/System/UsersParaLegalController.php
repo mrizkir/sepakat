@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\Controller;
 use App\Models\User;
-use App\Models\UserDesa;
 use Spatie\Permission\Models\Role;
 use Ramsey\Uuid\Uuid;
 use Illuminate\Validation\Rule;
@@ -111,16 +110,6 @@ class UsersParaLegalController extends Controller {
                 \DB::statement($sql); 
             }
 
-            $daftar_roles=json_decode($request->input('role_id'),true);
-            foreach($daftar_roles as $v)
-            {
-                $user->assignRole($v);               
-                $permission=Role::findByName($v)->permissions;
-                $permissions=$permission->pluck('name');
-                $user->givePermissionTo($permissions);                            
-            }
-            $user->syncRoles($daftar_roles);
-
             \App\Models\System\ActivityLog::log($request,[
                                             'object' => $this->guard()->user(), 
                                             'object_id' => $this->guard()->user()->id, 
@@ -209,21 +198,7 @@ class UsersParaLegalController extends Controller {
                 }    
                 $user->updated_at = \Carbon\Carbon::now()->toDateTimeString();
                 $user->save();
-
-                if ($request->input('role_dosen')=='true')
-                {
-                    $user->assignRole('dosen'); 
-                    $permission=Role::findByName('dosen')->permissions;
-                    $permissions=$permission->pluck('name');
-                    $user->givePermissionTo($permissions);
-                }
-                elseif ($user->hasRole('dosen'))
-                {
-                    $user->removeRole('dosen');
-                    $permission=Role::findByName('dosen')->permissions;
-                    $permissions=$permission->pluck('name');
-                    $user->revokePermissionTo($permissions);
-                }    
+                
                 $user_id=$user->id;
                 \DB::table('usersdesa')->where('user_id',$user_id)->delete();
                 $daftar_desa=json_decode($request->input('desa_id'),true);
@@ -253,59 +228,7 @@ class UsersParaLegalController extends Controller {
                             A.id='$desa_id' 
                     ";
                     \DB::statement($sql); 
-                }
-                $daftar_roles=json_decode($request->input('role_id'),true);                
-                if (($key= array_search('dosen',$daftar_roles))===false)
-                {                    
-                    $key= array_search('dosenwali',$daftar_roles);                    
-                    if (isset($daftar_roles[$key]))
-                    {
-                        unset($daftar_roles[$key]);
-                    }                    
-                }
-                $user->syncRoles($daftar_roles);
-                $dosen=UserDesa::find($user->id);
-
-                foreach($daftar_roles as $v)
-                {
-                    if ($v=='dosen'||$v=='dosenwali') // sementara seperti ini karena kalau bertambah tinggal diganti
-                    {              
-                        $permission=Role::findByName($v)->permissions;
-                        $permissions=$permission->pluck('name');
-                        $user->givePermissionTo($permissions);
-
-                        if ($v=='dosen' && is_null($dosen))
-                        {
-                            UserDesa::create([
-                                'user_id'=>$user->id,
-                                'nama_dosen'=>$request->input('name'),                                                            
-                            ]);
-                        }
-                        else if ($v=='dosen' && !is_null($dosen))
-                        {
-                            $dosen->active=1;
-                            $dosen->save();
-                        }
-                        else if (!is_null($dosen))
-                        {
-                            $dosen->active=0;
-                            $dosen->save();
-                        }
-                        //set dosen wali
-                        if ($v=='dosenwali' && $v=='dosen')
-                        {
-                            \DB::table('pe3_dosen')
-                                ->where('user_id',$user->id)
-                                ->update(['is_dw'=>true]);
-                        }
-                        else
-                        {
-                            \DB::table('pe3_dosen')
-                                ->where('user_id',$user->id)
-                                ->update(['is_dw'=>false]);
-                        }
-                    }
-                }
+                }               
 
                 \App\Models\System\ActivityLog::log($request,[
                                                             'object' => $this->guard()->user(), 
