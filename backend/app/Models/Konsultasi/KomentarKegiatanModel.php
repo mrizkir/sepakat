@@ -25,8 +25,7 @@ class KomentarKegiatanModel extends Model {
     protected $fillable = [
         'id',
         'kegiatan_id',
-        'user_id',
-        'tempat',
+        'user_id',        
         'isi_komentar',        
     ];
     /**

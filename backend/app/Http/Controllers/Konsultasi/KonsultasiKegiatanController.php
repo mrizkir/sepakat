@@ -116,7 +116,7 @@ class KonsultasikegiatanController extends Controller
                                     'status'=>1,
                                     'pid'=>'store',
                                     'kegiatan'=>$kegiatan,
-                                    'message'=>'Data pasien covid19 baru berhasil disimpan.'
+                                    'message'=>'Data kegiatan baru berhasil disimpan.'
                                 ],200);
     }
     public function uploadktppemohon (Request $request,$id)
@@ -232,7 +232,7 @@ class KonsultasikegiatanController extends Controller
         }
     }
     /**
-     * Menghapus calon mahasiwa baru
+     * Menghapus kegiatan
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response

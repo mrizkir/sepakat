@@ -55,5 +55,22 @@ class RolesTableSeeder extends Seeder
             ],                
         ]);
         
+        $role = Role::findByName('paralegal');
+        $records=[
+            'DASHBOARD_SHOW',
+            'DMASTER-JENISKEGIATAN_BROWSE',
+            'KONSULTASI-GROUP',
+            'KONSULTASI-KEGIATAN_BROWSE',
+            'KONSULTASI-KEGIATAN_SHOW',
+            'KONSULTASI-KEGIATAN_DESTROY',
+            'KONSULTASI-KEGIATAN_UPDATE',
+            'KONSULTASI-KEGIATAN_STORE',
+
+            'REPORT-GROUP',
+
+            'SYSTEM-USERS-PARALEGAL_BROWSE',            
+            
+        ]; 
+        $role->syncPermissions($records);
     }
 }

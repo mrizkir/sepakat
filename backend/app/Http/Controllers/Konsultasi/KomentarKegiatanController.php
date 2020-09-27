@@ -47,200 +47,74 @@ class KomentarkegiatanController extends Controller
     }    
     public function store(Request $request)
     {
-        $this->hasAnyPermission('KONSULTASI-KEGIATAN_STORE');
+        $this->hasAnyPermission('KONSULTASI-KOMENTAR-KEGIATAN_STORE');
 
         $this->validate($request, [
-            'kegiatan_id'=>'required|exists:kegiatan,kegiatan_id',            
-            'user_id'=>'required|exists:users,id',
-            'nama_kegiatan'=>'required',
-            'uraian_kegiatan'=>'required',
-            'tanggal_konsultasi'=>'required',
-            'jam_konsultasi'=>'required',
-            'tempat'=>'required',
-            'pemohon'=>'required',
-            'rekomendasi_kegiatan'=>'required',            
+            'kegiatan_id'=>'required|exists:kegiatan,kegiatan_id',                        
+            'isi_komentar'=>'required',            
         ]);
-
-        $tanggal_konsultasi=$request->input('tanggal_konsultasi') . ' '.$request->input('jam_konsultasi');
-        $kegiatan=KonsultasiKegiatanModel::create([
-            'kegiatan_id'=>Uuid::uuid4()->toString(),
-            'user_id'=>$request->input('user_id'),                
-            'tanggal'=>$tanggal_konsultasi,                
-            'tempat'=>$request->input('tempat'),                
-            'id_jenis_kegiatan'=>$request->input('id_jenis'),                
-            'nama_jenis'=>$request->input('nama_jenis'),                
-            'nama_kegiatan'=>$request->input('nama_kegiatan'),                
-            'pemohon'=>$request->input('pemohon'),                
-            'uraian_kegiatan'=>$request->input('uraian_kegiatan'),                
-            'rekomendasi_kegiatan'=>$request->input('rekomendasi_kegiatan'),                
-            'id_status'=>0,                            
-        ]);
-
+        $kegiatan_id=$request->input('kegiatan_id');
+        $komentar=KomentarKegiatanModel::create([
+            'id'=>Uuid::uuid4()->toString(),
+            'kegiatan_id'=>$kegiatan_id,                
+            'user_id'=>$this->getUserid(),                            
+            'isi_komentar'=>$request->input('isi_komentar'),                
+        ]);        
         return Response()->json([
-                                    'status'=>1,
-                                    'pid'=>'store',
-                                    'kegiatan'=>$kegiatan,
-                                    'message'=>'Data pasien covid19 baru berhasil disimpan.'
-                                ],200);
-    }
-    public function uploadktppemohon (Request $request,$id)
-    {
-        $this->hasAnyPermission('KONSULTASI-KEGIATAN_STORE');
-
-        $kegiatan = KonsultasiKegiatanModel::find($id); 
-        
-        if ($kegiatan == null)
-        {
-            return Response()->json([
-                                    'status'=>0,
-                                    'pid'=>'store',                
-                                    'message'=>["Data Konsultasi Kegiatan tidak ditemukan."]
-                                ],422);         
-        }
-        else
-        {
-            $this->validate($request, [                      
-                'filektppemohon'=>'required'                        
-            ]);
-            $name=$kegiatan->pemohon;
-            $filektppemohon = $request->file('filektppemohon');
-            $mime_type=$filektppemohon->getMimeType();
-            if ($mime_type=='image/png' || $mime_type=='image/jpeg')
-            {
-                $folder=\App\Helpers\Helper::public_path('images/kegiatan/');
-                $file_name=uniqid('img').".".$filektppemohon->getClientOriginalExtension();
-                if (is_file(\App\Helpers\Helper::public_path($kegiatan->file_fotocopy_ktp)))                
-                {
-                    unlink(\App\Helpers\Helper::public_path($kegiatan->file_fotocopy_ktp));
-                }                
-                $kegiatan->file_fotocopy_ktp="storage/images/kegiatan/$file_name";
-                $kegiatan->save();
-                $filektppemohon->move($folder,$file_name);
-                return Response()->json([
-                                            'status'=>0,
-                                            'pid'=>'store',
-                                            'kegiatan'=>$kegiatan,                
-                                            'message'=>"KTP Pemohon/Peserta ($name) berhasil diupload"
-                                        ],200);    
-            }
-            else
-            {
-                return Response()->json([
-                                        'status'=>1,
-                                        'pid'=>'store',
-                                        'message'=>["Extensi file yang diupload bukan jpg atau png."]
-                                    ],422); 
-                
-
-            }
-        }
-    }
+                                'status'=>1,
+                                'pid'=>'store',                                
+                                'message'=>'Data komentar baru berhasil disimpan.'
+                            ],200);
+    }    
     public function update(Request $request,$id)
     {
-        $this->hasAnyPermission('KONSULTASI-KEGIATAN_UPDATE');
-
-        if ($this->hasRole('paralegal'))
-        {
-            $kegiatan = KonsultasiKegiatanModel::where('user_id',$this->getUserid())
-                                            ->find($id);
-        }
-        else
-        {
-            $kegiatan = KonsultasiKegiatanModel::find($id);
-        }
+        $this->hasAnyPermission('KONSULTASI-KOMENTAR-KEGIATAN_UPDATE');
         
-
-        if (is_null($kegiatan))
-        {
-            return Response()->json([
-                                    'status'=>1,
-                                    'pid'=>'fetchdata',
-                                    'message'=>["kegiatan konsultasi dengan ID ($id) gagal diperoleh"]
-                                ],422);
-        }
-        else
-        {            
-            $this->validate($request, [
-                'id_jenis'=>'required|exists:jenis_kegiatan,id_jenis',
-                'nama_jenis'=>'required',
-                'user_id'=>'required|exists:users,id',
-                'nama_kegiatan'=>'required',
-                'uraian_kegiatan'=>'required',
-                'tanggal_konsultasi'=>'required',
-                'jam_konsultasi'=>'required',
-                'tempat'=>'required',
-                'pemohon'=>'required',
-                'rekomendasi_kegiatan'=>'required',            
-            ]);
-
-            $tanggal_konsultasi=$request->input('tanggal_konsultasi') . ' '.$request->input('jam_konsultasi');
-            $kegiatan->user_id=$request->input('user_id');             
-            $kegiatan->tanggal=$tanggal_konsultasi;               
-            $kegiatan->tempat=$request->input('tempat');                
-            $kegiatan->id_jenis_kegiatan=$request->input('id_jenis');                
-            $kegiatan->nama_jenis=$request->input('nama_jenis');                
-            $kegiatan->nama_kegiatan=$request->input('nama_kegiatan');                
-            $kegiatan->pemohon=$request->input('pemohon');                
-            $kegiatan->uraian_kegiatan=$request->input('uraian_kegiatan');                
-            $kegiatan->rekomendasi_kegiatan=$request->input('rekomendasi_kegiatan');
-            
-            $kegiatan->save();
-            
-
-            return Response()->json([
-                                        'status'=>1,
-                                        'pid'=>'update',
-                                        'kegiatan'=>$kegiatan,
-                                        'message'=>"Update Kegiatan Konsultasi berhasil diperoleh"
-                                    ],200);
-        }
     }
     /**
-     * Menghapus calon mahasiwa baru
+     * Menghapus komentar
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function destroy(Request $request,$id)
     {
-        $this->hasAnyPermission('KONSULTASI-KEGIATAN_DESTROY');
+        $this->hasAnyPermission('KONSULTASI-KOMENTAR-KEGIATAN_DESTROY');
 
-        if ($this->hasRole('paralegal'))
+        if ($this->hasRole('superadmin'))
         {
-            $kegiatan = KonsultasiKegiatanModel::where('user_id',$this->getUserid())
-                                            ->find($id);
+            $komentar = KomentarKegiatanModel::find($id);            
         }
         else
         {
-            $kegiatan = KonsultasiKegiatanModel::find($id);
+            $komentar = KomentarKegiatanModel::where('user_id',$this->getUserid())
+                                            ->find($id);
         }
         
 
-        if (is_null($kegiatan))
+        if (is_null($komentar))
         {
             return Response()->json([
                                     'status'=>1,
                                     'pid'=>'destroy',
-                                    'message'=>["kegiatan konsultasi dengan ID ($id) gagal dihapus"]
+                                    'message'=>["Komentar kegiatan konsultasi dengan ID ($id) gagal dihapus"]
                                 ],422);
         }
         else
         {
-            $nama_kegiatan=$kegiatan->nama_kegiatan;
             
-
             \App\Models\System\ActivityLog::log($request,[
-                                                                'object' => $kegiatan,
-                                                                'object_id' => $kegiatan->kegiatan_id,
+                                                                'object' => $komentar,
+                                                                'object_id' => $komentar->kegiatan_id,
                                                                 'user_id' => $this->getUserid(),
-                                                                'message' => 'Menghapus Kegiatan Konsultasi ('.$nama_kegiatan.') berhasil'
+                                                                'message' => 'Menghapus komentar Kegiatan Konsultasi berhasil'
                                                             ]);
-            $kegiatan->delete();
+            $komentar->delete();
             
             return Response()->json([
                                         'status'=>1,
                                         'pid'=>'destroy',
-                                        'message'=>"Kegiatan Konsultasi ($nama_kegiatan) berhasil dihapus"
+                                        'message' => 'Menghapus komentar Kegiatan Konsultasi berhasil'
                                     ],200);
         }
 

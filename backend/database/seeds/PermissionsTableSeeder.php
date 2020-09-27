@@ -79,6 +79,7 @@ class PermissionsTableSeeder extends Seeder
             'DMASTER-TA',        
                      
             'KONSULTASI-KEGIATAN',  
+            'KONSULTASI-KOMENTAR-KEGIATAN',  
 
             'SYSTEM-SETTING-PERMISSIONS',
             'SYSTEM-SETTING-ROLES',

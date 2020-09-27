@@ -47,25 +47,56 @@
                 </v-col>
             </v-row>
             <v-row>
-                <v-col cols="12">
-                    <v-form ref="frmdata" v-model="form_valid" lazy-validation>
-                        <v-card class="grey lighten-4">
-                            <v-card-title>
-                                <v-icon>mdi-comment</v-icon> Komentar
-                            </v-card-title>
-                            <v-card-text v-if="daftar_komentar.length">
-                                
-                            </v-card-text>  
-                            <v-card-text else>
-                                <v-alert
-                                    text
-                                    outlined
-                                    color="info"
-                                    >
-                                    BELUM ADA KOMENTAR
-                                </v-alert>
-                            </v-card-text>  
+                <v-col cols="12">                    
+                    <v-card class="grey lighten-4">
+                        <v-card-title>
+                            <v-icon>mdi-comment</v-icon> Komentar
+                        </v-card-title>
+                        <v-card-text v-if="daftar_komentar.length">
+                            <v-card 
+                                class="mx-auto mb-2"
+                                max-width="500"
+                                outlined
+                                v-for="items in daftar_komentar" v-bind:key="items.id">
+                                    <v-card-title>
+                                        {{items.name}}
+                                    </v-card-title>
+                                    <v-card-text>                                            
+                                        {{items.isi_komentar}}
+                                    </v-card-text>'
+                                    <v-divider class="mx-4"></v-divider>
+                                    <v-card-text>
+                                        <v-chip color="info">{{$date(items.created_at).format('DD/MM/YYYY HH:mm')}}</v-chip>
+                                    </v-card-text>
+
+                                    <v-card-actions>
+                                        <v-spacer></v-spacer>
+                                        <v-btn
+                                            small
+                                            icon
+                                            :loading="btnLoading"
+                                            :disabled="btnLoading"
+                                            @click.stop="deleteItem(items)"
+                                            v-if="$store.getters['auth/AttributeUser']('id')==items.user_id">
+                                            <v-icon color="red">
+                                                mdi-delete
+                                            </v-icon>
+                                        </v-btn>
+                                    </v-card-actions>
+                            </v-card>
+                        </v-card-text>  
+                        <v-card-text v-else>
+                            <v-alert
+                                text
+                                outlined
+                                color="info"
+                                >
+                                BELUM ADA KOMENTAR
+                            </v-alert>
+                        </v-card-text>  
+                        <v-form ref="frmdata" v-model="form_valid" lazy-validation>
                             <v-card-actions>
+                            
                                 <v-textarea
                                     class="mr-2"
                                     label="KOMENTAR"                                        
@@ -83,9 +114,10 @@
                                         mdi-send
                                     </v-icon> 
                                 </v-btn>                                
+                            
                             </v-card-actions>
-                        </v-card>
-                    </v-form>
+                        </v-form>
+                    </v-card>                    
                 </v-col>
             </v-row>
         </v-container>
@@ -160,7 +192,7 @@ export default {
                     Authorization:this.$store.getters['auth/Token']
                 }
             }).then(({data})=>{                               
-                console.log(data);
+                this.daftar_komentar=data.daftar_komentar;
             })
         },
         savekomentar:async function () {
@@ -170,7 +202,7 @@ export default {
 
                 await this.$ajax.post('/konsultasi/komentar/store',
                 {
-                    kegiatan_id:this.formdata.user_id,                    
+                    kegiatan_id:this.kegiatan_id,                    
                     isi_komentar:this.formdata.komentar,                    
                 },
                 {
@@ -178,18 +210,39 @@ export default {
                         Authorization:this.$store.getters['auth/Token']
                     }
                 }
-                ).then(({data})=>{        
-                    this.btnLoading=false;               
-                    setTimeout(() => {
-                        this.formdata = Object.assign({}, this.formdefault);                                
-                        this.$router.push('/konsultasi/kegiatan/'+data.kegiatan.kegiatan_id+'/files')
-                        }, 300
-                    );
+                ).then(( )=>{        
+                    this.btnLoading=false;     
+                    this.formdata.isi_komentar='';          
+                    this.$refs.frmdata.reset();
+                    this.fetchKomentar();
                 }).catch(()=>{
                     this.btnLoading=false;
                 });                
             }
         },  
+        deleteItem (item) {           
+            this.$root.$confirm.open('Delete', 'Apakah Anda ingin menghapus komentar kegiatan dengan ID '+item.kegiatan_id+' ?', { color: 'red',width:600 }).then((confirm) => {
+                if (confirm)
+                {
+                    this.btnLoading=true;
+                    this.$ajax.post('/konsultasi/komentar/'+item.id,
+                        {
+                            '_method':'DELETE',
+                        },
+                        {
+                            headers:{
+                                Authorization:this.$store.getters['auth/Token']
+                            }
+                        }
+                    ).then(()=>{   
+                        this.fetchKomentar();
+                        this.btnLoading=false;
+                    }).catch(()=>{
+                        this.btnLoading=false;
+                    });
+                }                
+            });
+        },        
     },
     components:{
         AdminLayout,
