@@ -141,7 +141,13 @@
                                                     multiple 
                                                     small-chips
                                                     outlined>                                                                                
-                                                </v-autocomplete>     
+                                                </v-autocomplete>   
+                                                <v-select 
+                                                    :items="daftar_utusan" 
+                                                    v-model="editedItem.utusan"
+                                                    label="UTUSAN"
+                                                    outlined>                                                                                
+                                                </v-select>  
                                                 <v-autocomplete 
                                                     :items="daftar_roles" 
                                                     v-model="editedItem.role_id"
@@ -149,7 +155,7 @@
                                                     multiple 
                                                     small-chips
                                                     outlined>                                                                                
-                                                </v-autocomplete>                                           
+                                                </v-autocomplete>                                                                                          
                                             </v-card-text>
                                             <v-card-actions>
                                                 <v-spacer></v-spacer>
@@ -227,6 +233,12 @@
                                                     small-chips
                                                     outlined>                                                                                
                                                 </v-autocomplete>   
+                                                <v-select 
+                                                    :items="daftar_utusan" 
+                                                    v-model="editedItem.utusan"
+                                                    label="UTUSAN"
+                                                    outlined>                                                                                
+                                                </v-select>
                                                 <v-autocomplete 
                                                     :items="daftar_roles" 
                                                     v-model="editedItem.role_id"
@@ -345,6 +357,7 @@ export default {
             { text: 'NAME', value: 'name',sortable:true },
             { text: 'EMAIL', value: 'email',sortable:true },     
             { text: 'NOMOR HP', value: 'nomor_hp',sortable:true },     
+            { text: 'UTUSAN', value: 'utusan',sortable:true },     
             { text: 'AKSI', value: 'actions', sortable: false,width:100 },
         ],
         expanded:[],
@@ -358,6 +371,7 @@ export default {
         daftar_roles:[],
         dialog: false,
         dialogEdit: false,
+        firstShowDialogEdit:true,
         dialogUserPermission: false,
         editedIndex: -1,
         
@@ -365,6 +379,16 @@ export default {
         kecamatan_id:null,
 
         daftar_desa:[],
+        daftar_utusan:[
+            {
+                value:'masyarakat',
+                text:'MASYARAKAT'
+            },
+            {
+                value:'perangkat_desa',
+                text:'PERANGKAT DESA'
+            }
+        ],
         editedItem: {
             id:0,
             username: '',           
@@ -373,6 +397,7 @@ export default {
             email: '',           
             nomor_hp:'',           
             desa_id:[], 
+            utusan:'masyarakat',  
             role_id:['paralegal'],                            
             created_at: '',           
             updated_at: '',   
@@ -385,6 +410,7 @@ export default {
             email: '',           
             nomor_hp: '',  
             desa_id:[],  
+            utusan:'masyarakat',  
             role_id:['paralegal'],                                              
             created_at: '',           
             updated_at: '',        
@@ -530,14 +556,19 @@ export default {
             ).then(({data})=>{                                   
                 let daftar_desa = data.daftar_desa;
                 var desa=[];
-                daftar_desa.forEach(element => {
-                    desa.push(element.desa_id);                        
-                    this.kecamatan_id={
+                var kecamatan=null;
+                daftar_desa.forEach(element => {                    
+                    desa.push(element.desa_id);                                            
+                    kecamatan={
                         id:element.kecamatan_id,
                         nama:element.nama_kecamatan
                     }
                 });   
-                this.editedItem.desa_id=desa;                 
+                if (kecamatan !== null)
+                {
+                    this.kecamatan_id=kecamatan;    
+                    this.editedItem.desa_id=desa;                       
+                }
             });           
             await this.$ajax.get('/system/setting/roles',{
                 headers: {
@@ -569,6 +600,8 @@ export default {
                 this.btnLoading=false;
                 this.dialogEdit = true;
             });
+
+            this.firstShowDialogEdit=false;
         },
         setPermission: async function (item) {          
             this.btnLoading=true;  
@@ -600,7 +633,8 @@ export default {
         close () {            
             this.btnLoading=false;
             this.dialog = false;
-            this.dialogEdit = false;            
+            this.dialogEdit = false;      
+            this.firstShowDialogEdit=true;      
             setTimeout(() => {
                 this.editedItem = Object.assign({}, this.defaultItem)
                 this.editedIndex = -1
@@ -628,6 +662,7 @@ export default {
                             username:this.editedItem.username,
                             password:this.editedItem.password,   
                             desa_id:JSON.stringify(Object.assign({},this.editedItem.desa_id)),
+                            utusan:this.editedItem.utusan,
                             role_id:JSON.stringify(Object.assign({},this.editedItem.role_id)),
                         },
                         {
@@ -651,6 +686,7 @@ export default {
                             username:this.editedItem.username,
                             password:this.editedItem.password,            
                             desa_id:JSON.stringify(Object.assign({},this.editedItem.desa_id)),    
+                            utusan:this.editedItem.utusan,
                             role_id:JSON.stringify(Object.assign({},this.editedItem.role_id)),                         
                         },
                         {
@@ -718,7 +754,10 @@ export default {
                     this.daftar_desa=data.desa;
                     this.selectLoadingKec=false;
                 });
-                this.editedItem.desa_id=[];
+                if (!this.firstShowDialogEdit)
+                {
+                    this.editedItem.desa_id=[];
+                }                
             }
         },  
     },    

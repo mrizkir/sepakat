@@ -8,25 +8,6 @@ const getDefaultState = () =>
         pages:[],
 
         daftar_ta:[],
-        tahun_pendaftaran:null,
-        tahun_akademik:null,
-
-        daftar_semester:[],
-        semester_pendaftaran:null,
-        semester_akademik:null,
-
-        daftar_fakultas:[],
-        fakultas_id:null,
-        
-        daftar_prodi:[],
-        prodi_id:null,
-
-        daftar_kelas:[],
-        idkelas:null,
-
-        daftar_status_mhs:[],
-        k_status:null,
-        
     }
 }
 const state = getDefaultState();
@@ -66,64 +47,7 @@ const mutations = {
     {
         state.daftar_ta=daftar;
     },
-    setTahunPendaftaran(state,tahun)
-    {
-        state.tahun_pendaftaran=tahun;
-    },  
-    setTahunAkademik(state,tahun)
-    {
-        state.tahun_akademik=tahun;
-    },  
-
-    setDaftarSemester(state,daftar)
-    {
-        state.daftar_semester=daftar;
-    },
-    setSemesterPendaftaran(state,semester)
-    {
-        state.semester_pendaftaran = semester;
-    },
-    setSemesterAkademik(state,semester)
-    {
-        state.semester_akademik = semester;
-    },
     
-    setDaftarFakultas(state,daftar)
-    {
-        state.daftar_fakultas=daftar;
-    },
-    setFakultasID(state,id)
-    {
-        state.fakultas_id=id;
-    },    
-    
-    setDaftarProdi(state,daftar)
-    {
-        state.daftar_prodi=daftar;
-    },
-    setProdiID(state,id)
-    {
-        state.prodi_id=id;
-    },    
-
-    setDaftarKelas(state,daftar)
-    {
-        state.daftar_kelas=daftar;
-    },
-    setIDKelas(state,id)
-    {
-        state.idkelas=id;
-    },    
-
-    setDaftarStatusMahasiswa(state,daftar)
-    {
-        state.daftar_status_mhs=daftar;
-    },
-    setStatusMahasiswa(state,k_status)
-    {
-        state.k_status=k_status;
-    },    
-
     resetState (state) {
         Object.assign(state, getDefaultState())
     }
@@ -148,108 +72,7 @@ const getters= {
     getDaftarTA: state => 
     {   
         return state.daftar_ta;
-    },
-    getTahunPendaftaran: state =>
-    {
-        return parseInt(state.tahun_pendaftaran);
-    },
-    getTahunAkademik: state =>
-    {
-        return parseInt(state.tahun_akademik);
-    },
-    
-    getDaftarSemester: state => 
-    {   
-        return state.daftar_semester;
-    },
-    getNamaSemester : (state) => (key) =>
-    {   
-        var nama_semester='';
-        let found = state.daftar_semester.find(semester => semester.id==key);                                 
-        if (typeof found !=='undefined')
-        {
-            nama_semester=found.text;
-        }               
-        return nama_semester;
-    },
-    getSemesterPendaftaran: state => 
-    {             
-        return parseInt(state.semester_pendaftaran);
-    },
-    getSemesterAkademik: state => 
-    {             
-        return parseInt(state.semester_akademik);
-    },
-
-    getDaftarProdi: state => 
-    {   
-        return state.daftar_prodi.filter(el => el != null);
-    },
-    getProdiID: state =>
-    {
-        return parseInt(state.prodi_id);
-    },
-    getProdiName : (state) => (key) =>
-    {   
-        return state.daftar_prodi == null?'':state.daftar_prodi[key].nama_prodi;
-    },
-    
-    getDaftarFakultas: state => 
-    {   
-        return state.daftar_fakultas.filter(el => el != null);
-    },
-    getFakultasID: state =>
-    {
-        return state.fakultas_id;
-    },
-    getFakultasName : (state) => (key) =>
-    {   
-        var nama_fakultas='';
-        let found = state.daftar_fakultas.find(fakultas => fakultas.id==key);                                 
-        if (typeof found !=='undefined')
-        {
-            nama_fakultas=found.text;
-        }               
-        return nama_fakultas;
-    },
-
-    getDaftarKelas: state => 
-    {   
-        return state.daftar_kelas;
-    },
-    getIDKelas: state =>
-    {
-        return state.idkelas;
-    },
-    getNamaKelas: (state) => (id) =>
-    {
-        var nama_kelas='N.A';
-        let found = state.daftar_kelas.find(kelas => kelas.id==id);                          
-        if (typeof found !=='undefined')
-        {
-            nama_kelas=found.text;
-        }               
-        return nama_kelas;
-    },
-
-    getDaftarStatusMahasiswa: state => 
-    {   
-        return state.daftar_status_mhs;
-    },
-    getKStatus: state =>
-    {
-        return state.k_status;
-    },
-    getStatusMahasiswa: (state) => (id) =>
-    {
-        var nama_status='N.A';
-        let found = state.daftar_status_mhs.find(status_mhs => status_mhs.id==id);                          
-        if (typeof found !=='undefined')
-        {
-            nama_status=found.text;
-        }               
-        return nama_status;
-    },
+    },   
     
 }
 const actions = {    
@@ -259,7 +82,6 @@ const actions = {
         commit('setLoaded',false);              
         if (!state.loaded && rootGetters['auth/Authenticated'])
         {   
-            commit('setSemesterPendaftaran',rootGetters['uifront/getSemesterPendaftaran']);   
             let token=rootGetters['auth/Token'];                                                     
             await ajax.get('/system/setting/uiadmin',               
                 {
@@ -269,41 +91,7 @@ const actions = {
                 }
             ).then(({data})=>{                   
                 commit('setDaftarTA',data.daftar_ta); 
-                commit('setTahunPendaftaran',data.tahun_pendaftaran);   
-                commit('setTahunAkademik',data.tahun_akademik);           
-                commit('setDaftarSemester',data.daftar_semester);         
-                commit('setSemesterAkademik',data.semester_akademik);
-
-                let daftar_fakultas = data.daftar_fakultas;
-                var fakultas=[];
-                daftar_fakultas.forEach(element => {
-                    fakultas.push({
-                        id:element.kode_fakultas,
-                        text:element.nama_fakultas,
-                        nama_fakultas:element.nama_fakultas,                  
-                    });
-                });                           
-                commit('setDaftarFakultas',fakultas);            
-                commit('setFakultasID',data.fakultas_id); 
-
-                let daftar_prodi = data.daftar_prodi;
-                var prodi=[];
-                daftar_prodi.forEach(element => {
-                    prodi[element.id]={
-                        id:element.id,
-                        text:element.nama_prodi_alias + ' ('+element.nama_jenjang+')',
-                        nama_prodi:element.nama_prodi + ' ('+element.nama_jenjang+')',                  
-                    };
-                });                           
-                commit('setDaftarProdi',prodi);            
-                commit('setProdiID',data.prodi_id);            
-                      
-                commit('setDaftarKelas',data.daftar_kelas);            
-                commit('setIDKelas',data.idkelas);            
                 
-                commit('setDaftarStatusMahasiswa',data.daftar_status_mhs);            
-                commit('setStatusMahasiswa',data.k_status);            
-
                 commit('setLoaded',true);              
             });      
         }
@@ -339,37 +127,6 @@ const actions = {
         commit('setDashboard',name);
     },
 
-    updateFakultas({commit},id)
-    {
-        commit('setFakultasID',id);
-    },
-    updateProdi({commit},id)
-    {
-        commit('setProdiID',id);
-    },
-    
-    updateTahunPendaftaran({commit},tahun)
-    {
-        commit('setTahunPendaftaran',tahun);
-    },
-    updateTahunAkademik({commit},tahun)
-    {
-        commit('setTahunAkademik',tahun);
-    },
-
-    updateSemesterPendaftaran({commit},semester)
-    {
-        commit('setSemesterPendaftaran',semester);
-    },
-    updateSemesterAkademik({commit},semester)
-    {
-        commit('setSemesterAkademik',semester);
-    },
-
-    updateIDKelas({commit},idkelas)
-    {
-        commit('setIDKelas',idkelas);
-    },
     reinit ({ commit }) 
     {
         commit('resetState');

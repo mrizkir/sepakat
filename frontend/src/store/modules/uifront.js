@@ -54,8 +54,7 @@ const actions = {
         commit('setLoaded',false);              
         if (!state.loaded)
         {            
-            await ajax.get('/system/setting/uifront').then(({data})=>{  
-                console.log(data);                                                                     
+            await ajax.get('/system/setting/uifront').then(({data})=>{                  
                 commit('setTahunData',data.tahun_data);                                                                                            
                 commit('setIdentitas',data.identitas);                                                         
                 commit('setLoaded',true);

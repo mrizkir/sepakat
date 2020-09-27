@@ -28,7 +28,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
         'name', 
         'nomor_hp', 
         'email', 
-        'ta', 
+        'utusan',         
         'code', 
         'theme', 
         'foto', 

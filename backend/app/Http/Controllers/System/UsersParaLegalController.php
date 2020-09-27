@@ -69,6 +69,7 @@ class UsersParaLegalController extends Controller {
                 'email'=>$request->input('email'),
                 'nomor_hp'=>$request->input('nomor_hp'),
                 'username'=> $request->input('username'),
+                'utusan'=> $request->input('utusan'),
                 'password'=>Hash::make($request->input('password')),                        
                 'theme'=>'default',
                 'default_role'=>'paralegal',            
@@ -202,6 +203,7 @@ class UsersParaLegalController extends Controller {
                 $user->email = $request->input('email');
                 $user->nomor_hp = $request->input('nomor_hp');
                 $user->username = $request->input('username');        
+                $user->utusan = $request->input('utusan');        
                 if (!empty(trim($request->input('password')))) {
                     $user->password = Hash::make($request->input('password'));
                 }    

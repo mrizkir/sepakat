@@ -20,18 +20,17 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->string('name');
             $table->string('email')->unique();
-            $table->string('nomor_hp')->unique();
-            $table->year('ta')->default(0);
+            $table->string('nomor_hp')->unique();            
             $table->integer('code')->default(0);        
             $table->string('theme')->default('default');
             $table->string('foto')->default('storage/images/users/no_photo.png');
             $table->boolean('active')->default(1);
             $table->boolean('isdeleted')->default(1);
             $table->string('default_role',15);
+            $table->enum('utusan',['masyarakat','perangkat_desa','none'])->default('none');
             $table->boolean('locked')->default(0);                          
             
-            $table->timestamps();
-            $table->index('ta');
+            $table->timestamps();            
         });
     }
 
