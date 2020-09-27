@@ -55,6 +55,12 @@ $router->group(['prefix'=>'v1','middleware'=>'auth:api'], function () use ($rout
     $router->post('/konsultasi/kegiatan/uploadktppemohon/{id}',['middleware'=>['role:superadmin|paralegal'],'uses'=>'Konsultasi\KonsultasiKegiatanController@uploadktppemohon','as'=>'konsultasikegiatan.uploadktppemohon']);
     $router->post('/konsultasi/kegiatan/hapusktppemohon/{id}',['middleware'=>['role:superadmin|paralegal'],'uses'=>'Konsultasi\KonsultasiKegiatanController@hapusktppemohon','as'=>'konsultasikegiatan.hapusktppemohon']);
     $router->delete('/konsultasi/kegiatan/{id}',['middleware'=>['role:superadmin|paralegal'],'uses'=>'Konsultasi\KonsultasiKegiatanController@destroy','as'=>'konsultasikegiatan.destroy']);
+    
+    //konsultasi - komentar kegiatan
+    $router->get('/konsultasi/komentar/{id}',['middleware'=>['role:superadmin|paralegal|kades|pmb|obh|kumham'],'uses'=>'Konsultasi\KomentarKegiatanController@index','as'=>'komentar.index']);
+    $router->post('/konsultasi/komentar/store',['middleware'=>['role:superadmin|paralegal|kades|pmb|obh|kumham'],'uses'=>'Konsultasi\KomentarKegiatanController@store','as'=>'komentar.store']);    
+    $router->put('/konsultasi/komentar/{id}',['middleware'=>['role:superadmin|paralegal|kades|pmb|obh|kumham'],'uses'=>'Konsultasi\KomentarKegiatanController@update','as'=>'komentar.update']);    
+    $router->delete('/konsultasi/komentar/{id}',['middleware'=>['role:superadmin|paralegal|kades|pmb|obh|kumham'],'uses'=>'Konsultasi\KomentarKegiatanController@destroy','as'=>'komentar.destroy']);
 
     //setting - permissions
     $router->get('/system/setting/permissions',['middleware'=>['role:superadmin'],'uses'=>'System\PermissionsController@index','as'=>'permissions.index']);

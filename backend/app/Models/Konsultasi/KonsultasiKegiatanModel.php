@@ -50,4 +50,9 @@ class KonsultasiKegiatanModel extends Model {
      * @var string
      */
     public $timestamps = true;
+
+    public function komentar()
+    {
+        return $this->hasMany ('App\Models\Konsultasi\KomentarKegiatanModel','kegiatan_id','kegiatan_id');
+    }
 }
