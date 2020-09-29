@@ -5,7 +5,7 @@
                 mdi-account
             </template>
             <template v-slot:name>
-                USERS PMB
+                USERS PEMBERDAYA MASYARAKAT DESA (PMD)
             </template>
             <template v-slot:breadcrumbs>
                 <v-breadcrumbs :items="breadcrumbs" class="pa-0">
@@ -21,7 +21,7 @@
                     colored-border
                     type="info"
                     >
-                     User dengan role PMB bertanggungjawab terhadap proses konsultasi hukum.
+                     User dengan role PMD bertanggungjawab terhadap proses konsultasi hukum.
                 </v-alert>
             </template>
         </ModuleHeader>        
@@ -59,7 +59,7 @@
                     >
                         <template v-slot:top>
                             <v-toolbar flat color="white">
-                                <v-toolbar-title>DAFTAR USERS PMB</v-toolbar-title>
+                                <v-toolbar-title>DAFTAR USERS PMD</v-toolbar-title>
                                 <v-divider
                                     class="mx-4"
                                     inset
@@ -78,7 +78,7 @@
                                     class="mb-2" 
                                     :loading="btnLoading"
                                     :disabled="btnLoading"
-                                    @click.stop="showDialogTambahUserPMB">
+                                    @click.stop="showDialogTambahUserPMD">
                                     TAMBAH
                                 </v-btn>
                                 <v-dialog v-model="dialog" max-width="500px" persistent>                                    
@@ -267,7 +267,7 @@ import AdminLayout from '@/views/layouts/AdminLayout';
 import ModuleHeader from '@/components/ModuleHeader';
 import UserPermissions from '@/views/pages/admin/system/UserPermissions';
 export default {
-    name: 'UsersPMB',  
+    name: 'UsersPMD',  
     created () {
         this.breadcrumbs = [
             {
@@ -281,7 +281,7 @@ export default {
                 href:'/system-users'
             },
             {
-                text:'USERS PMB',
+                text:'USERS PMD',
                 disabled:true,
                 href:'#'
             }
@@ -428,7 +428,7 @@ export default {
                 this.btnLoading=false;
             });     
         },
-        showDialogTambahUserPMB:async function ()
+        showDialogTambahUserPMD:async function ()
         {
             await this.$ajax.get('/system/setting/roles',{
                 headers: {
@@ -611,7 +611,7 @@ export default {
     },
     computed: {
         formTitle () {
-            return this.editedIndex === -1 ? 'TAMBAH USER PMB' : 'EDIT USER PMB'
+            return this.editedIndex === -1 ? 'TAMBAH USER PMD' : 'EDIT USER PMD'
         },
         ...mapGetters('auth',{            
             ACCESS_TOKEN:'AccessToken',          

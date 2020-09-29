@@ -106,20 +106,80 @@
                 </v-col>
             </v-row>
             <v-row>
-                <v-col xs="12" sm="6" md="4">                                    
-                    <v-card>
-                        <v-card-title>
-                            DAFTAR HADIR
-                        </v-card-title>
-                    </v-card>   
+                <v-col xs="12" sm="6" md="4">  
+                    <v-form v-model="form_valid_daftar_hadir" ref="frmuploaddaftarhadir" lazy-validation>                                                                                          
+                        <v-card>
+                            <v-card-title>
+                                DAFTAR HADIR
+                            </v-card-title>
+                            <v-card-text>
+                                <v-file-input 
+                                    accept="application/pdf" 
+                                    label="(.pdf)"
+                                    :rules="rule_filedaftarhadir"
+                                    show-size
+                                    v-model="filedaftarhadir">
+                                </v-file-input>
+                            </v-card-text>
+                            <v-card-actions>                            
+                                <v-spacer/>                                      
+                                <v-btn
+                                    color="orange"
+                                    text
+                                    @click="uploadDaftarHadir"
+                                    :loading="btnLoadingUploadDaftarHadir"                                
+                                    :disabled="!form_valid_daftar_hadir||btnLoadingUploadDaftarHadir">                                   
+                                    Upload
+                                </v-btn>
+                                <v-btn
+                                    color="orange"
+                                    text
+                                    @click="hapusDaftarHadir"
+                                    :loading="btnLoadingHapusDaftarHadir"                                
+                                    :disabled="btnLoadingHapusDaftarHadir">                   
+                                    Hapus
+                                </v-btn>                            
+                            </v-card-actions>
+                        </v-card>   
+                    </v-form>
                 </v-col>
                 <v-responsive width="100%" v-if="$vuetify.breakpoint.xsOnly"/>
-                <v-col xs="12" sm="6" md="4">                                    
-                    <v-card>
-                        <v-card-title>
-                            DOKUMENTASI KEGIATAN
-                        </v-card-title>
-                    </v-card>   
+                <v-col xs="12" sm="6" md="4">               
+                    <v-form v-model="form_valid_dokumentasi_kegiatan" ref="frmuploaddokumentasikegiatan" lazy-validation>                                                        
+                        <v-card>
+                            <v-card-title>
+                                DOKUMENTASI KEGIATAN
+                            </v-card-title>
+                            <v-card-text>
+                                <v-file-input 
+                                    accept="application/pdf" 
+                                    label="(.pdf)"
+                                    :rules="rule_filedokumentasikegiatan"
+                                    show-size
+                                    v-model="filedokumentasikegiatan">
+                                </v-file-input>
+                            </v-card-text>
+                            <v-card-actions>                            
+                                <v-spacer/>                                      
+                                <v-btn
+                                    color="orange"
+                                    text
+                                    @click="uploadDokumentasiKegiatan"
+                                    :loading="btnLoadingUploadDokumentasiKegiatan"                                
+                                    :disabled="!form_valid_dokumentasi_kegiatan||btnLoadingUploadDokumentasiKegiatan">                                   
+                                    Upload
+                                </v-btn>
+                                <v-btn
+                                    color="orange"
+                                    text
+                                    @click="hapusDokumentasiKegiatan"
+                                    :loading="btnLoadingHapusDokumentasiKegiatan"                                
+                                    :disabled="btnLoadingHapusDokumentasiKegiatan">                   
+                                    Hapus
+                                </v-btn>                            
+                            </v-card-actions>
+                        </v-card>   
+                    </v-form>
                 </v-col>
                 <v-responsive width="100%" v-if="$vuetify.breakpoint.xsOnly"/>
                 <v-col xs="12" sm="6" md="4"> 
@@ -200,13 +260,34 @@ export default {
     data: () => ({ 
         kegiatan_id:null,
         data_kegiatan:{},
+
+        btnLoadingUploadDaftarHadir:false,
+        btnLoadingHapusDaftarHadir:false,
+
+        btnLoadingUploadDokumentasiKegiatan:false,
+        btnLoadingHapusDokumentasiKegiatan:false,
+
         btnLoadingUploadKTP:false,
         btnLoadingHapusKTP:false,
 
         //formdata
         form_valid_ktp:true,
+        form_valid_daftar_hadir:true,
+        form_valid_dokumentasi_kegiatan:true,
+
         image_prev:null,
+        filedaftarhadir:null,
+        filedokumentasikegiatan:null,
         filektppemohon:null,
+        
+        rule_filedaftarhadir:[
+            value => !!value||"Mohon pilih file daftar hadir !!!",  
+            value =>  !value || value.size < 9000000 || 'File daftar hadir harus kurang dari 9MB.'                
+        ],
+        rule_filedokumentasikegiatan:[
+            value => !!value||"Mohon pilih file dokumentasi kegiatan !!!",  
+            value =>  !value || value.size < 9000000 || 'File dokumentasi kegiatan harus kurang dari 9MB.'                
+        ],
         rule_filektp:[
             value => !!value||"Mohon pilih file ktp pemohon !!!",  
             value =>  !value || value.size < 2000000 || 'File ktp pemohon harus kurang dari 2MB.'                
@@ -267,7 +348,23 @@ export default {
         async hapusKtpPemohon ()
         {
 
-        },    
+        },   
+        async uploadDaftarHadir ()
+        {
+
+        },
+        async hapusDaftarHadir ()
+        {
+
+        },
+        async uploadDokumentasiKegiatan ()
+        {
+
+        },
+        async hapusDokumentasiKegiatan ()
+        {
+            
+        }
     },  
     computed: {
         ktpPemohon :{
