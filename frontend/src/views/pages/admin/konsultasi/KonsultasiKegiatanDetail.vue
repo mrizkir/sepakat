@@ -39,6 +39,7 @@
                         class="indigo darken-4">
                         <v-btn
                             @click.stop="verifikasi"
+                            v-if="data_kegiatan.id_status==0"
                         >
                             <span>Verifikasi</span>
                             <v-icon>mdi-lock-open</v-icon>
@@ -83,7 +84,7 @@
                                             :loading="btnLoading"
                                             :disabled="btnLoading"
                                             @click.stop="deleteItem(items)"
-                                            v-if="$store.getters['auth/AttributeUser']('id')==items.user_id">
+                                            v-if="$store.getters['auth/AttributeUser']('id')==items.user_id && data_kegiatan.id_status==0">
                                             <v-icon color="red">
                                                 mdi-delete
                                             </v-icon>
@@ -100,9 +101,8 @@
                                 BELUM ADA KOMENTAR
                             </v-alert>
                         </v-card-text>  
-                        <v-form ref="frmdata" v-model="form_valid" lazy-validation>
-                            <v-card-actions>
-                            
+                        <v-form ref="frmdata" v-model="form_valid" lazy-validation v-if="data_kegiatan.id_status==0">                                >
+                            <v-card-actions>                            
                                 <v-textarea
                                     class="mr-2"
                                     label="KOMENTAR"                                        
@@ -114,7 +114,7 @@
                                     @click.stop="savekomentar" 
                                     :loading="btnLoading"
                                     :disabled="!form_valid||btnLoading"
-                                    large>                                
+                                    large>                                    
                                     KIRIM
                                     <v-icon>
                                         mdi-send

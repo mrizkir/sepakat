@@ -22,6 +22,7 @@ class KonsultasikegiatanController extends Controller
                                                         nama_kegiatan,
                                                         pemohon,                                                                                                                
                                                         nama_jenis,
+                                                        id_status,
                                                         created_at,
                                                         updated_at                                                        
                                                     '))    
@@ -35,6 +36,7 @@ class KonsultasikegiatanController extends Controller
                                                             nama_kegiatan,
                                                             pemohon,                                                                                                                
                                                             nama_jenis,
+                                                            id_status,
                                                             created_at,
                                                             updated_at                                                        
                                                         '))                                                                                                        

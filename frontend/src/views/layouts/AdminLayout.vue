@@ -81,7 +81,7 @@
 			</v-list-item>
 			<v-divider></v-divider>
             <v-list expand>
-                <v-list-item :to="{path:'/dashboard/'+ACCESS_TOKEN}" link active-class="yellow" color="green" v-if="CAN_ACCESS('AKADEMIK-GROUP')">
+                <v-list-item :to="{path:'/dashboard/'+ACCESS_TOKEN}" link active-class="yellow" color="green" v-if="CAN_ACCESS('DASHBOARD-SHOW')">
                     <v-list-item-icon class="mr-2">
                         <v-icon>mdi-monitor-dashboard</v-icon>
                     </v-list-item-icon>
