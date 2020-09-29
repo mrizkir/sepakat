@@ -171,6 +171,110 @@ class KonsultasikegiatanController extends Controller
             }
         }
     }
+    public function uploaddaftarhadir (Request $request,$id)
+    {
+        $this->hasAnyPermission('KONSULTASI-KEGIATAN_STORE');
+
+        $kegiatan = KonsultasiKegiatanModel::find($id); 
+        
+        if ($kegiatan == null)
+        {
+            return Response()->json([
+                                    'status'=>0,
+                                    'pid'=>'store',                
+                                    'message'=>["Data Konsultasi Kegiatan tidak ditemukan."]
+                                ],422);         
+        }
+        else
+        {
+            $this->validate($request, [                      
+                'filedaftarhadir'=>'required'                        
+            ]);
+            $name=$kegiatan->pemohon;
+            $filedaftarhadir = $request->file('filedaftarhadir');
+            $mime_type=$filedaftarhadir->getMimeType();
+            if ($mime_type=='application/pdf')
+            {
+                $folder=\App\Helpers\Helper::public_path('pdf/daftarhadir/');
+                $file_name=uniqid('pdfdh').".".$filedaftarhadir->getClientOriginalExtension();
+                if (is_file(\App\Helpers\Helper::public_path($kegiatan->file_daftar_hadir)))                
+                {
+                    unlink(\App\Helpers\Helper::public_path($kegiatan->file_daftar_hadir));
+                }                
+                $kegiatan->file_daftar_hadir="storage/pdf/daftarhadir/$file_name";
+                $kegiatan->save();
+                $filedaftarhadir->move($folder,$file_name);
+                return Response()->json([
+                                            'status'=>0,
+                                            'pid'=>'store',
+                                            'kegiatan'=>$kegiatan,                
+                                            'message'=>"File daftar hadir kegiatan ini berhasil diupload"
+                                        ],200);    
+            }
+            else
+            {
+                return Response()->json([
+                                        'status'=>1,
+                                        'pid'=>'store',
+                                        'message'=>["Extensi file yang diupload bukan pdf."]
+                                    ],422); 
+                
+
+            }
+        }
+    }
+    public function uploaddokumentasikegiatan (Request $request,$id)
+    {
+        $this->hasAnyPermission('KONSULTASI-KEGIATAN_STORE');
+
+        $kegiatan = KonsultasiKegiatanModel::find($id); 
+        
+        if ($kegiatan == null)
+        {
+            return Response()->json([
+                                    'status'=>0,
+                                    'pid'=>'store',                
+                                    'message'=>["Data Konsultasi Kegiatan tidak ditemukan."]
+                                ],422);         
+        }
+        else
+        {
+            $this->validate($request, [                      
+                'filedokumentasikegiatan'=>'required'                        
+            ]);
+            $name=$kegiatan->pemohon;
+            $filedokumentasikegiatan = $request->file('filedokumentasikegiatan');
+            $mime_type=$filedokumentasikegiatan->getMimeType();
+            if ($mime_type=='application/pdf')
+            {
+                $folder=\App\Helpers\Helper::public_path('pdf/dokumentasikegiatan/');
+                $file_name=uniqid('pdfdh').".".$filedokumentasikegiatan->getClientOriginalExtension();
+                if (is_file(\App\Helpers\Helper::public_path($kegiatan->file_dokumentasi_kegiatan)))                
+                {
+                    unlink(\App\Helpers\Helper::public_path($kegiatan->file_dokumentasi_kegiatan));
+                }                
+                $kegiatan->file_dokumentasi_kegiatan="storage/pdf/dokumentasikegiatan/$file_name";
+                $kegiatan->save();
+                $filedokumentasikegiatan->move($folder,$file_name);
+                return Response()->json([
+                                            'status'=>0,
+                                            'pid'=>'store',
+                                            'kegiatan'=>$kegiatan,                
+                                            'message'=>"File dokumentasi kegiatan ini berhasil diupload"
+                                        ],200);    
+            }
+            else
+            {
+                return Response()->json([
+                                        'status'=>1,
+                                        'pid'=>'store',
+                                        'message'=>["Extensi file yang diupload bukan pdf."]
+                                    ],422); 
+                
+
+            }
+        }
+    }
     public function update(Request $request,$id)
     {
         $this->hasAnyPermission('KONSULTASI-KEGIATAN_UPDATE');

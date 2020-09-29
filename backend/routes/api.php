@@ -54,6 +54,13 @@ $router->group(['prefix'=>'v1','middleware'=>'auth:api'], function () use ($rout
     $router->put('/konsultasi/kegiatan/{id}',['middleware'=>['role:superadmin|paralegal|lbh|pmb|kades|humkam'],'uses'=>'Konsultasi\KonsultasiKegiatanController@update','as'=>'konsultasikegiatan.update']);
     $router->post('/konsultasi/kegiatan/uploadktppemohon/{id}',['middleware'=>['role:superadmin|paralegal|humkam'],'uses'=>'Konsultasi\KonsultasiKegiatanController@uploadktppemohon','as'=>'konsultasikegiatan.uploadktppemohon']);
     $router->post('/konsultasi/kegiatan/hapusktppemohon/{id}',['middleware'=>['role:superadmin|paralegal|humkam'],'uses'=>'Konsultasi\KonsultasiKegiatanController@hapusktppemohon','as'=>'konsultasikegiatan.hapusktppemohon']);
+    
+    $router->post('/konsultasi/kegiatan/uploaddaftarhadir/{id}',['middleware'=>['role:superadmin|paralegal|humkam'],'uses'=>'Konsultasi\KonsultasiKegiatanController@uploaddaftarhadir','as'=>'konsultasikegiatan.uploaddaftarhadir']);
+    $router->post('/konsultasi/kegiatan/hapusdaftarhadir/{id}',['middleware'=>['role:superadmin|paralegal|humkam'],'uses'=>'Konsultasi\KonsultasiKegiatanController@hapusdaftarhadir','as'=>'konsultasikegiatan.hapusdaftarhadir']);
+    
+    $router->post('/konsultasi/kegiatan/uploaddokumentasikegiatan/{id}',['middleware'=>['role:superadmin|paralegal|humkam'],'uses'=>'Konsultasi\KonsultasiKegiatanController@uploaddokumentasikegiatan','as'=>'konsultasikegiatan.uploaddokumentasikegiatan']);
+    $router->post('/konsultasi/kegiatan/hapusdokumentasikegiatan/{id}',['middleware'=>['role:superadmin|paralegal|humkam'],'uses'=>'Konsultasi\KonsultasiKegiatanController@hapusdokumentasikegiatan','as'=>'konsultasikegiatan.hapusdokumentasikegiatan']);
+    
     $router->delete('/konsultasi/kegiatan/{id}',['middleware'=>['role:superadmin|paralegal|humkam'],'uses'=>'Konsultasi\KonsultasiKegiatanController@destroy','as'=>'konsultasikegiatan.destroy']);
     
     //konsultasi - komentar kegiatan

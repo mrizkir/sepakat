@@ -43,6 +43,10 @@
                             <span>Verifikasi</span>
                             <v-icon>mdi-lock-open</v-icon>
                         </v-btn>
+                        <v-btn :to="{path:'/konsultasi/kegiatan/'+kegiatan_id+'/files'}">
+                            <span>Files</span>
+                            <v-icon>mdi-file-document</v-icon>
+                        </v-btn>
                     </v-bottom-navigation>
                 </v-col>
             </v-row>

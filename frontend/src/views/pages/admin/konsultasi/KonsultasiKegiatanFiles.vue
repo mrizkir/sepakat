@@ -121,7 +121,13 @@
                                     v-model="filedaftarhadir">
                                 </v-file-input>
                             </v-card-text>
-                            <v-card-actions>                            
+                            <v-card-actions>  
+                                <v-btn
+                                    color="green"
+                                    text
+                                    :href="this.$api.url+'/'+data_kegiatan.file_daftar_hadir">                                   
+                                    Lihat
+                                </v-btn>                                                     
                                 <v-spacer/>                                      
                                 <v-btn
                                     color="orange"
@@ -157,9 +163,15 @@
                                     :rules="rule_filedokumentasikegiatan"
                                     show-size
                                     v-model="filedokumentasikegiatan">
-                                </v-file-input>
+                                </v-file-input>                                
                             </v-card-text>
-                            <v-card-actions>                            
+                            <v-card-actions> 
+                                <v-btn
+                                    color="green"
+                                    text
+                                    :href="this.$api.url+'/'+data_kegiatan.file_dokumentasi_kegiatan">                                   
+                                    Lihat
+                                </v-btn>                           
                                 <v-spacer/>                                      
                                 <v-btn
                                     color="orange"
@@ -337,9 +349,11 @@ export default {
                             }
                         }
                     ).then(()=>{                                                                                            
+                        this.btnLoadingUploadKTP=false;   
                         this.btnLoadingHapusKTP=false;   
                         this.$router.go();                     
                     }).catch(()=>{
+                        this.btnLoadingUploadKTP=false;
                         this.btnLoadingHapusKTP=false;
                     });                    
                 }
@@ -351,15 +365,61 @@ export default {
         },   
         async uploadDaftarHadir ()
         {
-
+            if (this.$refs.frmuploaddaftarhadir.validate())
+            {
+                if (typeof this.filedaftarhadir !== 'undefined' && this.filedaftarhadir !== null )
+                {
+                    this.btnLoadingUploadDaftarHadir=true;
+                    var formdata = new FormData();                                        
+                    formdata.append('filedaftarhadir',this.filedaftarhadir);
+                    await this.$ajax.post('/konsultasi/kegiatan/uploaddaftarhadir/'+this.kegiatan_id,formdata,                    
+                        {
+                            headers:{
+                                Authorization:this.$store.getters['auth/Token'],
+                                'Content-Type': 'multipart/form-data'                      
+                            }
+                        }
+                    ).then(()=>{                                                                                            
+                        this.btnLoadingUploadDaftarHadir=false;   
+                        this.btnLoadingHapusDaftarHadir=false;   
+                        this.$router.go();                     
+                    }).catch(()=>{
+                        this.btnLoadingUploadDaftarHadir=false;
+                        this.btnLoadingHapusDaftarHadir=false;
+                    });                    
+                }
+            }
         },
         async hapusDaftarHadir ()
         {
-
+            
         },
         async uploadDokumentasiKegiatan ()
         {
-
+            if (this.$refs.frmuploaddokumentasikegiatan.validate())
+            {
+                if (typeof this.filedokumentasikegiatan !== 'undefined' && this.filedokumentasikegiatan !== null )
+                {
+                    this.btnLoadingUploadDokumentasiKegiatan=true;
+                    var formdata = new FormData();                                        
+                    formdata.append('filedokumentasikegiatan',this.filedokumentasikegiatan);
+                    await this.$ajax.post('/konsultasi/kegiatan/uploaddokumentasikegiatan/'+this.kegiatan_id,formdata,                    
+                        {
+                            headers:{
+                                Authorization:this.$store.getters['auth/Token'],
+                                'Content-Type': 'multipart/form-data'                      
+                            }
+                        }
+                    ).then(()=>{                                                                                            
+                        this.btnLoadingUploadDokumentasiKegiatan=false;   
+                        this.btnLoadingHapusDokumentasiKegiatan=false;   
+                        this.$router.go();                     
+                    }).catch(()=>{
+                        this.btnLoadingUploadDokumentasiKegiatan=false;
+                        this.btnLoadingHapusDokumentasiKegiatan=false;
+                    });                    
+                }
+            }
         },
         async hapusDokumentasiKegiatan ()
         {
