@@ -166,6 +166,7 @@ import ModuleHeader from '@/components/ModuleHeader';
 export default {
     name:'KonsultasiKegiatanTambah',
     created () {
+        this.dashboard = this.$store.getters['uiadmin/getDefaultDashboard']; 
         this.breadcrumbs = [
             {
                 text:'HOME',
@@ -191,6 +192,8 @@ export default {
         this.initialize()
     },  
     data: () => ({ 
+        dashboard:null,
+        
         btnLoading:false,
         form_valid:true, 
         daftar_paralegal:[],       

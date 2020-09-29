@@ -166,6 +166,7 @@ import ModuleHeader from '@/components/ModuleHeader';
 export default {
     name:'KonsultasiKegiatanUbah',
     created () {
+        this.dashboard = this.$store.getters['uiadmin/getDefaultDashboard']; 
         this.kegiatan_id=this.$route.params.kegiatan_id;
         this.breadcrumbs = [
             {
@@ -192,6 +193,8 @@ export default {
         this.initialize()
     },  
     data: () => ({ 
+        dashboard:null,
+
         kegiatan_id:null,
         datakegiatan:{},
 

@@ -137,6 +137,7 @@ import DK from '@/views/pages/admin/konsultasi/DataKegiatan';
 export default {
     name:'KonsultasiKegiatanFiles',
     created () {
+        this.dashboard = this.$store.getters['uiadmin/getDefaultDashboard']; 
         this.kegiatan_id=this.$route.params.kegiatan_id;
         this.breadcrumbs = [
             {
@@ -164,6 +165,8 @@ export default {
         this.fetchKomentar();
     },  
     data: () => ({ 
+        dashboard:null,
+
         kegiatan_id:null,
         data_kegiatan:{},
         bottomNav: 3,
