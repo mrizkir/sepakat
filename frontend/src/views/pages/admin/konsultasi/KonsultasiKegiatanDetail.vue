@@ -61,10 +61,12 @@
                                 class="mx-auto mb-2"
                                 max-width="500"
                                 outlined
-                                v-for="items in daftar_komentar" v-bind:key="items.id">
+                                v-for="items in daftar_komentar" v-bind:key="items.id">                                    
                                     <v-card-title>
                                         {{items.name}}
-                                    </v-card-title>
+                                        <v-spacer/>
+                                        <v-chip color="info" outlined>{{items.default_role}}</v-chip>
+                                    </v-card-title>                                    
                                     <v-card-text>                                            
                                         {{items.isi_komentar}}
                                     </v-card-text>'

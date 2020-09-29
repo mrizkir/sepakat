@@ -84,7 +84,8 @@
                             <v-btn
                                 small      
                                 icon                          
-                                :to="{path:'/konsultasi/kegiatan/'+item.kegiatan_id+'/ubah'}">
+                                :to="{path:'/konsultasi/kegiatan/'+item.kegiatan_id+'/ubah'}"
+                                v-if="dashboard=='paralegal'||dashboard=='kumham'||dashboard=='superadmin'">
                                 <v-icon>
                                     mdi-pencil
                                 </v-icon>
@@ -94,7 +95,8 @@
                                 icon
                                 :loading="btnLoading"
                                 :disabled="btnLoading"
-                                @click.stop="deleteItem(item)">
+                                @click.stop="deleteItem(item)"
+                                v-if="dashboard=='paralegal'||dashboard=='kumham'||dashboard=='superadmin'">
                                 <v-icon>
                                     mdi-delete
                                 </v-icon>
@@ -103,7 +105,7 @@
                         <template v-slot:expanded-item="{ headers, item }">
                             <td :colspan="headers.length" class="text-center">
                                 <v-col cols="12">
-                                    <strong>ID:</strong>{{ item.id }}
+                                    <strong>ID:</strong>{{ item.kegiatan_id }}
                                     <strong>created_at:</strong>{{ $date(item.created_at).format('DD/MM/YYYY HH:mm') }}
                                     <strong>updated_at:</strong>{{ $date(item.updated_at).format('DD/MM/YYYY HH:mm') }}
                                 </v-col>                                

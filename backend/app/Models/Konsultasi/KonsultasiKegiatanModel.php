@@ -55,7 +55,7 @@ class KonsultasiKegiatanModel extends Model {
     {
         return $this->hasMany ('App\Models\Konsultasi\KomentarKegiatanModel','kegiatan_id','kegiatan_id')
                 ->join('users','komentar.user_id','users.id')
-                ->select(\DB::raw('komentar.id,komentar.kegiatan_id,komentar.user_id,users.name,isi_komentar,komentar.created_at,komentar.updated_at'))
+                ->select(\DB::raw('komentar.id,komentar.kegiatan_id,komentar.user_id,users.name,isi_komentar,users.default_role,komentar.created_at,komentar.updated_at'))
                 ->orderBy('komentar.created_at','asc');
     }
 }

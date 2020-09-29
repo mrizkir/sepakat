@@ -335,6 +335,46 @@ class KonsultasikegiatanController extends Controller
                                     ],200);
         }
     }
+    public function verifikasi(Request $request,$id)
+    {
+        $this->hasAnyPermission('KONSULTASI-KEGIATAN_UPDATE');
+
+        if ($this->hasRole(['pmb','superadmin','obh','kumham']))
+        {
+            $kegiatan = KonsultasiKegiatanModel::find($id);
+
+            if (is_null($kegiatan))
+            {
+                return Response()->json([
+                                    'status'=>0,
+                                    'pid'=>'store',                
+                                    'message'=>["Data Konsultasi Kegiatan tidak ditemukan."]
+                                ],422);     
+
+            }
+            else
+            {
+                $kegiatan->id_status=1;
+                $kegiatan->save();
+
+                return Response()->json([
+                                        'status'=>1,
+                                        'pid'=>'update',
+                                        'kegiatan'=>$kegiatan,
+                                        'message'=>"Verifikasi Kegiatan Konsultasi berhasil dilakukan"
+                                    ],200);
+            }
+        }
+        else
+        {
+            return Response()->json([
+                                        'status'=>1,
+                                        'pid'=>'update',                                        
+                                        'message'=>"Verifkasi Kegiatan Gagal dilakukan karena tidak memiliki permission"
+                                    ],422);
+        }
+
+    }
     /**
      * Menghapus kegiatan
      *

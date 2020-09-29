@@ -118,10 +118,11 @@
                                     label="(.pdf)"
                                     :rules="rule_filedaftarhadir"
                                     show-size
-                                    v-model="filedaftarhadir">
+                                    v-model="filedaftarhadir"
+                                    v-if="dashboard=='paralegal'||dashboard=='kumham'||dashboard=='superadmin'">
                                 </v-file-input>
                             </v-card-text>
-                            <v-card-actions>  
+                            <v-card-actions v-if="dashboard=='paralegal'||dashboard=='kumham'||dashboard=='superadmin'">  
                                 <v-btn
                                     color="green"
                                     text
@@ -163,10 +164,11 @@
                                     label="(.pdf)"
                                     :rules="rule_filedokumentasikegiatan"
                                     show-size
-                                    v-model="filedokumentasikegiatan">
+                                    v-model="filedokumentasikegiatan"
+                                    v-if="dashboard=='paralegal'||dashboard=='kumham'||dashboard=='superadmin'">
                                 </v-file-input>                                
                             </v-card-text>
-                            <v-card-actions> 
+                            <v-card-actions v-if="dashboard=='paralegal'||dashboard=='kumham'||dashboard=='superadmin'"> 
                                 <v-btn
                                     color="green"
                                     text
@@ -210,10 +212,11 @@
                                     :rules="rule_filektp"
                                     show-size
                                     v-model="filektppemohon"
-                                    @change="previewImage">
+                                    @change="previewImage"
+                                    v-if="dashboard=='paralegal'||dashboard=='kumham'||dashboard=='superadmin'">
                                 </v-file-input>
                             </v-card-text>
-                            <v-card-actions>                            
+                            <v-card-actions v-if="dashboard=='paralegal'||dashboard=='kumham'||dashboard=='superadmin'">                            
                                 <v-spacer/>                                      
                                 <v-btn
                                     color="orange"
