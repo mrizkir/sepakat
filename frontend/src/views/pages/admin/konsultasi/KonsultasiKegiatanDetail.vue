@@ -39,7 +39,7 @@
                         class="indigo darken-4">
                         <v-btn
                             @click.stop="verifikasi"
-                            v-if="data_kegiatan.id_status==0 && dashboard!='paralegal'&&dashboard=='kades'"
+                            v-if="data_kegiatan.id_status==0 && dashboard!='paralegal'&&dashboard!='kades'"
                         >
                             <span>Verifikasi</span>
                             <v-icon>mdi-lock-open</v-icon>
