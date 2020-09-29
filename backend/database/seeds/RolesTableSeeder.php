@@ -141,6 +141,30 @@ class RolesTableSeeder extends Seeder
         ]; 
         $role->syncPermissions($records);
         
+        $role = Role::findByName('pmb');
+        $records=[
+            'DASHBOARD_SHOW',
+            'DMASTER-JENISKEGIATAN_BROWSE',
+            'KONSULTASI-GROUP',
+            
+            'KONSULTASI-KEGIATAN_BROWSE',
+            'KONSULTASI-KEGIATAN_SHOW',            
+            'KONSULTASI-KEGIATAN_UPDATE',            
+            
+            'KONSULTASI-KOMENTAR-KEGIATAN_BROWSE',
+            'KONSULTASI-KOMENTAR-KEGIATAN_SHOW',
+            'KONSULTASI-KOMENTAR-KEGIATAN_DESTROY',
+            'KONSULTASI-KOMENTAR-KEGIATAN_UPDATE',
+            'KONSULTASI-KOMENTAR-KEGIATAN_STORE',
+
+            'REPORT-GROUP',
+            'REPORT-KEGIATAN_BROWSE',
+
+            'SYSTEM-USERS-PARALEGAL_BROWSE',            
+            
+        ]; 
+        $role->syncPermissions($records);
+        
         $role = Role::findByName('kades');
         $records=[
             'DASHBOARD_SHOW',
