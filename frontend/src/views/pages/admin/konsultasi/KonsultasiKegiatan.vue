@@ -66,7 +66,7 @@
                                     vertical
                                 ></v-divider>
                                 <v-spacer></v-spacer>
-                                <v-btn color="primary" dark class="mb-2" to="/konsultasi/kegiatan/tambah">TAMBAH</v-btn>
+                                <v-btn color="primary" dark class="mb-2" to="/konsultasi/kegiatan/tambah" v-if="dashboard=='paralegal'||dashboard=='kumham'||dashboard=='superadmin'">TAMBAH</v-btn>
                             </v-toolbar>
                         </template>
                         <template v-slot:item.id="{ item }">    
@@ -124,6 +124,7 @@ import ModuleHeader from '@/components/ModuleHeader';
 export default {
     name:'KonsultasiKegiatan',
     created () {
+        this.dashboard = this.$store.getters['uiadmin/getDefaultDashboard'];        
         this.breadcrumbs = [
             {
                 text:'HOME',
@@ -144,6 +145,8 @@ export default {
         this.initialize()
     },  
     data: () => ({ 
+        dashboard:null,
+
         btnLoading:false,
         datatableLoading:false,
         expanded:[],

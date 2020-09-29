@@ -76,6 +76,10 @@ class UsersPMBController extends Controller {
             ]);            
             $role='pmb';   
             $user->assignRole($role);      
+            
+            $permission=Role::findByName('pmb')->permissions;
+            $permissions=$permission->pluck('name');
+            $user->givePermissionTo($permissions);
 
             \App\Models\System\ActivityLog::log($request,[
                                             'object' => $this->guard()->user(), 

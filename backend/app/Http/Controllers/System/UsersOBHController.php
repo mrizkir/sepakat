@@ -76,6 +76,10 @@ class UsersOBHController extends Controller {
             ]);            
             $role='obh';   
             $user->assignRole($role);      
+            
+            $permission=Role::findByName('obh')->permissions;
+            $permissions=$permission->pluck('name');
+            $user->givePermissionTo($permissions);
 
             \App\Models\System\ActivityLog::log($request,[
                                             'object' => $this->guard()->user(), 

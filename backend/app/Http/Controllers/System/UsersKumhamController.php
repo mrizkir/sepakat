@@ -69,6 +69,10 @@ class UsersKumhamController extends Controller {
             $role='kumham';   
             $user->assignRole($role);               
             
+            $permission=Role::findByName('kumham')->permissions;
+            $permissions=$permission->pluck('name');
+            $user->givePermissionTo($permissions);
+
             $daftar_roles=json_decode($request->input('role_id'),true);
             foreach($daftar_roles as $v)
             {

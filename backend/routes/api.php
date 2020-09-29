@@ -108,10 +108,10 @@ $router->group(['prefix'=>'v1','middleware'=>'auth:api'], function () use ($rout
     $router->get('/system/users/{id}/roles',['uses'=>'System\UsersController@roles','as'=>'users.roles']);
 
     //setting - users paralegal
-    $router->get('/system/usersparalegal',['middleware'=>['role:superadmin|paralegal'],'uses'=>'System\UsersParaLegalController@index','as'=>'usersparalegal.index']);
-    $router->post('/system/usersparalegal/store',['middleware'=>['role:superadmin'],'uses'=>'System\UsersParaLegalController@store','as'=>'usersparalegal.store']);
-    $router->put('/system/usersparalegal/{id}',['middleware'=>['role:superadmin'],'uses'=>'System\UsersParaLegalController@update','as'=>'usersparalegal.update']);
-    $router->delete('/system/usersparalegal/{id}',['middleware'=>['role:superadmin'],'uses'=>'System\UsersParaLegalController@destroy','as'=>'usersparalegal.destroy']);
+    $router->get('/system/usersparalegal',['middleware'=>['role:superadmin|paralegal|kumham|obh|kades|pmd'],'uses'=>'System\UsersParaLegalController@index','as'=>'usersparalegal.index']);
+    $router->post('/system/usersparalegal/store',['middleware'=>['role:superadmin|paralegal|kumham'],'uses'=>'System\UsersParaLegalController@store','as'=>'usersparalegal.store']);
+    $router->put('/system/usersparalegal/{id}',['middleware'=>['role:superadmin|paralegal|kumham'],'uses'=>'System\UsersParaLegalController@update','as'=>'usersparalegal.update']);
+    $router->delete('/system/usersparalegal/{id}',['middleware'=>['role:superadmin|paralegal|kumham'],'uses'=>'System\UsersParaLegalController@destroy','as'=>'usersparalegal.destroy']);
 
     //setting - users kades
     $router->get('/system/userskades',['middleware'=>['role:superadmin|kumham'],'uses'=>'System\UsersKadesController@index','as'=>'userskades.index']);

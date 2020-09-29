@@ -78,6 +78,10 @@ class UsersKadesController extends Controller {
             $role='kades';   
             $user->assignRole($role);               
             
+            $permission=Role::findByName('kades')->permissions;
+            $permissions=$permission->pluck('name');
+            $user->givePermissionTo($permissions);
+
             $user_id=$user->id;
             $daftar_desa=json_decode($request->input('desa_id'),true);
             foreach($daftar_desa as $v)

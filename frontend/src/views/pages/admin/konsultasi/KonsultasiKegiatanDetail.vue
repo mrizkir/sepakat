@@ -36,10 +36,10 @@
                     <v-bottom-navigation
                         v-model="bottomNav"
                         dark
-                        class="indigo darken-4"
-                        shift
-                    >
-                        <v-btn>
+                        class="indigo darken-4">
+                        <v-btn
+                            @click.stop="verifikasi"
+                        >
                             <span>Verifikasi</span>
                             <v-icon>mdi-lock-open</v-icon>
                         </v-btn>
@@ -224,6 +224,30 @@ export default {
                 });                
             }
         },  
+        verifikasi ()
+        {
+            this.$root.$confirm.open('Verifikasi', 'Setelah diverifikasi, tidak bisa diberi komentar, diubah, atau dihapus ?', { color: 'green',width:600 }).then((confirm) => {
+                if (confirm)
+                {
+                    this.btnLoading=true;
+                    this.$ajax.post('/konsultasi/kegiatan/verifikasi/'+this.kegiatan_id,
+                        {
+                            '_method':'put',
+                        },
+                        {
+                            headers:{
+                                Authorization:this.$store.getters['auth/Token']
+                            }
+                        }
+                    ).then(()=>{   
+                        this.$router.go();
+                        this.btnLoading=false;
+                    }).catch(()=>{
+                        this.btnLoading=false;
+                    });
+                }                
+            });
+        },
         deleteItem (item) {           
             this.$root.$confirm.open('Delete', 'Apakah Anda ingin menghapus komentar kegiatan dengan ID '+item.kegiatan_id+' ?', { color: 'red',width:600 }).then((confirm) => {
                 if (confirm)
