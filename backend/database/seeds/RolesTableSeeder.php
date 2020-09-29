@@ -74,10 +74,95 @@ class RolesTableSeeder extends Seeder
             'KONSULTASI-KOMENTAR-KEGIATAN_STORE',
 
             'REPORT-GROUP',
+            'REPORT-KEGIATAN_BROWSE',
 
             'SYSTEM-USERS-PARALEGAL_BROWSE',            
             
         ]; 
         $role->syncPermissions($records);
+
+        $role = Role::findByName('kumham');
+        $records=[
+            'DASHBOARD_SHOW',
+            'DMASTER-JENISKEGIATAN_BROWSE',
+            'KONSULTASI-GROUP',
+            
+            'KONSULTASI-KEGIATAN_BROWSE',
+            'KONSULTASI-KEGIATAN_SHOW',
+            'KONSULTASI-KEGIATAN_DESTROY',
+            'KONSULTASI-KEGIATAN_UPDATE',
+            'KONSULTASI-KEGIATAN_STORE',
+            
+            'KONSULTASI-KOMENTAR-KEGIATAN_BROWSE',
+            'KONSULTASI-KOMENTAR-KEGIATAN_SHOW',
+            'KONSULTASI-KOMENTAR-KEGIATAN_DESTROY',
+            'KONSULTASI-KOMENTAR-KEGIATAN_UPDATE',
+            'KONSULTASI-KOMENTAR-KEGIATAN_STORE',          
+
+            'REPORT-GROUP',
+            'REPORT-KEGIATAN_BROWSE',
+
+            'SYSTEM-USERS-KUMHAM_BROWSE',            
+            'SYSTEM-USERS-KUMHAM_UPDATE',            
+            'SYSTEM-USERS-KUMHAM_SHOW',            
+            'SYSTEM-USERS-KUMHAM_UPDATE',            
+            'SYSTEM-USERS-KUMHAM_DESTROY',            
+            
+            'SYSTEM-USERS-PARALEGAL_BROWSE',            
+            'SYSTEM-USERS-PARALEGAL_UPDATE',            
+            'SYSTEM-USERS-PARALEGAL_SHOW',            
+            'SYSTEM-USERS-PARALEGAL_UPDATE',            
+            'SYSTEM-USERS-PARALEGAL_DESTROY',            
+            
+        ]; 
+        $role->syncPermissions($records);
+
+        $role = Role::findByName('obh');
+        $records=[
+            'DASHBOARD_SHOW',
+            'DMASTER-JENISKEGIATAN_BROWSE',
+            'KONSULTASI-GROUP',
+            
+            'KONSULTASI-KEGIATAN_BROWSE',
+            'KONSULTASI-KEGIATAN_SHOW',            
+            'KONSULTASI-KEGIATAN_UPDATE',            
+            
+            'KONSULTASI-KOMENTAR-KEGIATAN_BROWSE',
+            'KONSULTASI-KOMENTAR-KEGIATAN_SHOW',
+            'KONSULTASI-KOMENTAR-KEGIATAN_DESTROY',
+            'KONSULTASI-KOMENTAR-KEGIATAN_UPDATE',
+            'KONSULTASI-KOMENTAR-KEGIATAN_STORE',
+
+            'REPORT-GROUP',
+            'REPORT-KEGIATAN_BROWSE',
+
+            'SYSTEM-USERS-PARALEGAL_BROWSE',            
+            
+        ]; 
+        $role->syncPermissions($records);
+        
+        $role = Role::findByName('kades');
+        $records=[
+            'DASHBOARD_SHOW',
+            'DMASTER-JENISKEGIATAN_BROWSE',
+            'KONSULTASI-GROUP',
+            
+            'KONSULTASI-KEGIATAN_BROWSE',
+            'KONSULTASI-KEGIATAN_SHOW',                       
+            
+            'KONSULTASI-KOMENTAR-KEGIATAN_BROWSE',
+            'KONSULTASI-KOMENTAR-KEGIATAN_SHOW',
+            'KONSULTASI-KOMENTAR-KEGIATAN_DESTROY',
+            'KONSULTASI-KOMENTAR-KEGIATAN_UPDATE',
+            'KONSULTASI-KOMENTAR-KEGIATAN_STORE',
+
+            'REPORT-GROUP',
+            'REPORT-KEGIATAN_BROWSE',
+
+            'SYSTEM-USERS-PARALEGAL_BROWSE',            
+            
+        ]; 
+        $role->syncPermissions($records);
+        
     }
 }

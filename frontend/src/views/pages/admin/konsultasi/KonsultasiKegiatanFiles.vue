@@ -125,7 +125,8 @@
                                 <v-btn
                                     color="green"
                                     text
-                                    :href="this.$api.url+'/'+data_kegiatan.file_daftar_hadir">                                   
+                                    :href="this.$api.url+'/'+data_kegiatan.file_daftar_hadir"
+                                    v-if="data_kegiatan.file_daftar_hadir">                                   
                                     Lihat
                                 </v-btn>                                                     
                                 <v-spacer/>                                      
@@ -169,7 +170,8 @@
                                 <v-btn
                                     color="green"
                                     text
-                                    :href="this.$api.url+'/'+data_kegiatan.file_dokumentasi_kegiatan">                                   
+                                    :href="this.$api.url+'/'+data_kegiatan.file_dokumentasi_kegiatan"
+                                    v-if="data_kegiatan.file_dokumentasi_kegiatan">                                                                      
                                     Lihat
                                 </v-btn>                           
                                 <v-spacer/>                                      
