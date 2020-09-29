@@ -39,7 +39,7 @@
                         class="indigo darken-4">
                         <v-btn
                             @click.stop="verifikasi"
-                            v-if="data_kegiatan.id_status==0"
+                            v-if="data_kegiatan.id_status==0 && dashboard!='paralegal'&&dashboard=='kades'"
                         >
                             <span>Verifikasi</span>
                             <v-icon>mdi-lock-open</v-icon>
@@ -101,7 +101,7 @@
                                 BELUM ADA KOMENTAR
                             </v-alert>
                         </v-card-text>  
-                        <v-form ref="frmdata" v-model="form_valid" lazy-validation v-if="data_kegiatan.id_status==0">                                >
+                        <v-form ref="frmdata" v-model="form_valid" lazy-validation v-if="data_kegiatan.id_status==0">                                
                             <v-card-actions>                            
                                 <v-textarea
                                     class="mr-2"
