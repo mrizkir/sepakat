@@ -112,7 +112,7 @@
                     </v-list-item-content>
                 </v-list-item>                
                 <v-subheader v-if="CAN_ACCESS('REPORT-GROUP')">LAPORAN</v-subheader>                                         
-                <v-list-item link to="/laporan/kegiatan" v-if="CAN_ACCESS('AKADEMIK-DULANG-BARU_BROWSE')">
+                <v-list-item link to="/laporan/kegiatan" v-if="CAN_ACCESS('REPORT-KEGIATAN_BROWSE')">
                     <v-list-item-icon class="mr-2">
                         <v-icon>mdi-clipboard-list-outline</v-icon>
                     </v-list-item-icon>
