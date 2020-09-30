@@ -41,10 +41,12 @@ class ReportKegiatanController extends Controller
         ]);
         $kegiatan_id=$request->input('kegiatan_id');
 
-        $data = [
-			'foo' => 'bar'
-		];
-        $pdf = \Meneses\LaravelMpdf\Facades\LaravelMpdf::loadView('pdf.document', $data);
+        $kegiatan=KonsultasiKegiatanModel::join('users','users.id','kegiatan.user_id')
+                                            ->find($kegiatan_id);
+
+        $pdf = \Meneses\LaravelMpdf\Facades\LaravelMpdf::loadView('pdf.document', [
+                                                                                    'kegiatan'=>$kegiatan
+                                                                                ]);
         $file_pdf=\App\Helpers\Helper::public_path('exported/pdf/')."/$kegiatan_id.pdf";        
         $pdf->save($file_pdf);
 
@@ -53,7 +55,7 @@ class ReportKegiatanController extends Controller
         return Response()->json([
                                     'status'=>1,
                                     'pid'=>'fetchdata',
-                                    'file_pdf'=>$file_pdf,
+                                    'kegiatan'=>$kegiatan,
                                     'pdf_file'=>$pdf_file                                    
                                 ],200);
     }
