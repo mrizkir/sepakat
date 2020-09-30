@@ -85,7 +85,7 @@
                                 small      
                                 icon                          
                                 :to="{path:'/konsultasi/kegiatan/'+item.kegiatan_id+'/ubah'}"
-                                v-if="dashboard=='paralegal'||dashboard=='kumham'||dashboard=='superadmin'">
+                                v-if="item.id_status==0 && (dashboard=='paralegal'||dashboard=='kumham'||dashboard=='superadmin')">
                                 <v-icon>
                                     mdi-pencil
                                 </v-icon>
@@ -96,7 +96,7 @@
                                 :loading="btnLoading"
                                 :disabled="btnLoading"
                                 @click.stop="deleteItem(item)"
-                                v-if="dashboard=='paralegal'||dashboard=='kumham'||dashboard=='superadmin'">
+                                v-if="item.id_status==0 && (dashboard=='paralegal'||dashboard=='kumham'||dashboard=='superadmin')">
                                 <v-icon>
                                     mdi-delete
                                 </v-icon>
