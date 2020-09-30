@@ -21,7 +21,7 @@
                     colored-border
                     type="info"
                     >
-                    Halaman ini berisi daftar kegiatan konsultasi hukum paralegal
+                    Halaman ini berisi laporan kegiatan konsultasi hukum paralegal
                 </v-alert>
             </template>
         </ModuleHeader>   
@@ -65,42 +65,21 @@
                                     inset
                                     vertical
                                 ></v-divider>
-                                <v-spacer></v-spacer>
-                                <v-btn color="primary" dark class="mb-2" to="/konsultasi/kegiatan/tambah" v-if="dashboard=='paralegal'||dashboard=='kumham'||dashboard=='superadmin'">TAMBAH</v-btn>
+                                <v-spacer></v-spacer>                                
                             </v-toolbar>
                         </template>
                         <template v-slot:item.id="{ item }">    
-                           {{item.id}}
+                            {{item.id}}
                         </template>
                         <template v-slot:item.actions="{ item }">
                             <v-btn
                                 small
                                 icon
-                                @click.stop="$router.push('/konsultasi/kegiatan/'+item.kegiatan_id+'/detail')">
+                                @click.stop="printpdf(item)">
                                 <v-icon>
-                                    mdi-eye
+                                    mdi-printer
                                 </v-icon>
-                            </v-btn>                               
-                            <v-btn
-                                small      
-                                icon                          
-                                :to="{path:'/konsultasi/kegiatan/'+item.kegiatan_id+'/ubah'}"
-                                v-if="dashboard=='paralegal'||dashboard=='kumham'||dashboard=='superadmin'">
-                                <v-icon>
-                                    mdi-pencil
-                                </v-icon>
-                            </v-btn>                                               
-                            <v-btn
-                                small
-                                icon
-                                :loading="btnLoading"
-                                :disabled="btnLoading"
-                                @click.stop="deleteItem(item)"
-                                v-if="dashboard=='paralegal'||dashboard=='kumham'||dashboard=='superadmin'">
-                                <v-icon>
-                                    mdi-delete
-                                </v-icon>
-                            </v-btn>  
+                            </v-btn>   
                         </template>
                         <template v-slot:expanded-item="{ headers, item }">
                             <td :colspan="headers.length" class="text-center">
@@ -117,6 +96,25 @@
                     </v-data-table>
                 </v-col>
             </v-row>
+            <v-dialog v-model="dialogprintpdf" max-width="500px" persistent>                
+                <v-card>
+                    <v-card-title>
+                        <span class="headline">Print to PDF</span>
+                    </v-card-title>
+                    <v-card-text>
+                        <v-btn
+                            color="green"
+                            text
+                            :href="this.$api.url+'/'+file_pdf">                            
+                            Download
+                        </v-btn>                           
+                    </v-card-text>
+                    <v-card-actions>
+                        <v-spacer></v-spacer>
+                        <v-btn color="blue darken-1" text @click.stop="closedialogprintpdf">BATAL</v-btn>                            
+                    </v-card-actions>
+                </v-card>            
+            </v-dialog>
         </v-container>
     </AdminLayout>
 </template>
@@ -162,12 +160,15 @@ export default {
         ],
         search:'', 
 
+        dialogprintpdf:false,
+        file_pdf:null
+
     }),
     methods: {
         initialize:async function () 
         {
             this.datatableLoading=true;
-            await this.$ajax.get('/konsultasi/kegiatan',{
+            await this.$ajax.get('/report/kegiatan',{
                 headers: {
                     Authorization:this.$store.getters['auth/Token']
                 }
@@ -189,41 +190,34 @@ export default {
                 this.expanded=[item];
             }               
         },
-        viewItem (item) {
-            this.formdata=item;      
-            this.dialogdetailitem=true;              
-            // this.$ajax.get('/konsultasi/kegiatan/'+item.id,{
-            //     headers: {
-            //         Authorization:this.$store.getters['auth/Token']
-            //     }
-            // }).then(({data})=>{               
-                                           
-            // });                      
-        },            
-        deleteItem (item) {           
-            this.$root.$confirm.open('Delete', 'Apakah Anda ingin menghapus data konsultasi kegiatan dengan ID '+item.kegiatan_id+' ?', { color: 'red',width:600 }).then((confirm) => {
-                if (confirm)
+        async printpdf (item)
+        {
+            this.btnLoading=true;
+            await this.$ajax.post('/report/kegiatan/printpdf',
                 {
-                    this.btnLoading=true;
-                    this.$ajax.post('/konsultasi/kegiatan/'+item.kegiatan_id,
-                        {
-                            '_method':'DELETE',
-                        },
-                        {
-                            headers:{
-                                Authorization:this.$store.getters['auth/Token']
-                            }
-                        }
-                    ).then(()=>{   
-                        const index = this.datatable.indexOf(item);
-                        this.datatable.splice(index, 1);
-                        this.btnLoading=false;
-                    }).catch(()=>{
-                        this.btnLoading=false;
-                    });
-                }                
-            });
-        },        
+                    kegiatan_id:item.kegiatan_id,                                                                                    
+                },
+                {
+                    headers:{
+                        Authorization:this.$store.getters['auth/Token']
+                    },
+                    
+                }
+            ).then(({data})=>{                              
+                this.file_pdf=data.pdf_file;
+                this.dialogprintpdf=true;
+                this.btnLoading=false;
+            }).catch(()=>{
+                this.btnLoading=false;
+            });     
+        },
+        closedialogprintpdf () {                  
+            setTimeout(() => {
+                this.file_pdf=null;
+                this.dialogprintpdf = false;      
+                }, 300
+            );
+        },    
     },  
     components:{
         AdminLayout,

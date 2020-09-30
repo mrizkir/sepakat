@@ -71,6 +71,10 @@ $router->group(['prefix'=>'v1','middleware'=>'auth:api'], function () use ($rout
     $router->put('/konsultasi/komentar/{id}',['middleware'=>['role:superadmin|paralegal|kades|pmb|obh|kumham'],'uses'=>'Konsultasi\KomentarKegiatanController@update','as'=>'komentar.update']);    
     $router->delete('/konsultasi/komentar/{id}',['middleware'=>['role:superadmin|paralegal|kades|pmb|obh|kumham'],'uses'=>'Konsultasi\KomentarKegiatanController@destroy','as'=>'komentar.destroy']);
 
+    //report - kegiatan
+    $router->get('/report/kegiatan',['middleware'=>['role:superadmin|paralegal|kades|pmb|obh|kumham'],'uses'=>'Report\ReportKegiatanController@index','as'=>'reportkegiatan.index']);
+    $router->post('/report/kegiatan/printpdf',['middleware'=>['role:superadmin|paralegal|kades|pmb|obh|kumham'],'uses'=>'Report\ReportKegiatanController@printpdf','as'=>'reportkegiatan.printpdf']);
+
     //setting - permissions
     $router->get('/system/setting/permissions',['middleware'=>['role:superadmin'],'uses'=>'System\PermissionsController@index','as'=>'permissions.index']);
     $router->post('/system/setting/permissions/store',['middleware'=>['role:superadmin'],'uses'=>'System\PermissionsController@store','as'=>'permissions.store']);
