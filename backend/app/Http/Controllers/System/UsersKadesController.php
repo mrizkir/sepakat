@@ -40,7 +40,7 @@ class UsersKadesController extends Controller {
                                 'pid'=>'fetchdata',
                                 'role'=>$role,
                                 'users'=>$data,
-                                'message'=>'Fetch data users LEGAL berhasil diperoleh'
+                                'message'=>'Fetch data users KADES berhasil diperoleh'
                             ],200);  
     }    
     /**
@@ -117,7 +117,7 @@ class UsersKadesController extends Controller {
                                             'object' => $this->guard()->user(), 
                                             'object_id' => $this->guard()->user()->id, 
                                             'user_id' => $this->getUserid(), 
-                                            'message' => 'Menambah user LEGAL ('.$user->username.') berhasil'
+                                            'message' => 'Menambah user KADES ('.$user->username.') berhasil'
                                         ]);
 
             return $user;
@@ -127,7 +127,7 @@ class UsersKadesController extends Controller {
                                     'status'=>1,
                                     'pid'=>'store',
                                     'user'=>$user,                                    
-                                    'message'=>'Data user LEGAL berhasil disimpan.'
+                                    'message'=>'Data user KADES berhasil disimpan.'
                                 ],200); 
 
     }
@@ -236,7 +236,7 @@ class UsersKadesController extends Controller {
                                                             'object' => $this->guard()->user(), 
                                                             'object_id' => $this->guard()->user()->id, 
                                                             'user_id' => $this->getUserid(), 
-                                                            'message' => 'Mengubah data user LEGAL ('.$user->username.') berhasil'
+                                                            'message' => 'Mengubah data user KADES ('.$user->username.') berhasil'
                                                         ]);
                 return $user;
             });
@@ -245,7 +245,7 @@ class UsersKadesController extends Controller {
                                     'status'=>1,
                                     'pid'=>'update',
                                     'user'=>$user,      
-                                    'message'=>'Data user LEGAL '.$user->username.' berhasil diubah.'
+                                    'message'=>'Data user KADES '.$user->username.' berhasil diubah.'
                                 ],200); 
         }
     }
@@ -279,13 +279,13 @@ class UsersKadesController extends Controller {
                                                                 'object' => $this->guard()->user(), 
                                                                 'object_id' => $this->guard()->user()->id, 
                                                                 'user_id' => $this->getUserid(), 
-                                                                'message' => 'Menghapus user LEGAL ('.$username.') berhasil'
+                                                                'message' => 'Menghapus user KADES ('.$username.') berhasil'
                                                             ]);
         
             return Response()->json([
                                         'status'=>1,
                                         'pid'=>'destroy',                
-                                        'message'=>"User LEGAL ($username) berhasil dihapus"
+                                        'message'=>"User KADES ($username) berhasil dihapus"
                                     ],200);         
         }
                   
