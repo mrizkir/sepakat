@@ -48,7 +48,43 @@
                             <span>Files</span>
                             <v-icon>mdi-file-document</v-icon>
                         </v-btn>
+                        <v-btn @click.stop="dialogkronologis=true">
+                            <span>Kronologis</span>
+                            <v-icon>mdi-history</v-icon>
+                        </v-btn>
+                        <v-btn  @click.stop="dialogrekomendasi=true">
+                            <span>Rekomendasi</span>
+                            <v-icon>mdi-information</v-icon>
+                        </v-btn>
                     </v-bottom-navigation>
+                    <v-dialog v-model="dialogkronologis" max-width="500px" persistent>                        
+                        <v-card>
+                            <v-card-title>
+                                <span class="headline">Kronologis Kegiatan</span>
+                            </v-card-title>
+                            <v-card-text>
+                                {{data_kegiatan.uraian_kegiatan}}
+                            </v-card-text>
+                            <v-card-actions>
+                                <v-spacer></v-spacer>
+                                <v-btn color="blue darken-1" text @click.stop="closedialogkronologis">CLOSE</v-btn>                                    
+                            </v-card-actions>
+                        </v-card>                        
+                    </v-dialog>
+                    <v-dialog v-model="dialogrekomendasi" max-width="500px" persistent>                        
+                        <v-card>
+                            <v-card-title>
+                                <span class="headline">Rekomendasi Konsultasi</span>
+                            </v-card-title>
+                            <v-card-text>
+                                {{data_kegiatan.rekomendasi_kegiatan}}
+                            </v-card-text>
+                            <v-card-actions>
+                                <v-spacer></v-spacer>
+                                <v-btn color="blue darken-1" text @click.stop="closedialogrekomendasi">CLOSE</v-btn>                                    
+                            </v-card-actions>
+                        </v-card>                        
+                    </v-dialog>
                 </v-col>
             </v-row>
             <v-row>
@@ -167,10 +203,13 @@ export default {
     data: () => ({ 
         dashboard:null,
 
+        dialogkronologis:false,
+        dialogrekomendasi:false,
+
         kegiatan_id:null,
         data_kegiatan:{},
         bottomNav: 3,
-
+        
         daftar_komentar:[],
 
         //formdata
@@ -252,6 +291,14 @@ export default {
                     });
                 }                
             });
+        },
+        closedialogkronologis()
+        {
+            this.dialogkronologis=false;
+        },
+        closedialogrekomendasi()
+        {
+            this.dialogrekomendasi=false;
         },
         deleteItem (item) {           
             this.$root.$confirm.open('Delete', 'Apakah Anda ingin menghapus komentar kegiatan dengan ID '+item.kegiatan_id+' ?', { color: 'red',width:600 }).then((confirm) => {
