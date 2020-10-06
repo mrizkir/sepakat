@@ -114,7 +114,7 @@
                             </v-card-title>
                             <v-card-text>
                                 <v-file-input 
-                                    accept="application/pdf" 
+                                    accept="application/pdf,image/jpeg,image/png" 
                                     label="(.pdf)"
                                     :rules="rule_filedaftarhadir"
                                     show-size
@@ -162,7 +162,7 @@
                             </v-card-title>
                             <v-card-text>
                                 <v-file-input 
-                                    accept="application/pdf" 
+                                    accept="application/pdf,image/jpeg,image/png" 
                                     label="(.pdf)"
                                     :rules="rule_filedokumentasikegiatan"
                                     show-size

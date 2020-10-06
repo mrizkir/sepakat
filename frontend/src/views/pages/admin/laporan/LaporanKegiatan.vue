@@ -67,15 +67,19 @@
                                 ></v-divider>
                                 <v-spacer></v-spacer>                                
                             </v-toolbar>
-                        </template>
-                        <template v-slot:item.id="{ item }">    
-                            {{item.id}}
+                        </template>                        
+                        <template v-slot:item.id_status="{ item }"> 
+                            <v-chip :color="item.id_status==1?'success':'blue-grey lighten-3'" dark>
+                                {{item.id_status==1?'SETUJU':'DRAFT'}}
+                            </v-chip>
                         </template>
                         <template v-slot:item.actions="{ item }">
                             <v-btn
                                 small
                                 icon
-                                @click.stop="printpdf(item)">
+                                @click.stop="printpdf(item)"
+                                :disabled="item.id_status==0"
+                                :loading="btnLoading">
                                 <v-icon>
                                     mdi-printer
                                 </v-icon>
@@ -152,11 +156,12 @@ export default {
         expanded:[],
         datatable:[],
         headers: [                        
+            { text: 'PARALEGAL', value: 'name' },   
             { text: 'PEMOHON', value: 'pemohon' },   
             { text: 'JENIS KEGIATAN', value: 'nama_jenis' },   
             { text: 'NAMA KEGIATAN', value: 'nama_kegiatan' },               
             { text: 'STATUS', value: 'id_status', sortable:false, width:100 },               
-            { text: 'AKSI', value: 'actions', sortable: false,width:150 },
+            { text: 'AKSI', value: 'actions', sortable: false,width:80 },
         ],
         search:'', 
 

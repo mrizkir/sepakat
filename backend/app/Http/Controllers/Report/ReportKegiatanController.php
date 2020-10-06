@@ -17,14 +17,16 @@ class ReportKegiatanController extends Controller
     {
        
         $daftar_kegiatan=KonsultasikegiatanModel::select(\DB::raw('
-                                                        kegiatan_id,
-                                                        nama_kegiatan,
-                                                        pemohon,                                                                                                                
-                                                        nama_jenis,
-                                                        id_status,
-                                                        created_at,
-                                                        updated_at                                                        
-                                                    '))                                                                                                        
+                                                        kegiatan.kegiatan_id,
+                                                        users.name,
+                                                        kegiatan.nama_kegiatan,
+                                                        kegiatan.pemohon,                                                                                                                
+                                                        kegiatan.nama_jenis,
+                                                        kegiatan.id_status,
+                                                        kegiatan.created_at,
+                                                        kegiatan.updated_at                                                         
+                                                    '))       
+                                                    ->join ('users','users.id','kegiatan.user_id')                                                                                                 
                                                     ->get();
     
         return Response()->json([
