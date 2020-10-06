@@ -27,7 +27,13 @@ export default {
                 src:'storage/images/sliders/slider1.jpg',
             },
             {
-                src:'storage/images/sliders/slider2.jpg',
+                src:'storage/images/sliders/slider2.jpg',            
+            },
+            {
+                src:'storage/images/sliders/slider3.jpg',            
+            },
+            {
+                src:'storage/images/sliders/slider4.jpg',
             }
         ],
     }), 
