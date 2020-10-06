@@ -72,6 +72,11 @@
                         <template v-slot:item.id="{ item }">    
                            {{item.id}}
                         </template>
+                        <template v-slot:item.id_status="{ item }"> 
+                            <v-chip :color="item.id_status==1?'success':'blue-grey lighten-3'" dark>
+                                {{item.id_status==1?'SETUJU':'DRAFT'}}
+                            </v-chip>
+                        </template>
                         <template v-slot:item.actions="{ item }">
                             <v-btn
                                 small
@@ -154,6 +159,7 @@ export default {
         expanded:[],
         datatable:[],
         headers: [                        
+            { text: 'PARALEGAL', value: 'name' },   
             { text: 'PEMOHON', value: 'pemohon' },   
             { text: 'JENIS KEGIATAN', value: 'nama_jenis' },   
             { text: 'NAMA KEGIATAN', value: 'nama_kegiatan' },               

@@ -56,8 +56,10 @@
                 <v-col xs="12" sm="6" md="4">                                    
                     <v-card flat>
                         <v-card-title>STATUS:</v-card-title>  
-                        <v-card-subtitle>
-                            {{datakegiatan.id_status}}
+                        <v-card-subtitle>                            
+                            <v-chip :color="datakegiatan.id_status==1?'success':'blue-grey lighten-3'" dark>
+                                {{datakegiatan.id_status==1?'SETUJU':'DRAFT'}}
+                            </v-chip>
                         </v-card-subtitle>
                     </v-card>
                 </v-col>

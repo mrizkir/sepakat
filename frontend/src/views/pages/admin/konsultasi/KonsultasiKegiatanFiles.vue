@@ -122,7 +122,7 @@
                                     v-if="dashboard=='paralegal'||dashboard=='kumham'||dashboard=='superadmin'">
                                 </v-file-input>
                             </v-card-text>
-                            <v-card-actions v-if="dashboard=='paralegal'||dashboard=='kumham'||dashboard=='superadmin'">  
+                            <v-card-actions>  
                                 <v-btn
                                     color="green"
                                     text
@@ -136,7 +136,8 @@
                                     text
                                     @click="uploadDaftarHadir"
                                     :loading="btnLoadingUploadDaftarHadir"                                
-                                    :disabled="!form_valid_daftar_hadir||btnLoadingUploadDaftarHadir">                                   
+                                    :disabled="!form_valid_daftar_hadir||btnLoadingUploadDaftarHadir"
+                                    v-if="dashboard=='paralegal'||dashboard=='kumham'||dashboard=='superadmin'">                                   
                                     Upload
                                 </v-btn>
                                 <v-btn
@@ -144,7 +145,8 @@
                                     text
                                     @click="hapusDaftarHadir"
                                     :loading="btnLoadingHapusDaftarHadir"                                
-                                    :disabled="btnLoadingHapusDaftarHadir">                   
+                                    :disabled="btnLoadingHapusDaftarHadir"
+                                    v-if="dashboard=='paralegal'||dashboard=='kumham'||dashboard=='superadmin'">                   
                                     Hapus
                                 </v-btn>                            
                             </v-card-actions>
@@ -168,7 +170,7 @@
                                     v-if="dashboard=='paralegal'||dashboard=='kumham'||dashboard=='superadmin'">
                                 </v-file-input>                                
                             </v-card-text>
-                            <v-card-actions v-if="dashboard=='paralegal'||dashboard=='kumham'||dashboard=='superadmin'"> 
+                            <v-card-actions> 
                                 <v-btn
                                     color="green"
                                     text
@@ -182,7 +184,8 @@
                                     text
                                     @click="uploadDokumentasiKegiatan"
                                     :loading="btnLoadingUploadDokumentasiKegiatan"                                
-                                    :disabled="!form_valid_dokumentasi_kegiatan||btnLoadingUploadDokumentasiKegiatan">                                   
+                                    :disabled="!form_valid_dokumentasi_kegiatan||btnLoadingUploadDokumentasiKegiatan"
+                                    v-if="dashboard=='paralegal'||dashboard=='kumham'||dashboard=='superadmin'">                                   
                                     Upload
                                 </v-btn>
                                 <v-btn
@@ -190,7 +193,8 @@
                                     text
                                     @click="hapusDokumentasiKegiatan"
                                     :loading="btnLoadingHapusDokumentasiKegiatan"                                
-                                    :disabled="btnLoadingHapusDokumentasiKegiatan">                   
+                                    :disabled="btnLoadingHapusDokumentasiKegiatan"
+                                    v-if="dashboard=='paralegal'||dashboard=='kumham'||dashboard=='superadmin'">                                                      
                                     Hapus
                                 </v-btn>                            
                             </v-card-actions>
@@ -216,14 +220,15 @@
                                     v-if="dashboard=='paralegal'||dashboard=='kumham'||dashboard=='superadmin'">
                                 </v-file-input>
                             </v-card-text>
-                            <v-card-actions v-if="dashboard=='paralegal'||dashboard=='kumham'||dashboard=='superadmin'">                            
+                            <v-card-actions>                            
                                 <v-spacer/>                                      
                                 <v-btn
                                     color="orange"
                                     text
                                     @click="uploadKtpPemohon"
                                     :loading="btnLoadingUploadKTP"                                
-                                    :disabled="!form_valid_ktp||btnLoadingUploadKTP">                                   
+                                    :disabled="!form_valid_ktp||btnLoadingUploadKTP"
+                                    v-if="dashboard=='paralegal'||dashboard=='kumham'||dashboard=='superadmin'">                                   
                                     Upload
                                 </v-btn>
                                 <v-btn
@@ -231,7 +236,8 @@
                                     text
                                     @click="hapusKtpPemohon"
                                     :loading="btnLoadingHapusKTP"                                
-                                    :disabled="btnLoadingHapusKTP">                   
+                                    :disabled="btnLoadingHapusKTP"
+                                    v-if="dashboard=='paralegal'||dashboard=='kumham'||dashboard=='superadmin'">                   
                                     Hapus
                                 </v-btn>                            
                             </v-card-actions>

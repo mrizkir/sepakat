@@ -200,7 +200,7 @@
                             </v-list-item-icon>
                             <v-list-item-content>
                                 <v-list-item-title>
-                                    PMD
+                                    PEMDA
                                 </v-list-item-title>
                             </v-list-item-content>
                         </v-list-item>                       

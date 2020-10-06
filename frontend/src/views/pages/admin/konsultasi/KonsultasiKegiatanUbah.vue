@@ -58,7 +58,7 @@
                                     filled
                                 />
                                 <v-textarea
-                                    label="URAIAN KEGIATAN"                                        
+                                    label="URAIAN / KRONOLOGIS KEGIATAN"                                         
                                     v-model="formdata.uraian_kegiatan"
                                     :rules="rule_uraian_kegiatan"
                                     filled
@@ -123,7 +123,7 @@
                                     ></v-time-picker>
                                 </v-menu>
                                 <v-text-field
-                                    label="TEMPAT"                                        
+                                    label="TEMPAT (ALAMAT PEMOHON)"                                        
                                     v-model="formdata.tempat"
                                     :rules="rule_tempat"
                                     filled
