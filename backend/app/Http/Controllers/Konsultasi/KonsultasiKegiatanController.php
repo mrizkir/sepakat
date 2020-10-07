@@ -199,7 +199,7 @@ class KonsultasikegiatanController extends Controller
             $name=$kegiatan->pemohon;
             $filedaftarhadir = $request->file('filedaftarhadir');
             $mime_type=$filedaftarhadir->getMimeType();
-            if ($mime_type=='application/pdf')
+            if ($mime_type=='application/pdf' || $mime_type=='image/png' || $mime_type=='image/jpeg')
             {
                 $folder=\App\Helpers\Helper::public_path('pdf/daftarhadir/');
                 $file_name=uniqid('pdfdh').".".$filedaftarhadir->getClientOriginalExtension();
@@ -251,7 +251,7 @@ class KonsultasikegiatanController extends Controller
             $name=$kegiatan->pemohon;
             $filedokumentasikegiatan = $request->file('filedokumentasikegiatan');
             $mime_type=$filedokumentasikegiatan->getMimeType();
-            if ($mime_type=='application/pdf')
+            if ($mime_type=='application/pdf' || $mime_type=='image/png' || $mime_type=='image/jpeg')
             {
                 $folder=\App\Helpers\Helper::public_path('pdf/dokumentasikegiatan/');
                 $file_name=uniqid('pdfdh').".".$filedokumentasikegiatan->getClientOriginalExtension();

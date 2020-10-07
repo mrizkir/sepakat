@@ -115,7 +115,7 @@
                             <v-card-text>
                                 <v-file-input 
                                     accept="application/pdf,image/jpeg,image/png" 
-                                    label="(.pdf)"
+                                    label="(.pdf, .png, atau .jpg)"
                                     :rules="rule_filedaftarhadir"
                                     show-size
                                     v-model="filedaftarhadir"
@@ -163,7 +163,7 @@
                             <v-card-text>
                                 <v-file-input 
                                     accept="application/pdf,image/jpeg,image/png" 
-                                    label="(.pdf)"
+                                    label="(.pdf, .png, atau .jpg)"
                                     :rules="rule_filedokumentasikegiatan"
                                     show-size
                                     v-model="filedokumentasikegiatan"
