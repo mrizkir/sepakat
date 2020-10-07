@@ -43,8 +43,19 @@ class ReportKegiatanController extends Controller
         ]);
         $kegiatan_id=$request->input('kegiatan_id');
 
-        $kegiatan=KonsultasiKegiatanModel::join('users','users.id','kegiatan.user_id')
+        $kegiatan=KonsultasiKegiatanModel::select(\DB::raw('
+                                                kegiatan.*,
+                                                users.name,
+                                                \'\' AS waktu,
+                                                \'\' AS tanggal_ubah
+                                            '))
+                                            ->join('users','users.id','kegiatan.user_id')
                                             ->find($kegiatan_id);
+
+        $kegiatan->waktu=\App\Helpers\Helper::tanggal('H:m', $kegiatan->tanggal);
+        $kegiatan->tanggal=\App\Helpers\Helper::tanggal('d F Y', $kegiatan->tanggal);
+        $kegiatan->tanggal_ubah=\App\Helpers\Helper::tanggal('d F Y', $kegiatan->updated_at);
+        
 
         $pdf = \Meneses\LaravelMpdf\Facades\LaravelMpdf::loadView('pdf.document', [
                                                                                     'kegiatan'=>$kegiatan

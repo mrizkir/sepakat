@@ -44,7 +44,7 @@
                         <strong>TANGGAL</strong>
                     </td>
                     <td style="padding-bottom: 10px;">:</td>
-                    <td style="padding-bottom: 10px;">{{date('d-m-Y',strtotime($kegiatan->tanggal))}}</td>
+                    <td style="padding-bottom: 10px;">{{$kegiatan->tanggal}}</td>
                 </tr>
                 <tr>
                     <td style="padding-bottom: 10px;">
@@ -54,7 +54,7 @@
                         <strong>WAKTU</strong>
                     </td>
                     <td style="padding-bottom: 10px;">:</td>
-                    <td style="padding-bottom: 10px;">{{date('H:m:s',strtotime($kegiatan->tanggal))}}</td>
+                    <td style="padding-bottom: 10px;">{{$kegiatan->waktu}}</td>
                 </tr>
                 <tr>
                     <td style="padding-bottom: 10px;">
@@ -100,7 +100,7 @@
             <tfoot>
                 <tr>
                     <td colspan="3"></td>
-                    <td style="text-align:center;font-weight:bold;">Kabupaten Bintan, {{date('d-m-Y',strtotime($kegiatan->updated_at))}}</td>
+                    <td style="text-align:center;font-weight:bold;">Kabupaten Bintan, {{$kegiatan->tanggal_ubah}}</td>
                 </tr>
                 <tr>
                     <td colspan="3" style="text-align:center;font-weight:bold;padding-bottom:40px">&nbsp;</td>

@@ -55,7 +55,7 @@ class Helper {
                             'August', 
                             'September', 
                             'October', 
-                            'November' , 
+                            'November', 
                             'December'
                         ], 
                         [
