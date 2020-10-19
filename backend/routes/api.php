@@ -39,8 +39,7 @@ $router->group(['prefix'=>'v1','middleware'=>'auth:api'], function () use ($rout
     $router->get('/auth/me',['uses'=>'AuthController@me','as'=>'auth.me']);
 
     // dashboard
-    $router->post('/dashboard/pmb',['middleware'=>['role:superadmin|pmb'],'uses'=>'SPMB\SPMBController@index','as'=>'dashboardspmb.index']);
-    $router->post('/dashboard/keuangan',['middleware'=>['role:superadmin'],'uses'=>'Keuangan\KeuanganController@index','as'=>'dashboardkeuangan.index']);
+    $router->get('/dashboard',['uses'=>'DashboardController@index','as'=>'dashboard.index']);
 
     //data master - kelas
     $router->post('/datamaster/kelas/store',['middleware'=>['role:superadmin'],'uses'=>'DMaster\JenisKegiatanController@store','as'=>'kelas.store']);

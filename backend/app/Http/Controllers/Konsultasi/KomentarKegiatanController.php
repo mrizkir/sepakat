@@ -10,7 +10,7 @@ use App\Models\Konsultasi\KomentarKegiatanModel;
 
 use Ramsey\Uuid\Uuid;
 
-class KomentarkegiatanController extends Controller
+class KomentarKegiatanController extends Controller
 {
     public function index (Request $request,$id)
     {

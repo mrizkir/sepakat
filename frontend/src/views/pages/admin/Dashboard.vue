@@ -1,7 +1,12 @@
 <template>
-    <AdminLayout>		           
-        
-                
+    <AdminLayout>		                   
+		<v-container fluid>
+			<v-row>
+				<v-cols col="6">
+					
+				</v-cols>
+			</v-row>
+		</v-container>
     </AdminLayout>
 </template>
 <script>
@@ -24,13 +29,17 @@ export default {
 			}
 		];		
 		this.initialize();
+		this.fetchData();
+
 	},
 	data: () => ({
         breadcrumbs:[],
         TOKEN:null,
         dashboard:null,
 
-        tahun_pendaftaran:''
+		tahun_pendaftaran:'',
+
+		data_jenis_kegiatan:[],
 	}),
 	methods : {
 		initialize:async function()
@@ -46,7 +55,19 @@ export default {
                 this.$store.dispatch('uiadmin/changeDashboard',this.dashboard);                                       
             });                 
             this.$store.dispatch('uiadmin/init',this.$ajax);              
-            this.tahun_pendaftaran = this.$store.getters['uiadmin/getTahunPendaftaran'];            
+			this.tahun_pendaftaran = this.$store.getters['uiadmin/getTahunPendaftaran'];            
+			
+		},
+		async fetchData ()
+		{
+			await this.$ajax.get('/dashboard',                
+            {
+                headers: {
+                    Authorization:'Bearer '+this.TOKEN
+                }
+            }).then(({data})=>{          
+                this.data_jenis_kegiatan=data.jenis_kegiatan;
+            });    
 		}
 	},
 	computed:{

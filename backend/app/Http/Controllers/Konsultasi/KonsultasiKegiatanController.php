@@ -9,7 +9,7 @@ use App\Models\Konsultasi\KonsultasiKegiatanModel;
 
 use Ramsey\Uuid\Uuid;
 
-class KonsultasikegiatanController extends Controller
+class KonsultasiKegiatanController extends Controller
 {
     public function index ()
     {
