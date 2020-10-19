@@ -9,7 +9,7 @@
 								<v-card-title class="headline">
 									JUMLAH PARALEGAL
 								</v-card-title>
-								<v-card-subtitle>Total : {{jumlah_paralegal}}, Melaporkan Kegiatan: {{jumlah_paralegal_laporan}}</v-card-subtitle>
+								<v-card-subtitle>Total : {{jumlah_paralegal}} Orang, Melaporkan Kegiatan: {{jumlah_paralegal_laporan}} Orang</v-card-subtitle>
 								<v-card-actions>
 									<v-btn										
 										class="ml-2 mt-5"
