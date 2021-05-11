@@ -257,28 +257,8 @@ class UsersController extends Controller {
                     $user->password = Hash::make($request->input('password'));
                 }    
                 $user->updated_at = \Carbon\Carbon::now()->toDateTimeString();
-                $user->save();                
-                
-                $daftar_roles=json_decode($request->input('role_id'),true);
-                if (($key= array_search('dosen',$daftar_roles))===false)
-                {
-                    $key= array_search('dosenwali',$daftar_roles);
-                    if (isset($daftar_roles[$key]))
-                    {
-                        unset($daftar_roles[$key]);
-                    }
-                }
-                $user->syncRoles($daftar_roles);                
-                foreach($daftar_roles as $v)
-                {
-                    if ($v!='superadmin')
-                    {              
-                        $permission=Role::findByName($v)->permissions;
-                        $permissions=$permission->pluck('name');
-                        $user->givePermissionTo($permissions);
-                    }
-                }
-                
+                $user->save();
+
                 \App\Models\System\ActivityLog::log($request,[
                                                                 'object' => $this->guard()->user(), 
                                                                 'object_id' => $this->guard()->user()->id, 
