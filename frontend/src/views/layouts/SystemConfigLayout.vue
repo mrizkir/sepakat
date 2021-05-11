@@ -118,6 +118,17 @@
         <v-main class="mx-4 mb-4">			
 			<slot />
 		</v-main>
+        <v-footer app padless fixed>
+			<v-card class="flex" color="yellow darken-2" flat tile>
+				<v-divider></v-divider>
+				<v-card-text class="py-2 black--text text-center">
+					<strong>{{ APP_NAME }} (2020-2021)</strong> dikembangkan oleh LPPM STT INDONESIA TANJUNGPINANG
+					<v-btn icon href="https://github.com/mrizkir/sepakat">
+						<v-icon>mdi-github</v-icon>
+					</v-btn>
+				</v-card-text>
+			</v-card>
+		</v-footer>
     </div>    
 </template>
 <script>
