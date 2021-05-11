@@ -50,25 +50,32 @@ class ReportKegiatanController extends Controller
                                                 \'\' AS tanggal_ubah
                                             '))
                                             ->join('users','users.id','kegiatan.user_id')
+                                            ->join('usersdesa','kegiatan.user_id','usersdesa.user_id')
                                             ->find($kegiatan_id);
 
         $kegiatan->waktu=\App\Helpers\Helper::tanggal('H:m', $kegiatan->tanggal);
         $kegiatan->tanggal=\App\Helpers\Helper::tanggal('d F Y', $kegiatan->tanggal);
         $kegiatan->tanggal_ubah=\App\Helpers\Helper::tanggal('d F Y', $kegiatan->updated_at);
         
+        // $kades = User::where('default_role','kades')
+        //                 ->where('id',$kegiatan->)
+
+        //                 ->orderBy('username','ASC')
+        //                 ->get();           
 
         $pdf = \Meneses\LaravelMpdf\Facades\LaravelMpdf::loadView('pdf.document', [
-                                                                                    'kegiatan'=>$kegiatan
+                                                                                    'kegiatan'=>$kegiatan,
+                                                                                    'kegiatan_id'=>$kegiatan_id,
                                                                                 ]);
         $file_pdf=\App\Helpers\Helper::public_path('exported/pdf/')."/$kegiatan_id.pdf";        
         $pdf->save($file_pdf);
-
+        
         $pdf_file="storage/exported/pdf/$kegiatan_id.pdf";
 
         return Response()->json([
                                     'status'=>1,
                                     'pid'=>'fetchdata',
-                                    'kegiatan'=>$kegiatan,
+                                    'kegiatan'=>$kegiatan,                                    
                                     'pdf_file'=>$pdf_file                                    
                                 ],200);
     }

@@ -117,7 +117,24 @@
                     <td colspan="2" style="text-align:center;font-weight:bold;">Pembina </td>                    
                     <td colspan="2" style="text-align:center;font-weight:bold;">Kepala Desa </td>                    
                 </tr>
+                <tr>
+                    <td colspan="2" style="text-align:center;font-weight:bold;">
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                        ROSDIANA EVLIN WALEWANGKO
+                    </td>                    
+                    <td colspan="2" style="text-align:center;font-weight:bold;">
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                        ZULFITRI
+                    </td>                    
+                </tr>                
             </tfoot>
-        </table>        
+        </table>     
+        <div style="text-align:right;font-size:10px">KODE: {{$kegiatan_id}}</div>
     </body>
 </html>
