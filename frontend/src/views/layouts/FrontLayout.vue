@@ -5,10 +5,26 @@
 						dark
 						app>
 						<v-toolbar-title>
-								<span class="hidden-sm-and-down">
-								{{namaAPPAlias}}<br/>
-								[<small>Sistem Elektronik Paralegal Masyarakat</small>]
-								</span>
+							<v-container class="mt-4">
+								<v-row class="hidden-sm-and-down" no-gutters>
+									<v-col cols="3">
+										<span>
+											<v-img
+												max-height="60"
+												max-width="60"				
+												:src="$api.storageURL + '/storage/images/logo.png'"
+												>
+											</v-img>											
+										</span>
+									</v-col>
+									<v-col cols="3">
+										<span>
+											{{ namaAPPAlias }}<br/>
+											[<small style="font-size:13px">Sistem Elektronik Paralegal Masyarakat</small>]
+										</span>
+									</v-col>
+								</v-row>
+							</v-container>
 						</v-toolbar-title>
 						<v-spacer />
 						<v-btn to="/" class="mr-2" color="yellow" text large>
@@ -28,7 +44,7 @@
 			<v-card class="flex" color="yellow darken-2" flat tile>
 				<v-divider></v-divider>
 				<v-card-text class="py-2 black--text text-center">
-					<strong>{{ APP_NAME }} (2020-2021)</strong> dikembangkan oleh LPPM STT INDONESIA TANJUNGPINANG
+					<strong>{{ namaAPPAlias }} (2020-2021)</strong> dikembangkan oleh LPPM STT INDONESIA TANJUNGPINANG
 					<v-btn icon href="https://github.com/mrizkir/sepakat">
 						<v-icon>mdi-github</v-icon>
 					</v-btn>

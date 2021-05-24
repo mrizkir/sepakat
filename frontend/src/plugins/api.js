@@ -4,13 +4,13 @@ export default {
     install(Vue)
     {
         let ajax = axios.create({
-            baseURL:process.env.VUE_APP_APIUrlV3
+            baseURL:process.env.VUE_APP_APIUrlV1
         });
         
-        Vue.prototype.$api = {
+        Vue.prototype.$api = {            
             url : process.env.VUE_APP_API_HOST,
-            post : async function (path)
-            {
+            storageURL : process.env.VUE_APP_STORAGE_URL,
+            post : async function (path) {
                 return await ajax.post(path);
             },            
         };        

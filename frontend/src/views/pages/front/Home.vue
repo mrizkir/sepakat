@@ -5,7 +5,9 @@
                 <v-col cols="12">
                     <v-carousel
                         cycle                                                
-                        show-arrows-on-hover>
+                        show-arrows-on-hover
+												height="auto"
+                    >
                         <v-carousel-item
                             v-for="(slide, i) in slides"
                             :key="i"
