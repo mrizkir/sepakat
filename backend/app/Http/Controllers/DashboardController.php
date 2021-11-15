@@ -13,13 +13,14 @@ class DashboardController extends Controller
 {  
 	public function index (Request $request)
 	{
-		
-		$subquery = \DB::table('kegiatan')
-						->select(\DB::raw('id_jenis_kegiatan,COUNT(kegiatan_id) AS jumlah'))
-						->groupBy('id_jenis_kegiatan');
 
 		if ($this->hasRole('paralegal'))
 		{
+			$subquery = \DB::table('kegiatan')
+						->select(\DB::raw('id_jenis_kegiatan,COUNT(kegiatan_id) AS jumlah'))
+						->where('kegiatan.user_id', $this->getUserid())
+						->groupBy('id_jenis_kegiatan');
+
 			$jenis_kegiatan=JenisKegiatanModel::select(\DB::raw('
 													jenis_kegiatan.id_jenis,
 													jenis_kegiatan.nama_jenis,                                                
@@ -27,13 +28,16 @@ class DashboardController extends Controller
 												))
 												->leftJoinSub($subquery,'kegiatan',function($join){
 													$join->on('kegiatan.id_jenis_kegiatan','=','jenis_kegiatan.id_jenis');
-												})
-												->where('kegiatan.user_id', $this->getUserid())
+												})												
 												->orderBy('id_jenis','ASC')
 												->get();
 		}
 		else
 		{
+			$subquery = \DB::table('kegiatan')
+						->select(\DB::raw('id_jenis_kegiatan,COUNT(kegiatan_id) AS jumlah'))
+						->groupBy('id_jenis_kegiatan');
+
 			$jenis_kegiatan=JenisKegiatanModel::select(\DB::raw('
 													jenis_kegiatan.id_jenis,
 													jenis_kegiatan.nama_jenis,                                                
