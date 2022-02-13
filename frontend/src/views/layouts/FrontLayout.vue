@@ -3,28 +3,16 @@
 				<v-app-bar 
 						class="indigo darken-4 yellow--text"
 						dark
-						app>
+						app
+						elevation="0">
 						<v-toolbar-title>
-							<v-container class="mt-4">
-								<v-row class="hidden-sm-and-down" no-gutters>
-									<v-col cols="3">
-										<span>
-											<v-img
-												max-height="60"
-												max-width="60"				
-												:src="$api.storageURL + '/storage/images/logo.png'"
-												>
-											</v-img>											
-										</span>
-									</v-col>
-									<v-col cols="3">
-										<span>
-											{{ namaAPPAlias }}<br/>
-											[<small style="font-size:13px">Sistem Elektronik Paralegal Masyarakat</small>]
-										</span>
-									</v-col>
-								</v-row>
-							</v-container>
+								<span>
+									<v-img
+											max-width="155"
+											:src="$api.storageURL + '/storage/images/logo/sepakatlogo.svg'"
+											>
+										</v-img>
+								</span>
 						</v-toolbar-title>
 						<v-spacer />
 						<v-btn to="/" class="mr-2" color="yellow" text large>
