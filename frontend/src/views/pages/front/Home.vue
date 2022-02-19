@@ -2,11 +2,11 @@
     <FrontLayout>
         <v-container fluid>
             <v-row>
-                <v-col cols="12">
+                <v-col cols="12" class="pa-0">
                     <v-carousel
                         cycle                                                
                         show-arrows-on-hover
-												height="auto"
+						height="auto"
                     >
                         <v-carousel-item
                             v-for="(slide, i) in slides"
