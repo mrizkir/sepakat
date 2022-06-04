@@ -126,14 +126,98 @@
         >
         <v-list-item
           link
-          to="/konsultasi/kegiatan"
+          to="/konsultasi/kegiatan/penyuluhanhukum"
           v-if="CAN_ACCESS('KONSULTASI-KEGIATAN_BROWSE')"
         >
           <v-list-item-icon class="mr-2">
             <v-icon>mdi-calendar-blank-multiple</v-icon>
           </v-list-item-icon>
           <v-list-item-content>
-            <v-list-item-title> KEGIATAN </v-list-item-title>
+            <v-list-item-title> PENYULUHAN HUKUM </v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+        <v-list-item
+          link
+          to="/konsultasi/kegiatan/konsultasihukum"
+          v-if="CAN_ACCESS('KONSULTASI-KEGIATAN_BROWSE')"
+        >
+          <v-list-item-icon class="mr-2">
+            <v-icon>mdi-calendar-blank-multiple</v-icon>
+          </v-list-item-icon>
+          <v-list-item-content>
+            <v-list-item-title> KONSULTASI HUKUM </v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+        <v-list-item
+          link
+          to="/konsultasi/kegiatan/investigasiperkara"
+          v-if="CAN_ACCESS('KONSULTASI-KEGIATAN_BROWSE')"
+        >
+          <v-list-item-icon class="mr-2">
+            <v-icon>mdi-calendar-blank-multiple</v-icon>
+          </v-list-item-icon>
+          <v-list-item-content>
+            <v-list-item-title> INVESTIGASI PERKARA </v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+        <v-list-item
+          link
+          to="/konsultasi/kegiatan/mediasi"
+          v-if="CAN_ACCESS('KONSULTASI-KEGIATAN_BROWSE')"
+        >
+          <v-list-item-icon class="mr-2">
+            <v-icon>mdi-calendar-blank-multiple</v-icon>
+          </v-list-item-icon>
+          <v-list-item-content>
+            <v-list-item-title> MEDIASI </v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+        <v-list-item
+          link
+          to="/konsultasi/kegiatan/negoisasi"
+          v-if="CAN_ACCESS('KONSULTASI-KEGIATAN_BROWSE')"
+        >
+          <v-list-item-icon class="mr-2">
+            <v-icon>mdi-calendar-blank-multiple</v-icon>
+          </v-list-item-icon>
+          <v-list-item-content>
+            <v-list-item-title> NEGOISASI </v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+        <v-list-item
+          link
+          to="/konsultasi/kegiatan/pembinaanmasyarakat"
+          v-if="CAN_ACCESS('KONSULTASI-KEGIATAN_BROWSE')"
+        >
+          <v-list-item-icon class="mr-2">
+            <v-icon>mdi-calendar-blank-multiple</v-icon>
+          </v-list-item-icon>
+          <v-list-item-content>
+            <v-list-item-title> PEMB. MASYARAKAT </v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+        <v-list-item
+          link
+          to="/konsultasi/kegiatan/pendampingan"
+          v-if="CAN_ACCESS('KONSULTASI-KEGIATAN_BROWSE')"
+        >
+          <v-list-item-icon class="mr-2">
+            <v-icon>mdi-calendar-blank-multiple</v-icon>
+          </v-list-item-icon>
+          <v-list-item-content>
+            <v-list-item-title> PENDAMPINGAN </v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+        <v-list-item
+          link
+          to="/konsultasi/kegiatan/draftingdokumen"
+          v-if="CAN_ACCESS('KONSULTASI-KEGIATAN_BROWSE')"
+        >
+          <v-list-item-icon class="mr-2">
+            <v-icon>mdi-calendar-blank-multiple</v-icon>
+          </v-list-item-icon>
+          <v-list-item-content>
+            <v-list-item-title> DRAFTING DOKUMEN </v-list-item-title>
           </v-list-item-content>
         </v-list-item>
         <v-subheader v-if="CAN_ACCESS('REPORT-GROUP')">LAPORAN</v-subheader>
@@ -372,11 +456,14 @@ export default {
       let img = this.ATTRIBUTE_USER("foto");
       var photo;
       if (img == "") {
-        photo = this.$api.url + "/storage/images/users/no_photo.png";
+        photo = this.$api.storageURL + "/storage/images/users/no_photo.png";
       } else {
-        photo = this.$api.url + "/" + img;
+        photo = this.$api.storageURL + "/" + img;
       }
       return photo;
+    },
+    isReportPage() {
+      return true;
     },
   },
   watch: {

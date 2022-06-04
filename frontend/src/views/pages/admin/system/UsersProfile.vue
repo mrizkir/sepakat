@@ -247,7 +247,7 @@ export default {
             {
                 if (this.avatar==null)
                 {
-                    let photo = this.$api.url+'/'+this.$store.getters.User.foto;			
+                    let photo = this.$api.storageURL+'/'+this.$store.getters.User.foto;			
                     return photo;
                 }
                 else

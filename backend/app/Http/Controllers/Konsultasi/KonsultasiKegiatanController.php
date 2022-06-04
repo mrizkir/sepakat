@@ -18,40 +18,40 @@ class KonsultasiKegiatanController extends Controller
 		if ($this->hasRole('paralegal'))
 		{
 			$daftar_kegiatan=KonsultasikegiatanModel::select(\DB::raw('
-														kegiatan.kegiatan_id,
-														users.name,
-														kegiatan.nama_kegiatan,
-														kegiatan.pemohon,                                                                                                                
-														kegiatan.nama_jenis,
-														kegiatan.id_status,
-														kegiatan.created_at,
-														kegiatan.updated_at                                                        
-													'))    
-													->join ('users','users.id','kegiatan.user_id')
-													->where('user_id',$this->getUserid())                                                                                                    
-													->get();
+				kegiatan.kegiatan_id,
+				users.name,
+				kegiatan.nama_kegiatan,
+				kegiatan.pemohon,                                                                                                                
+				kegiatan.nama_jenis,
+				kegiatan.id_status,
+				kegiatan.created_at,
+				kegiatan.updated_at                                                        
+			'))    
+			->join ('users','users.id','kegiatan.user_id')
+			->where('user_id',$this->getUserid())                                                                                                    
+			->get();
 		}
 		else
 		{        
 			$daftar_kegiatan=KonsultasikegiatanModel::select(\DB::raw('
-															kegiatan.kegiatan_id,
-															users.name,
-															kegiatan.nama_kegiatan,
-															kegiatan.pemohon,                                                                                                                
-															kegiatan.nama_jenis,
-															kegiatan.id_status,
-															kegiatan.created_at,
-															kegiatan.updated_at                                                        
-														'))    
-														->join ('users','users.id','kegiatan.user_id')                                                                                                    
-														->get();
+				kegiatan.kegiatan_id,
+				users.name,
+				kegiatan.nama_kegiatan,
+				kegiatan.pemohon,                                                                                                                
+				kegiatan.nama_jenis,
+				kegiatan.id_status,
+				kegiatan.created_at,
+				kegiatan.updated_at                                                        
+			'))    
+			->join ('users','users.id','kegiatan.user_id')                                                                                                    
+			->get();
 		}
 		return Response()->json([
 									'status'=>1,
 									'pid'=>'fetchdata',
 									'daftar_kegiatan'=>$daftar_kegiatan,
 									'message'=>'Fetch data daftar kegiatan berhasil diperoleh.'
-								],200);
+								], 200);
 	}
 	public function show(Request $request,$id)
 	{
@@ -159,19 +159,19 @@ class KonsultasiKegiatanController extends Controller
 				$kegiatan->save();
 				$filektppemohon->move($folder,$file_name);
 				return Response()->json([
-											'status'=>0,
-											'pid'=>'store',
-											'kegiatan'=>$kegiatan,                
-											'message'=>"KTP Pemohon/Peserta ($name) berhasil diupload"
-										],200);    
+					'status'=>0,
+					'pid'=>'store',
+					'kegiatan'=>$kegiatan,                
+					'message'=>"KTP Pemohon/Peserta ($name) berhasil diupload"
+				],200);    
 			}
 			else
 			{
 				return Response()->json([
-										'status'=>1,
-										'pid'=>'store',
-										'message'=>["Extensi file yang diupload bukan jpg atau png."]
-									],422); 
+					'status'=>1,
+					'pid'=>'store',
+					'message'=>["Extensi file yang diupload bukan jpg atau png."]
+				],422); 
 				
 
 			}
@@ -186,10 +186,10 @@ class KonsultasiKegiatanController extends Controller
 		if ($kegiatan == null)
 		{
 			return Response()->json([
-									'status'=>0,
-									'pid'=>'store',                
-									'message'=>["Data Konsultasi Kegiatan tidak ditemukan."]
-								],422);         
+				'status'=>0,
+				'pid'=>'store',                
+				'message'=>["Data Konsultasi Kegiatan tidak ditemukan."]
+			],422);         
 		}
 		else
 		{

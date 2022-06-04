@@ -328,7 +328,7 @@ export default {
                 }
             }).then(({data})=>{                               
                 this.data_kegiatan=data.kegiatan;
-                this.ktpPemohon=this.$api.url+'/'+data.kegiatan.file_fotocopy_ktp;
+                this.ktpPemohon=this.$api.storageURL+'/'+data.kegiatan.file_fotocopy_ktp;
             })
         },   
         previewImage (e)
