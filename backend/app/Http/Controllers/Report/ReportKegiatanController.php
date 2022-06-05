@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Report;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-use App\Models\Kegiatan\KonsultasiKegiatanModel;
+use App\Models\Kegiatan\KegiatanModel;
 
 use Ramsey\Uuid\Uuid;
 
@@ -86,7 +86,7 @@ class ReportKegiatanController extends Controller
 		]);
 		$kegiatan_id=$request->input('kegiatan_id');
 
-		$kegiatan=KonsultasiKegiatanModel::select(\DB::raw('
+		$kegiatan=KegiatanModel::select(\DB::raw('
 												kegiatan.*,
 												users.name,
 												\'\' AS waktu,

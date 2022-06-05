@@ -17,7 +17,7 @@
             <template v-slot:desc>
                 <v-alert                                        
                     color="cyan"
-                    border="left"                    
+                    border="left"
                     colored-border
                     type="info"
                     >
@@ -140,7 +140,7 @@ export default {
             rule_foto:[
                 value => !!value||"Mohon pilih gambar !!!",
                 value =>  !value || value.size < 2000000 || 'File foto harus kurang dari 2MB.'                
-            ], 
+            ],
             rule_user_password:[
                 value => !!value||"Mohon untuk di isi password User !!!",
                 value => {

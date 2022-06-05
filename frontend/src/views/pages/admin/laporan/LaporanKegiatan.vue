@@ -17,7 +17,7 @@
             <template v-slot:desc>
                 <v-alert                                        
                     color="cyan"
-                    border="left"                    
+                    border="left"
                     colored-border
                     type="info"
                     >
@@ -173,7 +173,7 @@ export default {
         initialize: async function () 
         {
             this.datatableLoading=true;
-            await this.$ajax.get('/report/kegiatan',{
+            await this.$ajax.get('/report/kegiatan', {
                 headers: {
                     Authorization:this.$store.getters['auth/Token']
                 }

@@ -17,7 +17,7 @@
             <template v-slot:desc>
                 <v-alert                                        
                     color="cyan"
-                    border="left"                    
+                    border="left"
                     colored-border
                     type="info"
                     >
@@ -193,13 +193,13 @@ export default {
         rule_permission_name:[
             value => !!value||"Mohon untuk di isi nama Permission !!!",
             value => /^[a-zA-Z\\-]+$/.test(value) || 'Nama Permission hanya boleh string',
-        ], 
+        ],
     }),
     methods: {
         initialize () 
         {
             this.datatableLoading=true;
-            this.$ajax.get('/system/setting/permissions',{
+            this.$ajax.get('/system/setting/permissions', {
                 headers: {
                     Authorization:this.TOKEN
                 }
@@ -288,7 +288,7 @@ export default {
         formTitle () {
             return this.editedIndex === -1 ? 'TAMBAH PERMISSION' : 'EDIT PERMISSION'
         },
-        ...mapGetters('auth',{            
+        ...mapGetters('auth', {            
             ACCESS_TOKEN: 'AccessToken', 
             TOKEN: 'Token', 
             CAN_ACCESS: 'can',

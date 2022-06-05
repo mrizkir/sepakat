@@ -5,7 +5,7 @@
         mdi-calendar-blank-multiple
       </template>
       <template v-slot:name>
-        KEGIATAN MEDIASI
+        KEGIATAN PENYULUHAN HUKUM
       </template>
       <template v-slot:breadcrumbs>
         <v-breadcrumbs :items="breadcrumbs" class="pa-0">
@@ -16,14 +16,14 @@
       </template>
       <template v-slot:desc>
         <v-alert color="cyan" border="left" colored-border type="info">
-          Halaman ini berisi daftar kegiatan mediasi yang dilakukan oleh paralegal
+          Halaman ini berisi daftar kegiatan penyuluhan hukum yang dilakukan oleh paralegal
         </v-alert>
       </template>
     </ModuleHeader>   
     <v-container fluid v-if="Object.keys(data_kegiatan).length">   
       <v-row>
         <v-col cols="12">
-          <DK :datakegiatan="data_kegiatan" path="/kegiatan/mediasi"/>
+          <DK :datakegiatan="data_kegiatan" path="/kegiatan/penyuluhanhukum"/>
         </v-col>
       </v-row>
       <v-row>
@@ -39,7 +39,7 @@
               <span>Verifikasi</span>
               <v-icon>mdi-lock-open</v-icon>
             </v-btn>
-            <v-btn :to="{path: '/kegiatan/mediasi/' + kegiatan_id + '/files'}">
+            <v-btn :to="{path: '/kegiatan/penyuluhanhukum/' + kegiatan_id + '/files'}">
               <span>Files</span>
               <v-icon>mdi-file-document</v-icon>
             </v-btn>
@@ -162,10 +162,10 @@
 <script>
 import AdminLayout from '@/views/layouts/AdminLayout';
 import ModuleHeader from '@/components/ModuleHeader';
-import DK from '@/views/pages/admin/mediasi/DataKegiatanMediasi';
+import DK from '@/views/pages/admin/penyuluhanhukum/DataKegiatanPenyuluhanHukum';
 
 export default {
-  name: 'KegiatanMediasiDetail',
+  name: 'KegiatanPenyuluhanHukumDetail',
   created () {
     this.dashboard = this.$store.getters['uiadmin/getDefaultDashboard']; 
     this.kegiatan_id=this.$route.params.kegiatan_id;
@@ -181,9 +181,9 @@ export default {
         href: '#'
       },
       {
-        text: 'MEDIASI',
+        text: 'PENYULUHAN HUKUM',
         disabled: false,
-        href: '/kegiatan/mediasi/'
+        href: '/kegiatan/penyuluhanhukum/'
       },
       {
         text: 'DETAIL',
@@ -218,7 +218,7 @@ export default {
   }),
   methods: {
     initialize: async function () {
-      await this.$ajax.get('/kegiatan/mediasi/' + this.kegiatan_id,{
+      await this.$ajax.get('/kegiatan/penyuluhanhukum/' + this.kegiatan_id,{
         headers: {
           Authorization:this.$store.getters['auth/Token']
         }
@@ -267,7 +267,7 @@ export default {
       this.$root.$confirm.open('Verifikasi', 'Setelah diverifikasi, tidak bisa diberi komentar, diubah, atau dihapus ?', { color: 'green',width:600 }).then((confirm) => {
         if (confirm) {
           this.btnLoading = true
-          this.$ajax.post('/kegiatan/mediasi/verifikasi/' + this.kegiatan_id,
+          this.$ajax.post('/kegiatan/penyuluhanhukum/verifikasi/' + this.kegiatan_id,
             {
               '_method': 'put',
             },

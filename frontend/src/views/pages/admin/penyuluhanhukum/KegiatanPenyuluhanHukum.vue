@@ -5,7 +5,7 @@
         mdi-calendar-blank-multiple
       </template>
       <template v-slot:name>
-        KEGIATAN MEDIASI
+        KEGIATAN PENYULUHAN HUKUM
       </template>
       <template v-slot:breadcrumbs>
         <v-breadcrumbs :items="breadcrumbs" class="pa-0">
@@ -21,7 +21,7 @@
           colored-border
           type="info"
           >
-          Halaman ini berisi daftar kegiatan mediasi yang dilakukan oleh paralegal
+          Halaman ini berisi daftar kegiatan penyuluhan hukum yang dilakukan oleh paralegal
         </v-alert>
       </template>
     </ModuleHeader>   
@@ -66,7 +66,7 @@
                   vertical
                 ></v-divider>
                 <v-spacer></v-spacer>
-                <v-btn color="primary" dark class="mb-2" to="/kegiatan/mediasi/tambah" v-if="dashboard=='paralegal'||dashboard=='kumham'||dashboard=='superadmin'">TAMBAH</v-btn>
+                <v-btn color="primary" dark class="mb-2" to="/kegiatan/penyuluhanhukum/tambah" v-if="dashboard=='paralegal'||dashboard=='kumham'||dashboard=='superadmin'">TAMBAH</v-btn>
               </v-toolbar>
             </template>
             <template v-slot:item.id="{ item }">    
@@ -81,7 +81,7 @@
               <v-btn
                 small
                 icon
-                @click.stop="$router.push('/kegiatan/mediasi/'+item.id+'/detail')">
+                @click.stop="$router.push('/kegiatan/penyuluhanhukum/'+item.id+'/detail')">
                 <v-icon>
                   mdi-eye
                 </v-icon>
@@ -89,7 +89,7 @@
               <v-btn
                 small      
                 icon                          
-                :to="{path: '/kegiatan/mediasi/'+item.id+'/ubah'}"
+                :to="{path: '/kegiatan/penyuluhanhukum/'+item.id+'/ubah'}"
                 v-if="item.id_status==0 && (dashboard=='paralegal'||dashboard=='kumham'||dashboard=='superadmin')">
                 <v-icon>
                   mdi-pencil
@@ -129,7 +129,7 @@
 import AdminLayout from '@/views/layouts/AdminLayout';
 import ModuleHeader from '@/components/ModuleHeader';
 export default {
-  name: 'KegiatanMediasiMediasi',
+  name: 'KegiatanPenyuluhanHukumPenyuluhanHukum',
   created () {
     this.dashboard = this.$store.getters['uiadmin/getDefaultDashboard'];        
     this.breadcrumbs = [
@@ -144,7 +144,7 @@ export default {
         href: '#'
       },
       {
-        text: 'MEDIASI',
+        text: 'PENYULUHAN HUKUM',
         disabled: true,
         href: '#'
       }
@@ -160,8 +160,9 @@ export default {
     datatable: [],
     headers: [                        
       { text: 'PARALEGAL', value: 'name' },
-      { text: 'PEMOHON', value: 'nama_pemohon' },
       { text: 'NAMA KEGIATAN', value: 'nama_kegiatan' },
+      { text: 'NARA SUMBER', value: 'narasumber' },
+      { text: 'JUMLAH PESERTA', value: 'jumlah_peserta' },
       { text: 'STATUS', value: 'id_status', sortable: false, width:100 },
       { text: 'AKSI', value: 'actions', sortable: false,width:150 },
     ],
@@ -172,7 +173,7 @@ export default {
     initialize: async function () 
     {
       this.datatableLoading=true;
-      await this.$ajax.get('/kegiatan/mediasi', {
+      await this.$ajax.get('/kegiatan/penyuluhanhukum', {
         headers: {
           Authorization:this.$store.getters['auth/Token']
         }
@@ -197,7 +198,7 @@ export default {
     viewItem (item) {
       this.formdata=item;      
       this.dialogdetailitem=true;              
-      // this.$ajax.get('/kegiatan/mediasi'+item.id,{
+      // this.$ajax.get('/kegiatan/penyuluhanhukum'+item.id,{
       //     headers: {
       //         Authorization:this.$store.getters['auth/Token']
       //     }
@@ -206,11 +207,11 @@ export default {
       // });                      
     },
     deleteItem (item) {           
-      this.$root.$confirm.open('Delete', 'Apakah Anda ingin menghapus data kegiatan mediasi dengan ID '+item.id+' ?', { color: 'red',width:600 }).then((confirm) => {
+      this.$root.$confirm.open('Delete', 'Apakah Anda ingin menghapus data kegiatan penyuluhan hukum dengan ID '+item.id+' ?', { color: 'red',width:600 }).then((confirm) => {
         if (confirm)
         {
           this.btnLoading = true
-          this.$ajax.post('/kegiatan/mediasi/' + item.id,
+          this.$ajax.post('/kegiatan/penyuluhanhukum/' + item.id,
             {
               '_method': 'DELETE',
             },

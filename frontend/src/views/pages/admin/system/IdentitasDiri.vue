@@ -17,7 +17,7 @@
             <template v-slot:desc>
                 <v-alert                                        
                     color="cyan"
-                    border="left"                    
+                    border="left"
                     colored-border
                     type="info"
                     >
@@ -116,7 +116,7 @@ export default {
         //form rules        
         rule_nama_pt:[
             value => !!value||"Mohon untuk di isi Nama Perguruan Tinggi !!!", 
-        ], 
+        ],
         rule_nama_singkatan_pt:[
             value => !!value||"Mohon untuk di isi Nama Alias Perguruan Tinggi !!!", 
         ],
@@ -172,7 +172,7 @@ export default {
         }
     },
     computed: { 
-        ...mapGetters('auth',{            
+        ...mapGetters('auth', {            
             ACCESS_TOKEN: 'AccessToken', 
             TOKEN: 'Token',
         }),

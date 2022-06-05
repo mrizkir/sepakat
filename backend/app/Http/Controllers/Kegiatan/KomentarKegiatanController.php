@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Kegiatan;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-use App\Models\Kegiatan\KonsultasiKegiatanModel;
+use App\Models\Kegiatan\KegiatanModel;
 use App\Models\Kegiatan\KomentarKegiatanModel;
 
 use Ramsey\Uuid\Uuid;
@@ -18,12 +18,12 @@ class KomentarKegiatanController extends Controller
     
     if ($this->hasRole('paralegal'))
     {
-      $kegiatan = KonsultasiKegiatanModel::where('user_id',$this->getUserid())
+      $kegiatan = KegiatanModel::where('user_id',$this->getUserid())
                       ->find($id);
     }
     else
     {        
-      $kegiatan = KonsultasiKegiatanModel::find($id);
+      $kegiatan = KegiatanModel::find($id);
     }
     
     if (is_null($kegiatan))
@@ -31,7 +31,7 @@ class KomentarKegiatanController extends Controller
       return Response()->json([
                   'status'=>1,
                   'pid'=>'fetchdata',
-                  'message'=>["kegiatan konsultasi dengan ID ($id) gagal diperoleh"]
+                  'message'=>["kegiatan dengan ID ($id) gagal diperoleh"]
                 ],422);
     }
     else
@@ -97,7 +97,7 @@ class KomentarKegiatanController extends Controller
       return Response()->json([
                   'status'=>1,
                   'pid'=>'destroy',
-                  'message'=>["Komentar kegiatan konsultasi dengan ID ($id) gagal dihapus"]
+                  'message'=>["Komentar kegiatan dengan ID ($id) gagal dihapus"]
                 ],422);
     }
     else

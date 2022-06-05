@@ -17,7 +17,7 @@
             <template v-slot:desc>
                 <v-alert                                        
                     color="cyan"
-                    border="left"                    
+                    border="left"
                     colored-border
                     type="info"
                     >
@@ -207,7 +207,7 @@
                                             :headers="headersdetail"
                                             :items="permissions_selected"
                                             item-key="name"
-                                            sort-by="name"                                            
+                                            sort-by="name"
                                             class="elevation-1"
                                         >
                                         </v-data-table>
@@ -296,14 +296,14 @@ export default {
         rule_role_name:[
             value => !!value||"Mohon untuk di isi nama Role !!!",
             value => /^[A-Za-z]*$/.test(value) || 'Nama Role hanya boleh string',
-        ], 
+        ],
         form_error_message: ''
     }),
     methods: {
         initialize () 
         {
             this.datatableLoading=true;
-            this.$ajax.get('/system/setting/roles',{
+            this.$ajax.get('/system/setting/roles', {
                 headers: {
                     Authorization:this.TOKEN
                 }
@@ -332,7 +332,7 @@ export default {
             this.editedIndex = this.datatable.indexOf(item);
             this.editedItem = Object.assign({}, item);
 
-            this.$ajax.get('/system/setting/roles/'+item.id+'/permission',{
+            this.$ajax.get('/system/setting/roles/'+item.id+'/permission', {
                 headers: {
                     Authorization:this.TOKEN
                 }
@@ -351,7 +351,7 @@ export default {
             this.dialog = true
         },
         setPermission (item) {            
-            this.$ajax.get('/system/setting/permissions',{
+            this.$ajax.get('/system/setting/permissions', {
                 headers: {
                     Authorization:this.TOKEN
                 }
@@ -362,7 +362,7 @@ export default {
                 }                 
             });          
 
-            this.$ajax.get('/system/setting/roles/'+item.id+'/permission',{
+            this.$ajax.get('/system/setting/roles/'+item.id+'/permission', {
                 headers: {
                     Authorization:this.TOKEN
                 }
@@ -409,7 +409,7 @@ export default {
                             }
                         }
                     ).then(({data})=>{   
-                        Object.assign(this.datatable[this.editedIndex], data.roles);
+                        Object.assign(this.datatable[this.editedIndex],data.roles);
                         this.close();
                     }).catch(()=>{
                         this.btnLoading = false
@@ -439,7 +439,7 @@ export default {
         formTitle () {
             return this.editedIndex === -1 ? 'TAMBAH ROLE' : 'EDIT ROLE'
         },
-        ...mapGetters('auth',{            
+        ...mapGetters('auth', {            
             ACCESS_TOKEN: 'AccessToken', 
             TOKEN: 'Token',
         }),

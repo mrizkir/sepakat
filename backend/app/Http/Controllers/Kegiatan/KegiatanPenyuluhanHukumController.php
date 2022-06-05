@@ -5,11 +5,11 @@ namespace App\Http\Controllers\Kegiatan;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-use App\Models\Kegiatan\KegiatanMediasiModel;
+use App\Models\Kegiatan\KegiatanPenyuluhanHukumModel;
 
 use Ramsey\Uuid\Uuid;
 
-class KegiatanMediasiController extends Controller
+class KegiatanPenyuluhanHukumController extends Controller
 {
 	public function index ()
 	{
@@ -17,38 +17,40 @@ class KegiatanMediasiController extends Controller
 
 		if ($this->hasRole('paralegal'))
 		{
-			$daftar_kegiatan=KegiatanMediasiModel::select(\DB::raw('
-				mediasi.id,
+			$daftar_kegiatan=KegiatanPenyuluhanHukumModel::select(\DB::raw('
+				penyuluhan_hukum.id,
 				users.name,
-				mediasi.nama_kegiatan,
-				mediasi.nama_pemohon,                                                                                                                				
-				mediasi.id_status,
-				mediasi.created_at,
-				mediasi.updated_at                                                        
+				penyuluhan_hukum.nama_kegiatan,
+				penyuluhan_hukum.narasumber,
+				penyuluhan_hukum.jumlah_peserta,
+				penyuluhan_hukum.id_status,
+				penyuluhan_hukum.created_at,
+				penyuluhan_hukum.updated_at                                                        
 			'))    
-			->join ('users','users.id','mediasi.user_id')			
+			->join ('users','users.id','penyuluhan_hukum.user_id')			
 			->where('user_id',$this->getUserid())                                                                                                    
 			->get();
 		}
 		else
 		{        
-			$daftar_kegiatan=KegiatanMediasiModel::select(\DB::raw('
-				mediasi.id,
+			$daftar_kegiatan=KegiatanPenyuluhanHukumModel::select(\DB::raw('
+				penyuluhan_hukum.id,
 				users.name,
-				mediasi.nama_kegiatan,
-				mediasi.nama_pemohon,                                                                                                                				
-				mediasi.id_status,
-				mediasi.created_at,
-				mediasi.updated_at                                                        
+				penyuluhan_hukum.nama_kegiatan,
+				penyuluhan_hukum.narasumber,
+				penyuluhan_hukum.jumlah_peserta,
+				penyuluhan_hukum.id_status,
+				penyuluhan_hukum.created_at,
+				penyuluhan_hukum.updated_at
 			'))    
-			->join ('users','users.id','mediasi.user_id')    			                                                                         
+			->join ('users','users.id','penyuluhan_hukum.user_id')    			                                                                         
 			->get();
 		}
 		return Response()->json([
 			'status'=>1,
 			'pid'=>'fetchdata',
 			'daftar_kegiatan'=>$daftar_kegiatan,
-			'message'=>'Fetch data daftar kegiatan mediasi berhasil diperoleh.'
+			'message'=>'Fetch data daftar kegiatan penyuluhan hukum berhasil diperoleh.'
 		], 200);
 	}
 	public function show(Request $request,$id)
@@ -57,19 +59,19 @@ class KegiatanMediasiController extends Controller
 
 		if ($this->hasRole('paralegal'))
 		{
-			$kegiatan = KegiatanMediasiModel::where('user_id', $this->getUserid())			
+			$kegiatan = KegiatanPenyuluhanHukumModel::where('user_id', $this->getUserid())			
 			->find($id);
 		}
 		else
 		{
-			$kegiatan = KegiatanMediasiModel::find($id);
+			$kegiatan = KegiatanPenyuluhanHukumModel::find($id);
 		}
 		if (is_null($kegiatan))
 		{
 			return Response()->json([
 				'status'=>1,
 				'pid'=>'fetchdata',
-				'message'=>["kegiatan mediasi dengan ID ($id) gagal diperoleh"]
+				'message'=>["kegiatan penyuluhan hukum dengan ID ($id) gagal diperoleh"]
 			],422);
 		}
 		else
@@ -88,20 +90,14 @@ class KegiatanMediasiController extends Controller
 
 		$this->validate($request, [					
 			'user_id'=>'required|exists:users,id',
-			'nama_pemohon'=>'required',
-			'tempat_lahir'=>'required',
-			'tanggal_lahir'=>'required|date',
-			'pendidikan'=>'required',
-			'pekerjaan'=>'required',
-			'alamat'=>'required',
-			'nama_kegiatan'=>'required',            
+			'nama_kegiatan'=>'required',			
+			'tempat_pelaksanaan'=>'required',         
 			'tanggal_pelaksanaan'=>'required|date',            
-			'nama_kegiatan'=>'required',            
-			'tanggal_pelaksanaan'=>'required', 
-			'jam_pelaksanaan'=>'required',                       
-			'tempat_pelaksanaan'=>'required',            
-			'uraian_kegiatan'=>'required',            
-			'nama_saksi'=>'required',            
+			'jam_pelaksanaan'=>'required',            
+			'narasumber'=>'required',
+			'peserta'=>'required',
+			'jumlah_peserta'=>'required|numeric',			   
+			'uraian_kegiatan'=>'required',            			        
 			'rekomendasi_kegiatan'=>'required',            
 		]);
 		\DB::beginTransaction();
@@ -109,20 +105,16 @@ class KegiatanMediasiController extends Controller
 		$tanggal_pelaksanaan=$request->input('tanggal_pelaksanaan') . ' '.$request->input('jam_pelaksanaan');
 		$uuid = Uuid::uuid4()->toString();
 		
-		$kegiatan=KegiatanMediasiModel::create([
+		$kegiatan=KegiatanPenyuluhanHukumModel::create([
 			'id'=>$uuid,
 			'user_id'=>$request->input('user_id'),                
-			'nama_pemohon'=>$request->input('nama_pemohon'),                
-			'tempat_lahir'=>$request->input('tempat_lahir'),                
-			'tanggal_lahir'=>$request->input('tanggal_lahir'),                
-			'pendidikan'=>$request->input('pendidikan'),                
-			'pekerjaan'=>$request->input('pekerjaan'),                
-			'alamat'=>$request->input('alamat'),                
 			'nama_kegiatan'=>$request->input('nama_kegiatan'),       
+			'tempat_pelaksanaan'=>$request->input('tempat_pelaksanaan'),                			             			
 			'tanggal_pelaksanaan'=>$tanggal_pelaksanaan,                
-			'tempat_pelaksanaan'=>$request->input('tempat_pelaksanaan'),                			             
-			'uraian_kegiatan'=>$request->input('uraian_kegiatan'),                
-			'nama_saksi'=>$request->input('nama_saksi'),                
+			'narasumber'=>$request->input('narasumber'),                
+			'peserta'=>$request->input('peserta'),                
+			'jumlah_peserta'=>$request->input('jumlah_peserta'),                
+			'uraian_kegiatan'=>$request->input('uraian_kegiatan'),                			
 			'rekomendasi_kegiatan'=>$request->input('rekomendasi_kegiatan'),                
 			'id_status'=>0,                            
 		]);
@@ -133,10 +125,10 @@ class KegiatanMediasiController extends Controller
 			'user_id'=>$request->input('user_id'),                
 			'tanggal'=>$tanggal_pelaksanaan,                
 			'tempat'=>$request->input('tempat_pelaksanaan'),                
-			'id_jenis_kegiatan'=>6,                
-			'nama_jenis'=>'Mediasi',                
+			'id_jenis_kegiatan'=>1,                
+			'nama_jenis'=>'Penyuluhan Hukum',                
 			'nama_kegiatan'=>$request->input('nama_kegiatan'),                
-			'pemohon'=>$request->input('nama_pemohon'),                
+			'pemohon'=>$request->input('narasumber'),                
 			'uraian_kegiatan'=>$request->input('uraian_kegiatan'),                
 			'rekomendasi_kegiatan'=>$request->input('rekomendasi_kegiatan'),                
 			'id_status'=>0,                            
@@ -148,50 +140,50 @@ class KegiatanMediasiController extends Controller
 			'status'=>1,
 			'pid'=>'store',
 			'kegiatan'=>$kegiatan,
-			'message'=>'Data kegiatan mediasi baru berhasil disimpan.'
+			'message'=>'Data kegiatan penyuluhan hukum baru berhasil disimpan.'
 		],200);
 	}
-	public function uploadktppemohon (Request $request,$id)
+	public function uploadsuratpermohonan (Request $request,$id)
 	{
 		$this->hasAnyPermission('KONSULTASI-KEGIATAN_STORE');
 
-		$kegiatan = KegiatanMediasiModel::find($id); 
+		$kegiatan = KegiatanPenyuluhanHukumModel::find($id); 
 		
 		if ($kegiatan == null)
 		{
 			return Response()->json([
 				'status'=>0,
 				'pid'=>'store',                
-				'message'=>["Data kegiatan mediasi tidak ditemukan."]
+				'message'=>["Data kegiatan penyuluhan hukum tidak ditemukan."]
 			],422);         
 		}
 		else
 		{
 			$this->validate($request, [                      
-				'filektppemohon'=>'required'                        
+				'filesuratpermohonan'=>'required'                        
 			]);
 			$name=$kegiatan->nama_pemohon;
-			$filektppemohon = $request->file('filektppemohon');
-			$mime_type=$filektppemohon->getMimeType();
-			if ($mime_type=='image/png' || $mime_type=='image/jpeg')
+			$filesuratpermohonan = $request->file('filesuratpermohonan');
+			$mime_type=$filesuratpermohonan->getMimeType();
+			if ($mime_type=='application/pdf' || $mime_type=='image/png' || $mime_type=='image/jpeg')
 			{
-				$folder=\App\Helpers\Helper::public_path('images/kegiatan/');
-				$file_name=uniqid('img').".".$filektppemohon->getClientOriginalExtension();
-				if (is_file(\App\Helpers\Helper::public_path($kegiatan->file_fotocopy_ktp)))                
+				$folder=\App\Helpers\Helper::public_path('pdf/suratpermohonan/');
+				$file_name=uniqid('img').".".$filesuratpermohonan->getClientOriginalExtension();
+				if (is_file(\App\Helpers\Helper::public_path($kegiatan->file_surat_permohonan)))                
 				{
-					unlink(\App\Helpers\Helper::public_path($kegiatan->file_fotocopy_ktp));
+					unlink(\App\Helpers\Helper::public_path($kegiatan->file_surat_permohonan));
 				}                
-				$kegiatan->file_fotocopy_ktp="storage/images/kegiatan/$file_name";
+				$kegiatan->file_surat_permohonan="storage/pdf/suratpermohonan/$file_name";
 				$kegiatan->save();
 
 				\DB::table('kegiatan')
 				->where('kegiatan_id', $kegiatan->id)
 				->update([
-					'file_fotocopy_ktp' => $kegiatan->file_fotocopy_ktp,
+					'file_fotocopy_ktp' => $kegiatan->file_surat_permohonan,
 				]);
 
 
-				$filektppemohon->move($folder,$file_name);
+				$filesuratpermohonan->move($folder,$file_name);
 				return Response()->json([
 					'status'=>0,
 					'pid'=>'store',
@@ -215,14 +207,14 @@ class KegiatanMediasiController extends Controller
 	{
 		$this->hasAnyPermission('KONSULTASI-KEGIATAN_STORE');
 
-		$kegiatan = KegiatanMediasiModel::find($id); 
+		$kegiatan = KegiatanPenyuluhanHukumModel::find($id); 
 		
 		if ($kegiatan == null)
 		{
 			return Response()->json([
 				'status'=>0,
 				'pid'=>'store',                
-				'message'=>["Data kegiatan mediasi tidak ditemukan."]
+				'message'=>["Data kegiatan penyuluhan hukum tidak ditemukan."]
 			],422);         
 		}
 		else
@@ -255,18 +247,16 @@ class KegiatanMediasiController extends Controller
 					'status'=>0,
 					'pid'=>'store',
 					'kegiatan'=>$kegiatan,                
-					'message'=>"File daftar hadir kegiatan mediasi ini berhasil diupload"
+					'message'=>"File daftar hadir kegiatan penyuluhan hukum ini berhasil diupload"
 				], 200);    
 			}
 			else
 			{
 				return Response()->json([
-										'status'=>1,
-										'pid'=>'store',
-										'message'=>["Extensi file yang diupload bukan pdf."]
-									],422); 
-				
-
+					'status'=>1,
+					'pid'=>'store',
+					'message'=>["Extensi file yang diupload bukan pdf."]
+				],422); 
 			}
 		}
 	}
@@ -274,14 +264,14 @@ class KegiatanMediasiController extends Controller
 	{
 		$this->hasAnyPermission('KONSULTASI-KEGIATAN_STORE');
 
-		$kegiatan = KegiatanMediasiModel::find($id); 
+		$kegiatan = KegiatanPenyuluhanHukumModel::find($id); 
 		
 		if ($kegiatan == null)
 		{
 			return Response()->json([
 									'status'=>0,
 									'pid'=>'store',                
-									'message'=>["Data kegiatan mediasi tidak ditemukan."]
+									'message'=>["Data kegiatan penyuluhan hukum tidak ditemukan."]
 								],422);         
 		}
 		else
@@ -314,7 +304,7 @@ class KegiatanMediasiController extends Controller
 					'status'=>0,
 					'pid'=>'store',
 					'kegiatan'=>$kegiatan,                
-					'message'=>"File dokumentasi kegiatan mediasi ini berhasil diupload"
+					'message'=>"File dokumentasi kegiatan penyuluhan hukum ini berhasil diupload"
 				],200);    
 			}
 			else
@@ -335,12 +325,12 @@ class KegiatanMediasiController extends Controller
 
 		if ($this->hasRole('paralegal'))
 		{
-			$kegiatan = KegiatanMediasiModel::where('user_id',$this->getUserid())			
+			$kegiatan = KegiatanPenyuluhanHukumModel::where('user_id',$this->getUserid())			
 			->find($id);
 		}
 		else
 		{
-			$kegiatan = KegiatanMediasiModel::find($id); 
+			$kegiatan = KegiatanPenyuluhanHukumModel::find($id); 
 		}		
 
 		if (is_null($kegiatan))
@@ -348,7 +338,7 @@ class KegiatanMediasiController extends Controller
 			return Response()->json([
 				'status'=>1,
 				'pid'=>'fetchdata',
-				'message'=>["kegiatan mediasi dengan ID ($id) gagal diperoleh"]
+				'message'=>["kegiatan penyuluhan hukum dengan ID ($id) gagal diperoleh"]
 			],422);
 		}
 		else
@@ -362,8 +352,7 @@ class KegiatanMediasiController extends Controller
 				'pekerjaan'=>'required',
 				'alamat'=>'required',
 				'nama_kegiatan'=>'required',            
-				'tanggal_pelaksanaan'=>'required|date',  
-				'jam_pelaksanaan'=>'required',                      
+				'tanggal_pelaksanaan'=>'required|date',            
 				'nama_kegiatan'=>'required',            
 				'tanggal_pelaksanaan'=>'required',            
 				'tempat_pelaksanaan'=>'required',            
@@ -416,14 +405,14 @@ class KegiatanMediasiController extends Controller
 
 		if ($this->hasRole(['pmb','superadmin','obh','kumham']))
 		{
-			$kegiatan = KegiatanMediasiModel::find($id); 
+			$kegiatan = KegiatanPenyuluhanHukumModel::find($id); 
 
 			if (is_null($kegiatan))
 			{
 				return Response()->json([
 									'status'=>0,
 									'pid'=>'store',                
-									'message'=>["Data kegiatan mediasi tidak ditemukan."]
+									'message'=>["Data kegiatan penyuluhan hukum tidak ditemukan."]
 								],422);     
 
 			}
@@ -468,12 +457,12 @@ class KegiatanMediasiController extends Controller
 
 		if ($this->hasRole('paralegal'))
 		{
-			$kegiatan = KegiatanMediasiModel::where('user_id',$this->getUserid())			
+			$kegiatan = KegiatanPenyuluhanHukumModel::where('user_id',$this->getUserid())			
 			->find($id);
 		}
 		else
 		{
-			$kegiatan = KegiatanMediasiModel::find($id); 
+			$kegiatan = KegiatanPenyuluhanHukumModel::find($id); 
 		}		
 
 		if (is_null($kegiatan))
@@ -481,7 +470,7 @@ class KegiatanMediasiController extends Controller
 			return Response()->json([
 									'status'=>1,
 									'pid'=>'destroy',
-									'message'=>["kegiatan mediasi dengan ID ($id) gagal dihapus"]
+									'message'=>["kegiatan penyuluhan hukum dengan ID ($id) gagal dihapus"]
 								],422);
 		}
 		else

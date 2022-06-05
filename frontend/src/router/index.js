@@ -47,7 +47,7 @@ const routes = [
         },
 		component: () => import('../views/pages/admin/dmaster/JenisKegiatan.vue'),		
 	},	
-	//konsultasi - mediasi
+	//kegiatan - mediasi
 	{
 		path: '/kegiatan/mediasi',
 		name: 'KegiatanMediasi',
@@ -92,6 +92,53 @@ const routes = [
 			requiresAuth:true,
         },
 		component: () => import('../views/pages/admin/mediasi/KegiatanMediasiDetail.vue'),		
+	},
+
+	//kegiatan - penyuluhan hukum
+	{
+		path: '/kegiatan/penyuluhanhukum',
+		name: 'KegiatanPenyuluhanHukum',
+		meta:{
+			title: "KEGIATAN - MEDIASI",
+			requiresAuth:true,
+        },
+		component: () => import('../views/pages/admin/penyuluhanhukum/KegiatanPenyuluhanHukum.vue'),		
+	},
+	{
+		path: '/kegiatan/penyuluhanhukum/tambah',
+		name: 'KegiatanPenyuluhanHukumTambah',
+		meta:{
+			title: "KEGIATAN - MEDIASI",
+			requiresAuth:true,
+        },
+		component: () => import('../views/pages/admin/penyuluhanhukum/KegiatanPenyuluhanHukumTambah.vue'),		
+	},
+	{
+		path: '/kegiatan/penyuluhanhukum/:kegiatan_id/ubah',
+		name: 'KegiatanPenyuluhanHukumUbah',
+		meta:{
+			title: "KEGIATAN - MEDIASI",
+			requiresAuth:true,
+        },
+		component: () => import('../views/pages/admin/penyuluhanhukum/KegiatanPenyuluhanHukumUbah.vue'),		
+	},
+	{
+		path: '/kegiatan/penyuluhanhukum/:kegiatan_id/files',
+		name: 'KegiatanPenyuluhanHukumFiles',
+		meta:{
+			title: "KEGIATAN - MEDIASI",
+			requiresAuth:true,
+        },
+		component: () => import('../views/pages/admin/penyuluhanhukum/KegiatanPenyuluhanHukumFiles.vue'),		
+	},
+	{
+		path: '/kegiatan/penyuluhanhukum/:kegiatan_id/detail',
+		name: 'KegiatanPenyuluhanHukumDetail',
+		meta:{
+			title: "KEGIATAN - MEDIASI",
+			requiresAuth:true,
+        },
+		component: () => import('../views/pages/admin/penyuluhanhukum/KegiatanPenyuluhanHukumDetail.vue'),		
 	},
 	
 	//laporan	

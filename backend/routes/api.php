@@ -64,6 +64,24 @@ $router->group(['prefix'=>'v1','middleware'=>'auth:api'], function () use ($rout
     
     $router->delete('/kegiatan/mediasi/{id}',['middleware'=>['role:superadmin|paralegal|kumham'],'uses'=>'Kegiatan\KegiatanMediasiController@destroy','as'=>'kegiatanmediasi.destroy']);
     
+    //kegiatan - penyuluhan hukum
+    $router->get('/kegiatan/penyuluhanhukum',['middleware'=>['role:superadmin|paralegal|obh|pmb|kades|kumham'],'uses'=>'Kegiatan\KegiatanPenyuluhanHukumController@index','as'=>'kegiatanpenyuluhanhukum.index']);
+    $router->post('/kegiatan/penyuluhanhukum/store',['middleware'=>['role:superadmin|paralegal|kumham'],'uses'=>'Kegiatan\KegiatanPenyuluhanHukumController@store','as'=>'kegiatanpenyuluhanhukum.store']);
+    $router->get('/kegiatan/penyuluhanhukum/{id}',['middleware'=>['role:superadmin|paralegal|obh|pmb|kades|kumham'],'uses'=>'Kegiatan\KegiatanPenyuluhanHukumController@show','as'=>'kegiatanpenyuluhanhukum.show']);
+    $router->put('/kegiatan/penyuluhanhukum/{id}',['middleware'=>['role:superadmin|paralegal|obh|pmb|kades|kumham'],'uses'=>'Kegiatan\KegiatanPenyuluhanHukumController@update','as'=>'kegiatanpenyuluhanhukum.update']);
+    $router->put('/kegiatan/penyuluhanhukum/verifikasi/{id}',['middleware'=>['role:superadmin|obh|pmb|kumham'],'uses'=>'Kegiatan\KegiatanPenyuluhanHukumController@verifikasi','as'=>'kegiatanpenyuluhanhukum.verifikasi']);
+    
+    $router->post('/kegiatan/penyuluhanhukum/uploadsuratpermohonan/{id}',['middleware'=>['role:superadmin|paralegal|kumham'],'uses'=>'Kegiatan\KegiatanPenyuluhanHukumController@uploadsuratpermohonan','as'=>'kegiatanpenyuluhanhukum.uploadsuratpermohonan']);
+    $router->post('/kegiatan/penyuluhanhukum/hapussuratpermohonan/{id}',['middleware'=>['role:superadmin|paralegal|kumham'],'uses'=>'Kegiatan\KegiatanPenyuluhanHukumController@hapussuratpermohonan','as'=>'kegiatanpenyuluhanhukum.hapussuratpermohonan']);
+    
+    $router->post('/kegiatan/penyuluhanhukum/uploaddaftarhadir/{id}',['middleware'=>['role:superadmin|paralegal|kumham'],'uses'=>'Kegiatan\KegiatanPenyuluhanHukumController@uploaddaftarhadir','as'=>'kegiatanpenyuluhanhukum.uploaddaftarhadir']);
+    $router->post('/kegiatan/penyuluhanhukum/hapusdaftarhadir/{id}',['middleware'=>['role:superadmin|paralegal|kumham'],'uses'=>'Kegiatan\KegiatanPenyuluhanHukumController@hapusdaftarhadir','as'=>'kegiatanpenyuluhanhukum.hapusdaftarhadir']);
+    
+    $router->post('/kegiatan/penyuluhanhukum/uploaddokumentasikegiatan/{id}',['middleware'=>['role:superadmin|paralegal|kumham'],'uses'=>'Kegiatan\KegiatanPenyuluhanHukumController@uploaddokumentasikegiatan','as'=>'kegiatanpenyuluhanhukum.uploaddokumentasikegiatan']);
+    $router->post('/kegiatan/penyuluhanhukum/hapusdokumentasikegiatan/{id}',['middleware'=>['role:superadmin|paralegal|kumham'],'uses'=>'Kegiatan\KegiatanPenyuluhanHukumController@hapusdokumentasikegiatan','as'=>'kegiatanpenyuluhanhukum.hapusdokumentasikegiatan']);
+    
+    $router->delete('/kegiatan/penyuluhanhukum/{id}',['middleware'=>['role:superadmin|paralegal|kumham'],'uses'=>'Kegiatan\KegiatanPenyuluhanHukumController@destroy','as'=>'kegiatanpenyuluhanhukum.destroy']);
+    
     //kegiatan - komentar
     $router->get('/kegiatan/komentar/{id}',['middleware'=>['role:superadmin|paralegal|kades|pmb|obh|kumham'],'uses'=>'Kegiatan\KomentarKegiatanController@index','as'=>'komentar.index']);
     $router->post('/kegiatan/komentar/store',['middleware'=>['role:superadmin|paralegal|kades|pmb|obh|kumham'],'uses'=>'Kegiatan\KomentarKegiatanController@store','as'=>'komentar.store']);    

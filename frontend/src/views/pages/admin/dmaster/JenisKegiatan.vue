@@ -30,12 +30,12 @@
                 <v-col cols="12">
                     <v-data-table
                         :headers="headers"
-                        :items="datatable"                        
+                        :items="datatable"
                         item-key="id_jenis"
-                        sort-by="id_jenis"                        
+                        sort-by="id_jenis"
                         class="elevation-1"
                         :disable-pagination="true"
-                        :hide-default-footer="true"     
+                        :hide-default-footer="true"
                         :loading="datatableLoading"
                         loading-text="Loading... Please wait">
                         <template v-slot:top>
@@ -105,7 +105,7 @@ export default {
         initialize: async function ()
         {
             this.datatableLoading=true;
-            await this.$ajax.get('/datamaster/jeniskegiatan',{
+            await this.$ajax.get('/datamaster/jeniskegiatan', {
                 headers: {
                     Authorization:this.TOKEN
                 }
@@ -129,7 +129,7 @@ export default {
         }, 
     },
     computed: {
-        ...mapGetters('auth',{
+        ...mapGetters('auth', {
             ACCESS_TOKEN: 'AccessToken',
             TOKEN: 'Token',
         }),

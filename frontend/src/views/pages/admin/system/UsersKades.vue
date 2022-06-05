@@ -17,7 +17,7 @@
             <template v-slot:desc>
                 <v-alert                                        
                     color="cyan"
-                    border="left"                    
+                    border="left"
                     colored-border
                     type="info"
                     >
@@ -74,7 +74,7 @@
                                     v-if="$store.getters['auth/can']('USER_STOREPERMISSIONS')">
                                     SYNC PERMISSION
                                 </v-btn>
-                                <v-btn color="primary"                                    
+                                <v-btn color="primary"
                                     class="mb-2" 
                                     :loading="btnLoading"
                                     :disabled="btnLoading"
@@ -131,13 +131,13 @@
                                                     :loading="selectLoadingKec" 
                                                     return-object                      
                                                     outlined
-                                                />                    
+                                                />          
                                                 <v-autocomplete 
                                                     :items="daftar_desa" 
                                                     v-model="editedItem.desa_id"
                                                     label="DESA/KELURAHAN" 
                                                     item-text="nama"
-                                                    item-value="id"   
+                                                    item-value="id"
                                                     multiple                                                 
                                                     small-chips
                                                     :rules="rule_desa"
@@ -146,7 +146,7 @@
                                                 <v-autocomplete 
                                                     :items="daftar_roles" 
                                                     v-model="editedItem.role_id"
-                                                    label="ROLES"                                                     
+                                                    label="ROLES"
                                                     multiple 
                                                     small-chips
                                                     :rules="rule_user_roles"
@@ -218,13 +218,13 @@
                                                     :loading="selectLoadingKec" 
                                                     return-object                      
                                                     outlined
-                                                />                    
+                                                />          
                                                 <v-autocomplete 
                                                     :items="daftar_desa" 
                                                     v-model="editedItem.desa_id"
                                                     label="DESA/KELURAHAN" 
                                                     item-text="nama"
-                                                    item-value="id"                                                    
+                                                    item-value="id"
                                                     multiple
                                                     small-chips
                                                     outlined>                                                    
@@ -232,7 +232,7 @@
                                                 <v-autocomplete 
                                                     :items="daftar_roles" 
                                                     v-model="editedItem.role_id"
-                                                    label="ROLES"                                                     
+                                                    label="ROLES"
                                                     multiple 
                                                     small-chips
                                                     :rules="rule_user_roles"
@@ -287,7 +287,7 @@
                         </template>
                         <template v-slot:item.foto="{ item }">
                             <v-avatar size="30">
-                                <v-img :src="$api.url+'/'+item.foto" />    
+                                <v-img :src="$api.url+'/'+item.foto" />
                             </v-avatar>                                                                      
                         </template>
                         <template v-slot:expanded-item="{ headers, item }">
@@ -376,7 +376,7 @@ export default {
             name: '',
             email: '',
             nomor_hp: '',
-            desa_id: [], 
+            desa_id: [],
             role_id:['kades'],
             created_at: '',
             updated_at: '',
@@ -389,7 +389,7 @@ export default {
             email: '',
             nomor_hp: '',
             desa_id: [],
-            role_id:['kades'], 
+            role_id:['kades'],
             created_at: '',
             updated_at: '',
         },
@@ -397,19 +397,19 @@ export default {
         rule_user_name:[
             value => !!value||"Mohon untuk di isi nama User !!!",
             value => /^[A-Za-z\s]*$/.test(value) || 'Nama User hanya boleh string dan spasi',
-        ], 
+        ],
         rule_user_email:[
             value => !!value||"Mohon untuk di isi email User !!!",
             value => /.+@.+\..+/.test(value) || 'Format E-mail harus benar', 
-        ], 
+        ],
         rule_user_nomorhp:[
             value => !!value||"Nomor HP mohon untuk diisi !!!",
             value => /^\+[1-9]{1}[0-9]{1,14}$/.test(value) || 'Nomor HP hanya boleh angka dan gunakan kode negara didepan seperti +6281214553388',
-        ], 
+        ],
         rule_user_username:[
             value => !!value||"Mohon untuk di isi username User !!!",
             value => /^[A-Za-z_]*$/.test(value) || 'Username hanya boleh string dan underscore',
-        ], 
+        ],
         rule_user_password:[
             value => !!value||"Mohon untuk di isi password User !!!",
             value => {
@@ -421,7 +421,7 @@ export default {
                     return true;
                 }
             }
-        ], 
+        ],
         rule_desa:[
             value => !!value||"Mohon untuk dipilih desa tempat bertugas para legal !!!",
             value => {                
@@ -435,7 +435,7 @@ export default {
                     return 'Mohon untuk dipilih desa tempat bertugas para legal ';
                 }
             }
-        ], 
+        ],
         rule_user_passwordEdit:[
             value => {
                 if (value && typeof value !== 'undefined' && value.length > 0){
@@ -455,7 +455,7 @@ export default {
         initialize: async function () 
         {
             this.datatableLoading=true;
-            await this.$ajax.get('/system/userskades',{
+            await this.$ajax.get('/system/userskades', {
                 headers: {
                     Authorization:this.TOKEN
                 }
@@ -501,7 +501,7 @@ export default {
                 this.daftar_kecamatan=data.kecamatan;                
             });
 
-            await this.$ajax.get('/system/setting/roles',{
+            await this.$ajax.get('/system/setting/roles', {
                 headers: {
                     Authorization:this.TOKEN
                 }
@@ -553,7 +553,7 @@ export default {
                     this.editedItem.desa_id=desa;                       
                 }
             });           
-            await this.$ajax.get('/system/setting/roles',{
+            await this.$ajax.get('/system/setting/roles', {
                 headers: {
                     Authorization:this.TOKEN
                 }
@@ -588,7 +588,7 @@ export default {
         },
         setPermission: async function (item) {          
             this.btnLoading = true  
-            this.$ajax.get('/system/setting/roles/' + this.role_id+'/permission',{
+            this.$ajax.get('/system/setting/roles/' + this.role_id+'/permission', {
                 headers: {
                     Authorization:this.TOKEN
                 }
@@ -598,7 +598,7 @@ export default {
                 this.btnLoading = false
             });          
 
-            await this.$ajax.get('/system/users/'+item.id+'/permission',{
+            await this.$ajax.get('/system/users/'+item.id+'/permission', {
                 headers: {
                     Authorization:this.TOKEN
                 }
@@ -653,7 +653,7 @@ export default {
                             }
                         }
                     ).then(({data})=>{   
-                        Object.assign(this.daftar_users[this.editedIndex], data.user);
+                        Object.assign(this.daftar_users[this.editedIndex],data.user);
                         this.close();
                     }).catch(()=>{
                         this.btnLoading = false
@@ -713,7 +713,7 @@ export default {
         formTitle () {
             return this.editedIndex === -1 ? 'TAMBAH USER KADES' : 'EDIT USER KADES'
         },
-        ...mapGetters('auth',{            
+        ...mapGetters('auth', {            
             ACCESS_TOKEN: 'AccessToken', 
             TOKEN: 'Token',
         }),

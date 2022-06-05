@@ -5,7 +5,7 @@
         mdi-calendar-blank-multiple
       </template>
       <template v-slot:name>
-        KEGIATAN MEDIASI
+        KEGIATAN PENYULUHAN HUKUM
       </template>
       <template v-slot:breadcrumbs>
         <v-breadcrumbs :items="breadcrumbs" class="pa-0">
@@ -16,7 +16,7 @@
       </template>
       <template v-slot:desc>
         <v-alert color="cyan" border="left" colored-border type="info">
-          Halaman ini berisi daftar kegiatan mediasi yang dilakukan oleh paralegal
+          Halaman ini berisi daftar kegiatan penyuluhan hukum yang dilakukan oleh paralegal
         </v-alert>
       </template>
     </ModuleHeader>   
@@ -34,7 +34,7 @@
                 ></v-divider>
                 <v-spacer></v-spacer>
                 <v-icon                
-                  @click.stop="$router.push('/kegiatan/mediasi/')">
+                  @click.stop="$router.push('/kegiatan/penyuluhanhukum/')">
                   mdi-close-thick
                 </v-icon>
               </v-card-title>
@@ -49,76 +49,16 @@
                   dense
                 />
                 <v-text-field
-                  label="NAMA PEMOHON"
-                  v-model="formdata.nama_pemohon"
-                  :rules="rule_nama_pemohon"
-                  outlined
-                  dense
-                />
-                <v-text-field
-                  label="TEMPAT LAHIR"
-                  v-model="formdata.tempat_lahir"
-                  :rules="rule_tempat_lahir"
-                  outlined
-                  dense
-                />
-                <v-menu
-									ref="menuTanggalLahir"
-									v-model="menuTanggalLahir"
-									:close-on-content-click="false"
-									:return-value.sync="formdata.tanggal_lahir"
-									transition="scale-transition"
-									offset-y
-									max-width="290px"
-									min-width="290px"
-								>
-									<template v-slot:activator="{ on }">
-										<v-text-field
-											v-model="formdata.tanggal_lahir"
-											label="TANGGAL LAHIR"
-											readonly
-											outlined
-                      dense
-											v-on="on"
-											:rules="rule_tanggal_lahir"
-										></v-text-field>
-									</template>
-									<v-date-picker
-										v-model="formdata.tanggal_lahir"
-										no-title                                
-										scrollable
-										>
-										<v-spacer></v-spacer>
-										<v-btn text color="primary" @click="menuTanggalLahir = false">Cancel</v-btn>
-										<v-btn text color="primary" @click="$refs.menuTanggalLahir.save(formdata.tanggal_lahir)">OK</v-btn>
-									</v-date-picker>
-								</v-menu>
-                <v-text-field
-                  label="PENDIDIKAN"
-                  v-model="formdata.pendidikan"
-                  :rules="rule_pendidikan"
-                  outlined
-                  dense
-                />
-                <v-text-field
-                  label="PEKERJAAN"
-                  v-model="formdata.pekerjaan"
-                  :rules="rule_pekerjaan"
-                  outlined
-                  dense
-                />
-                <v-text-field
-                  label="ALAMAT"
-                  v-model="formdata.alamat"
-                  :rules="rule_alamat"
-                  outlined
-                  dense
-                />
-                <v-divider class="mb-4" />
-                <v-text-field
-                  label="NAMA KEGIATAN"
+                  label="TEMA PENYULUHAN HUKUM"
                   v-model="formdata.nama_kegiatan"
                   :rules="rule_nama_kegiatan"
+                  outlined
+                  dense
+                />
+                <v-text-field
+                  label="TEMPAT PELAKSANAAN"
+                  v-model="formdata.tempat_pelaksanaan"
+                  :rules="rule_tempat"
                   outlined
                   dense
                 />
@@ -184,26 +124,33 @@
                   ></v-time-picker>
                 </v-menu>
                 <v-text-field
-                  label="TEMPAT PELAKSANAAN"
-                  v-model="formdata.tempat_pelaksanaan"
-                  :rules="rule_tempat"
+                  label="NARA SUMBER"
+                  v-model="formdata.narasumber"
+                  :rules="rule_nara_sumber"
                   outlined
                   dense
                 />
                 <v-textarea
-                  label="URAIAN SINGKAT PERMASALAHAN"
+                  label="PESERTA"
+                  v-model="formdata.peserta"
+                  :rules="rule_peserta"
+                  outlined
+                  dense
+                />                             
+                <v-text-field
+                  label="JUMLAH PESERTA"
+                  v-model="formdata.jumlah_peserta"
+                  :rules="rule_jumlah_peserta"
+                  outlined
+                  dense
+                />                
+                <v-textarea
+                  label="RINGKASAN PENYULUHAN"
                   v-model="formdata.uraian_kegiatan"
                   :rules="rule_uraian_kegiatan"
                   outlined
                   dense
-                />
-                <v-textarea
-                  label="NAMA SAKSI-SAKSI"
-                  v-model="formdata.nama_saksi"
-                  :rules="rule_rekomendasi_kegiatan"
-                  outlined
-                  dense
-                />
+                />                
                 <v-textarea
                   label="REKOMENDASI PARALEGAL"
                   v-model="formdata.rekomendasi_kegiatan"
@@ -232,13 +179,13 @@
   </AdminLayout>
 </template>
 <script>
-  import AdminLayout from '@/views/layouts/AdminLayout';
-  import ModuleHeader from '@/components/ModuleHeader';
+  import AdminLayout from '@/views/layouts/AdminLayout'
+  import ModuleHeader from '@/components/ModuleHeader'
   export default {
-    name: 'KegiatanMediasiUbah',
+    name: 'KegiatanPenyuluhanHukumUbah',
     created () {
-      this.dashboard = this.$store.getters['uiadmin/getDefaultDashboard']; 
-      this.kegiatan_id = this.$route.params.kegiatan_id;
+      this.dashboard = this.$store.getters['uiadmin/getDefaultDashboard'] 
+      this.kegiatan_id = this.$route.params.kegiatan_id
       this.breadcrumbs = [
         {
           text: 'HOME',
@@ -251,16 +198,16 @@
           href: '#'
         },
         {
-          text: 'KEGIATAN',
+          text: 'PENYULUHAN HUKUM',
           disabled: false,
-          href: '/kegiatan/mediasi'
+          href: '/kegiatan/penyuluhanhukum'
         },
         {
           text: 'UBAH',
           disabled: true,
           href: '#'
         }
-      ];
+      ]
       this.initialize()
     },
     data: () => ({ 
@@ -271,80 +218,62 @@
 
       btnLoading: false,
       form_valid: true, 
-      daftar_paralegal: [],
-      menuTanggalLahir: false,
+      daftar_paralegal: [],      
       menuTanggalPelaksanaan: false,
       menuJamPelaksanaan: false, 
       formdata: {        
         user_id: null,
-        nama_pemohon: null,
-        tempat_lahir: null,
-        tanggal_lahir: null,
-        pendidikan: null,
-        pekerjaan: null,
-        alamat: null,
         nama_kegiatan: null,
+        tempat_pelaksanaan: null,
         tanggal_pelaksanaan: null,
         jam_pelaksanaan: null,
-        tempat_pelaksanaan: null,
+        narasumber: null,
+        peserta: null,
+        jumlah_peserta: null,
         uraian_kegiatan: null,
-        nama_saksi: null,
         rekomendasi_kegiatan: null,
       },
       formdefault: {        
         user_id: null,
-        nama_pemohon: null,
-        tempat_lahir: null,
-        tanggal_lahir: null,
-        pendidikan: null,
-        pekerjaan: null,
-        alamat: null,
         nama_kegiatan: null,
+        tempat_pelaksanaan: null,
         tanggal_pelaksanaan: null,
         jam_pelaksanaan: null,
-        tempat_pelaksanaan: null,
+        narasumber: null,
+        peserta: null,
+        jumlah_peserta: null,
         uraian_kegiatan: null,
-        nama_saksi: null,
         rekomendasi_kegiatan: null,
       },
       rule_user_id: [
         value => !!value || "Mohon untuk dipilih paralegal !!!",
       ],
-      rule_nama_pemohon: [
-        value => !!value || "Mohon untuk diisi nama pemohon kegiatan mediasi !!!", 
-      ],
-      rule_tempat_lahir: [
-        value => !!value || "Tempat Lahir pemohon mohon untuk diisi !!!"
-      ],
-      rule_tanggal_lahir: [
-        value => !!value || "Tanggal Lahir pemohon mohon untuk diisi !!!"
-      ],
-      rule_pendidikan: [
-        value => !!value || "Tingkat pendidikan pemohon mohon untuk diisi !!!"
-      ],
-      rule_pekerjaan: [
-        value => !!value || "Pekerjaan pemohon mohon untuk diisi !!!"
-      ],
-      rule_alamat: [
-        value => !!value || "Alamat pemohon mohon untuk diisi !!!"
-      ],
       rule_nama_kegiatan: [
-        value => !!value || "Mohon untuk diisi nama kegiatan mediasi !!!", 
-      ],
-      rule_tanggal_pelaksanaan: [
-        value => !!value || "Mohon untuk diisi tanggal pelaksanaan kegiatan mediasi !!!", 
-      ],
-      rule_jam_pelaksanaan: [
-        value => !!value || "Mohon untuk diisi waktu kegiatan mediasi !!!", 
+        value => !!value || "Mohon untuk diisi nama tema penyuluhan hukum !!!", 
       ],
       rule_tempat: [
-        value => !!value || "Mohon untuk diisi tempat kegiatan mediasi !!!", 
+        value => !!value || "Mohon untuk diisi tempat kegiatan penyuluhan hukum !!!", 
       ],
+      rule_tanggal_pelaksanaan: [
+        value => !!value || "Mohon untuk diisi tanggal pelaksanaan kegiatan penyuluhan hukum !!!", 
+      ],
+      rule_jam_pelaksanaan: [
+        value => !!value || "Mohon untuk diisi waktu kegiatan penyuluhan hukum !!!", 
+      ],
+      rule_nara_sumber: [
+        value => !!value || "Mohon untuk diisi nama nara sumber penyuluhan hukum !!!", 
+      ],    
+      rule_peserta: [
+        value => !!value || "Daftar peserta pemohon mohon untuk diisi !!!"
+      ],
+      rule_jumlah_peserta: [
+        value => !!value || "Jumlah peserta mohon untuk diisi !!!"
+      ],       
       rule_uraian_kegiatan: [
-        value => !!value || "Mohon untuk diisi uraian kegiatan mediasi !!!", 
+        value => !!value || "Mohon untuk diisi uraian kegiatan penyuluhan hukum !!!", 
       ],
       rule_rekomendasi_kegiatan: [
-        value => !!value || "Mohon untuk diisi rekomendasi kegiatan mediasi !!!", 
+        value => !!value || "Mohon untuk diisi rekomendasi kegiatan penyuluhan hukum !!!", 
       ],
     }),
     methods: {
@@ -355,50 +284,42 @@
           }
         })
         .then(({ data }) => {
-          this.daftar_paralegal = data.users;                
-        });          
-        await this.$ajax.get('/kegiatan/mediasi/' + this.kegiatan_id,{
+          this.daftar_paralegal = data.users                
+        })          
+        await this.$ajax.get('/kegiatan/penyuluhanhukum/' + this.kegiatan_id,{
           headers: {
             Authorization:this.$store.getters['auth/Token']
           }
         })
         .then(({ data }) => {
-          this.datakegiatan = data.kegiatan;                
-          this.formdata.user_id = this.datakegiatan.user_id;
-          this.formdata.nama_pemohon = this.datakegiatan.nama_pemohon;
-          this.formdata.tempat_lahir = this.datakegiatan.tempat_lahir;
-          this.formdata.tanggal_lahir = this.$date(this.datakegiatan.tanggal_lahir).format('YYYY-MM-DD');
-          this.formdata.pendidikan = this.datakegiatan.pendidikan;
-          this.formdata.pekerjaan = this.datakegiatan.pekerjaan;
-          this.formdata.alamat = this.datakegiatan.alamat;
-          this.formdata.nama_kegiatan = this.datakegiatan.nama_kegiatan;          
-          this.formdata.tanggal_pelaksanaan = this.$date(this.datakegiatan.tanggal_pelaksanaan).format('YYYY-MM-DD');
-          this.formdata.jam_pelaksanaan = this.$date(this.datakegiatan.tanggal_pelaksanaan).format('HH:mm');
-          this.formdata.tempat_pelaksanaan = this.datakegiatan.tempat_pelaksanaan;                    
-          this.formdata.uraian_kegiatan = this.datakegiatan.uraian_kegiatan;
-          this.formdata.nama_saksi = this.datakegiatan.nama_saksi;
-          this.formdata.rekomendasi_kegiatan = this.datakegiatan.rekomendasi_kegiatan;                                                
-        });          
+          this.datakegiatan = data.kegiatan                
+          this.formdata.user_id = this.datakegiatan.user_id
+          this.formdata.nama_kegiatan = this.datakegiatan.nama_kegiatan
+          this.formdata.tempat_pelaksanaan = this.datakegiatan.tempat_pelaksanaan
+          this.formdata.tanggal_pelaksanaan = this.$date(this.datakegiatan.tanggal_pelaksanaan).format('YYYY-MM-DD')
+          this.formdata.jam_pelaksanaan = this.$date(this.datakegiatan.tanggal_pelaksanaan).format('HH:mm')
+          this.formdata.narasumber = this.datakegiatan.narasumber
+          this.formdata.peserta = this.datakegiatan.peserta
+          this.formdata.jumlah_peserta = this.datakegiatan.jumlah_peserta          
+          this.formdata.uraian_kegiatan = this.datakegiatan.uraian_kegiatan
+          this.formdata.rekomendasi_kegiatan = this.datakegiatan.rekomendasi_kegiatan
+        })          
       },
       save: async function () {
         if (this.$refs.frmdata.validate()) {
           this.btnLoading = true                
-          await this.$ajax.post('/kegiatan/mediasi/' + this.kegiatan_id,
+          await this.$ajax.post('/kegiatan/penyuluhanhukum/' + this.kegiatan_id,
             {
               _method: 'put',
               user_id: this.formdata.user_id,
-              nama_pemohon: this.formdata.nama_pemohon,
-              tempat_lahir: this.formdata.tempat_lahir,
-              tanggal_lahir: this.formdata.tanggal_lahir,
-              pendidikan: this.formdata.pendidikan,
-              pekerjaan: this.formdata.pekerjaan,
-              alamat: this.formdata.alamat,
               nama_kegiatan: this.formdata.nama_kegiatan,
+              tempat_pelaksanaan: this.formdata.tempat_pelaksanaan,
               tanggal_pelaksanaan: this.formdata.tanggal_pelaksanaan,
               jam_pelaksanaan: this.formdata.jam_pelaksanaan,
-              tempat_pelaksanaan: this.formdata.tempat_pelaksanaan,
-              uraian_kegiatan: this.formdata.uraian_kegiatan,
-              nama_saksi: this.formdata.nama_saksi,
+              narasumber: this.formdata.narasumber,
+              peserta: this.formdata.peserta,
+              jumlah_peserta: this.formdata.jumlah_peserta,            
+              uraian_kegiatan: this.formdata.uraian_kegiatan,            
               rekomendasi_kegiatan: this.formdata.rekomendasi_kegiatan,
             },
             {
@@ -410,20 +331,20 @@
           .then(({data})=>{        
             this.btnLoading = false               
             setTimeout(() => {
-              this.formdata = Object.assign({}, this.formdefault);                                
-              this.$router.push('/kegiatan/mediasi/' + data.kegiatan.id + '/detail')
+              this.formdata = Object.assign({}, this.formdefault)                                
+              this.$router.push('/kegiatan/penyuluhanhukum/' + data.kegiatan.id + '/detail')
               }, 300
-            );
+            )
           }).catch(()=>{
             this.btnLoading = false
-          });                
+          })                
         }
       },
       closedialogfrm () {            
         setTimeout(() => {
-          this.formdata = Object.assign({}, this.formdefault);                                
-          this.$router.push('/kegiatan/mediasi/' + this.kegiatan_id + '/detail')
-          }, 300);
+          this.formdata = Object.assign({}, this.formdefault)                                
+          this.$router.push('/kegiatan/penyuluhanhukum/' + this.kegiatan_id + '/detail')
+          }, 300)
       },
     },
     components: {

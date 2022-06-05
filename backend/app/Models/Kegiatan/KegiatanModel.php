@@ -4,7 +4,7 @@ namespace App\Models\Kegiatan;
 
 use Illuminate\Database\Eloquent\Model;
 
-class KonsultasiKegiatanModel extends Model {    
+class KegiatanModel extends Model {    
   /**
    * nama tabel model ini.
    *
