@@ -49,49 +49,49 @@ const routes = [
 	},	
 	//konsultasi - mediasi
 	{
-		path: '/konsultasi/kegiatan/mediasi',
-		name: 'KonsultasiKegiatanMediasi',
+		path: '/kegiatan/mediasi',
+		name: 'KegiatanMediasi',
 		meta:{
-			title: "KONSULTASI - KEGIATAN",
+			title: "KEGIATAN - MEDIASI",
 			requiresAuth:true,
         },
-		component: () => import('../views/pages/admin/mediasi/KonsultasiKegiatan.vue'),		
+		component: () => import('../views/pages/admin/mediasi/KegiatanMediasi.vue'),		
 	},
 	{
-		path: '/konsultasi/kegiatan/mediasi/tambah',
-		name: 'KonsultasiKegiatanMediasiTambah',
+		path: '/kegiatan/mediasi/tambah',
+		name: 'KegiatanMediasiTambah',
 		meta:{
-			title: "KONSULTASI - KEGIATAN",
+			title: "KEGIATAN - MEDIASI",
 			requiresAuth:true,
         },
-		component: () => import('../views/pages/admin/mediasi/KonsultasiKegiatanTambah.vue'),		
+		component: () => import('../views/pages/admin/mediasi/KegiatanMediasiTambah.vue'),		
 	},
 	{
-		path: '/konsultasi/kegiatan/mediasi/:kegiatan_id/ubah',
-		name: 'KonsultasiKegiatanMediasiUbah',
+		path: '/kegiatan/mediasi/:kegiatan_id/ubah',
+		name: 'KegiatanMediasiUbah',
 		meta:{
-			title: "KONSULTASI - KEGIATAN",
+			title: "KEGIATAN - MEDIASI",
 			requiresAuth:true,
         },
-		component: () => import('../views/pages/admin/mediasi/KonsultasiKegiatanUbah.vue'),		
+		component: () => import('../views/pages/admin/mediasi/KegiatanMediasiUbah.vue'),		
 	},
 	{
-		path: '/konsultasi/kegiatan/mediasi/:kegiatan_id/files',
-		name: 'KonsultasiKegiatanMediasiFiles',
+		path: '/kegiatan/mediasi/:kegiatan_id/files',
+		name: 'KegiatanMediasiFiles',
 		meta:{
-			title: "KONSULTASI - KEGIATAN",
+			title: "KEGIATAN - MEDIASI",
 			requiresAuth:true,
         },
-		component: () => import('../views/pages/admin/mediasi/KonsultasiKegiatanFiles.vue'),		
+		component: () => import('../views/pages/admin/mediasi/KegiatanMediasiFiles.vue'),		
 	},
 	{
-		path: '/konsultasi/kegiatan/mediasi/:kegiatan_id/detail',
-		name: 'KonsultasiKegiatanMediasiDetail',
+		path: '/kegiatan/mediasi/:kegiatan_id/detail',
+		name: 'KegiatanMediasiDetail',
 		meta:{
-			title: "KONSULTASI - KEGIATAN",
+			title: "KEGIATAN - MEDIASI",
 			requiresAuth:true,
         },
-		component: () => import('../views/pages/admin/mediasi/KonsultasiKegiatanDetail.vue'),		
+		component: () => import('../views/pages/admin/mediasi/KegiatanMediasiDetail.vue'),		
 	},
 	
 	//laporan	

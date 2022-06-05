@@ -6,9 +6,9 @@
 <script>
 import SystemConfigLayout from '@/views/layouts/SystemConfigLayout';
 export default {
-    name:'SystemUsers',
-    components:{
-        SystemConfigLayout,        
+    name: 'SystemUsers',
+    components: {
+        SystemConfigLayout,  
     },
 }
 </script>

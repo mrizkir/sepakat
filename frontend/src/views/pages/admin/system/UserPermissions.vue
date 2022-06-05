@@ -38,7 +38,7 @@
                                             </v-card-text>
                                         </v-card>
                                    </v-col>
-                                   <v-responsive width="100%" v-if="$vuetify.breakpoint.xsOnly"/>                                   
+                                   <v-responsive width="100%" v-if="$vuetify.breakpoint.xsOnly"/>                       
                                    <v-col xs="12" sm="6" md="6">
                                        <v-card flat>
                                             <v-card-title>THEME :</v-card-title>
@@ -46,7 +46,7 @@
                                                 {{user.theme}}
                                             </v-card-text>
                                         </v-card>
-                                   </v-col>                                    
+                                   </v-col>                        
                                    <v-responsive width="100%" v-if="$vuetify.breakpoint.xsOnly"/>
                                 </v-row>
                                 <v-row no-gutters>
@@ -62,7 +62,7 @@
                                     <v-col xs="12" sm="6" md="6">
                                        <v-card flat>
                                             <v-card-title>DEFAULT ROLE :</v-card-title>
-                                            <v-card-text>                                                
+                                            <v-card-text>                                    
                                                 {{user.default_role}}
                                             </v-card-text>
                                         </v-card>
@@ -82,7 +82,7 @@
                                    <v-col xs="12" sm="6" md="6">
                                        <v-card flat>
                                             <v-card-title>CREATED / UPDATED :</v-card-title>
-                                            <v-card-text>                                                
+                                            <v-card-text>                                    
                                                 {{$date(user.created_at).format('DD/MM/YYYY HH:mm')}} / {{$date(user.updated_at).format('DD/MM/YYYY HH:mm')}}
                                             </v-card-text>
                                         </v-card>
@@ -92,7 +92,7 @@
                            </v-card-text>
                         </v-card>
                     </v-col>
-                </v-row>                
+                </v-row>    
                 <v-row class="mb-4" no-gutters>
                     <v-col cols="12">
                         <v-card>
@@ -120,7 +120,7 @@
                             show-select
                             class="elevation-1"
                         >
-                        <template v-slot:item.actions="{ item }">                            
+                        <template v-slot:item.actions="{ item }">                
                             <v-icon
                                 small
                                 :loading="btnLoading"
@@ -155,16 +155,16 @@ import {mapGetters} from 'vuex';
 export default {
     name: 'UserPermissions',
     data: () => ({
-        btnLoading:false,
+        btnLoading: false,
         //tables
         headers: [                        
             { text: 'NAMA PERMISSION', value: 'name' },
-            { text: 'GUARD', value: 'guard_name' },   
-            { text: 'AKSI', value: 'actions', sortable: false,width:100 },         
+            { text: 'GUARD', value: 'guard_name' },
+            { text: 'AKSI', value: 'actions', sortable: false,width:100 },
         ],
-        search:'',        
-        perm_selected:[],
-        perm_revoked:[]
+        search: '',  
+        perm_selected: [],
+        perm_revoked: []
     }),
     methods: {        
         save()
@@ -176,14 +176,14 @@ export default {
                     chkpermission:this.permissions_selected
                 },
                 {
-                    headers:{
+                    headers: {
                         Authorization:this.TOKEN
                     }
                 }
             ).then(()=>{   
                 this.close();                
             }).catch(()=>{
-                this.btnLoading=false;
+                this.btnLoading = false
             });
         },
         revoke(item)
@@ -195,31 +195,31 @@ export default {
                     name:item.name
                 },
                 {
-                    headers:{
+                    headers: {
                         Authorization:this.TOKEN
                     }
                 }
             ).then(()=>{   
                 this.close();                
             }).catch(()=>{
-                this.btnLoading=false;
+                this.btnLoading = false
             });
         },
         close()
         {            
-            this.btnLoading=false;
+            this.btnLoading = false
             this.permissions_selected=[];     
             this.$emit('closeUserPermissions');
         }
     },
-    props:{
+    props: {
         user:Object,
         daftarpermissions:Array,
         permissionsselected:Array,
     },
     computed: {
         ...mapGetters('auth',{                        
-            TOKEN:'Token',                                  
+            TOKEN: 'Token',                         
         }),
         daftar_permissions()
         {

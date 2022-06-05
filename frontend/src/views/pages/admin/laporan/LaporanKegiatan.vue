@@ -65,12 +65,12 @@
                                     inset
                                     vertical
                                 ></v-divider>
-                                <v-spacer></v-spacer>                                
+                                <v-spacer></v-spacer>                    
                             </v-toolbar>
-                        </template>                        
+                        </template>            
                         <template v-slot:item.id_status="{ item }"> 
-                            <v-chip :color="item.id_status==1?'success':'blue-grey lighten-3'" dark>
-                                {{item.id_status==1?'SETUJU':'DRAFT'}}
+                            <v-chip :color="item.id_status==1?'success': 'blue-grey lighten-3'" dark>
+                                {{item.id_status==1?'SETUJU': 'DRAFT'}}
                             </v-chip>
                         </template>
                         <template v-slot:item.actions="{ item }">
@@ -91,7 +91,7 @@
                                     <strong>ID:</strong>{{ item.kegiatan_id }}
                                     <strong>created_at:</strong>{{ $date(item.created_at).format('DD/MM/YYYY HH:mm') }}
                                     <strong>updated_at:</strong>{{ $date(item.updated_at).format('DD/MM/YYYY HH:mm') }}
-                                </v-col>                                
+                                </v-col>                    
                             </td>
                         </template>
                         <template v-slot:no-data>
@@ -100,7 +100,7 @@
                     </v-data-table>
                 </v-col>
             </v-row>
-            <v-dialog v-model="dialogprintpdf" max-width="500px" persistent>                
+            <v-dialog v-model="dialogprintpdf" max-width="500px" persistent>    
                 <v-card>
                     <v-card-title>
                         <span class="headline">Print to PDF</span>
@@ -109,15 +109,15 @@
                         <v-btn
                             color="green"
                             text
-                            :href="this.$api.storageURL+'/'+file_pdf">                            
+                            :href="this.$api.storageURL+'/'+file_pdf">                
                             Download
-                        </v-btn>                           
+                        </v-btn>               
                     </v-card-text>
                     <v-card-actions>
                         <v-spacer></v-spacer>
-                        <v-btn color="blue darken-1" text @click.stop="closedialogprintpdf">BATAL</v-btn>                            
+                        <v-btn color="blue darken-1" text @click.stop="closedialogprintpdf">BATAL</v-btn>                
                     </v-card-actions>
-                </v-card>            
+                </v-card>
             </v-dialog>
         </v-container>
     </AdminLayout>
@@ -126,58 +126,58 @@
 import AdminLayout from '@/views/layouts/AdminLayout';
 import ModuleHeader from '@/components/ModuleHeader';
 export default {
-    name:'LaporanKegiatan',
+    name: 'LaporanKegiatan',
     created () {
         this.dashboard = this.$store.getters['uiadmin/getDefaultDashboard'];        
         this.breadcrumbs = [
             {
-                text:'HOME',
-                disabled:false,
-                href:'/dashboard/'+this.$store.getters['auth/AccessToken']
+                text: 'HOME',
+                disabled: false,
+                href: '/dashboard/' + this.$store.getters['auth/AccessToken']
             },
             {
-                text:'KONSULTASI',
-                disabled:false,
-                href:'#'
+                text: 'KONSULTASI',
+                disabled: false,
+                href: '#'
             },
             {
-                text:'KEGIATAN',
-                disabled:true,
-                href:'#'
+                text: 'KEGIATAN',
+                disabled: true,
+                href: '#'
             }
         ];
         this.initialize()
     },  
     data: () => ({ 
-        dashboard:null,
+        dashboard: null,
 
-        btnLoading:false,
-        datatableLoading:false,
-        expanded:[],
-        datatable:[],
+        btnLoading: false,
+        datatableLoading: false,
+        expanded: [],
+        datatable: [],
         headers: [                        
-            { text: 'PARALEGAL', value: 'name' },   
-            { text: 'PEMOHON', value: 'pemohon' },   
-            { text: 'JENIS KEGIATAN', value: 'nama_jenis' },   
-            { text: 'NAMA KEGIATAN', value: 'nama_kegiatan' },               
-            { text: 'STATUS', value: 'id_status', sortable:false, width:100 },               
+            { text: 'PARALEGAL', value: 'name' },
+            { text: 'PEMOHON', value: 'pemohon' },
+            { text: 'JENIS KEGIATAN', value: 'nama_jenis' },
+            { text: 'NAMA KEGIATAN', value: 'nama_kegiatan' },      
+            { text: 'STATUS', value: 'id_status', sortable: false, width:100 },      
             { text: 'AKSI', value: 'actions', sortable: false,width:80 },
         ],
-        search:'', 
+        search: '', 
 
-        dialogprintpdf:false,
-        file_pdf:null
+        dialogprintpdf: false,
+        file_pdf: null
 
     }),
     methods: {
-        initialize:async function () 
+        initialize: async function () 
         {
             this.datatableLoading=true;
             await this.$ajax.get('/report/kegiatan',{
                 headers: {
                     Authorization:this.$store.getters['auth/Token']
                 }
-            }).then(({data})=>{               
+            }).then(({ data }) => {
                 this.datatable = data.daftar_kegiatan;
                 this.datatableLoading=false;
             }).catch(()=>{
@@ -200,20 +200,20 @@ export default {
             this.btnLoading=true;
             await this.$ajax.post('/report/kegiatan/printpdf',
                 {
-                    kegiatan_id:item.kegiatan_id,                                                                                    
+                    kegiatan_id:item.kegiatan_id,                                 
                 },
                 {
-                    headers:{
+                    headers: {
                         Authorization:this.$store.getters['auth/Token']
                     },
                     
                 }
-            ).then(({data})=>{                              
+            ).then(({ data }) => {               
                 this.file_pdf=data.pdf_file;
                 this.dialogprintpdf=true;
-                this.btnLoading=false;
+                this.btnLoading = false
             }).catch(()=>{
-                this.btnLoading=false;
+                this.btnLoading = false
             });     
         },
         closedialogprintpdf () {                  
@@ -222,11 +222,11 @@ export default {
                 this.dialogprintpdf = false;      
                 }, 300
             );
-        },    
+        }, 
     },  
-    components:{
+    components: {
         AdminLayout,
-        ModuleHeader,        
+        ModuleHeader,  
     },
 
 }

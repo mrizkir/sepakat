@@ -46,7 +46,7 @@
                                     inset
                                     vertical
                                 ></v-divider>
-                                <v-spacer></v-spacer>                                                                
+                                <v-spacer></v-spacer>                                                    
                             </v-toolbar>
                         </template>
                         <template v-slot:expanded-item="{ headers, item }">
@@ -70,39 +70,39 @@ import {mapGetters} from 'vuex';
 import AdminLayout from '@/views/layouts/AdminLayout';
 import ModuleHeader from '@/components/ModuleHeader';
 export default {
-    name:'JenisKegiatan',
+    name: 'JenisKegiatan',
     created () {
         this.breadcrumbs = [
             {
-                text:'HOME',
-                disabled:false,
-                href:'/dashboard/'+this.ACCESS_TOKEN
+                text: 'HOME',
+                disabled: false,
+                href: '/dashboard/' + this.ACCESS_TOKEN
             },
             {
-                text:'DATA MASTER',
-                disabled:false,
-                href:'#'
+                text: 'DATA MASTER',
+                disabled: false,
+                href: '#'
             },
             {
-                text:'JENIS KEGIATAN',
-                disabled:true,
-                href:'#'
+                text: 'JENIS KEGIATAN',
+                disabled: true,
+                href: '#'
             }
         ];
         this.initialize()
     },
     data: () => ({
-        btnLoading:false,
-        datatableLoading:false,
-        expanded:[],
-        datatable:[],
+        btnLoading: false,
+        datatableLoading: false,
+        expanded: [],
+        datatable: [],
         headers: [
             { text: 'ID JENIS', value: 'id_jenis',width:150 },
-            { text: 'NAMA JENIS', value: 'nama_jenis' },            
-        ],              
+            { text: 'NAMA JENIS', value: 'nama_jenis' },   
+        ],     
     }),
     methods: {
-        initialize:async function ()
+        initialize: async function ()
         {
             this.datatableLoading=true;
             await this.$ajax.get('/datamaster/jeniskegiatan',{
@@ -126,18 +126,18 @@ export default {
             {
                 this.expanded=[item];
             }
-        },    
+        }, 
     },
     computed: {
         ...mapGetters('auth',{
-            ACCESS_TOKEN:'AccessToken',
-            TOKEN:'Token',
+            ACCESS_TOKEN: 'AccessToken',
+            TOKEN: 'Token',
         }),
         formTitle () {
             return this.editedIndex === -1 ? 'TAMBAH DATA' : 'UBAH DATA'
         },
     },
-    components:{
+    components: {
         AdminLayout,
         ModuleHeader,
     },

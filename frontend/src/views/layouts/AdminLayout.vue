@@ -122,11 +122,11 @@
           </v-list-item-content>
         </v-list-item>
         <v-subheader v-if="CAN_ACCESS('KONSULTASI-GROUP')"
-          >KONSULTASI</v-subheader
+          >KEGIATAN</v-subheader
         >
         <v-list-item
           link
-          to="/konsultasi/kegiatan/penyuluhanhukum"
+          to="/kegiatan/penyuluhanhukum"
           v-if="CAN_ACCESS('KONSULTASI-KEGIATAN_BROWSE')"
         >
           <v-list-item-icon class="mr-2">
@@ -138,7 +138,7 @@
         </v-list-item>
         <v-list-item
           link
-          to="/konsultasi/kegiatan/konsultasihukum"
+          to="/kegiatan/konsultasihukum"
           v-if="CAN_ACCESS('KONSULTASI-KEGIATAN_BROWSE')"
         >
           <v-list-item-icon class="mr-2">
@@ -150,7 +150,7 @@
         </v-list-item>
         <v-list-item
           link
-          to="/konsultasi/kegiatan/investigasiperkara"
+          to="/kegiatan/investigasiperkara"
           v-if="CAN_ACCESS('KONSULTASI-KEGIATAN_BROWSE')"
         >
           <v-list-item-icon class="mr-2">
@@ -162,7 +162,7 @@
         </v-list-item>
         <v-list-item
           link
-          to="/konsultasi/kegiatan/mediasi"
+          to="/kegiatan/mediasi"
           v-if="CAN_ACCESS('KONSULTASI-KEGIATAN_BROWSE')"
         >
           <v-list-item-icon class="mr-2">
@@ -174,7 +174,7 @@
         </v-list-item>
         <v-list-item
           link
-          to="/konsultasi/kegiatan/negoisasi"
+          to="/kegiatan/negoisasi"
           v-if="CAN_ACCESS('KONSULTASI-KEGIATAN_BROWSE')"
         >
           <v-list-item-icon class="mr-2">
@@ -186,7 +186,7 @@
         </v-list-item>
         <v-list-item
           link
-          to="/konsultasi/kegiatan/pembinaanmasyarakat"
+          to="/kegiatan/pembinaanmasyarakat"
           v-if="CAN_ACCESS('KONSULTASI-KEGIATAN_BROWSE')"
         >
           <v-list-item-icon class="mr-2">
@@ -198,7 +198,7 @@
         </v-list-item>
         <v-list-item
           link
-          to="/konsultasi/kegiatan/pendampingan"
+          to="/kegiatan/pendampingan"
           v-if="CAN_ACCESS('KONSULTASI-KEGIATAN_BROWSE')"
         >
           <v-list-item-icon class="mr-2">
@@ -210,7 +210,7 @@
         </v-list-item>
         <v-list-item
           link
-          to="/konsultasi/kegiatan/draftingdokumen"
+          to="/kegiatan/draftingdokumen"
           v-if="CAN_ACCESS('KONSULTASI-KEGIATAN_BROWSE')"
         >
           <v-list-item-icon class="mr-2">

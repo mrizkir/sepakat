@@ -33,7 +33,7 @@
         </template>
         <v-container fluid>
             <v-row>
-                <v-col cols="12">                    
+                <v-col cols="12">        
                     <v-form ref="frmdata" v-model="form_valid" lazy-validation>
                         <v-card class="mb-4">
                             <v-card-title>
@@ -83,8 +83,8 @@
                                     item-text="name"
                                     item-value="id"
                                     :rules="rule_dw"
-                                    outlined/>                                                        
-                            </v-card-text>                            
+                                    outlined/>                                            
+                            </v-card-text>                
                         </v-card>         
                         <v-card class="mb-4">
                             <v-card-title>
@@ -100,22 +100,22 @@
                                     item-key="id"
                                     :items="daftar_tasmt"
                                     dense> 
-                                    <template v-slot:item.k_status="{ item }">                                                                    
+                                    <template v-slot:item.k_status="{ item }">                                                        
                                         <v-select       
                                             v-model="formdata.status_mhs[daftar_tasmt.indexOf(item)]"                                                                                
                                             :items="daftar_status_mhs"
                                             item-text="text"
                                             item-value="id" />
-                                    </template>                                        
-                                    <template v-slot:no-data>                            
+                                    </template>                            
+                                    <template v-slot:no-data>                
                                         belum ada data tahun akademik dan semester, silahkan ganti Tahun Pendaftaran ke yang lebih kecil dari 2020
-                                    </template>                           
+                                    </template>               
                                 </v-data-table>
-                            </v-card-text>                            
+                            </v-card-text>                
                         </v-card>
                         <v-card>
-                            <v-card-actions>                       
-                                <v-spacer></v-spacer>                        
+                            <v-card-actions>           
+                                <v-spacer></v-spacer>            
                                 <v-btn 
                                     color="blue darken-1" 
                                     text                                     
@@ -140,14 +140,14 @@ export default {
 	{
 		this.breadcrumbs = [
 			{
-				text:'HOME',
-				disabled:false,
-				href:'/dashboard/'+this.$store.getters['auth/AccessToken']
+				text: 'HOME',
+				disabled: false,
+				href: '/dashboard/' + this.$store.getters['auth/AccessToken']
 			},
 			{
-				text:'MIGRASI SISTEM',
-				disabled:true,
-				href:'#'
+				text: 'MIGRASI SISTEM',
+				disabled: true,
+				href: '#'
 			}
         ];				
         this.tahun_pendaftaran = this.$store.getters['uiadmin/getTahunPendaftaran']; 
@@ -157,28 +157,28 @@ export default {
         this.initialize();
     },
     data: () => ({        
-        firstloading:true,
-        breadcrumbs:[],        
+        firstloading: true,
+        breadcrumbs: [],  
         tahun_pendaftaran:0,  
         
         //form
-        form_valid:true, 
-        btnLoading:false,
+        form_valid: true, 
+        btnLoading: false,
 
-        daftar_prodi:[],
-        daftar_kelas:[],                
-        daftar_dw:[],     
+        daftar_prodi: [],
+        daftar_kelas: [],       
+        daftar_dw: [],  
 
-        daftar_tasmt:[],
-        daftar_status_mhs:[],        
+        daftar_tasmt: [],
+        daftar_status_mhs: [],  
         formdata: {
-            nim:'',
-            nirm:'',
-            nama_mhs:'',            
-            dosen_id:'',           
-            prodi_id:'',
-            idkelas:'',
-            status_mhs:[],
+            nim: '',
+            nirm: '',
+            nama_mhs: '',   
+            dosen_id: '',  
+            prodi_id: '',
+            idkelas: '',
+            status_mhs: [],
         },
         rule_nim:[
             value => !!value||"Nomor Induk Mahasiswa (NIM) mohon untuk diisi !!!",
@@ -191,7 +191,7 @@ export default {
         rule_nama_mhs:[
             value => !!value||"Nama Mahasiswa mohon untuk diisi !!!",
             value => /^[A-Za-z\s\\,\\.]*$/.test(value) || 'Nama Mahasiswa hanya boleh string dan spasi',
-        ],         
+        ],
         rule_prodi:[
             value => !!value||"Program studi mohon untuk dipilih !!!"
         ], 
@@ -200,13 +200,13 @@ export default {
         ],
         rule_dw:[
             value => !!value||"Mohon dipilih Dosen Wali untuk Mahasiswa ini !!!"
-        ],         
+        ],
         
-        datatableLoading:false,
+        datatableLoading: false,
         headers: [                                                
-            { text: 'TAHUN AKADEMIK', value: 'ta',sortable:false },
-            { text: 'SEMESTER', value: 'semester',sortable:false },
-            { text: 'STATUS', value: 'k_status',sortable:false, width:250 },                 
+            { text: 'TAHUN AKADEMIK', value: 'ta',sortable: false },
+            { text: 'SEMESTER', value: 'semester',sortable: false },
+            { text: 'STATUS', value: 'k_status',sortable: false, width:250 },        
         ],
     }),
     methods : {
@@ -214,7 +214,7 @@ export default {
         {
             this.tahun_pendaftaran=tahun;
         },
-		initialize:async function()
+		initialize: async function()
 		{	
             this.daftar_prodi=this.$store.getters['uiadmin/getDaftarProdi'];  
             this.daftar_kelas=this.$store.getters['uiadmin/getDaftarKelas'];                      
@@ -223,7 +223,7 @@ export default {
                 headers: {
                     Authorization:this.$store.getters['auth/Token']
                 }
-            }).then(({data})=>{                              
+            }).then(({ data }) => {               
                 this.daftar_dw = data.users; 
             });
 
@@ -236,7 +236,7 @@ export default {
                 headers: {
                     Authorization:this.$store.getters['auth/Token']
                 }
-            }).then(({data})=>{                              
+            }).then(({ data }) => {               
                 this.daftar_tasmt = data.daftar_tasmt; 
                 var dt = this.daftar_tasmt;
                 var i=0;
@@ -262,13 +262,13 @@ export default {
                         nirm:this.formdata.nirm,
                         nama_mhs:this.formdata.nama_mhs,
                         dosen_id:this.formdata.dosen_id,
-                        prodi_id:this.formdata.prodi_id,     
-                        idkelas:this.formdata.idkelas,       
-                        tahun_pendaftaran:this.tahun_pendaftaran,                 
-                        status_mhs:JSON.stringify(Object.assign({},this.formdata.status_mhs)),                                                                                                          
+                        prodi_id:this.formdata.prodi_id,  
+                        idkelas:this.formdata.idkelas, 
+                        tahun_pendaftaran:this.tahun_pendaftaran,        
+                        status_mhs:JSON.stringify(Object.assign({},this.formdata.status_mhs)),                                                       
                     },
                     {
-                        headers:{
+                        headers: {
                             Authorization:this.$store.getters['auth/Token']
                         }
                     }
@@ -276,17 +276,17 @@ export default {
                     console.log(data);                   
                     setTimeout(() => {
                         this.$router.go();    
-                        this.btnLoading=false;
+                        this.btnLoading = false
                         }, 300
                     );                                  
                 }).catch(()=>{
-                    this.btnLoading=false;
+                    this.btnLoading = false
                 });                                   
                  
             }
         },
     },
-    watch:{
+    watch: {
         tahun_pendaftaran()
         {
             if (!this.firstloading)
@@ -295,10 +295,10 @@ export default {
             }            
         },
     },
-    components:{
+    components: {
         SystemMigrationLayout,
-        ModuleHeader,           
-        Filter9,        
+        ModuleHeader,  
+        Filter9,  
     },
 }
 </script>

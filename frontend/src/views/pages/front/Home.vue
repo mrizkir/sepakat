@@ -11,7 +11,7 @@
                         <v-carousel-item
                             v-for="(slide, i) in slides"
                             :key="i"
-                            :src="$api.url+'/'+slide.src">                            
+                            :src="$api.url+'/'+slide.src">                
                         </v-carousel-item>
                     </v-carousel>
                 </v-col>
@@ -26,16 +26,16 @@ export default {
     data:()=>({
         slides: [
             {
-                src:'storage/images/sliders/slider1.jpg',
+                src: 'storage/images/sliders/slider1.jpg',
             },
             {
-                src:'storage/images/sliders/slider2.jpg',            
+                src: 'storage/images/sliders/slider2.jpg',   
             },
             {
-                src:'storage/images/sliders/slider3.jpg',            
+                src: 'storage/images/sliders/slider3.jpg',   
             },
             {
-                src:'storage/images/sliders/slider4.jpg',
+                src: 'storage/images/sliders/slider4.jpg',
             }
         ],
     }), 

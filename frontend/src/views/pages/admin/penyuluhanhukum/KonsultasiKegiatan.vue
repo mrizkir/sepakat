@@ -73,8 +73,8 @@
                            {{item.id}}
                         </template>
                         <template v-slot:item.id_status="{ item }"> 
-                            <v-chip :color="item.id_status==1?'success':'blue-grey lighten-3'" dark>
-                                {{item.id_status==1?'SETUJU':'DRAFT'}}
+                            <v-chip :color="item.id_status==1?'success': 'blue-grey lighten-3'" dark>
+                                {{item.id_status==1?'SETUJU': 'DRAFT'}}
                             </v-chip>
                         </template>
                         <template v-slot:item.actions="{ item }">
@@ -85,16 +85,16 @@
                                 <v-icon>
                                     mdi-eye
                                 </v-icon>
-                            </v-btn>                               
+                            </v-btn>                   
                             <v-btn
                                 small      
                                 icon                          
-                                :to="{path:'/konsultasi/kegiatan/'+item.kegiatan_id+'/ubah'}"
+                                :to="{path: '/konsultasi/kegiatan/'+item.kegiatan_id+'/ubah'}"
                                 v-if="item.id_status==0 && (dashboard=='paralegal'||dashboard=='kumham'||dashboard=='superadmin')">
                                 <v-icon>
                                     mdi-pencil
                                 </v-icon>
-                            </v-btn>                                               
+                            </v-btn>                                   
                             <v-btn
                                 small
                                 icon
@@ -113,7 +113,7 @@
                                     <strong>ID:</strong>{{ item.kegiatan_id }}
                                     <strong>created_at:</strong>{{ $date(item.created_at).format('DD/MM/YYYY HH:mm') }}
                                     <strong>updated_at:</strong>{{ $date(item.updated_at).format('DD/MM/YYYY HH:mm') }}
-                                </v-col>                                
+                                </v-col>                    
                             </td>
                         </template>
                         <template v-slot:no-data>
@@ -129,55 +129,55 @@
 import AdminLayout from '@/views/layouts/AdminLayout';
 import ModuleHeader from '@/components/ModuleHeader';
 export default {
-    name:'KonsultasiKegiatan',
+    name: 'KonsultasiKegiatan',
     created () {
         this.dashboard = this.$store.getters['uiadmin/getDefaultDashboard'];        
         this.breadcrumbs = [
             {
-                text:'HOME',
-                disabled:false,
-                href:'/dashboard/'+this.$store.getters['auth/AccessToken']
+                text: 'HOME',
+                disabled: false,
+                href: '/dashboard/' + this.$store.getters['auth/AccessToken']
             },
             {
-                text:'KONSULTASI',
-                disabled:false,
-                href:'#'
+                text: 'KONSULTASI',
+                disabled: false,
+                href: '#'
             },
             {
-                text:'KEGIATAN',
-                disabled:true,
-                href:'#'
+                text: 'KEGIATAN',
+                disabled: true,
+                href: '#'
             }
         ];
         this.initialize()
     },  
     data: () => ({ 
-        dashboard:null,
+        dashboard: null,
 
-        btnLoading:false,
-        datatableLoading:false,
-        expanded:[],
-        datatable:[],
+        btnLoading: false,
+        datatableLoading: false,
+        expanded: [],
+        datatable: [],
         headers: [                        
-            { text: 'PARALEGAL', value: 'name' },   
-            { text: 'PEMOHON', value: 'pemohon' },   
-            { text: 'JENIS KEGIATAN', value: 'nama_jenis' },   
-            { text: 'NAMA KEGIATAN', value: 'nama_kegiatan' },               
-            { text: 'STATUS', value: 'id_status', sortable:false, width:100 },               
+            { text: 'PARALEGAL', value: 'name' },
+            { text: 'PEMOHON', value: 'pemohon' },
+            { text: 'JENIS KEGIATAN', value: 'nama_jenis' },
+            { text: 'NAMA KEGIATAN', value: 'nama_kegiatan' },      
+            { text: 'STATUS', value: 'id_status', sortable: false, width:100 },      
             { text: 'AKSI', value: 'actions', sortable: false,width:150 },
         ],
-        search:'', 
+        search: '', 
 
     }),
     methods: {
-        initialize:async function () 
+        initialize: async function () 
         {
             this.datatableLoading=true;
             await this.$ajax.get('/konsultasi/kegiatan',{
                 headers: {
                     Authorization:this.$store.getters['auth/Token']
                 }
-            }).then(({data})=>{               
+            }).then(({ data }) => {
                 this.datatable = data.daftar_kegiatan;
                 this.datatableLoading=false;
             }).catch(()=>{
@@ -202,10 +202,10 @@ export default {
             //     headers: {
             //         Authorization:this.$store.getters['auth/Token']
             //     }
-            // }).then(({data})=>{               
+            // }).then(({ data }) => {
                                            
             // });                      
-        },            
+        },   
         deleteItem (item) {           
             this.$root.$confirm.open('Delete', 'Apakah Anda ingin menghapus data konsultasi kegiatan dengan ID '+item.kegiatan_id+' ?', { color: 'red',width:600 }).then((confirm) => {
                 if (confirm)
@@ -213,27 +213,27 @@ export default {
                     this.btnLoading=true;
                     this.$ajax.post('/konsultasi/kegiatan/'+item.kegiatan_id,
                         {
-                            '_method':'DELETE',
+                            '_method': 'DELETE',
                         },
                         {
-                            headers:{
+                            headers: {
                                 Authorization:this.$store.getters['auth/Token']
                             }
                         }
                     ).then(()=>{   
                         const index = this.datatable.indexOf(item);
                         this.datatable.splice(index, 1);
-                        this.btnLoading=false;
+                        this.btnLoading = false
                     }).catch(()=>{
-                        this.btnLoading=false;
+                        this.btnLoading = false
                     });
                 }                
             });
-        },        
+        },  
     },  
-    components:{
+    components: {
         AdminLayout,
-        ModuleHeader,        
+        ModuleHeader,  
     },
 
 }

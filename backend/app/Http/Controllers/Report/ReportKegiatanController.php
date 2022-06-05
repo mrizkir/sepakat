@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Report;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-use App\Models\Konsultasi\KonsultasiKegiatanModel;
+use App\Models\Kegiatan\KonsultasiKegiatanModel;
 
 use Ramsey\Uuid\Uuid;
 

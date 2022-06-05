@@ -26,7 +26,7 @@
             </template>
         </ModuleHeader>   
         <v-form ref="frmdata" v-model="form_valid" lazy-validation  v-if="Object.keys(datakegiatan).length">
-            <v-container fluid>               
+            <v-container fluid>   
                 <v-row>  
                     <v-col cols="12"> 
                         <v-card>
@@ -91,7 +91,7 @@
                                         <v-spacer></v-spacer>
                                         <v-btn text color="primary" @click="menuTanggalKonsultasi = false">Cancel</v-btn>
                                         <v-btn text color="primary" @click="$refs.menuTanggalKonsultasi.save(formdata.tanggal_konsultasi)">OK</v-btn>
-                                    </v-date-picker>                                    
+                                    </v-date-picker>                        
                                 </v-menu>
                                 <v-menu
                                     ref="menuJamKonsultasi"
@@ -127,7 +127,7 @@
                                     v-model="formdata.tempat"
                                     :rules="rule_tempat"
                                     filled
-                                />                                
+                                />                    
                                 <v-text-field
                                     label="PESERTA / PEMOHON"                                        
                                     v-model="formdata.pemohon"
@@ -153,9 +153,9 @@
                                         SIMPAN
                                 </v-btn>
                             </v-card-actions>
-                        </v-card>                        
+                        </v-card>            
                     </v-col>
-                </v-row>                
+                </v-row>    
             </v-container>
         </v-form>
     </AdminLayout>
@@ -164,96 +164,96 @@
 import AdminLayout from '@/views/layouts/AdminLayout';
 import ModuleHeader from '@/components/ModuleHeader';
 export default {
-    name:'KonsultasiKegiatanUbah',
+    name: 'KonsultasiKegiatanUbah',
     created () {
         this.dashboard = this.$store.getters['uiadmin/getDefaultDashboard']; 
         this.kegiatan_id=this.$route.params.kegiatan_id;
         this.breadcrumbs = [
             {
-                text:'HOME',
-                disabled:false,
-                href:'/dashboard/'+this.$store.getters['auth/AccessToken']
+                text: 'HOME',
+                disabled: false,
+                href: '/dashboard/' + this.$store.getters['auth/AccessToken']
             },
             {
-                text:'KONSULTASI',
-                disabled:false,
-                href:'#'
+                text: 'KONSULTASI',
+                disabled: false,
+                href: '#'
             },
             {
-                text:'KEGIATAN',
-                disabled:false,
-                href:'/konsultasi/kegiatan'
+                text: 'KEGIATAN',
+                disabled: false,
+                href: '/konsultasi/kegiatan'
             },
             {
-                text:'UBAH',
-                disabled:true,
-                href:'#'
+                text: 'UBAH',
+                disabled: true,
+                href: '#'
             }
         ];
         this.initialize()
     },  
     data: () => ({ 
-        dashboard:null,
+        dashboard: null,
 
-        kegiatan_id:null,
-        datakegiatan:{},
+        kegiatan_id: null,
+        datakegiatan: {},
 
-        btnLoading:false,
-        form_valid:true, 
-        daftar_paralegal:[],       
-        menuTanggalKonsultasi:false,
-        menuJamKonsultasi:false,
-        daftar_jenis_kegiatan:[],
-        formdata:{
-            id_jenis_kegiatan:'',
-            user_id:'',
-            nama_kegiatan:'',
-            uraian_kegiatan:'',
-            tanggal_konsultasi:'',
-            jam_konsultasi:'',
-            tempat:'',            
-            pemohon:'',
-            rekomendasi_kegiatan:'',
+        btnLoading: false,
+        form_valid: true, 
+        daftar_paralegal: [], 
+        menuTanggalKonsultasi: false,
+        menuJamKonsultasi: false,
+        daftar_jenis_kegiatan: [],
+        formdata: {
+            id_jenis_kegiatan: '',
+            user_id: '',
+            nama_kegiatan: '',
+            uraian_kegiatan: '',
+            tanggal_konsultasi: '',
+            jam_konsultasi: '',
+            tempat: '',   
+            pemohon: '',
+            rekomendasi_kegiatan: '',
         },
-        formdefault:{
-            id_jenis_kegiatan:'',
-            user_id:'',
-            nama_kegiatan:'',
-            uraian_kegiatan:'',
-            tanggal_konsultasi:'',
-            jam_konsultasi:'',
-            tempat:'',            
-            pemohon:'',
-            rekomendasi_kegiatan:'',
+        formdefault: {
+            id_jenis_kegiatan: '',
+            user_id: '',
+            nama_kegiatan: '',
+            uraian_kegiatan: '',
+            tanggal_konsultasi: '',
+            jam_konsultasi: '',
+            tempat: '',   
+            pemohon: '',
+            rekomendasi_kegiatan: '',
         },
         rule_user_id:[
-            value => !!value||"Mohon untuk dipilih paralegal !!!",              
+            value => !!value||"Mohon untuk dipilih paralegal !!!",     
         ],
         rule_nama_kegiatan:[
-            value => !!value||"Mohon untuk diisi nama kegiata konsultasi !!!",             
+            value => !!value||"Mohon untuk diisi nama kegiata konsultasi !!!",    
         ],
         rule_uraian_kegiatan:[
-            value => !!value||"Mohon untuk diisi uraian kegiatan konsultasi !!!",             
+            value => !!value||"Mohon untuk diisi uraian kegiatan konsultasi !!!",    
         ],
         rule_tanggal_konsultasi:[
-            value => !!value||"Mohon untuk diisi tanggal kegiatan konsultasi !!!",             
+            value => !!value||"Mohon untuk diisi tanggal kegiatan konsultasi !!!",    
         ],
         rule_jam_konsultasi:[
-            value => !!value||"Mohon untuk diisi jam kegiatan konsultasi !!!",             
+            value => !!value||"Mohon untuk diisi jam kegiatan konsultasi !!!",    
         ],
         rule_tempat:[
-            value => !!value||"Mohon untuk diisi tempat kegiatan konsultasi !!!",             
-        ],        
+            value => !!value||"Mohon untuk diisi tempat kegiatan konsultasi !!!",    
+        ],  
         rule_pemohon:[
-            value => !!value||"Mohon untuk diisi pemohon / peserta kegiatan konsultasi !!!",             
+            value => !!value||"Mohon untuk diisi pemohon / peserta kegiatan konsultasi !!!",    
         ],
         rule_rekomendasi_kegiatan:[
-            value => !!value||"Mohon untuk diisi rekomendasi kegiatan konsultasi !!!",             
+            value => !!value||"Mohon untuk diisi rekomendasi kegiatan konsultasi !!!",    
         ],
         
     }),
     methods: {
-        initialize:async function () 
+        initialize: async function () 
         {
 
             await this.$ajax.get('/datamaster/jeniskegiatan',{
@@ -267,14 +267,14 @@ export default {
                 headers: {
                     Authorization:this.$store.getters['auth/Token']
                 }
-            }).then(({data})=>{               
+            }).then(({ data }) => {
                 this.daftar_paralegal = data.users;                
             });          
-            await this.$ajax.get('/konsultasi/kegiatan/'+this.kegiatan_id,{
+            await this.$ajax.get('/konsultasi/kegiatan/' + this.kegiatan_id,{
                 headers: {
                     Authorization:this.$store.getters['auth/Token']
                 }
-            }).then(({data})=>{               
+            }).then(({ data }) => {
                 this.datakegiatan = data.kegiatan;                
                 this.formdata.user_id=this.datakegiatan.user_id;
                 this.formdata.tanggal_konsultasi=this.$date(this.datakegiatan.tanggal).format('YYYY-MM-DD');
@@ -290,13 +290,13 @@ export default {
                 this.formdata.rekomendasi_kegiatan=this.datakegiatan.rekomendasi_kegiatan;                                                
             });          
         },
-        save:async function () {
+        save: async function () {
             if (this.$refs.frmdata.validate())
             {
                 this.btnLoading=true;                
-                await this.$ajax.post('/konsultasi/kegiatan/'+this.kegiatan_id,
+                await this.$ajax.post('/konsultasi/kegiatan/' + this.kegiatan_id,
                     {
-                        _method:'put',
+                        _method: 'put',
                         user_id:this.formdata.user_id,
                         tanggal_konsultasi:this.formdata.tanggal_konsultasi,
                         jam_konsultasi:this.formdata.jam_konsultasi,
@@ -304,24 +304,24 @@ export default {
                         id_jenis:this.formdata.id_jenis_kegiatan.id_jenis,
                         nama_jenis:this.formdata.id_jenis_kegiatan.nama_jenis,
                         nama_kegiatan:this.formdata.nama_kegiatan,
-                        pemohon:this.formdata.pemohon,                        
+                        pemohon:this.formdata.pemohon,               
                         uraian_kegiatan:this.formdata.uraian_kegiatan,
-                        rekomendasi_kegiatan:this.formdata.rekomendasi_kegiatan,                                                
+                        rekomendasi_kegiatan:this.formdata.rekomendasi_kegiatan,
                     },
                     {
-                        headers:{
+                        headers: {
                             Authorization:this.$store.getters['auth/Token']
                         }
                     }
                 ).then(({data})=>{        
-                    this.btnLoading=false;               
+                    this.btnLoading = false               
                     setTimeout(() => {
                         this.formdata = Object.assign({}, this.formdefault);                                
                         this.$router.push('/konsultasi/kegiatan/'+data.kegiatan.kegiatan_id+'/detail')
                         }, 300
                     );
                 }).catch(()=>{
-                    this.btnLoading=false;
+                    this.btnLoading = false
                 });                
             }
         },
@@ -333,9 +333,9 @@ export default {
             );
         },
     },  
-    components:{
+    components: {
         AdminLayout,
-        ModuleHeader,        
+        ModuleHeader,  
     },
 
 }

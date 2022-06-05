@@ -75,7 +75,7 @@
                                 </v-text-field> 
                             </v-card-text>
                             <v-card-actions>
-                                <v-spacer></v-spacer>                                
+                                <v-spacer></v-spacer>                    
                                 <v-btn 
                                     color="blue darken-1" 
                                     text 
@@ -94,47 +94,47 @@
 import AdminLayout from '@/views/layouts/AdminLayout';
 import ModuleHeader from '@/components/ModuleHeader';
 export default {
-    name:'UsersProfile',
+    name: 'UsersProfile',
     created () {
         this.breadcrumbs = [
             {
-                text:'HOME',
-                disabled:false,
-                href:'/dashboard/'+this.$store.getters['auth/AccessToken']
+                text: 'HOME',
+                disabled: false,
+                href: '/dashboard/' + this.$store.getters['auth/AccessToken']
             },
             {
-                text:'SYSTEM',
-                disabled:false,
-                href:'#'
+                text: 'SYSTEM',
+                disabled: false,
+                href: '#'
             },
             {
-                text:'PROFILE USER',
-                disabled:true,
-                href:'#'
+                text: 'PROFILE USER',
+                disabled: true,
+                href: '#'
             }
         ];
     }, 
     data ()
     {
         return {
-            btnLoading:false,
-            datatable:[],
+            btnLoading: false,
+            datatable: [],
             avatar : null,
             //form data   
-            form_valid:true,         
+            form_valid: true,
             formdata: {
-                id:0,                        
-                foto:null,  
-                password: '',                       
-                created_at: '',           
-                updated_at: '',           
+                id:0,               
+                foto: null,  
+                password: '',              
+                created_at: '',  
+                updated_at: '',  
             },
             formdefault: {
-                id:0,           
-                foto:null,    
-                password: '',                                  
-                created_at: '',           
-                updated_at: '',       
+                id:0,  
+                foto: null, 
+                password: '',                         
+                created_at: '',  
+                updated_at: '', 
             },
             //form rules  
             rule_foto:[
@@ -161,23 +161,23 @@ export default {
             if (this.$refs.frmdata.validate())
             {
                 this.btnLoading=true;
-                this.$ajax.post('/system/users/updatepassword/'+this.$store.getters['auth/AttributeUser']('id'),
+                this.$ajax.post('/system/users/updatepassword/' + this.$store.getters['auth/AttributeUser']('id'),
                     {
-                        '_method':'PUT',                        
-                        password:this.formdata.password,                           
+                        '_method': 'PUT',               
+                        password:this.formdata.password,                  
                     },
                     {
-                        headers:{
+                        headers: {
                             Authorization:this.$store.getters['auth/Token']
                         }
                     }
-                ).then(({data})=>{                                                                            
+                ).then(({ data }) => {                                                             
                     this.$refs.frmdata.reset(); 
                     this.formdata.foto=data.foto;       
                     this.formdata=this.formdefault; 
-                    this.btnLoading=false;
+                    this.btnLoading = false
                 }).catch(()=>{
-                    this.btnLoading=false;
+                    this.btnLoading = false
                 });                     
             }
         },
@@ -197,7 +197,7 @@ export default {
             }            
             
         },
-        uploadFoto:async function () 
+        uploadFoto: async function () 
         {
             if (this.$refs.frmuploadfoto.validate())
             {
@@ -206,48 +206,48 @@ export default {
                     this.btnLoading=true;
                     var formdata = new FormData();
                     formdata.append('foto',this.formdata.foto);
-                    await this.$ajax.post('/setting/users/uploadfoto/'+this.$store.getters.User.id,formdata,                    
+                    await this.$ajax.post('/setting/users/uploadfoto/' + this.$store.getters.User.id,formdata,           
                         {
-                            headers:{
+                            headers: {
                                 Authorization:this.$store.getters['auth/Token'],  
                                 'Content-Type': 'multipart/form-data'                      
                             }
                         }
-                    ).then(({data})=>{                           
-                        this.btnLoading=false;
+                    ).then(({ data }) => {            
+                        this.btnLoading = false
                         this.$store.dispatch('updateFoto',data.user.foto);                        
                     }).catch(()=>{
-                        this.btnLoading=false;
+                        this.btnLoading = false
                     });    
                     this.$refs.frmdata.reset(); 
                 }   
             }
         },
-        resetFoto:async function () 
+        resetFoto: async function () 
         {
             this.btnLoading=true;
-            await this.$ajax.post('/setting/users/resetfoto/'+this.$store.getters.User.id,{},                    
+            await this.$ajax.post('/setting/users/resetfoto/' + this.$store.getters.User.id,{},           
                 {
-                    headers:{
-                        Authorization:this.$store.getters['auth/Token'],                              
+                    headers: {
+                        Authorization:this.$store.getters['auth/Token'],                     
                     }
                 }
-            ).then(({data})=>{                           
-                this.btnLoading=false;
+            ).then(({ data }) => {            
+                this.btnLoading = false
                 this.$store.dispatch('updateFoto',data.user.foto);
             }).catch(()=>{
-                this.btnLoading=false;
+                this.btnLoading = false
             });    
         }
         
     },
-    computed:{        
+    computed: {        
 		photoUser: {
             get()
             {
                 if (this.avatar==null)
                 {
-                    let photo = this.$api.storageURL+'/'+this.$store.getters.User.foto;			
+                    let photo = this.$api.storageURL+'/' + this.$store.getters.User.foto;			
                     return photo;
                 }
                 else
@@ -262,7 +262,7 @@ export default {
             }
 		}
     },
-    components:{
+    components: {
         AdminLayout,
         ModuleHeader,
     },

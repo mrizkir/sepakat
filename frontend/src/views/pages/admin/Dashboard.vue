@@ -124,14 +124,14 @@ export default {
         this.TOKEN = this.$route.params.token;        
 		this.breadcrumbs = [
 			{
-				text:'HOME',
-				disabled:false,
-				href:'/dashboard/'+this.TOKEN
+				text: 'HOME',
+				disabled: false,
+				href: '/dashboard/' + this.TOKEN
 			},
 			{
-				text:'DASHBOARD',
-				disabled:true,
-				href:'#'
+				text: 'DASHBOARD',
+				disabled: true,
+				href: '#'
 			}
 		];		
 		this.initialize();
@@ -139,26 +139,26 @@ export default {
 
 	},
 	data: () => ({
-        breadcrumbs:[],
-        TOKEN:null,
-        dashboard:null,
+        breadcrumbs: [],
+        TOKEN: null,
+        dashboard: null,
 
-		tahun_pendaftaran:'',
+		tahun_pendaftaran: '',
 
-		data_jenis_kegiatan:[],
+		data_jenis_kegiatan: [],
 		jumlah_paralegal:0,
 		jumlah_paralegal_laporan:0,
 		jumlah_obh:0,
 		jumlah_kades:0,
 	}),
 	methods : {
-		initialize:async function()
+		initialize: async function()
 		{	
             
-            await this.$ajax.get('/auth/me',                
+            await this.$ajax.get('/auth/me',       
             {
                 headers: {
-                    Authorization:'Bearer '+this.TOKEN
+                    Authorization: 'Bearer '+this.TOKEN
                 }
             }).then(({data})=>{          
                 this.dashboard = data.role[0];    
@@ -170,10 +170,10 @@ export default {
 		},
 		async fetchData ()
 		{
-			await this.$ajax.get('/dashboard',                
+			await this.$ajax.get('/dashboard',       
             {
                 headers: {
-                    Authorization:'Bearer '+this.TOKEN
+                    Authorization: 'Bearer '+this.TOKEN
                 }
             }).then(({data})=>{          
 				this.data_jenis_kegiatan=data.jenis_kegiatan;
@@ -185,7 +185,7 @@ export default {
             });    
 		}
 	},
-	computed:{
+	computed: {
 		totalJenisKegiatan ()
 		{
 			var total=0;
@@ -197,8 +197,8 @@ export default {
 			return total;
 		}
 	},
-    components:{
-		AdminLayout,                
+    components: {
+		AdminLayout,       
 	}
 }
 </script>

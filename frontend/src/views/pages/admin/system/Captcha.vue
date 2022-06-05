@@ -73,32 +73,32 @@ export default {
     {
         this.breadcrumbs = [
             {
-                text:'HOME',
-                disabled:false,
-                href:'/dashboard/'+this.ACCESS_TOKEN
+                text: 'HOME',
+                disabled: false,
+                href: '/dashboard/' + this.ACCESS_TOKEN
             },
             {
-                text:'KONFIGURASI SISTEM',
-                disabled:false,
-                href:'/system-setting'
+                text: 'KONFIGURASI SISTEM',
+                disabled: false,
+                href: '/system-setting'
             },  
             {
-                text:'SERVER - CAPTCHA',
-                disabled:true,
-                href:'#'
+                text: 'SERVER - CAPTCHA',
+                disabled: true,
+                href: '#'
             }
         ];
         this.initialize();
     },
     data: () => ({
-        breadcrumbs:[],
-        datatableLoading:false,
-        btnLoading:false,
+        breadcrumbs: [],
+        datatableLoading: false,
+        btnLoading: false,
         //form
-        form_valid:true,
+        form_valid: true,
         formdata: {
-            siteKey:'',
-            privateKey:''
+            siteKey: '',
+            privateKey: ''
         },
         //form rules
         rule_site_key:[
@@ -109,7 +109,7 @@ export default {
         ],
     }),
     methods: {
-        initialize:async function ()
+        initialize: async function ()
         {
             this.datatableLoading=true;
             await this.$ajax.get('/system/setting/variables',
@@ -130,33 +130,33 @@ export default {
                 this.btnLoading=true;
                 this.$ajax.post('/system/setting/variables',
                     {
-                        '_method':'PUT',
-                        'pid':'captcha google',
+                        '_method': 'PUT',
+                        'pid': 'captcha google',
                         setting:JSON.stringify({
                             901:this.formdata.siteKey,
                             902:this.formdata.privateKey,
                         }),
                     },
                     {
-                        headers:{
+                        headers: {
                             Authorization:this.TOKEN
                         }
                     }
                 ).then(()=>{
-                    this.btnLoading=false;
+                    this.btnLoading = false
                 }).catch(()=>{
-                    this.btnLoading=false;
+                    this.btnLoading = false
                 });
             }
         }
     },
-    computed:{
+    computed: {
         ...mapGetters('auth',{
-            ACCESS_TOKEN:'AccessToken',
-            TOKEN:'Token',
+            ACCESS_TOKEN: 'AccessToken',
+            TOKEN: 'Token',
         }),
     },
-    components:{
+    components: {
 		SystemConfigLayout,
         ModuleHeader,
 	}

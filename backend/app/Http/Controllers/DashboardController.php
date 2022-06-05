@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 use App\Models\DMaster\JenisKegiatanModel;
-use App\Models\Konsultasi\KonsultasiKegiatanModel;
 use App\Models\User;
 
 class DashboardController extends Controller 
@@ -41,7 +40,7 @@ class DashboardController extends Controller
 			$jenis_kegiatan=JenisKegiatanModel::select(\DB::raw('
 													jenis_kegiatan.id_jenis,
 													jenis_kegiatan.nama_jenis,                                                
-													COALESCE(jumlah,0) AS jumlah'
+													COALESCE(jumlah, 0) AS jumlah'
 												))
 												->leftJoinSub($subquery,'kegiatan',function($join){
 													$join->on('kegiatan.id_jenis_kegiatan','=','jenis_kegiatan.id_jenis');
@@ -53,8 +52,7 @@ class DashboardController extends Controller
 		$jumlah_paralegal = User::where('default_role','paralegal')                                                
 									->count();     
 		
-		$jumlah_paralegal_laporan = KonsultasiKegiatanModel::distinct('user_id')
-															->count('user_id');     
+		$jumlah_paralegal_laporan = 0;     
 															
 		$jumlah_obh = User::where('default_role','obh')                        
 						->count();     

@@ -8,7 +8,7 @@
             <v-toolbar-title class="headline clickable" @click.stop="$router.push('/dashboard/'+$store.getters['auth/AccessToken']).catch(err => {})">
 				<span class="hidden-sm-and-down">{{APP_NAME}}</span>
 			</v-toolbar-title>
-            <v-spacer></v-spacer>            
+            <v-spacer></v-spacer>
             <v-divider
                 class="mx-4"
                 inset
@@ -24,7 +24,7 @@
                 <template v-slot:activator="{on}">
                     <v-avatar size="30">
                         <v-img :src="photoUser" v-on="on" />
-                    </v-avatar>                    
+                    </v-avatar>        
                 </template>
                 <v-list>
                     <v-list-item>
@@ -35,11 +35,11 @@
                             <v-list-item-title class="title">
                                 {{ATTRIBUTE_USER('username')}}
                             </v-list-item-title>
-                            <v-list-item-subtitle>                                
+                            <v-list-item-subtitle>                    
                                 {{ROLE}}
                             </v-list-item-subtitle>
                         </v-list-item-content>
-                    </v-list-item>                    
+                    </v-list-item>        
                     <v-divider/>
                     <v-list-item to="/system-users/profil">
                         <v-list-item-icon class="mr-2">
@@ -73,7 +73,7 @@
 			</v-list-item>
 			<v-divider></v-divider>
             <v-list expand>
-                <v-list-item :to="{path:'/system-setting'}" v-if="CAN_ACCESS('SYSTEM-SETTING-GROUP')" link class="yellow" color="green" >
+                <v-list-item :to="{path: '/system-setting'}" v-if="CAN_ACCESS('SYSTEM-SETTING-GROUP')" link class="yellow" color="green" >
                     <v-list-item-icon class="mr-2">
                         <v-icon>mdi-account</v-icon>
                     </v-list-item-icon>
@@ -112,7 +112,7 @@
                             EMAIL
                         </v-list-item-title>
                     </v-list-item-content>
-                </v-list-item>                    
+                </v-list-item>        
             </v-list>
         </v-navigation-drawer>        
         <v-main class="mx-4 mb-4">			
@@ -134,11 +134,11 @@
 <script>
 import {mapGetters} from 'vuex';
 export default {
-    name:'SystemConfigLayout',        
+    name: 'SystemConfigLayout',  
     data:()=>({
         loginTime:0,
-        drawer:null,        
-    }),       
+        drawer: null,  
+    }), 
     methods: {        
         logout ()
         {
@@ -146,7 +146,7 @@ export default {
             this.$ajax.post('/auth/logout',
                 {},
                 {
-                    headers:{
+                    headers: {
                         'Authorization': this.TOKEN,
                     }
                 }
@@ -165,17 +165,17 @@ export default {
         },
         isBentukPT (bentuk_pt)
         {
-            return this.$store.getters['uifront/getBentukPT']==bentuk_pt?true:false;
+            return this.$store.getters['uifront/getBentukPT']==bentuk_pt?true: false;
         }
 	},
-    computed:{
+    computed: {
         ...mapGetters('auth',{
-            AUTHENTICATED:'Authenticated',  
-            ACCESS_TOKEN:'AccessToken',          
-            TOKEN:'Token',          
-            ROLE:'Role',
-            CAN_ACCESS:'can',         
-            ATTRIBUTE_USER:'AttributeUser',               
+            AUTHENTICATED: 'Authenticated',  
+            ACCESS_TOKEN: 'AccessToken', 
+            TOKEN: 'Token', 
+            ROLE: 'Role',
+            CAN_ACCESS: 'can',
+            ATTRIBUTE_USER: 'AttributeUser',      
         }),
         APP_NAME ()
         {
@@ -205,10 +205,10 @@ export default {
 			{
 				return false;
 			}
-        },        
+        },  
     },
     watch: {
-        loginTime:{
+        loginTime: {
             handler(value)
             {
                 
@@ -224,8 +224,8 @@ export default {
                     this.$router.replace('/login');
                 }
             },
-            immediate:true
-        },        
+            immediate: true
+        },  
     }
 }
 </script>

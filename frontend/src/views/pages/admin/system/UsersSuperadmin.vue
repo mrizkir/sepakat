@@ -65,7 +65,7 @@
                                     inset
                                     vertical
                                 ></v-divider>
-                                <v-spacer></v-spacer>                                
+                                <v-spacer></v-spacer>                    
                                 <v-btn color="primary"                                    
                                     class="mb-2" 
                                     :loading="btnLoading"
@@ -73,25 +73,25 @@
                                     @click.stop="showDialogTambahUserSuperAdmin">
                                     TAMBAH
                                 </v-btn>
-                                <v-dialog v-model="dialog" max-width="500px" persistent>                                    
+                                <v-dialog v-model="dialog" max-width="500px" persistent>                        
                                     <v-form ref="frmdata" v-model="form_valid" lazy-validation>
                                         <v-card>
                                             <v-card-title>
                                                 <span class="headline">{{ formTitle }}</span>
-                                            </v-card-title>                                            
+                                            </v-card-title>                                
                                             <v-card-text>     
                                                 <v-text-field 
                                                     v-model="editedItem.name" 
                                                     label="NAMA USER"
                                                     outlined
                                                     :rules="rule_user_name">
-                                                </v-text-field>                                                                                               
+                                                </v-text-field>                                                                                   
                                                 <v-text-field 
                                                     v-model="editedItem.email" 
                                                     label="EMAIL"
                                                     outlined
                                                     :rules="rule_user_email">
-                                                </v-text-field>                                                        
+                                                </v-text-field>                                            
                                                 <v-text-field 
                                                     v-model="editedItem.nomor_hp" 
                                                     label="NOMOR HP"
@@ -117,8 +117,8 @@
                                                     label="ROLES"                                                     
                                                     multiple 
                                                     small-chips
-                                                    outlined>                                                                                
-                                                </v-autocomplete>                                       
+                                                    outlined>                                                                    
+                                                </v-autocomplete>                           
                                             </v-card-text>
                                             <v-card-actions>
                                                 <v-spacer></v-spacer>
@@ -140,8 +140,8 @@
                                         <v-card>
                                             <v-card-title>
                                                 <span class="headline">{{ formTitle }}</span>
-                                            </v-card-title>                                            
-                                            <v-card-text>                                                                                                
+                                            </v-card-title>                                
+                                            <v-card-text>                                                                                    
                                                 <v-text-field 
                                                     v-model="editedItem.name" 
                                                     label="NAMA USER"
@@ -179,8 +179,8 @@
                                                     label="ROLES"                                                     
                                                     multiple 
                                                     small-chips
-                                                    outlined>                                                                                
-                                                </v-autocomplete>                                       
+                                                    outlined>                                                                    
+                                                </v-autocomplete>                           
                                             </v-card-text>
                                             <v-card-actions>
                                                 <v-spacer></v-spacer>
@@ -194,10 +194,10 @@
                                             </v-card-actions>
                                         </v-card>
                                     </v-form>
-                                </v-dialog>                                
+                                </v-dialog>                    
                             </v-toolbar>
                         </template>
-                        <template v-slot:item.actions="{ item }">                            
+                        <template v-slot:item.actions="{ item }">                
                             <v-icon
                                 small
                                 class="mr-2"
@@ -216,10 +216,10 @@
                                 mdi-delete
                             </v-icon>
                         </template>
-                        <template v-slot:item.foto="{ item }">                            
+                        <template v-slot:item.foto="{ item }">                
                             <v-avatar size="30">
-                                <v-img :src="$api.url+'/'+item.foto" />                                
-                            </v-avatar>                                                                                                  
+                                <v-img :src="$api.url+'/'+item.foto" />                    
+                            </v-avatar>                                                                                      
                         </template>
                         <template v-slot:expanded-item="{ headers, item }">
                             <td :colspan="headers.length" class="text-center">
@@ -227,7 +227,7 @@
                                     <strong>ID:</strong>{{ item.id }}
                                     <strong>created_at:</strong>{{ $date(item.created_at).format('DD/MM/YYYY HH:mm') }}
                                     <strong>updated_at:</strong>{{ $date(item.updated_at).format('DD/MM/YYYY HH:mm') }}
-                                </v-col>                                
+                                </v-col>                    
                             </td>
                         </template>
                         <template v-slot:no-data>
@@ -248,19 +248,19 @@ export default {
     created () {
         this.breadcrumbs = [
             {
-                text:'HOME',
-                disabled:false,
-                href:'/dashboard/'+this.ACCESS_TOKEN
+                text: 'HOME',
+                disabled: false,
+                href: '/dashboard/' + this.ACCESS_TOKEN
             },
             {
-                text:'USER SISTEM',
-                disabled:false,
-                href:'/system-users'
+                text: 'USER SISTEM',
+                disabled: false,
+                href: '/system-users'
             },
             {
-                text:'USERS SUPER ADMIN',
-                disabled:true,
-                href:'#'
+                text: 'USERS SUPER ADMIN',
+                disabled: true,
+                href: '#'
             }
         ];
         this.initialize()
@@ -268,57 +268,57 @@ export default {
    
     data: () => ({ 
         role_id:0,
-        datatableLoading:false,
-        btnLoading:false,      
+        datatableLoading: false,
+        btnLoading: false,
         //tables
         headers: [                        
             { text: '', value: 'foto' },
-            { text: 'USERNAME', value: 'username',sortable:true },
-            { text: 'NAME', value: 'name',sortable:true },
-            { text: 'EMAIL', value: 'email',sortable:true },     
-            { text: 'NOMOR HP', value: 'nomor_hp',sortable:true },     
+            { text: 'USERNAME', value: 'username',sortable: true },
+            { text: 'NAME', value: 'name',sortable: true },
+            { text: 'EMAIL', value: 'email',sortable: true },  
+            { text: 'NOMOR HP', value: 'nomor_hp',sortable: true },  
             { text: 'AKSI', value: 'actions', sortable: false,width:100 },
         ],
-        expanded:[],
-        search:'',
-        daftar_users: [],        
+        expanded: [],
+        search: '',
+        daftar_users: [],  
 
         //form
-        form_valid:true,
-        daftar_roles:[],
+        form_valid: true,
+        daftar_roles: [],
         dialog: false,
-        dialogEdit: false,        
-        editedIndex: -1,          
+        dialogEdit: false,  
+        editedIndex: -1, 
         editedItem: {
             id:0,
-            username: '',           
-            password: '',           
-            name: '',           
-            email: '',           
-            nomor_hp:'',       
+            username: '',  
+            password: '',  
+            name: '',  
+            email: '',  
+            nomor_hp: '', 
             role_id:['superadmin'],
-            created_at: '',           
-            updated_at: '',   
+            created_at: '',  
+            updated_at: '',
         },
         defaultItem: {
             id:0,
-            username: '',           
-            password: '',           
-            name: '',           
-            email: '',           
-            nomor_hp: '',   
-            role_id:['superadmin'],    
-            created_at: '',           
-            updated_at: '',        
+            username: '',  
+            password: '',  
+            name: '',  
+            email: '',  
+            nomor_hp: '',
+            role_id:['superadmin'], 
+            created_at: '',  
+            updated_at: '',  
         },
         //form rules        
         rule_user_name:[
             value => !!value||"Mohon untuk di isi nama User !!!",  
-            value => /^[A-Za-z\s]*$/.test(value) || 'Nama User hanya boleh string dan spasi',                
+            value => /^[A-Za-z\s]*$/.test(value) || 'Nama User hanya boleh string dan spasi',       
         ], 
         rule_user_email:[
             value => !!value||"Mohon untuk di isi email User !!!",  
-            value => /.+@.+\..+/.test(value) || 'Format E-mail harus benar',       
+            value => /.+@.+\..+/.test(value) || 'Format E-mail harus benar', 
         ], 
         rule_user_nomorhp:[
             value => !!value||"Nomor HP mohon untuk diisi !!!",
@@ -326,7 +326,7 @@ export default {
         ], 
         rule_user_username:[
             value => !!value||"Mohon untuk di isi username User !!!",  
-            value => /^[A-Za-z_]*$/.test(value) || 'Username hanya boleh string dan underscore',                    
+            value => /^[A-Za-z_]*$/.test(value) || 'Username hanya boleh string dan underscore',           
         ], 
         rule_user_password:[
             value => !!value||"Mohon untuk di isi password User !!!",
@@ -353,14 +353,14 @@ export default {
         ],
     }),
     methods: {
-        initialize:async function () 
+        initialize: async function () 
         {
             this.datatableLoading=true;
             await this.$ajax.get('/system/users',{
                 headers: {
                     Authorization:this.TOKEN
                 }
-            }).then(({data})=>{               
+            }).then(({ data }) => {
                 this.daftar_users = data.users;
                 this.role_id=data.role.id;
                 this.datatableLoading=false;
@@ -377,8 +377,8 @@ export default {
             {
                 this.expanded=[item];
             }               
-        },        
-        showDialogTambahUserSuperAdmin:async function ()
+        },  
+        showDialogTambahUserSuperAdmin: async function ()
         {
             await this.$ajax.get('/system/setting/roles',{
                 headers: {
@@ -392,14 +392,14 @@ export default {
                     {                        
                         daftar_roles.push({
                             text:element.name,
-                            disabled:true,
+                            disabled: true,
                         });                        
                     }
                     else
                     {
                         daftar_roles.push({
                             text:element.name,
-                            disabled:false,                            
+                            disabled: false,                   
                         });                        
                     }                    
                 });        
@@ -408,7 +408,7 @@ export default {
             });     
             
         },
-        editItem:async function (item) {
+        editItem: async function (item) {
             this.editedIndex = this.daftar_users.indexOf(item)
             item.password='';            
             this.editedItem = Object.assign({}, item); 
@@ -425,14 +425,14 @@ export default {
                     {                        
                         daftar_roles.push({
                             text:element.name,
-                            disabled:true,
+                            disabled: true,
                         });                        
                     }
                     else
                     {
                         daftar_roles.push({
                             text:element.name,
-                            disabled:false,                            
+                            disabled: false,                   
                         });                        
                     }                    
                 });        
@@ -447,12 +447,12 @@ export default {
                 }
             }).then(({data})=>{  
                 this.editedItem.role_id=data.roles;                   
-                this.btnLoading=false;
+                this.btnLoading = false
                 this.dialogEdit = true;
             });   
-        },        
+        },  
         close () {            
-            this.btnLoading=false;
+            this.btnLoading = false
             this.dialog = false;
             this.dialogEdit = false;            
             setTimeout(() => {
@@ -461,25 +461,25 @@ export default {
                 this.$refs.frmdata.reset(); 
                 }, 300
             );
-        },        
+        },  
         save () {
             if (this.$refs.frmdata.validate())
             {
                 this.btnLoading=true;
                 if (this.editedIndex > -1) 
                 {
-                    this.$ajax.post('/system/users/'+this.editedItem.id,
+                    this.$ajax.post('/system/users/' + this.editedItem.id,
                         {
-                            '_method':'PUT',
+                            '_method': 'PUT',
                             name:this.editedItem.name,
                             email:this.editedItem.email,
-                            nomor_hp:this.editedItem.nomor_hp,     
+                            nomor_hp:this.editedItem.nomor_hp,  
                             username:this.editedItem.username,
                             password:this.editedItem.password,
                             role_id:JSON.stringify(Object.assign({},this.editedItem.role_id)),
                         },
                         {
-                            headers:{
+                            headers: {
                                 Authorization:this.TOKEN
                             }
                         }
@@ -487,7 +487,7 @@ export default {
                         Object.assign(this.daftar_users[this.editedIndex], data.user);
                         this.close();
                     }).catch(()=>{
-                        this.btnLoading=false;
+                        this.btnLoading = false
                     });                    
                     
                 } else {
@@ -495,13 +495,13 @@ export default {
                         {
                             name:this.editedItem.name,
                             email:this.editedItem.email,
-                            nomor_hp:this.editedItem.nomor_hp,     
+                            nomor_hp:this.editedItem.nomor_hp,  
                             username:this.editedItem.username,
                             password:this.editedItem.password, 
                             role_id:JSON.stringify(Object.assign({},this.editedItem.role_id)),
                         },
                         {
-                            headers:{
+                            headers: {
                                 Authorization:this.TOKEN
                             }
                         }
@@ -509,7 +509,7 @@ export default {
                         this.daftar_users.push(data.user);
                         this.close();
                     }).catch(()=>{
-                        this.btnLoading=false;
+                        this.btnLoading = false
                     });
                 }
             }
@@ -521,19 +521,19 @@ export default {
                     this.btnLoading=true;
                     this.$ajax.post('/system/users/'+item.id,
                         {
-                            '_method':'DELETE',
+                            '_method': 'DELETE',
                         },
                         {
-                            headers:{
+                            headers: {
                                 Authorization:this.TOKEN
                             }
                         }
                     ).then(()=>{   
                         const index = this.daftar_users.indexOf(item);
                         this.daftar_users.splice(index, 1);
-                        this.btnLoading=false;
+                        this.btnLoading = false
                     }).catch(()=>{
-                        this.btnLoading=false;
+                        this.btnLoading = false
                     });
                 }
             });
@@ -544,8 +544,8 @@ export default {
             return this.editedIndex === -1 ? 'TAMBAH USER SUPER ADMIN' : 'EDIT USER SUPER ADMIN'
         },
         ...mapGetters('auth',{            
-            ACCESS_TOKEN:'AccessToken',          
-            TOKEN:'Token',                                  
+            ACCESS_TOKEN: 'AccessToken', 
+            TOKEN: 'Token',                         
         }),
     },
 
@@ -555,11 +555,11 @@ export default {
         },
         dialogEdit (val) {
             val || this.close()
-        },        
-    },    
-    components:{
+        },  
+    }, 
+    components: {
         AdminLayout,
-        ModuleHeader,        
+        ModuleHeader,  
     },
 }
 </script>

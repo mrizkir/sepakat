@@ -75,7 +75,7 @@
                                             <v-card-title>
                                                 <span class="headline">{{ formTitle }}</span>
                                             </v-card-title>
-                                            <v-card-text>                                                
+                                            <v-card-text>                                    
                                                 <v-container fluid>
                                                     <v-row>
                                                         <v-col cols="12" sm="12" md="12">
@@ -84,7 +84,7 @@
                                                                 label="NAMA PERMISSION"
                                                                 :rules="rule_permission_name">
                                                             </v-text-field>
-                                                        </v-col>                                            
+                                                        </v-col>                                
                                                     </v-row>
                                                 </v-container>
                                             </v-card-text>
@@ -141,58 +141,58 @@ export default {
     {
         this.breadcrumbs = [
             {
-                text:'HOME',
-                disabled:false,
-                href:'/dashboard/'+this.ACCESS_TOKEN
+                text: 'HOME',
+                disabled: false,
+                href: '/dashboard/' + this.ACCESS_TOKEN
             },
             {
-                text:'USER SISTEM',
-                disabled:false,
-                href:'/system-users'
+                text: 'USER SISTEM',
+                disabled: false,
+                href: '/system-users'
             },
             {
-                text:'PERMISSIONS',
-                disabled:true,
-                href:'#'
+                text: 'PERMISSIONS',
+                disabled: true,
+                href: '#'
             }
         ];
         this.initialize();
     },
     data: () => ({
-        breadcrumbs:[],
-        datatableLoading:false,
-        btnLoading:false,  
-        expanded:[],        
+        breadcrumbs: [],
+        datatableLoading: false,
+        btnLoading: false,  
+        expanded: [],  
         daftar_permissions: [],
         //tables
         headers: [                        
             { text: 'NAMA PERMISSION', value: 'name' },
-            { text: 'GUARD', value: 'guard_name' },            
+            { text: 'GUARD', value: 'guard_name' },   
             { text: 'AKSI', value: 'actions', sortable: false,width:100 },
         ],
-        search:'',        
+        search: '',  
         //form
-        form_valid:true,
+        form_valid: true,
         dialog: false,
         editedIndex: -1,
         editedItem: {
             id:0,
-            name: '',           
-            guard: '',           
-            created_at: '',           
-            updated_at: '',           
+            name: '',  
+            guard: '',  
+            created_at: '',  
+            updated_at: '',  
         },
         defaultItem: {
             id:0,
-            name: '',           
-            guard: 'api',           
-            created_at: '',           
-            updated_at: '',           
+            name: '',  
+            guard: 'api',  
+            created_at: '',  
+            updated_at: '',  
         },
         //form rules        
         rule_permission_name:[
             value => !!value||"Mohon untuk di isi nama Permission !!!",  
-            value => /^[a-zA-Z\\-]+$/.test(value) || 'Nama Permission hanya boleh string',                
+            value => /^[a-zA-Z\\-]+$/.test(value) || 'Nama Permission hanya boleh string',       
         ], 
     }),
     methods: {
@@ -203,7 +203,7 @@ export default {
                 headers: {
                     Authorization:this.TOKEN
                 }
-            }).then(({data})=>{                
+            }).then(({ data }) => { 
                 this.daftar_permissions = data.permissions;
                 this.datatableLoading=false;
             });          
@@ -226,7 +226,7 @@ export default {
             this.dialog = true
         },
         close () {
-            this.btnLoading=false;
+            this.btnLoading = false
             this.dialog = false;
             this.$refs.frmdata.reset(); 
             setTimeout(() => {
@@ -246,7 +246,7 @@ export default {
                             name:this.editedItem.name.toLowerCase()
                         },
                         {
-                            headers:{
+                            headers: {
                                 Authorization:this.TOKEN
                             }
                         }
@@ -254,7 +254,7 @@ export default {
                         this.initialize();
                         this.close();
                     }).catch(()=>{
-                        this.btnLoading=false;
+                        this.btnLoading = false
                     });
                 }
             }
@@ -266,41 +266,41 @@ export default {
                     this.btnLoading=true;
                     this.$ajax.post('/system/setting/permissions/'+item.id,
                     {
-                        '_method':'DELETE',
+                        '_method': 'DELETE',
                     },
                     {
-                        headers:{
+                        headers: {
                             Authorization:this.TOKEN
                         }
                     }
                     ).then(()=>{   
                         const index = this.daftar_permissions.indexOf(item);
                         this.daftar_permissions.splice(index, 1);
-                        this.btnLoading=false;
+                        this.btnLoading = false
                     }).catch(()=>{
-                        this.btnLoading=false;
+                        this.btnLoading = false
                     });
                 }
             });      
         },
     },
-    computed:{
+    computed: {
         formTitle () {
             return this.editedIndex === -1 ? 'TAMBAH PERMISSION' : 'EDIT PERMISSION'
         },
         ...mapGetters('auth',{            
-            ACCESS_TOKEN:'AccessToken',          
-            TOKEN:'Token',          
-            CAN_ACCESS:'can',         
-            ATTRIBUTE_USER:'AttributeUser',          
+            ACCESS_TOKEN: 'AccessToken', 
+            TOKEN: 'Token', 
+            CAN_ACCESS: 'can',
+            ATTRIBUTE_USER: 'AttributeUser', 
         }),
     },
     watch: {
         dialog (val) {
             val || this.close()
         },
-    },   
-    components:{
+    },
+    components: {
 		AdminLayout,
 		ModuleHeader,
 	}

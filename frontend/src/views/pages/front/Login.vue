@@ -12,10 +12,10 @@
                         icon="mdi-close-octagon-outline"
                     >
                         Username atau Password tidak dikenal !.
-                    </v-alert>                                
+                    </v-alert>                    
                     <v-form ref="frmlogin" lazy-validation>
                         <v-card outlined>
-                            <v-card-text>                                
+                            <v-card-text>                    
                                 <v-text-field 
                                     v-model="formlogin.username"
                                     label="Username" 
@@ -56,16 +56,16 @@ export default {
 	{
 		if (this.$store.getters['auth/Authenticated'])
 		{
-			this.$router.push('/dashboard/'+this.$store.getters['auth/AccessToken']);
+			this.$router.push('/dashboard/' + this.$store.getters['auth/AccessToken']);
 		}
 	},
     data: () => ({     
-        btnLoading:false,
+        btnLoading: false,
         //form
-        form_error:false,
+        form_error: false,
         formlogin: {
-            username:'',
-            password:''
+            username: '',
+            password: ''
         },
         rule_username:[
             value => !!value||"Kolom Username mohon untuk diisi !!!"
@@ -86,7 +86,7 @@ export default {
                     password:this.formlogin.password
                 }).then(({data})=>{  
                     this.$ajax.get('/auth/me',{
-                        headers:{
+                        headers: {
                             'Authorization': data.token_type+' '+data.access_token,
                         }
                     })
@@ -97,12 +97,12 @@ export default {
                         }
                         this.$store.dispatch('auth/afterLoginSuccess',data_user);                          
                     });
-                    this.btnLoading=false;
+                    this.btnLoading = false
                     this.form_error=false;
                     this.$router.push('/dashboard/'+data.access_token);
                 }).catch(() => {                    
                     this.form_error=true;
-                    this.btnLoading=false;
+                    this.btnLoading = false
                 });                                
             }
         }

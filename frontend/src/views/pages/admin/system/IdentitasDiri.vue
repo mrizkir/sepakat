@@ -39,7 +39,7 @@
                                     label="NAMA PERGURUAN TINGGI"
                                     outlined
                                     :rules="rule_nama_pt">
-                                </v-text-field>                                                                                               
+                                </v-text-field>                                                                                   
                                 <v-text-field 
                                     v-model="formdata.nama_alias_pt" 
                                     label="NAMA SINGKATAN PERGURUAN TINGGI"
@@ -56,10 +56,10 @@
                                     label="KODE PERGURUAN TINGGI (SESUAI FORLAP)"
                                     outlined
                                     :rules="rule_kode_pt">
-                                </v-text-field>                                                                                               
+                                </v-text-field>                                                                                   
                             </v-card-text>
                             <v-card-actions>
-                                <v-spacer></v-spacer>                                
+                                <v-spacer></v-spacer>                    
                                 <v-btn 
                                     color="blue darken-1" 
                                     text 
@@ -84,49 +84,49 @@ export default {
     {
         this.breadcrumbs = [
             {
-                text:'HOME',
-                disabled:false,
-                href:'/dashboard/'+this.ACCESS_TOKEN
+                text: 'HOME',
+                disabled: false,
+                href: '/dashboard/' + this.ACCESS_TOKEN
             },
             {
-                text:'KONFIGURASI SISTEM',
-                disabled:false,
-                href:'/system-setting'
+                text: 'KONFIGURASI SISTEM',
+                disabled: false,
+                href: '/system-setting'
             },  
             {
-                text:'PERGURUAN TINGGI - IDENTITAS DIRI',
-                disabled:true,
-                href:'#'
+                text: 'PERGURUAN TINGGI - IDENTITAS DIRI',
+                disabled: true,
+                href: '#'
             }
         ];
         this.initialize();
     },
     data: () => ({
-        breadcrumbs:[],
-        datatableLoading:false,
-        btnLoading:false,   
+        breadcrumbs: [],
+        datatableLoading: false,
+        btnLoading: false,
         //form
-        form_valid:true,   
+        form_valid: true,
         formdata: {
-            nama_pt:'',
-            nama_alias_pt:'',
-            bentuk_pt:'',
+            nama_pt: '',
+            nama_alias_pt: '',
+            bentuk_pt: '',
             kode_pt:0,
         },
         //form rules        
         rule_nama_pt:[
-            value => !!value||"Mohon untuk di isi Nama Perguruan Tinggi !!!",             
+            value => !!value||"Mohon untuk di isi Nama Perguruan Tinggi !!!",    
         ], 
         rule_nama_singkatan_pt:[
-            value => !!value||"Mohon untuk di isi Nama Alias Perguruan Tinggi !!!",             
+            value => !!value||"Mohon untuk di isi Nama Alias Perguruan Tinggi !!!",    
         ],
         rule_kode_pt:[
-            value => !!value||"Mohon untuk di isi Kode Perguruan Tinggi !!!",                     
+            value => !!value||"Mohon untuk di isi Kode Perguruan Tinggi !!!",            
             value => /^[0-9]+$/.test(value) || 'Kode Perguruan Tinggi hanya boleh angka',
         ]
     }),
     methods: {
-        initialize:async function () 
+        initialize: async function () 
         {
             this.datatableLoading=true;
             await this.$ajax.get('/system/setting/variables',
@@ -149,37 +149,37 @@ export default {
                 this.btnLoading=true;                
                 this.$ajax.post('/system/setting/variables',
                     {
-                        '_method':'PUT', 
-                        'pid':'Identitas Perguruan Tinggi',
+                        '_method': 'PUT', 
+                        'pid': 'Identitas Perguruan Tinggi',
                         setting:JSON.stringify({
                             101:this.formdata.nama_pt,
                             102:this.formdata.nama_alias_pt,
                             103:this.formdata.bentuk_pt,
                             104:this.formdata.kode_pt,
-                        }),                                                                                                                            
+                        }),                                                                         
                     },
                     {
-                        headers:{
+                        headers: {
                             Authorization:this.TOKEN
                         }
                     }
                 ).then(()=>{                       
-                    this.btnLoading=false;
+                    this.btnLoading = false
                 }).catch(()=>{
-                    this.btnLoading=false;
+                    this.btnLoading = false
                 });        
             }
         }
     },
-    computed:{ 
+    computed: { 
         ...mapGetters('auth',{            
-            ACCESS_TOKEN:'AccessToken',          
-            TOKEN:'Token',                                  
+            ACCESS_TOKEN: 'AccessToken', 
+            TOKEN: 'Token',                         
         }),
     },
-    components:{
+    components: {
 		SystemConfigLayout,
-        ModuleHeader,        
+        ModuleHeader,  
 	}
 }
 </script>

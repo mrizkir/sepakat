@@ -89,7 +89,7 @@
                                                                 label="NAMA ROLE"
                                                                 :rules="rule_role_name">
                                                             </v-text-field>
-                                                        </v-col>                                            
+                                                        </v-col>                                
                                                     </v-row>
                                                 </v-container>
                                             </v-card-text>
@@ -107,8 +107,8 @@
                                             </v-card-actions>
                                         </v-card>
                                     </v-form>
-                                </v-dialog>                                
-                                <v-dialog v-model="dialogRolePermission" max-width="800px" persistent>                                                                    
+                                </v-dialog>                    
+                                <v-dialog v-model="dialogRolePermission" max-width="800px" persistent>                                                        
                                     <RolePermissions :role="editedItem" :daftarpermissions="daftar_permissions" :permissionsselected="permissions_selected" v-on:closeRolePermissions="closeRolePermissions" />
                                 </v-dialog>
                             </v-toolbar>
@@ -150,9 +150,9 @@
                         <template v-slot:no-data>
                             Data belum tersedia
                         </template>
-                    </v-data-table>                    
+                    </v-data-table>        
                 </v-col>
-                <v-dialog v-model="dialogdetail" width="800px">                                    
+                <v-dialog v-model="dialogdetail" width="800px">                        
                     <v-card>
                         <v-card-title>
                             <span class="headline">DETAIL ROLE</span>
@@ -218,7 +218,7 @@
                         <v-card-actions>
                             
                         </v-card-actions>
-                    </v-card>                                    
+                    </v-card>                        
                 </v-dialog>
             </v-row>
         </v-container>
@@ -235,69 +235,69 @@ export default {
     {
         this.breadcrumbs = [
             {
-                text:'HOME',
-                disabled:false,
-                href:'/dashboard/'+this.ACCESS_TOKEN
+                text: 'HOME',
+                disabled: false,
+                href: '/dashboard/' + this.ACCESS_TOKEN
             },
             {
-                text:'USER SISTEM',
-                disabled:false,
-                href:'/system-users'
+                text: 'USER SISTEM',
+                disabled: false,
+                href: '/system-users'
             },
             {
-                text:'ROLES',
-                disabled:true,
-                href:'#'
+                text: 'ROLES',
+                disabled: true,
+                href: '#'
             }
         ];
         this.initialize()
-    },    
+    }, 
     data: () => ({
-        breadcrumbs:[],
-        datatableLoading:false,
-        btnLoading:false,          
-        expanded:[],        
+        breadcrumbs: [],
+        datatableLoading: false,
+        btnLoading: false, 
+        expanded: [],  
         datatable: [],
         daftar_permissions: [],
         permissions_selected: [],
         //tables
         headers: [                        
             { text: 'NAMA ROLE', value: 'name' },
-            { text: 'GUARD', value: 'guard_name' },            
+            { text: 'GUARD', value: 'guard_name' },   
             { text: 'AKSI', value: 'actions', sortable: false,width:130 },
         ],
         //tables
         headersdetail: [                        
             { text: 'NAMA PERMISSION', value: 'name' },
-            { text: 'GUARD', value: 'guard_name' },                          
+            { text: 'GUARD', value: 'guard_name' },                 
         ],
-        search:'',
+        search: '',
         //form
-        form_valid:true,
+        form_valid: true,
         dialog: false,
         dialogdetail: false,
         dialogRolePermission: false,
         editedIndex: -1,
         editedItem: {
             id:0,
-            name: '',           
-            guard: '',           
-            created_at: '',           
-            updated_at: '',           
+            name: '',  
+            guard: '',  
+            created_at: '',  
+            updated_at: '',  
         },
         defaultItem: {
             id:0,
-            name: '',           
-            guard: 'api',           
-            created_at: '',           
-            updated_at: '',           
+            name: '',  
+            guard: 'api',  
+            created_at: '',  
+            updated_at: '',  
         },
         //form rules        
         rule_role_name:[
             value => !!value||"Mohon untuk di isi nama Role !!!",  
-            value => /^[A-Za-z]*$/.test(value) || 'Nama Role hanya boleh string',                
+            value => /^[A-Za-z]*$/.test(value) || 'Nama Role hanya boleh string',       
         ], 
-        form_error_message:''
+        form_error_message: ''
     }),
     methods: {
         initialize () 
@@ -377,7 +377,7 @@ export default {
         
         },
         close () {
-            this.btnLoading=false;
+            this.btnLoading = false
             this.dialog = false;
             this.$refs.frmdata.reset(); 
             this.form_error_message='';           
@@ -398,13 +398,13 @@ export default {
                 this.btnLoading=true;
                 if (this.editedIndex > -1) 
                 {
-                    this.$ajax.post('/system/setting/roles/'+this.editedItem.id,
+                    this.$ajax.post('/system/setting/roles/' + this.editedItem.id,
                         {
-                            '_method':'PUT',
+                            '_method': 'PUT',
                             name:this.editedItem.name.toLowerCase(),
                         },
                         {
-                            headers:{
+                            headers: {
                                 Authorization:this.TOKEN
                             }
                         }
@@ -412,7 +412,7 @@ export default {
                         Object.assign(this.datatable[this.editedIndex], data.roles);
                         this.close();
                     }).catch(()=>{
-                        this.btnLoading=false;
+                        this.btnLoading = false
                     });                    
                     
                 } else {
@@ -421,7 +421,7 @@ export default {
                             name:this.editedItem.name.toLowerCase()
                         },
                         {
-                            headers:{
+                            headers: {
                                 Authorization:this.TOKEN
                             }
                         }
@@ -429,27 +429,27 @@ export default {
                         this.datatable.push(data.roles);
                         this.close();
                     }).catch(()=>{
-                        this.btnLoading=false;
+                        this.btnLoading = false
                     });
                 }
             }
-        },        
+        },  
     },
-    computed:{        
+    computed: {        
         formTitle () {
             return this.editedIndex === -1 ? 'TAMBAH ROLE' : 'EDIT ROLE'
         },
         ...mapGetters('auth',{            
-            ACCESS_TOKEN:'AccessToken',          
-            TOKEN:'Token',                                  
+            ACCESS_TOKEN: 'AccessToken', 
+            TOKEN: 'Token',                         
         }),
     },
     watch: {
         dialog (val) {
             val || this.close()
         },
-    },   
-    components:{
+    },
+    components: {
 		AdminLayout,
         ModuleHeader,
         RolePermissions
