@@ -80,7 +80,7 @@ class KegiatanPenyuluhanHukumController extends Controller
 				'status'=>1,
 				'pid'=>'fetchdata',
 				'kegiatan'=>$kegiatan,
-				'message'=>"Kegiatan mediasi berhasil diperoleh"
+				'message'=>"kegiatan penyuluhan hukum berhasil diperoleh"
 			],200);
 		}
 	}
@@ -345,37 +345,28 @@ class KegiatanPenyuluhanHukumController extends Controller
 		{            
 			$this->validate($request, [					
 				'user_id'=>'required|exists:users,id',
-				'nama_pemohon'=>'required',
-				'tempat_lahir'=>'required',
-				'tanggal_lahir'=>'required|date',
-				'pendidikan'=>'required',
-				'pekerjaan'=>'required',
-				'alamat'=>'required',
-				'nama_kegiatan'=>'required',            
+				'nama_kegiatan'=>'required',			
+				'tempat_pelaksanaan'=>'required',         
 				'tanggal_pelaksanaan'=>'required|date',            
-				'nama_kegiatan'=>'required',            
-				'tanggal_pelaksanaan'=>'required',            
-				'tempat_pelaksanaan'=>'required',            
-				'uraian_kegiatan'=>'required',            
-				'nama_saksi'=>'required',            
+				'jam_pelaksanaan'=>'required',            
+				'narasumber'=>'required',
+				'peserta'=>'required',
+				'jumlah_peserta'=>'required|numeric',			   
+				'uraian_kegiatan'=>'required',            			        
 				'rekomendasi_kegiatan'=>'required',            
 			]);
 
 			$tanggal_pelaksanaan=$request->input('tanggal_pelaksanaan') . ' '.$request->input('jam_pelaksanaan');
 
 			$kegiatan->user_id=$request->input('user_id');             
-			$kegiatan->nama_pemohon=$request->input('nama_pemohon');             
-			$kegiatan->tempat_lahir=$request->input('tempat_lahir');             
-			$kegiatan->tanggal_lahir=$request->input('tanggal_lahir');             
-			$kegiatan->pendidikan=$request->input('pendidikan');             
-			$kegiatan->pekerjaan=$request->input('pekerjaan');             
-			$kegiatan->alamat=$request->input('alamat');             
-			$kegiatan->nama_kegiatan=$request->input('nama_kegiatan');                
+			$kegiatan->nama_kegiatan=$request->input('nama_kegiatan');             
 			$kegiatan->tanggal_pelaksanaan=$tanggal_pelaksanaan;               
-			$kegiatan->tempat_pelaksanaan=$request->input('tempat_pelaksanaan');                			
-			$kegiatan->uraian_kegiatan=$request->input('uraian_kegiatan');                
-			$kegiatan->nama_saksi=$request->input('nama_saksi');                
-			$kegiatan->rekomendasi_kegiatan=$request->input('rekomendasi_kegiatan');
+			$kegiatan->tempat_pelaksanaan=$request->input('tempat_pelaksanaan');                						
+			$kegiatan->narasumber=$request->input('narasumber');             
+			$kegiatan->peserta=$request->input('peserta');             
+			$kegiatan->jumlah_peserta=$request->input('jumlah_peserta');             
+			$kegiatan->uraian_kegiatan=$request->input('uraian_kegiatan');             
+			$kegiatan->rekomendasi_kegiatan=$request->input('rekomendasi_kegiatan');                
 			
 			$kegiatan->save();
 			
@@ -386,7 +377,7 @@ class KegiatanPenyuluhanHukumController extends Controller
 				'tanggal'=>$tanggal_pelaksanaan,                
 				'tempat'=>$request->input('tempat_pelaksanaan'),                				             
 				'nama_kegiatan'=>$request->input('nama_kegiatan'),                
-				'pemohon'=>$request->input('nama_pemohon'),                
+				'pemohon'=>$request->input('narasumber'),                
 				'uraian_kegiatan'=>$request->input('uraian_kegiatan'),                
 				'rekomendasi_kegiatan'=>$request->input('rekomendasi_kegiatan'),                				                          
 			]);
@@ -395,7 +386,7 @@ class KegiatanPenyuluhanHukumController extends Controller
 				'status'=>1,
 				'pid'=>'update',
 				'kegiatan'=>$kegiatan,
-				'message'=>"Update Kegiatan mediasi berhasil diperoleh"
+				'message'=>"Update kegiatan penyuluhan hukum berhasil diperoleh"
 			],200);
 		}
 	}
@@ -431,7 +422,7 @@ class KegiatanPenyuluhanHukumController extends Controller
 										'status'=>1,
 										'pid'=>'update',
 										'kegiatan'=>$kegiatan,
-										'message'=>"Verifikasi Kegiatan mediasi berhasil dilakukan"
+										'message'=>"Verifikasi kegiatan penyuluhan hukum berhasil dilakukan"
 									],200);
 			}
 		}
@@ -482,14 +473,14 @@ class KegiatanPenyuluhanHukumController extends Controller
 																'object' => $kegiatan,
 																'object_id' => $kegiatan->id,
 																'user_id' => $this->getUserid(),
-																'message' => 'Menghapus Kegiatan mediasi ('.$nama_kegiatan.') berhasil'
+																'message' => 'Menghapus kegiatan penyuluhan hukum ('.$nama_kegiatan.') berhasil'
 															]);
 			$kegiatan->delete();
 			
 			return Response()->json([
 										'status'=>1,
 										'pid'=>'destroy',
-										'message'=>"Kegiatan mediasi ($nama_kegiatan) berhasil dihapus"
+										'message'=>"kegiatan penyuluhan hukum ($nama_kegiatan) berhasil dihapus"
 									],200);
 		}
 
