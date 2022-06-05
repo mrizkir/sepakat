@@ -89,7 +89,7 @@
                                                                 label="NAMA ROLE"
                                                                 :rules="rule_role_name">
                                                             </v-text-field>
-                                                        </v-col>                                
+                                                        </v-col>                
                                                     </v-row>
                                                 </v-container>
                                             </v-card-text>
@@ -107,8 +107,8 @@
                                             </v-card-actions>
                                         </v-card>
                                     </v-form>
-                                </v-dialog>                    
-                                <v-dialog v-model="dialogRolePermission" max-width="800px" persistent>                                                        
+                                </v-dialog>    
+                                <v-dialog v-model="dialogRolePermission" max-width="800px" persistent>                                        
                                     <RolePermissions :role="editedItem" :daftarpermissions="daftar_permissions" :permissionsselected="permissions_selected" v-on:closeRolePermissions="closeRolePermissions" />
                                 </v-dialog>
                             </v-toolbar>
@@ -152,7 +152,7 @@
                         </template>
                     </v-data-table>        
                 </v-col>
-                <v-dialog v-model="dialogdetail" width="800px">                        
+                <v-dialog v-model="dialogdetail" width="800px">        
                     <v-card>
                         <v-card-title>
                             <span class="headline">DETAIL ROLE</span>
@@ -218,7 +218,7 @@
                         <v-card-actions>
                             
                         </v-card-actions>
-                    </v-card>                        
+                    </v-card>        
                 </v-dialog>
             </v-row>
         </v-container>
@@ -256,20 +256,20 @@ export default {
         breadcrumbs: [],
         datatableLoading: false,
         btnLoading: false, 
-        expanded: [],  
+        expanded: [],
         datatable: [],
         daftar_permissions: [],
         permissions_selected: [],
         //tables
         headers: [                        
             { text: 'NAMA ROLE', value: 'name' },
-            { text: 'GUARD', value: 'guard_name' },   
+            { text: 'GUARD', value: 'guard_name' },
             { text: 'AKSI', value: 'actions', sortable: false,width:130 },
         ],
         //tables
         headersdetail: [                        
             { text: 'NAMA PERMISSION', value: 'name' },
-            { text: 'GUARD', value: 'guard_name' },                 
+            { text: 'GUARD', value: 'guard_name' },
         ],
         search: '',
         //form
@@ -280,22 +280,22 @@ export default {
         editedIndex: -1,
         editedItem: {
             id:0,
-            name: '',  
-            guard: '',  
-            created_at: '',  
-            updated_at: '',  
+            name: '',
+            guard: '',
+            created_at: '',
+            updated_at: '',
         },
         defaultItem: {
             id:0,
-            name: '',  
-            guard: 'api',  
-            created_at: '',  
-            updated_at: '',  
+            name: '',
+            guard: 'api',
+            created_at: '',
+            updated_at: '',
         },
         //form rules        
         rule_role_name:[
-            value => !!value||"Mohon untuk di isi nama Role !!!",  
-            value => /^[A-Za-z]*$/.test(value) || 'Nama Role hanya boleh string',       
+            value => !!value||"Mohon untuk di isi nama Role !!!",
+            value => /^[A-Za-z]*$/.test(value) || 'Nama Role hanya boleh string',
         ], 
         form_error_message: ''
     }),
@@ -395,7 +395,7 @@ export default {
             this.form_error_message='';
             if (this.$refs.frmdata.validate())
             {
-                this.btnLoading=true;
+                this.btnLoading = true
                 if (this.editedIndex > -1) 
                 {
                     this.$ajax.post('/system/setting/roles/' + this.editedItem.id,
@@ -433,7 +433,7 @@ export default {
                     });
                 }
             }
-        },  
+        },
     },
     computed: {        
         formTitle () {
@@ -441,7 +441,7 @@ export default {
         },
         ...mapGetters('auth',{            
             ACCESS_TOKEN: 'AccessToken', 
-            TOKEN: 'Token',                         
+            TOKEN: 'Token',
         }),
     },
     watch: {

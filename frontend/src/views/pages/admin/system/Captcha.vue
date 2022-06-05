@@ -81,7 +81,7 @@ export default {
                 text: 'KONFIGURASI SISTEM',
                 disabled: false,
                 href: '/system-setting'
-            },  
+            },
             {
                 text: 'SERVER - CAPTCHA',
                 disabled: true,
@@ -127,7 +127,7 @@ export default {
         save () {
             if (this.$refs.frmdata.validate())
             {
-                this.btnLoading=true;
+                this.btnLoading = true
                 this.$ajax.post('/system/setting/variables',
                     {
                         '_method': 'PUT',

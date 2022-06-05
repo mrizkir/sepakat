@@ -75,7 +75,7 @@
                                             <v-card-title>
                                                 <span class="headline">{{ formTitle }}</span>
                                             </v-card-title>
-                                            <v-card-text>                                    
+                                            <v-card-text>                    
                                                 <v-container fluid>
                                                     <v-row>
                                                         <v-col cols="12" sm="12" md="12">
@@ -84,7 +84,7 @@
                                                                 label="NAMA PERMISSION"
                                                                 :rules="rule_permission_name">
                                                             </v-text-field>
-                                                        </v-col>                                
+                                                        </v-col>                
                                                     </v-row>
                                                 </v-container>
                                             </v-card-text>
@@ -161,38 +161,38 @@ export default {
     data: () => ({
         breadcrumbs: [],
         datatableLoading: false,
-        btnLoading: false,  
-        expanded: [],  
+        btnLoading: false,
+        expanded: [],
         daftar_permissions: [],
         //tables
         headers: [                        
             { text: 'NAMA PERMISSION', value: 'name' },
-            { text: 'GUARD', value: 'guard_name' },   
+            { text: 'GUARD', value: 'guard_name' },
             { text: 'AKSI', value: 'actions', sortable: false,width:100 },
         ],
-        search: '',  
+        search: '',
         //form
         form_valid: true,
         dialog: false,
         editedIndex: -1,
         editedItem: {
             id:0,
-            name: '',  
-            guard: '',  
-            created_at: '',  
-            updated_at: '',  
+            name: '',
+            guard: '',
+            created_at: '',
+            updated_at: '',
         },
         defaultItem: {
             id:0,
-            name: '',  
-            guard: 'api',  
-            created_at: '',  
-            updated_at: '',  
+            name: '',
+            guard: 'api',
+            created_at: '',
+            updated_at: '',
         },
         //form rules        
         rule_permission_name:[
-            value => !!value||"Mohon untuk di isi nama Permission !!!",  
-            value => /^[a-zA-Z\\-]+$/.test(value) || 'Nama Permission hanya boleh string',       
+            value => !!value||"Mohon untuk di isi nama Permission !!!",
+            value => /^[a-zA-Z\\-]+$/.test(value) || 'Nama Permission hanya boleh string',
         ], 
     }),
     methods: {
@@ -240,7 +240,7 @@ export default {
             {
                 if (!(this.editedIndex > -1)) 
                 {
-                    this.btnLoading=true;
+                    this.btnLoading = true
                     this.$ajax.post('/system/setting/permissions/store',
                         {
                             name:this.editedItem.name.toLowerCase()
@@ -263,7 +263,7 @@ export default {
             this.$root.$confirm.open('Delete', 'Apakah Anda ingin menghapus permission '+item.name+' ?', { color: 'red' }).then((confirm) => {
                 if (confirm)
                 {
-                    this.btnLoading=true;
+                    this.btnLoading = true
                     this.$ajax.post('/system/setting/permissions/'+item.id,
                     {
                         '_method': 'DELETE',

@@ -155,7 +155,7 @@ export default {
 		initialize: async function()
 		{	
             
-            await this.$ajax.get('/auth/me',       
+            await this.$ajax.get('/auth/me',
             {
                 headers: {
                     Authorization: 'Bearer '+this.TOKEN
@@ -170,7 +170,7 @@ export default {
 		},
 		async fetchData ()
 		{
-			await this.$ajax.get('/dashboard',       
+			await this.$ajax.get('/dashboard',
             {
                 headers: {
                     Authorization: 'Bearer '+this.TOKEN
@@ -198,7 +198,7 @@ export default {
 		}
 	},
     components: {
-		AdminLayout,       
+		AdminLayout,
 	}
 }
 </script>

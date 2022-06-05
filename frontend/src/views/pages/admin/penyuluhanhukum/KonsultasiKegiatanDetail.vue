@@ -67,7 +67,7 @@
                             </v-card-text>
                             <v-card-actions>
                                 <v-spacer></v-spacer>
-                                <v-btn color="blue darken-1" text @click.stop="closedialogkronologis">CLOSE</v-btn>                        
+                                <v-btn color="blue darken-1" text @click.stop="closedialogkronologis">CLOSE</v-btn>        
                             </v-card-actions>
                         </v-card>            
                     </v-dialog>
@@ -81,7 +81,7 @@
                             </v-card-text>
                             <v-card-actions>
                                 <v-spacer></v-spacer>
-                                <v-btn color="blue darken-1" text @click.stop="closedialogrekomendasi">CLOSE</v-btn>                        
+                                <v-btn color="blue darken-1" text @click.stop="closedialogrekomendasi">CLOSE</v-btn>        
                             </v-card-actions>
                         </v-card>            
                     </v-dialog>
@@ -98,13 +98,13 @@
                                 class="mx-auto mb-2"
                                 max-width="500"
                                 outlined
-                                v-for="items in daftar_komentar" v-bind:key="items.id">                        
+                                v-for="items in daftar_komentar" v-bind:key="items.id">        
                                     <v-card-title>
                                         {{items.name}}
                                         <v-spacer/>
                                         <v-chip color="info" outlined>{{items.default_role}}</v-chip>
-                                    </v-card-title>                        
-                                    <v-card-text>                                
+                                    </v-card-title>        
+                                    <v-card-text>                
                                         {{items.isi_komentar}}
                                     </v-card-text>'
                                     <v-divider class="mx-4"></v-divider>
@@ -137,8 +137,8 @@
                                 BELUM ADA KOMENTAR
                             </v-alert>
                         </v-card-text>  
-                        <v-form ref="frmdata" v-model="form_valid" lazy-validation v-if="data_kegiatan.id_status==0">                    
-                            <v-card-actions>                
+                        <v-form ref="frmdata" v-model="form_valid" lazy-validation v-if="data_kegiatan.id_status==0">    
+                            <v-card-actions>
                                 <v-textarea
                                     class="mr-2"
                                     label="KOMENTAR"                                        
@@ -150,12 +150,12 @@
                                     @click.stop="savekomentar" 
                                     :loading="btnLoading"
                                     :disabled="!form_valid||btnLoading"
-                                    large>                        
+                                    large>        
                                     KIRIM
                                     <v-icon>
                                         mdi-send
                                     </v-icon> 
-                                </v-btn>                    
+                                </v-btn>    
                             
                             </v-card-actions>
                         </v-form>
@@ -190,7 +190,7 @@ export default {
                 text: 'KEGIATAN',
                 disabled: false,
                 href: '/konsultasi/kegiatan/' + this.kegiatan_id+'/detail'
-            },  
+            },
             {
                 text: 'DETAIL',
                 disabled: true,
@@ -199,7 +199,7 @@ export default {
         ];
         this.initialize();
         this.fetchKomentar();
-    },  
+    },
     data: () => ({ 
         dashboard: null,
 
@@ -219,7 +219,7 @@ export default {
             komentar: ''
         },
         rule_komentar:[
-            value => !!value||"Mohon untuk diisi komentar !!!",     
+            value => !!value||"Mohon untuk diisi komentar !!!",
         ]
     }),
     methods: {
@@ -246,12 +246,12 @@ export default {
         savekomentar: async function () {
             if (this.$refs.frmdata.validate())
             {
-                this.btnLoading=true;      
+                this.btnLoading = true      
 
                 await this.$ajax.post('/konsultasi/komentar/store',
                 {
-                    kegiatan_id:this.kegiatan_id,           
-                    isi_komentar:this.formdata.komentar,           
+                    kegiatan_id:this.kegiatan_id,
+                    isi_komentar:this.formdata.komentar,
                 },
                 {
                     headers: {
@@ -267,13 +267,13 @@ export default {
                     this.btnLoading = false
                 });                
             }
-        },  
+        },
         verifikasi ()
         {
             this.$root.$confirm.open('Verifikasi', 'Setelah diverifikasi, tidak bisa diberi komentar, diubah, atau dihapus ?', { color: 'green',width:600 }).then((confirm) => {
                 if (confirm)
                 {
-                    this.btnLoading=true;
+                    this.btnLoading = true
                     this.$ajax.post('/konsultasi/kegiatan/verifikasi/' + this.kegiatan_id,
                         {
                             '_method': 'put',
@@ -304,7 +304,7 @@ export default {
             this.$root.$confirm.open('Delete', 'Apakah Anda ingin menghapus komentar kegiatan dengan ID '+item.kegiatan_id+' ?', { color: 'red',width:600 }).then((confirm) => {
                 if (confirm)
                 {
-                    this.btnLoading=true;
+                    this.btnLoading = true
                     this.$ajax.post('/konsultasi/komentar/'+item.id,
                         {
                             '_method': 'DELETE',
@@ -322,11 +322,11 @@ export default {
                     });
                 }                
             });
-        },  
+        },
     },
     components: {
         AdminLayout,
-        ModuleHeader,  
+        ModuleHeader,
         DK
     },
 

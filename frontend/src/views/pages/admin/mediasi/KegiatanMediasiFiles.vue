@@ -5,7 +5,7 @@
         mdi-calendar-blank-multiple
       </template>
       <template v-slot:name>
-        KONSULTASI KEGIATAN MEDIASI
+        KEGIATAN MEDIASI
       </template>
       <template v-slot:breadcrumbs>
         <v-breadcrumbs :items="breadcrumbs" class="pa-0">
@@ -16,7 +16,7 @@
       </template>
       <template v-slot:desc>
         <v-alert color="cyan" border="left" colored-border type="info">
-          Halaman ini berisi daftar kegiatan konsultasi hukum paralegal
+          Halaman ini berisi daftar kegiatan mediasi yang dilakukan oleh paralegal
         </v-alert>
       </template>
     </ModuleHeader>
@@ -196,14 +196,14 @@
           href: '/dashboard/' + this.$store.getters['auth/AccessToken']
         },
         {
-          text: 'KONSULTASI',
+          text: 'KEGIATAN',
           disabled: false,
           href: '#'
         },
         {
           text: 'MEDIASI',
           disabled: false,
-          href: '/konsultasi/mediasi/' + this.kegiatan_id+'/detail'
+          href: '/kegiatan/mediasi/' + this.kegiatan_id+'/detail'
         },
         {
           text: 'FILES',
@@ -281,7 +281,7 @@
             this.btnLoadingUploadKTP = true;
             var formdata = new FormData()
             formdata.append('filektppemohon', this.filektppemohon)
-            await this.$ajax.post('/kegiatan/mediasi/uploadktppemohon/' + this.kegiatan_id,formdata,         
+            await this.$ajax.post('/kegiatan/mediasi/uploadktppemohon/' + this.kegiatan_id,formdata,
               {
                 headers: {
                   Authorization: this.$store.getters['auth/Token'],
@@ -312,7 +312,7 @@
             this.btnLoadingUploadDaftarHadir=true;
             var formdata = new FormData()
             formdata.append('filedaftarhadir', this.filedaftarhadir)
-            await this.$ajax.post('/kegiatan/mediasi/uploaddaftarhadir/' + this.kegiatan_id,formdata,         
+            await this.$ajax.post('/kegiatan/mediasi/uploaddaftarhadir/' + this.kegiatan_id,formdata,
               {
                 headers: {
                   Authorization: this.$store.getters['auth/Token'],

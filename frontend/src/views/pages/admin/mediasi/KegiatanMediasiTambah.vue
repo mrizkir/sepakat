@@ -5,7 +5,7 @@
         mdi-calendar-blank-multiple
       </template>
       <template v-slot:name>
-        KONSULTASI KEGIATAN MEDIASI
+        KEGIATAN MEDIASI
       </template>
       <template v-slot:breadcrumbs>
         <v-breadcrumbs :items="breadcrumbs" class="pa-0">
@@ -15,12 +15,7 @@
         </v-breadcrumbs>
       </template>
       <template v-slot:desc>
-        <v-alert                                        
-          color="cyan"
-          border="left"                    
-          colored-border
-          type="info"
-          >
+        <v-alert color="cyan" border="left" colored-border type="info">
           Halaman ini berisi daftar kegiatan mediasi hukum paralegal
         </v-alert>
       </template>
@@ -156,7 +151,7 @@
                     <v-spacer></v-spacer>
                     <v-btn text color="primary" @click="menuTanggalPelaksanaan = false">Cancel</v-btn>
                     <v-btn text color="primary" @click="$refs.menuTanggalPelaksanaan.save(formdata.tanggal_pelaksanaan)">OK</v-btn>
-                  </v-date-picker>                        
+                  </v-date-picker>        
                 </v-menu>
                 <v-menu
                   ref="menuJamPelaksanaan"
@@ -250,7 +245,7 @@ export default {
         href: '/dashboard/' + this.$store.getters['auth/AccessToken']
       },
       {
-        text: 'KONSULTASI',
+        text: 'KEGIATAN',
         disabled: false,
         href: '#'
       },
@@ -266,7 +261,7 @@ export default {
       }
     ];
     this.initialize()
-  },  
+  },
   data: () => ({ 
     dashboard: null,
     
@@ -303,16 +298,16 @@ export default {
       nama_kegiatan: null,
       tanggal_pelaksanaan: null,
       jam_pelaksanaan: null,
-      tempat_pelaksanaan: null,  
+      tempat_pelaksanaan: null,
       uraian_kegiatan: null,
       nama_saksi: null,
       rekomendasi_kegiatan: null,
     },
     rule_user_id: [
-      value => !!value || "Mohon untuk dipilih paralegal !!!",     
+      value => !!value || "Mohon untuk dipilih paralegal !!!",
     ],
     rule_nama_pemohon: [
-      value => !!value || "Mohon untuk diisi nama pemohon kegiatan mediasi !!!",    
+      value => !!value || "Mohon untuk diisi nama pemohon kegiatan mediasi !!!", 
     ],
     rule_tempat_lahir: [
 			value => !!value || "Tempat Lahir pemohon mohon untuk diisi !!!"
@@ -330,22 +325,22 @@ export default {
 			value => !!value || "Alamat pemohon mohon untuk diisi !!!"
 		], 
     rule_nama_kegiatan: [
-      value => !!value || "Mohon untuk diisi nama kegiatan mediasi !!!",    
+      value => !!value || "Mohon untuk diisi nama kegiatan mediasi !!!", 
     ], 
     rule_tanggal_pelaksanaan: [
-      value => !!value || "Mohon untuk diisi tanggal pelaksanaan kegiatan mediasi !!!",    
+      value => !!value || "Mohon untuk diisi tanggal pelaksanaan kegiatan mediasi !!!", 
     ],
     rule_jam_pelaksanaan: [
-      value => !!value || "Mohon untuk diisi waktu kegiatan mediasi !!!",    
+      value => !!value || "Mohon untuk diisi waktu kegiatan mediasi !!!", 
     ],
     rule_tempat: [
-      value => !!value || "Mohon untuk diisi tempat kegiatan mediasi !!!",    
-    ],  
+      value => !!value || "Mohon untuk diisi tempat kegiatan mediasi !!!", 
+    ],
     rule_uraian_kegiatan: [
-      value => !!value || "Mohon untuk diisi uraian kegiatan mediasi !!!",    
+      value => !!value || "Mohon untuk diisi uraian kegiatan mediasi !!!", 
     ],
     rule_rekomendasi_kegiatan: [
-      value => !!value || "Mohon untuk diisi rekomendasi kegiatan mediasi !!!",    
+      value => !!value || "Mohon untuk diisi rekomendasi kegiatan mediasi !!!", 
     ], 
   }),
   methods: {
@@ -362,7 +357,7 @@ export default {
     save: async function () {
       if (this.$refs.frmdata.validate())
       {
-        this.btnLoading=true;                
+        this.btnLoading = true                
         await this.$ajax.post('/kegiatan/mediasi/store',
           {
             user_id: this.formdata.user_id,
@@ -404,10 +399,10 @@ export default {
         }, 300
       );
     },
-  },  
+  },
   components: {
     AdminLayout,
-    ModuleHeader,  
+    ModuleHeader,
   },
 };
 </script>

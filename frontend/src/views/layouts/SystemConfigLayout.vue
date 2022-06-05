@@ -35,7 +35,7 @@
                             <v-list-item-title class="title">
                                 {{ATTRIBUTE_USER('username')}}
                             </v-list-item-title>
-                            <v-list-item-subtitle>                    
+                            <v-list-item-subtitle>    
                                 {{ROLE}}
                             </v-list-item-subtitle>
                         </v-list-item-content>
@@ -134,10 +134,10 @@
 <script>
 import {mapGetters} from 'vuex';
 export default {
-    name: 'SystemConfigLayout',  
-    data:()=>({
+    name: 'SystemConfigLayout',
+    data: () => ({
         loginTime:0,
-        drawer: null,  
+        drawer: null,
     }), 
     methods: {        
         logout ()
@@ -170,12 +170,12 @@ export default {
 	},
     computed: {
         ...mapGetters('auth',{
-            AUTHENTICATED: 'Authenticated',  
+            AUTHENTICATED: 'Authenticated',
             ACCESS_TOKEN: 'AccessToken', 
             TOKEN: 'Token', 
             ROLE: 'Role',
             CAN_ACCESS: 'can',
-            ATTRIBUTE_USER: 'AttributeUser',      
+            ATTRIBUTE_USER: 'AttributeUser',
         }),
         APP_NAME ()
         {
@@ -205,7 +205,7 @@ export default {
 			{
 				return false;
 			}
-        },  
+        },
     },
     watch: {
         loginTime: {
@@ -225,7 +225,7 @@ export default {
                 }
             },
             immediate: true
-        },  
+        },
     }
 }
 </script>

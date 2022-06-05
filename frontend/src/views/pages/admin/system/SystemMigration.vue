@@ -83,8 +83,8 @@
                                     item-text="name"
                                     item-value="id"
                                     :rules="rule_dw"
-                                    outlined/>                                            
-                            </v-card-text>                
+                                    outlined/>                            
+                            </v-card-text>
                         </v-card>         
                         <v-card class="mb-4">
                             <v-card-title>
@@ -100,18 +100,18 @@
                                     item-key="id"
                                     :items="daftar_tasmt"
                                     dense> 
-                                    <template v-slot:item.k_status="{ item }">                                                        
+                                    <template v-slot:item.k_status="{ item }">                                        
                                         <v-select       
                                             v-model="formdata.status_mhs[daftar_tasmt.indexOf(item)]"                                                                                
                                             :items="daftar_status_mhs"
                                             item-text="text"
                                             item-value="id" />
-                                    </template>                            
-                                    <template v-slot:no-data>                
+                                    </template>            
+                                    <template v-slot:no-data>
                                         belum ada data tahun akademik dan semester, silahkan ganti Tahun Pendaftaran ke yang lebih kecil dari 2020
                                     </template>               
                                 </v-data-table>
-                            </v-card-text>                
+                            </v-card-text>
                         </v-card>
                         <v-card>
                             <v-card-actions>           
@@ -158,24 +158,24 @@ export default {
     },
     data: () => ({        
         firstloading: true,
-        breadcrumbs: [],  
-        tahun_pendaftaran:0,  
+        breadcrumbs: [],
+        tahun_pendaftaran:0,
         
         //form
         form_valid: true, 
         btnLoading: false,
 
         daftar_prodi: [],
-        daftar_kelas: [],       
-        daftar_dw: [],  
+        daftar_kelas: [],
+        daftar_dw: [],
 
         daftar_tasmt: [],
-        daftar_status_mhs: [],  
+        daftar_status_mhs: [],
         formdata: {
             nim: '',
             nirm: '',
-            nama_mhs: '',   
-            dosen_id: '',  
+            nama_mhs: '',
+            dosen_id: '',
             prodi_id: '',
             idkelas: '',
             status_mhs: [],
@@ -206,7 +206,7 @@ export default {
         headers: [                                                
             { text: 'TAHUN AKADEMIK', value: 'ta',sortable: false },
             { text: 'SEMESTER', value: 'semester',sortable: false },
-            { text: 'STATUS', value: 'k_status',sortable: false, width:250 },        
+            { text: 'STATUS', value: 'k_status',sortable: false, width:250 }, 
         ],
     }),
     methods : {
@@ -254,7 +254,7 @@ export default {
         save () {
             if (this.$refs.frmdata.validate())
             {
-                this.btnLoading=true;
+                this.btnLoading = true
                 
                 this.$ajax.post('/system/migration/store',
                     {
@@ -262,10 +262,10 @@ export default {
                         nirm:this.formdata.nirm,
                         nama_mhs:this.formdata.nama_mhs,
                         dosen_id:this.formdata.dosen_id,
-                        prodi_id:this.formdata.prodi_id,  
+                        prodi_id:this.formdata.prodi_id,
                         idkelas:this.formdata.idkelas, 
-                        tahun_pendaftaran:this.tahun_pendaftaran,        
-                        status_mhs:JSON.stringify(Object.assign({},this.formdata.status_mhs)),                                                       
+                        tahun_pendaftaran:this.tahun_pendaftaran, 
+                        status_mhs:JSON.stringify(Object.assign({},this.formdata.status_mhs)),
                     },
                     {
                         headers: {
@@ -297,8 +297,8 @@ export default {
     },
     components: {
         SystemMigrationLayout,
-        ModuleHeader,  
-        Filter9,  
+        ModuleHeader,
+        Filter9,
     },
 }
 </script>

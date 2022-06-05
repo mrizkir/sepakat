@@ -65,7 +65,7 @@
                                     inset
                                     vertical
                                 ></v-divider>
-                                <v-spacer></v-spacer>                    
+                                <v-spacer></v-spacer>    
                             </v-toolbar>
                         </template>            
                         <template v-slot:item.id_status="{ item }"> 
@@ -91,7 +91,7 @@
                                     <strong>ID:</strong>{{ item.kegiatan_id }}
                                     <strong>created_at:</strong>{{ $date(item.created_at).format('DD/MM/YYYY HH:mm') }}
                                     <strong>updated_at:</strong>{{ $date(item.updated_at).format('DD/MM/YYYY HH:mm') }}
-                                </v-col>                    
+                                </v-col>    
                             </td>
                         </template>
                         <template v-slot:no-data>
@@ -109,13 +109,13 @@
                         <v-btn
                             color="green"
                             text
-                            :href="this.$api.storageURL+'/'+file_pdf">                
+                            :href="this.$api.storageURL+'/'+file_pdf">
                             Download
                         </v-btn>               
                     </v-card-text>
                     <v-card-actions>
                         <v-spacer></v-spacer>
-                        <v-btn color="blue darken-1" text @click.stop="closedialogprintpdf">BATAL</v-btn>                
+                        <v-btn color="blue darken-1" text @click.stop="closedialogprintpdf">BATAL</v-btn>
                     </v-card-actions>
                 </v-card>
             </v-dialog>
@@ -147,7 +147,7 @@ export default {
             }
         ];
         this.initialize()
-    },  
+    },
     data: () => ({ 
         dashboard: null,
 
@@ -159,8 +159,8 @@ export default {
             { text: 'PARALEGAL', value: 'name' },
             { text: 'PEMOHON', value: 'pemohon' },
             { text: 'JENIS KEGIATAN', value: 'nama_jenis' },
-            { text: 'NAMA KEGIATAN', value: 'nama_kegiatan' },      
-            { text: 'STATUS', value: 'id_status', sortable: false, width:100 },      
+            { text: 'NAMA KEGIATAN', value: 'nama_kegiatan' },
+            { text: 'STATUS', value: 'id_status', sortable: false, width:100 },
             { text: 'AKSI', value: 'actions', sortable: false,width:80 },
         ],
         search: '', 
@@ -197,10 +197,10 @@ export default {
         },
         async printpdf (item)
         {
-            this.btnLoading=true;
+            this.btnLoading = true
             await this.$ajax.post('/report/kegiatan/printpdf',
                 {
-                    kegiatan_id:item.kegiatan_id,                                 
+                    kegiatan_id:item.kegiatan_id,
                 },
                 {
                     headers: {
@@ -223,10 +223,10 @@ export default {
                 }, 300
             );
         }, 
-    },  
+    },
     components: {
         AdminLayout,
-        ModuleHeader,  
+        ModuleHeader,
     },
 
 }

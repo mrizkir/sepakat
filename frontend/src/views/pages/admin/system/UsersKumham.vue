@@ -65,7 +65,7 @@
                                     inset
                                     vertical
                                 ></v-divider>
-                                <v-spacer></v-spacer>                    
+                                <v-spacer></v-spacer>    
                                 <v-btn color="primary"                                    
                                     class="mb-2" 
                                     :loading="btnLoading"
@@ -73,25 +73,25 @@
                                     @click.stop="showDialogTambahUserSuperAdmin">
                                     TAMBAH
                                 </v-btn>
-                                <v-dialog v-model="dialog" max-width="500px" persistent>                        
+                                <v-dialog v-model="dialog" max-width="500px" persistent>        
                                     <v-form ref="frmdata" v-model="form_valid" lazy-validation>
                                         <v-card>
                                             <v-card-title>
                                                 <span class="headline">{{ formTitle }}</span>
-                                            </v-card-title>                                
+                                            </v-card-title>                
                                             <v-card-text>     
                                                 <v-text-field 
                                                     v-model="editedItem.name" 
                                                     label="NAMA USER"
                                                     outlined
                                                     :rules="rule_user_name">
-                                                </v-text-field>                                                                                   
+                                                </v-text-field>                                                                   
                                                 <v-text-field 
                                                     v-model="editedItem.email" 
                                                     label="EMAIL"
                                                     outlined
                                                     :rules="rule_user_email">
-                                                </v-text-field>                                            
+                                                </v-text-field>                            
                                                 <v-text-field 
                                                     v-model="editedItem.nomor_hp" 
                                                     label="NOMOR HP"
@@ -117,8 +117,8 @@
                                                     label="ROLES"                                                     
                                                     multiple 
                                                     small-chips
-                                                    outlined>                                                                    
-                                                </v-autocomplete>                           
+                                                    outlined>                                                    
+                                                </v-autocomplete>           
                                             </v-card-text>
                                             <v-card-actions>
                                                 <v-spacer></v-spacer>
@@ -140,8 +140,8 @@
                                         <v-card>
                                             <v-card-title>
                                                 <span class="headline">{{ formTitle }}</span>
-                                            </v-card-title>                                
-                                            <v-card-text>                                                                                    
+                                            </v-card-title>                
+                                            <v-card-text>                                                                    
                                                 <v-text-field 
                                                     v-model="editedItem.name" 
                                                     label="NAMA USER"
@@ -179,8 +179,8 @@
                                                     label="ROLES"                                                     
                                                     multiple 
                                                     small-chips
-                                                    outlined>                                                                    
-                                                </v-autocomplete>                           
+                                                    outlined>                                                    
+                                                </v-autocomplete>           
                                             </v-card-text>
                                             <v-card-actions>
                                                 <v-spacer></v-spacer>
@@ -194,10 +194,10 @@
                                             </v-card-actions>
                                         </v-card>
                                     </v-form>
-                                </v-dialog>                    
+                                </v-dialog>    
                             </v-toolbar>
                         </template>
-                        <template v-slot:item.actions="{ item }">                
+                        <template v-slot:item.actions="{ item }">
                             <v-icon
                                 small
                                 class="mr-2"
@@ -216,10 +216,10 @@
                                 mdi-delete
                             </v-icon>
                         </template>
-                        <template v-slot:item.foto="{ item }">                
+                        <template v-slot:item.foto="{ item }">
                             <v-avatar size="30">
-                                <v-img :src="$api.url+'/'+item.foto" />                    
-                            </v-avatar>                                                                                      
+                                <v-img :src="$api.url+'/'+item.foto" />    
+                            </v-avatar>                                                                      
                         </template>
                         <template v-slot:expanded-item="{ headers, item }">
                             <td :colspan="headers.length" class="text-center">
@@ -227,7 +227,7 @@
                                     <strong>ID:</strong>{{ item.id }}
                                     <strong>created_at:</strong>{{ $date(item.created_at).format('DD/MM/YYYY HH:mm') }}
                                     <strong>updated_at:</strong>{{ $date(item.updated_at).format('DD/MM/YYYY HH:mm') }}
-                                </v-col>                    
+                                </v-col>    
                             </td>
                         </template>
                         <template v-slot:no-data>
@@ -244,7 +244,7 @@ import {mapGetters} from 'vuex';
 import AdminLayout from '@/views/layouts/AdminLayout';
 import ModuleHeader from '@/components/ModuleHeader';
 export default {
-    name: 'UsersKumham',  
+    name: 'UsersKumham',
     created () {
         this.breadcrumbs = [
             {
@@ -264,7 +264,7 @@ export default {
             }
         ];
         this.initialize()
-    },  
+    },
    
     data: () => ({ 
         role_id:0,
@@ -275,49 +275,49 @@ export default {
             { text: '', value: 'foto' },
             { text: 'USERNAME', value: 'username',sortable: true },
             { text: 'NAME', value: 'name',sortable: true },
-            { text: 'EMAIL', value: 'email',sortable: true },  
-            { text: 'NOMOR HP', value: 'nomor_hp',sortable: true },  
+            { text: 'EMAIL', value: 'email',sortable: true },
+            { text: 'NOMOR HP', value: 'nomor_hp',sortable: true },
             { text: 'AKSI', value: 'actions', sortable: false,width:100 },
         ],
         expanded: [],
         search: '',
-        daftar_users: [],  
+        daftar_users: [],
 
         //form
         form_valid: true,
         daftar_roles: [],
         dialog: false,
-        dialogEdit: false,  
+        dialogEdit: false,
         editedIndex: -1, 
         editedItem: {
             id:0,
-            username: '',  
-            password: '',  
-            name: '',  
-            email: '',  
+            username: '',
+            password: '',
+            name: '',
+            email: '',
             nomor_hp: '', 
             role_id:['kumham'],
-            created_at: '',  
+            created_at: '',
             updated_at: '',
         },
         defaultItem: {
             id:0,
-            username: '',  
-            password: '',  
-            name: '',  
-            email: '',  
+            username: '',
+            password: '',
+            name: '',
+            email: '',
             nomor_hp: '',
             role_id:['kumham'], 
-            created_at: '',  
-            updated_at: '',  
+            created_at: '',
+            updated_at: '',
         },
         //form rules        
         rule_user_name:[
-            value => !!value||"Mohon untuk di isi nama User !!!",  
-            value => /^[A-Za-z\s]*$/.test(value) || 'Nama User hanya boleh string dan spasi',       
+            value => !!value||"Mohon untuk di isi nama User !!!",
+            value => /^[A-Za-z\s]*$/.test(value) || 'Nama User hanya boleh string dan spasi',
         ], 
         rule_user_email:[
-            value => !!value||"Mohon untuk di isi email User !!!",  
+            value => !!value||"Mohon untuk di isi email User !!!",
             value => /.+@.+\..+/.test(value) || 'Format E-mail harus benar', 
         ], 
         rule_user_nomorhp:[
@@ -325,8 +325,8 @@ export default {
             value => /^\+[1-9]{1}[0-9]{1,14}$/.test(value) || 'Nomor HP hanya boleh angka dan gunakan kode negara didepan seperti +6281214553388',
         ], 
         rule_user_username:[
-            value => !!value||"Mohon untuk di isi username User !!!",  
-            value => /^[A-Za-z_]*$/.test(value) || 'Username hanya boleh string dan underscore',           
+            value => !!value||"Mohon untuk di isi username User !!!",
+            value => /^[A-Za-z_]*$/.test(value) || 'Username hanya boleh string dan underscore',
         ], 
         rule_user_password:[
             value => !!value||"Mohon untuk di isi password User !!!",
@@ -377,7 +377,7 @@ export default {
             {
                 this.expanded=[item];
             }               
-        },  
+        },
         showDialogTambahUserSuperAdmin: async function ()
         {
             await this.$ajax.get('/system/setting/roles',{
@@ -399,7 +399,7 @@ export default {
                     {
                         daftar_roles.push({
                             text:element.name,
-                            disabled: false,                   
+                            disabled: false,
                         });                        
                     }                    
                 });        
@@ -432,14 +432,14 @@ export default {
                     {
                         daftar_roles.push({
                             text:element.name,
-                            disabled: false,                   
+                            disabled: false,
                         });                        
                     }                    
                 });        
                 this.daftar_roles=daftar_roles;                                                
             });    
 
-            this.btnLoading=true;
+            this.btnLoading = true
             await this.$ajax.get('/system/users/'+item.id+'/roles',
             {
                 headers: {
@@ -450,7 +450,7 @@ export default {
                 this.btnLoading = false
                 this.dialogEdit = true;
             });   
-        },  
+        },
         close () {            
             this.btnLoading = false
             this.dialog = false;
@@ -461,11 +461,11 @@ export default {
                 this.$refs.frmdata.reset(); 
                 }, 300
             );
-        },  
+        },
         save () {
             if (this.$refs.frmdata.validate())
             {
-                this.btnLoading=true;
+                this.btnLoading = true
                 if (this.editedIndex > -1) 
                 {
                     this.$ajax.post('/system/userskumham/' + this.editedItem.id,
@@ -473,7 +473,7 @@ export default {
                             '_method': 'PUT',
                             name:this.editedItem.name,
                             email:this.editedItem.email,
-                            nomor_hp:this.editedItem.nomor_hp,  
+                            nomor_hp:this.editedItem.nomor_hp,
                             username:this.editedItem.username,
                             password:this.editedItem.password,
                             role_id:JSON.stringify(Object.assign({},this.editedItem.role_id)),
@@ -495,7 +495,7 @@ export default {
                         {
                             name:this.editedItem.name,
                             email:this.editedItem.email,
-                            nomor_hp:this.editedItem.nomor_hp,  
+                            nomor_hp:this.editedItem.nomor_hp,
                             username:this.editedItem.username,
                             password:this.editedItem.password, 
                             role_id:JSON.stringify(Object.assign({},this.editedItem.role_id)),
@@ -518,7 +518,7 @@ export default {
             this.$root.$confirm.open('Delete', 'Apakah Anda ingin menghapus username '+item.username+' ?', { color: 'red' }).then((confirm) => {
                 if (confirm)
                 {
-                    this.btnLoading=true;
+                    this.btnLoading = true
                     this.$ajax.post('/system/userskumham/'+item.id,
                         {
                             '_method': 'DELETE',
@@ -545,7 +545,7 @@ export default {
         },
         ...mapGetters('auth',{            
             ACCESS_TOKEN: 'AccessToken', 
-            TOKEN: 'Token',                         
+            TOKEN: 'Token',
         }),
     },
 
@@ -555,11 +555,11 @@ export default {
         },
         dialogEdit (val) {
             val || this.close()
-        },  
+        },
     }, 
     components: {
         AdminLayout,
-        ModuleHeader,  
+        ModuleHeader,
     },
 }
 </script>

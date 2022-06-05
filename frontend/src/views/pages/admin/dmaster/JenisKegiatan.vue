@@ -46,7 +46,7 @@
                                     inset
                                     vertical
                                 ></v-divider>
-                                <v-spacer></v-spacer>                                                    
+                                <v-spacer></v-spacer>                                    
                             </v-toolbar>
                         </template>
                         <template v-slot:expanded-item="{ headers, item }">
@@ -98,8 +98,8 @@ export default {
         datatable: [],
         headers: [
             { text: 'ID JENIS', value: 'id_jenis',width:150 },
-            { text: 'NAMA JENIS', value: 'nama_jenis' },   
-        ],     
+            { text: 'NAMA JENIS', value: 'nama_jenis' },
+        ],
     }),
     methods: {
         initialize: async function ()

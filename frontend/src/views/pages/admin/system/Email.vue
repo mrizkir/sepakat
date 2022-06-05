@@ -35,14 +35,14 @@
                             </v-card-title>
                             <v-card-text>
                                <v-row>
-                                   <v-col xs="12" sm="4" md="3">                           
+                                   <v-col xs="12" sm="4" md="3">           
                                        <v-switch v-model="formdata.email_mhs_isvalid" label="Check Email Mahasiswa Valid"></v-switch>
                                    </v-col>
                                    <v-responsive width="100%" v-if="$vuetify.breakpoint.xsOnly"/>
                                </v-row>
                             </v-card-text>
                             <v-card-actions>
-                                <v-spacer></v-spacer>                    
+                                <v-spacer></v-spacer>    
                                 <v-btn 
                                     color="blue darken-1" 
                                     text 
@@ -75,7 +75,7 @@ export default {
                 text: 'KONFIGURASI SISTEM',
                 disabled: false,
                 href: '/system-setting'
-            },  
+            },
             {
                 text: 'SERVER - EMAIL',
                 disabled: true,
@@ -85,12 +85,12 @@ export default {
         this.initialize();
     },
     data: () => ({
-        breadcrumbs: [],  
+        breadcrumbs: [],
         btnLoading: false,
         //form
         form_valid: true,
         formdata: {
-            email_mhs_isvalid: null,   
+            email_mhs_isvalid: null,
         },
         //form rules        
         
@@ -113,14 +113,14 @@ export default {
         save () {
             if (this.$refs.frmdata.validate())
             {
-                this.btnLoading=true;
+                this.btnLoading = true
                 this.$ajax.post('/system/setting/variables',
                     {
                         '_method': 'PUT', 
                         'pid': 'email',
                         setting:JSON.stringify({
-                            910:this.formdata.email_mhs_isvalid,                   
-                        }),                                                                         
+                            910:this.formdata.email_mhs_isvalid,
+                        }),
                     },
                     {
                         headers: {
@@ -138,12 +138,12 @@ export default {
     computed: { 
         ...mapGetters('auth',{            
             ACCESS_TOKEN: 'AccessToken', 
-            TOKEN: 'Token',                         
+            TOKEN: 'Token',
         }),
     },
     components: {
 		SystemConfigLayout,
-        ModuleHeader,  
+        ModuleHeader,
 	}
 }
 </script>

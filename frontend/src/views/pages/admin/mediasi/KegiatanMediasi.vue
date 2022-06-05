@@ -5,7 +5,7 @@
         mdi-calendar-blank-multiple
       </template>
       <template v-slot:name>
-        KONSULTASI KEGIATAN MEDIASI
+        KEGIATAN MEDIASI
       </template>
       <template v-slot:breadcrumbs>
         <v-breadcrumbs :items="breadcrumbs" class="pa-0">
@@ -21,7 +21,7 @@
           colored-border
           type="info"
           >
-          Halaman ini berisi daftar kegiatan konsultasi hukum paralegal
+          Halaman ini berisi daftar kegiatan mediasi yang dilakukan oleh paralegal
         </v-alert>
       </template>
     </ModuleHeader>   
@@ -85,7 +85,7 @@
                 <v-icon>
                   mdi-eye
                 </v-icon>
-              </v-btn>                   
+              </v-btn>   
               <v-btn
                 small      
                 icon                          
@@ -94,7 +94,7 @@
                 <v-icon>
                   mdi-pencil
                 </v-icon>
-              </v-btn>                                   
+              </v-btn>                   
               <v-btn
                 small
                 icon
@@ -113,7 +113,7 @@
                   <strong>ID:</strong>{{ item.id }}
                   <strong>created_at:</strong>{{ $date(item.created_at).format('DD/MM/YYYY HH:mm') }}
                   <strong>updated_at:</strong>{{ $date(item.updated_at).format('DD/MM/YYYY HH:mm') }}
-                </v-col>                    
+                </v-col>    
               </td>
             </template>
             <template v-slot:no-data>
@@ -139,7 +139,7 @@ export default {
         href: '/dashboard/' + this.$store.getters['auth/AccessToken']
       },
       {
-        text: 'KONSULTASI',
+        text: 'KEGIATAN',
         disabled: false,
         href: '#'
       },
@@ -150,7 +150,7 @@ export default {
       }
     ];
     this.initialize()
-  },  
+  },
   data: () => ({ 
     dashboard: null,
 
@@ -161,8 +161,8 @@ export default {
     headers: [                        
       { text: 'PARALEGAL', value: 'name' },
       { text: 'PEMOHON', value: 'nama_pemohon' },
-      { text: 'NAMA KEGIATAN', value: 'nama_kegiatan' },      
-      { text: 'STATUS', value: 'id_status', sortable: false, width:100 },      
+      { text: 'NAMA KEGIATAN', value: 'nama_kegiatan' },
+      { text: 'STATUS', value: 'id_status', sortable: false, width:100 },
       { text: 'AKSI', value: 'actions', sortable: false,width:150 },
     ],
     search: '', 
@@ -204,12 +204,12 @@ export default {
       // }).then(({ data }) => {
                        
       // });                      
-    },   
+    },
     deleteItem (item) {           
       this.$root.$confirm.open('Delete', 'Apakah Anda ingin menghapus data kegiatan mediasi dengan ID '+item.id+' ?', { color: 'red',width:600 }).then((confirm) => {
         if (confirm)
         {
-          this.btnLoading=true;
+          this.btnLoading = true
           this.$ajax.post('/kegiatan/mediasi/' + item.id,
             {
               '_method': 'DELETE',
@@ -229,11 +229,11 @@ export default {
           });
         }                
       });
-    },  
-  },  
+    },
+  },
   components: {
     AdminLayout,
-    ModuleHeader,  
+    ModuleHeader,
   },
 
 }

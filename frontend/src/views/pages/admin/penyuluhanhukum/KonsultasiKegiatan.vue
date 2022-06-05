@@ -85,7 +85,7 @@
                                 <v-icon>
                                     mdi-eye
                                 </v-icon>
-                            </v-btn>                   
+                            </v-btn>   
                             <v-btn
                                 small      
                                 icon                          
@@ -94,7 +94,7 @@
                                 <v-icon>
                                     mdi-pencil
                                 </v-icon>
-                            </v-btn>                                   
+                            </v-btn>                   
                             <v-btn
                                 small
                                 icon
@@ -113,7 +113,7 @@
                                     <strong>ID:</strong>{{ item.kegiatan_id }}
                                     <strong>created_at:</strong>{{ $date(item.created_at).format('DD/MM/YYYY HH:mm') }}
                                     <strong>updated_at:</strong>{{ $date(item.updated_at).format('DD/MM/YYYY HH:mm') }}
-                                </v-col>                    
+                                </v-col>    
                             </td>
                         </template>
                         <template v-slot:no-data>
@@ -150,7 +150,7 @@ export default {
             }
         ];
         this.initialize()
-    },  
+    },
     data: () => ({ 
         dashboard: null,
 
@@ -162,8 +162,8 @@ export default {
             { text: 'PARALEGAL', value: 'name' },
             { text: 'PEMOHON', value: 'pemohon' },
             { text: 'JENIS KEGIATAN', value: 'nama_jenis' },
-            { text: 'NAMA KEGIATAN', value: 'nama_kegiatan' },      
-            { text: 'STATUS', value: 'id_status', sortable: false, width:100 },      
+            { text: 'NAMA KEGIATAN', value: 'nama_kegiatan' },
+            { text: 'STATUS', value: 'id_status', sortable: false, width:100 },
             { text: 'AKSI', value: 'actions', sortable: false,width:150 },
         ],
         search: '', 
@@ -205,12 +205,12 @@ export default {
             // }).then(({ data }) => {
                                            
             // });                      
-        },   
+        },
         deleteItem (item) {           
             this.$root.$confirm.open('Delete', 'Apakah Anda ingin menghapus data konsultasi kegiatan dengan ID '+item.kegiatan_id+' ?', { color: 'red',width:600 }).then((confirm) => {
                 if (confirm)
                 {
-                    this.btnLoading=true;
+                    this.btnLoading = true
                     this.$ajax.post('/konsultasi/kegiatan/'+item.kegiatan_id,
                         {
                             '_method': 'DELETE',
@@ -229,11 +229,11 @@ export default {
                     });
                 }                
             });
-        },  
-    },  
+        },
+    },
     components: {
         AdminLayout,
-        ModuleHeader,  
+        ModuleHeader,
     },
 
 }

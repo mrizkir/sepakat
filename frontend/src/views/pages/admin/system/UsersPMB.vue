@@ -81,25 +81,25 @@
                                     @click.stop="showDialogTambahUserPEMDA">
                                     TAMBAH
                                 </v-btn>
-                                <v-dialog v-model="dialog" max-width="500px" persistent>                        
+                                <v-dialog v-model="dialog" max-width="500px" persistent>        
                                     <v-form ref="frmdata" v-model="form_valid" lazy-validation>
                                         <v-card>
                                             <v-card-title>
                                                 <span class="headline">{{ formTitle }}</span>
-                                            </v-card-title>                                
+                                            </v-card-title>                
                                             <v-card-text>     
                                                 <v-text-field 
                                                     v-model="editedItem.name" 
                                                     label="NAMA USER"
                                                     outlined
                                                     :rules="rule_user_name">
-                                                </v-text-field>                                                                                   
+                                                </v-text-field>                                                                   
                                                 <v-text-field 
                                                     v-model="editedItem.email" 
                                                     label="EMAIL"
                                                     outlined
                                                     :rules="rule_user_email">
-                                                </v-text-field>                                            
+                                                </v-text-field>                            
                                                 <v-text-field 
                                                     v-model="editedItem.nomor_hp" 
                                                     label="NOMOR HP"
@@ -118,7 +118,7 @@
                                                     :type="'password'"
                                                     outlined
                                                     :rules="rule_user_password">
-                                                </v-text-field>                                    
+                                                </v-text-field>                    
                                                 <v-autocomplete 
                                                     :items="daftar_roles" 
                                                     v-model="editedItem.role_id"
@@ -126,8 +126,8 @@
                                                     multiple 
                                                     small-chips
                                                     :rules="rule_user_roles"
-                                                    outlined>                                                                    
-                                                </v-autocomplete>                                                                              
+                                                    outlined>                                                    
+                                                </v-autocomplete>                                                              
                                             </v-card-text>
                                             <v-card-actions>
                                                 <v-spacer></v-spacer>
@@ -149,8 +149,8 @@
                                         <v-card>
                                             <v-card-title>
                                                 <span class="headline">{{ formTitle }}</span>
-                                            </v-card-title>                                
-                                            <v-card-text>                                                                                    
+                                            </v-card-title>                
+                                            <v-card-text>                                                                    
                                                 <v-text-field 
                                                     v-model="editedItem.name" 
                                                     label="NAMA USER"
@@ -181,7 +181,7 @@
                                                     :type="'password'"
                                                     outlined
                                                     :rules="rule_user_passwordEdit">
-                                                </v-text-field>                                       
+                                                </v-text-field>                       
                                                 <v-autocomplete 
                                                     :items="daftar_roles" 
                                                     v-model="editedItem.role_id"
@@ -189,8 +189,8 @@
                                                     multiple 
                                                     small-chips
                                                     :rules="rule_user_roles"
-                                                    outlined>                                                                    
-                                                </v-autocomplete>                                 
+                                                    outlined>                                                    
+                                                </v-autocomplete>                 
                                             </v-card-text>
                                             <v-card-actions>
                                                 <v-spacer></v-spacer>
@@ -205,7 +205,7 @@
                                         </v-card>
                                     </v-form>
                                 </v-dialog>
-                                <v-dialog v-model="dialogUserPermission" max-width="800px" persistent>                                                        
+                                <v-dialog v-model="dialogUserPermission" max-width="800px" persistent>                                        
                                     <UserPermissions :user="editedItem" :daftarpermissions="daftar_permissions" :permissionsselected="permissions_selected" v-on:closeUserPermissions="closeUserPermissions" />
                                 </v-dialog>
                             </v-toolbar>
@@ -238,10 +238,10 @@
                                 mdi-delete
                             </v-icon>
                         </template>
-                        <template v-slot:item.foto="{ item }">                
+                        <template v-slot:item.foto="{ item }">
                             <v-avatar size="30">
-                                <v-img :src="$api.url+'/'+item.foto" />                    
-                            </v-avatar>                                                                                      
+                                <v-img :src="$api.url+'/'+item.foto" />    
+                            </v-avatar>                                                                      
                         </template>
                         <template v-slot:expanded-item="{ headers, item }">
                             <td :colspan="headers.length" class="text-center">
@@ -249,7 +249,7 @@
                                     <strong>ID:</strong>{{ item.id }}
                                     <strong>created_at:</strong>{{ $date(item.created_at).format('DD/MM/YYYY HH:mm') }}
                                     <strong>updated_at:</strong>{{ $date(item.updated_at).format('DD/MM/YYYY HH:mm') }}
-                                </v-col>                    
+                                </v-col>    
                             </td>
                         </template>
                         <template v-slot:no-data>
@@ -267,7 +267,7 @@ import AdminLayout from '@/views/layouts/AdminLayout';
 import ModuleHeader from '@/components/ModuleHeader';
 import UserPermissions from '@/views/pages/admin/system/UserPermissions';
 export default {
-    name: 'UsersPEMDA',  
+    name: 'UsersPEMDA',
     created () {
         this.breadcrumbs = [
             {
@@ -287,7 +287,7 @@ export default {
             }
         ];
         this.initialize()
-    },  
+    },
    
     data: () => ({ 
         role_id:0,
@@ -299,8 +299,8 @@ export default {
             { text: '', value: 'foto' },
             { text: 'USERNAME', value: 'username',sortable: true },
             { text: 'NAME', value: 'name',sortable: true },
-            { text: 'EMAIL', value: 'email',sortable: true },  
-            { text: 'NOMOR HP', value: 'nomor_hp',sortable: true },        
+            { text: 'EMAIL', value: 'email',sortable: true },
+            { text: 'NOMOR HP', value: 'nomor_hp',sortable: true }, 
             { text: 'AKSI', value: 'actions', sortable: false,width:100 },
         ],
         expanded: [],
@@ -320,33 +320,33 @@ export default {
         
         editedItem: {
             id:0,
-            username: '',  
-            password: '',  
-            name: '',  
-            email: '',  
-            nomor_hp: '',              
-            role_id:['pmb'],                   
-            created_at: '',  
+            username: '',
+            password: '',
+            name: '',
+            email: '',
+            nomor_hp: '',
+            role_id:['pmb'],
+            created_at: '',
             updated_at: '',
         },
         defaultItem: {
             id:0,
-            username: '',  
-            password: '',  
-            name: '',  
-            email: '',  
-            nomor_hp: '',     
-            role_id:['pmb'],                                     
-            created_at: '',  
-            updated_at: '',  
+            username: '',
+            password: '',
+            name: '',
+            email: '',
+            nomor_hp: '',
+            role_id:['pmb'], 
+            created_at: '',
+            updated_at: '',
         },
         //form rules        
         rule_user_name:[
-            value => !!value||"Mohon untuk di isi nama User !!!",  
-            value => /^[A-Za-z\s]*$/.test(value) || 'Nama User hanya boleh string dan spasi',       
+            value => !!value||"Mohon untuk di isi nama User !!!",
+            value => /^[A-Za-z\s]*$/.test(value) || 'Nama User hanya boleh string dan spasi',
         ], 
         rule_user_email:[
-            value => !!value||"Mohon untuk di isi email User !!!",  
+            value => !!value||"Mohon untuk di isi email User !!!",
             value => /.+@.+\..+/.test(value) || 'Format E-mail harus benar', 
         ], 
         rule_user_nomorhp:[
@@ -354,8 +354,8 @@ export default {
             value => /^\+[1-9]{1}[0-9]{1,14}$/.test(value) || 'Nomor HP hanya boleh angka dan gunakan kode negara didepan seperti +6281214553388',
         ], 
         rule_user_username:[
-            value => !!value||"Mohon untuk di isi username User !!!",  
-            value => /^[A-Za-z_]*$/.test(value) || 'Username hanya boleh string dan underscore',           
+            value => !!value||"Mohon untuk di isi username User !!!",
+            value => /^[A-Za-z_]*$/.test(value) || 'Username hanya boleh string dan underscore',
         ], 
         rule_user_password:[
             value => !!value||"Mohon untuk di isi password User !!!",
@@ -412,10 +412,10 @@ export default {
         },
         syncPermission: async function ()
         {
-            this.btnLoading=true;
+            this.btnLoading = true
             await this.$ajax.post('/system/users/syncallpermissions',
                 {
-                    role_name: 'pmb',           
+                    role_name: 'pmb',
                 },
                 {
                     headers: {
@@ -474,7 +474,7 @@ export default {
                 this.daftar_roles=daftar_roles;                                                
             });    
 
-            this.btnLoading=true;
+            this.btnLoading = true
             await this.$ajax.get('/system/users/'+item.id+'/roles',
             {
                 headers: {
@@ -489,7 +489,7 @@ export default {
             this.firstShowDialogEdit=false;
         },
         setPermission: async function (item) {          
-            this.btnLoading=true;  
+            this.btnLoading = true  
             this.$ajax.get('/system/setting/roles/' + this.role_id+'/permission',{
                 headers: {
                     Authorization:this.TOKEN
@@ -535,7 +535,7 @@ export default {
         save () {
             if (this.$refs.frmdata.validate())
             {
-                this.btnLoading=true;
+                this.btnLoading = true
                 if (this.editedIndex > -1) 
                 {
                     this.$ajax.post('/system/userspmb/' + this.editedItem.id,
@@ -543,9 +543,9 @@ export default {
                             '_method': 'PUT',
                             name:this.editedItem.name,
                             email:this.editedItem.email,
-                            nomor_hp:this.editedItem.nomor_hp,  
+                            nomor_hp:this.editedItem.nomor_hp,
                             username:this.editedItem.username,
-                            password:this.editedItem.password,                      
+                            password:this.editedItem.password,
                             role_id:JSON.stringify(Object.assign({},this.editedItem.role_id)),
                         },
                         {
@@ -565,10 +565,10 @@ export default {
                         {
                             name:this.editedItem.name,
                             email:this.editedItem.email,
-                            nomor_hp:this.editedItem.nomor_hp,  
+                            nomor_hp:this.editedItem.nomor_hp,
                             username:this.editedItem.username,
-                            password:this.editedItem.password,                               
-                            role_id:JSON.stringify(Object.assign({},this.editedItem.role_id)),                
+                            password:this.editedItem.password,
+                            role_id:JSON.stringify(Object.assign({},this.editedItem.role_id)),
                         },
                         {
                             headers: {
@@ -588,7 +588,7 @@ export default {
             this.$root.$confirm.open('Delete', 'Apakah Anda ingin menghapus username '+item.username+' ?', { color: 'red' }).then((confirm) => {
                 if (confirm)
                 {
-                    this.btnLoading=true;
+                    this.btnLoading = true
                     this.$ajax.post('/system/userspmb/'+item.id,
                         {
                             '_method': 'DELETE',
@@ -615,7 +615,7 @@ export default {
         },
         ...mapGetters('auth',{            
             ACCESS_TOKEN: 'AccessToken', 
-            TOKEN: 'Token',                         
+            TOKEN: 'Token',
         }),
     },
 
@@ -625,7 +625,7 @@ export default {
         },
         dialogEdit (val) {
             val || this.close()
-        },     
+        },
     }, 
     components: {
         AdminLayout,

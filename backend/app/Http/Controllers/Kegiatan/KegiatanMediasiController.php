@@ -159,10 +159,10 @@ class KegiatanMediasiController extends Controller
 		if ($kegiatan == null)
 		{
 			return Response()->json([
-									'status'=>0,
-									'pid'=>'store',                
-									'message'=>["Data kegiatan mediasi tidak ditemukan."]
-								],422);         
+				'status'=>0,
+				'pid'=>'store',                
+				'message'=>["Data kegiatan mediasi tidak ditemukan."]
+			],422);         
 		}
 		else
 		{
@@ -366,13 +366,24 @@ class KegiatanMediasiController extends Controller
 			
 			$kegiatan->save();
 			
+			\DB::table('kegiatan')
+			->where('kegiatan_id', $kegiatan->id)
+			->update([				
+				'user_id'=>$request->input('user_id'),                
+				'tanggal'=>$tanggal_pelaksanaan,                
+				'tempat'=>$request->input('tempat_pelaksanaan'),                				             
+				'nama_kegiatan'=>$request->input('nama_kegiatan'),                
+				'pemohon'=>$request->input('nama_pemohon'),                
+				'uraian_kegiatan'=>$request->input('uraian_kegiatan'),                
+				'rekomendasi_kegiatan'=>$request->input('rekomendasi_kegiatan'),                				                          
+			]);
 
 			return Response()->json([
-										'status'=>1,
-										'pid'=>'update',
-										'kegiatan'=>$kegiatan,
-										'message'=>"Update Kegiatan mediasi berhasil diperoleh"
-									],200);
+				'status'=>1,
+				'pid'=>'update',
+				'kegiatan'=>$kegiatan,
+				'message'=>"Update Kegiatan mediasi berhasil diperoleh"
+			],200);
 		}
 	}
 	public function verifikasi(Request $request,$id)
@@ -397,6 +408,12 @@ class KegiatanMediasiController extends Controller
 				$kegiatan->id_status=1;
 				$kegiatan->save();
 
+				\DB::table('kegiatan')
+				->where('kegiatan_id', $kegiatan->id)
+				->update([
+					'id_status' => 1,
+				]);
+				
 				return Response()->json([
 										'status'=>1,
 										'pid'=>'update',

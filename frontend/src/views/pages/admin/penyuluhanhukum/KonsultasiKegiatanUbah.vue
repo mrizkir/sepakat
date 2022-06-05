@@ -91,7 +91,7 @@
                                         <v-spacer></v-spacer>
                                         <v-btn text color="primary" @click="menuTanggalKonsultasi = false">Cancel</v-btn>
                                         <v-btn text color="primary" @click="$refs.menuTanggalKonsultasi.save(formdata.tanggal_konsultasi)">OK</v-btn>
-                                    </v-date-picker>                        
+                                    </v-date-picker>        
                                 </v-menu>
                                 <v-menu
                                     ref="menuJamKonsultasi"
@@ -127,7 +127,7 @@
                                     v-model="formdata.tempat"
                                     :rules="rule_tempat"
                                     filled
-                                />                    
+                                />    
                                 <v-text-field
                                     label="PESERTA / PEMOHON"                                        
                                     v-model="formdata.pemohon"
@@ -191,7 +191,7 @@ export default {
             }
         ];
         this.initialize()
-    },  
+    },
     data: () => ({ 
         dashboard: null,
 
@@ -211,7 +211,7 @@ export default {
             uraian_kegiatan: '',
             tanggal_konsultasi: '',
             jam_konsultasi: '',
-            tempat: '',   
+            tempat: '',
             pemohon: '',
             rekomendasi_kegiatan: '',
         },
@@ -222,33 +222,33 @@ export default {
             uraian_kegiatan: '',
             tanggal_konsultasi: '',
             jam_konsultasi: '',
-            tempat: '',   
+            tempat: '',
             pemohon: '',
             rekomendasi_kegiatan: '',
         },
         rule_user_id:[
-            value => !!value||"Mohon untuk dipilih paralegal !!!",     
+            value => !!value||"Mohon untuk dipilih paralegal !!!",
         ],
         rule_nama_kegiatan:[
-            value => !!value||"Mohon untuk diisi nama kegiata konsultasi !!!",    
+            value => !!value||"Mohon untuk diisi nama kegiata konsultasi !!!", 
         ],
         rule_uraian_kegiatan:[
-            value => !!value||"Mohon untuk diisi uraian kegiatan konsultasi !!!",    
+            value => !!value||"Mohon untuk diisi uraian kegiatan konsultasi !!!", 
         ],
         rule_tanggal_konsultasi:[
-            value => !!value||"Mohon untuk diisi tanggal kegiatan konsultasi !!!",    
+            value => !!value||"Mohon untuk diisi tanggal kegiatan konsultasi !!!", 
         ],
         rule_jam_konsultasi:[
-            value => !!value||"Mohon untuk diisi jam kegiatan konsultasi !!!",    
+            value => !!value||"Mohon untuk diisi jam kegiatan konsultasi !!!", 
         ],
         rule_tempat:[
-            value => !!value||"Mohon untuk diisi tempat kegiatan konsultasi !!!",    
-        ],  
+            value => !!value||"Mohon untuk diisi tempat kegiatan konsultasi !!!", 
+        ],
         rule_pemohon:[
-            value => !!value||"Mohon untuk diisi pemohon / peserta kegiatan konsultasi !!!",    
+            value => !!value||"Mohon untuk diisi pemohon / peserta kegiatan konsultasi !!!", 
         ],
         rule_rekomendasi_kegiatan:[
-            value => !!value||"Mohon untuk diisi rekomendasi kegiatan konsultasi !!!",    
+            value => !!value||"Mohon untuk diisi rekomendasi kegiatan konsultasi !!!", 
         ],
         
     }),
@@ -293,7 +293,7 @@ export default {
         save: async function () {
             if (this.$refs.frmdata.validate())
             {
-                this.btnLoading=true;                
+                this.btnLoading = true                
                 await this.$ajax.post('/konsultasi/kegiatan/' + this.kegiatan_id,
                     {
                         _method: 'put',
@@ -304,7 +304,7 @@ export default {
                         id_jenis:this.formdata.id_jenis_kegiatan.id_jenis,
                         nama_jenis:this.formdata.id_jenis_kegiatan.nama_jenis,
                         nama_kegiatan:this.formdata.nama_kegiatan,
-                        pemohon:this.formdata.pemohon,               
+                        pemohon:this.formdata.pemohon,
                         uraian_kegiatan:this.formdata.uraian_kegiatan,
                         rekomendasi_kegiatan:this.formdata.rekomendasi_kegiatan,
                     },
@@ -332,10 +332,10 @@ export default {
                 }, 300
             );
         },
-    },  
+    },
     components: {
         AdminLayout,
-        ModuleHeader,  
+        ModuleHeader,
     },
 
 }

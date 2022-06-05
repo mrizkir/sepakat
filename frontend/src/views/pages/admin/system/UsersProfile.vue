@@ -75,7 +75,7 @@
                                 </v-text-field> 
                             </v-card-text>
                             <v-card-actions>
-                                <v-spacer></v-spacer>                    
+                                <v-spacer></v-spacer>    
                                 <v-btn 
                                     color="blue darken-1" 
                                     text 
@@ -123,22 +123,22 @@ export default {
             //form data   
             form_valid: true,
             formdata: {
-                id:0,               
-                foto: null,  
-                password: '',              
-                created_at: '',  
-                updated_at: '',  
+                id:0,
+                foto: null,
+                password: '',
+                created_at: '',
+                updated_at: '',
             },
             formdefault: {
-                id:0,  
+                id:0,
                 foto: null, 
-                password: '',                         
-                created_at: '',  
+                password: '',
+                created_at: '',
                 updated_at: '', 
             },
             //form rules  
             rule_foto:[
-                value => !!value||"Mohon pilih gambar !!!",  
+                value => !!value||"Mohon pilih gambar !!!",
                 value =>  !value || value.size < 2000000 || 'File foto harus kurang dari 2MB.'                
             ], 
             rule_user_password:[
@@ -160,11 +160,11 @@ export default {
         {
             if (this.$refs.frmdata.validate())
             {
-                this.btnLoading=true;
+                this.btnLoading = true
                 this.$ajax.post('/system/users/updatepassword/' + this.$store.getters['auth/AttributeUser']('id'),
                     {
-                        '_method': 'PUT',               
-                        password:this.formdata.password,                  
+                        '_method': 'PUT',
+                        password:this.formdata.password,
                     },
                     {
                         headers: {
@@ -203,13 +203,13 @@ export default {
             {
                 if (this.formdata.foto)
                 {                
-                    this.btnLoading=true;
+                    this.btnLoading = true
                     var formdata = new FormData();
                     formdata.append('foto',this.formdata.foto);
-                    await this.$ajax.post('/setting/users/uploadfoto/' + this.$store.getters.User.id,formdata,           
+                    await this.$ajax.post('/setting/users/uploadfoto/' + this.$store.getters.User.id,formdata,
                         {
                             headers: {
-                                Authorization:this.$store.getters['auth/Token'],  
+                                Authorization:this.$store.getters['auth/Token'],
                                 'Content-Type': 'multipart/form-data'                      
                             }
                         }
@@ -225,11 +225,11 @@ export default {
         },
         resetFoto: async function () 
         {
-            this.btnLoading=true;
-            await this.$ajax.post('/setting/users/resetfoto/' + this.$store.getters.User.id,{},           
+            this.btnLoading = true
+            await this.$ajax.post('/setting/users/resetfoto/' + this.$store.getters.User.id,{},
                 {
                     headers: {
-                        Authorization:this.$store.getters['auth/Token'],                     
+                        Authorization:this.$store.getters['auth/Token'],
                     }
                 }
             ).then(({ data }) => {            

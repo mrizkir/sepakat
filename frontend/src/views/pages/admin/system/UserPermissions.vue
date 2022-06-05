@@ -38,7 +38,7 @@
                                             </v-card-text>
                                         </v-card>
                                    </v-col>
-                                   <v-responsive width="100%" v-if="$vuetify.breakpoint.xsOnly"/>                       
+                                   <v-responsive width="100%" v-if="$vuetify.breakpoint.xsOnly"/>       
                                    <v-col xs="12" sm="6" md="6">
                                        <v-card flat>
                                             <v-card-title>THEME :</v-card-title>
@@ -46,7 +46,7 @@
                                                 {{user.theme}}
                                             </v-card-text>
                                         </v-card>
-                                   </v-col>                        
+                                   </v-col>        
                                    <v-responsive width="100%" v-if="$vuetify.breakpoint.xsOnly"/>
                                 </v-row>
                                 <v-row no-gutters>
@@ -62,7 +62,7 @@
                                     <v-col xs="12" sm="6" md="6">
                                        <v-card flat>
                                             <v-card-title>DEFAULT ROLE :</v-card-title>
-                                            <v-card-text>                                    
+                                            <v-card-text>                    
                                                 {{user.default_role}}
                                             </v-card-text>
                                         </v-card>
@@ -82,7 +82,7 @@
                                    <v-col xs="12" sm="6" md="6">
                                        <v-card flat>
                                             <v-card-title>CREATED / UPDATED :</v-card-title>
-                                            <v-card-text>                                    
+                                            <v-card-text>                    
                                                 {{$date(user.created_at).format('DD/MM/YYYY HH:mm')}} / {{$date(user.updated_at).format('DD/MM/YYYY HH:mm')}}
                                             </v-card-text>
                                         </v-card>
@@ -120,7 +120,7 @@
                             show-select
                             class="elevation-1"
                         >
-                        <template v-slot:item.actions="{ item }">                
+                        <template v-slot:item.actions="{ item }">
                             <v-icon
                                 small
                                 :loading="btnLoading"
@@ -162,14 +162,14 @@ export default {
             { text: 'GUARD', value: 'guard_name' },
             { text: 'AKSI', value: 'actions', sortable: false,width:100 },
         ],
-        search: '',  
+        search: '',
         perm_selected: [],
         perm_revoked: []
     }),
     methods: {        
         save()
         {
-            this.btnLoading=true;
+            this.btnLoading = true
             this.$ajax.post('/system/users/storeuserpermissions',
                 {
                     user_id:this.user.id,
@@ -188,7 +188,7 @@ export default {
         },
         revoke(item)
         {   
-            this.btnLoading=true;         
+            this.btnLoading = true         
             this.$ajax.post('/system/users/revokeuserpermissions',
                 {
                     user_id:this.user.id,
@@ -219,7 +219,7 @@ export default {
     },
     computed: {
         ...mapGetters('auth',{                        
-            TOKEN: 'Token',                         
+            TOKEN: 'Token',
         }),
         daftar_permissions()
         {

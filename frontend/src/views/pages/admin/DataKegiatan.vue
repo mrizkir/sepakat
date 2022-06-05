@@ -15,7 +15,7 @@
         </v-toolbar>
         <v-card-text>
             <v-row>
-                <v-col xs="12" sm="6" md="4">                        
+                <v-col xs="12" sm="6" md="4">        
                     <v-card flat>
                         <v-card-title>ID:</v-card-title>  
                         <v-card-subtitle>
@@ -24,7 +24,7 @@
                     </v-card>
                 </v-col>
                 <v-responsive width="100%" v-if="$vuetify.breakpoint.xsOnly"/>
-                <v-col xs="12" sm="6" md="4">                        
+                <v-col xs="12" sm="6" md="4">        
                     <v-card flat>
                         <v-card-title>JENIS KEGIATAN:</v-card-title>  
                         <v-card-subtitle>
@@ -33,7 +33,7 @@
                     </v-card>
                 </v-col>
                 <v-responsive width="100%" v-if="$vuetify.breakpoint.xsOnly"/>
-                <v-col xs="12" sm="6" md="4">                        
+                <v-col xs="12" sm="6" md="4">        
                     <v-card flat>
                         <v-card-title>PEMOHON / PESERTA:</v-card-title>  
                         <v-card-subtitle>
@@ -44,7 +44,7 @@
                 <v-responsive width="100%" v-if="$vuetify.breakpoint.xsOnly"/>
             </v-row>
             <v-row>
-                <v-col xs="12" sm="6" md="4">                        
+                <v-col xs="12" sm="6" md="4">        
                     <v-card flat>
                         <v-card-title>NAMA KEGIATAN:</v-card-title>  
                         <v-card-subtitle>
@@ -53,10 +53,10 @@
                     </v-card>
                 </v-col>
                 <v-responsive width="100%" v-if="$vuetify.breakpoint.xsOnly"/>
-                <v-col xs="12" sm="6" md="4">                        
+                <v-col xs="12" sm="6" md="4">        
                     <v-card flat>
                         <v-card-title>STATUS:</v-card-title>  
-                        <v-card-subtitle>                
+                        <v-card-subtitle>
                             <v-chip :color="datakegiatan.id_status==1?'success': 'blue-grey lighten-3'" dark>
                                 {{datakegiatan.id_status==1?'SETUJU': 'DRAFT'}}
                             </v-chip>
@@ -64,7 +64,7 @@
                     </v-card>
                 </v-col>
                 <v-responsive width="100%" v-if="$vuetify.breakpoint.xsOnly"/>
-                <v-col xs="12" sm="6" md="4">                        
+                <v-col xs="12" sm="6" md="4">        
                     <v-card flat>
                         <v-card-title>CREATED / UPDATED:</v-card-title>  
                         <v-card-subtitle>

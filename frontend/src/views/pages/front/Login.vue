@@ -12,10 +12,10 @@
                         icon="mdi-close-octagon-outline"
                     >
                         Username atau Password tidak dikenal !.
-                    </v-alert>                    
+                    </v-alert>    
                     <v-form ref="frmlogin" lazy-validation>
                         <v-card outlined>
-                            <v-card-text>                    
+                            <v-card-text>    
                                 <v-text-field 
                                     v-model="formlogin.username"
                                     label="Username" 
@@ -80,7 +80,7 @@ export default {
         {
             if (this.$refs.frmlogin.validate())
             {
-                this.btnLoading=true;                
+                this.btnLoading = true                
                 await this.$ajax.post('/auth/login',{                    
                     username:this.formlogin.username,
                     password:this.formlogin.password

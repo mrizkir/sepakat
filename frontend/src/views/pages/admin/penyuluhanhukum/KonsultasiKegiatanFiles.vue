@@ -44,7 +44,7 @@
                         </v-toolbar>
                         <v-card-text>
                             <v-row>
-                                <v-col xs="12" sm="6" md="4">                        
+                                <v-col xs="12" sm="6" md="4">        
                                     <v-card flat>
                                         <v-card-title>ID:</v-card-title>  
                                         <v-card-subtitle>
@@ -53,7 +53,7 @@
                                     </v-card>
                                 </v-col>
                                 <v-responsive width="100%" v-if="$vuetify.breakpoint.xsOnly"/>
-                                <v-col xs="12" sm="6" md="4">                        
+                                <v-col xs="12" sm="6" md="4">        
                                     <v-card flat>
                                         <v-card-title>JENIS KEGIATAN:</v-card-title>  
                                         <v-card-subtitle>
@@ -62,7 +62,7 @@
                                     </v-card>
                                 </v-col>
                                 <v-responsive width="100%" v-if="$vuetify.breakpoint.xsOnly"/>
-                                <v-col xs="12" sm="6" md="4">                        
+                                <v-col xs="12" sm="6" md="4">        
                                     <v-card flat>
                                         <v-card-title>PEMOHON / PESERTA:</v-card-title>  
                                         <v-card-subtitle>
@@ -73,7 +73,7 @@
                                 <v-responsive width="100%" v-if="$vuetify.breakpoint.xsOnly"/>
                             </v-row>
                             <v-row>
-                                <v-col xs="12" sm="6" md="4">                        
+                                <v-col xs="12" sm="6" md="4">        
                                     <v-card flat>
                                         <v-card-title>NAMA KEGIATAN:</v-card-title>  
                                         <v-card-subtitle>
@@ -82,7 +82,7 @@
                                     </v-card>
                                 </v-col>
                                 <v-responsive width="100%" v-if="$vuetify.breakpoint.xsOnly"/>
-                                <v-col xs="12" sm="6" md="4">                        
+                                <v-col xs="12" sm="6" md="4">        
                                     <v-card flat>
                                         <v-card-title>STATUS:</v-card-title>  
                                         <v-card-subtitle>
@@ -91,7 +91,7 @@
                                     </v-card>
                                 </v-col>
                                 <v-responsive width="100%" v-if="$vuetify.breakpoint.xsOnly"/>
-                                <v-col xs="12" sm="6" md="4">                        
+                                <v-col xs="12" sm="6" md="4">        
                                     <v-card flat>
                                         <v-card-title>CREATED / UPDATED:</v-card-title>  
                                         <v-card-subtitle>
@@ -107,7 +107,7 @@
             </v-row>
             <v-row>
                 <v-col xs="12" sm="6" md="4">  
-                    <v-form v-model="form_valid_daftar_hadir" ref="frmuploaddaftarhadir" lazy-validation>                                                                              
+                    <v-form v-model="form_valid_daftar_hadir" ref="frmuploaddaftarhadir" lazy-validation>                                                              
                         <v-card>
                             <v-card-title>
                                 DAFTAR HADIR
@@ -127,17 +127,17 @@
                                     color="green"
                                     text
                                     :href="this.$api.url+'/'+data_kegiatan.file_daftar_hadir"
-                                    v-if="data_kegiatan.file_daftar_hadir">                       
+                                    v-if="data_kegiatan.file_daftar_hadir">       
                                     Lihat
-                                </v-btn>                                         
-                                <v-spacer/>                          
+                                </v-btn>                         
+                                <v-spacer/>          
                                 <v-btn
                                     color="orange"
                                     text
                                     @click="uploadDaftarHadir"
                                     :loading="btnLoadingUploadDaftarHadir"                                
                                     :disabled="!form_valid_daftar_hadir||btnLoadingUploadDaftarHadir"
-                                    v-if="dashboard=='paralegal'||dashboard=='kumham'||dashboard=='superadmin'">                       
+                                    v-if="dashboard=='paralegal'||dashboard=='kumham'||dashboard=='superadmin'">       
                                     Upload
                                 </v-btn>
                                 <v-btn
@@ -148,14 +148,14 @@
                                     :disabled="btnLoadingHapusDaftarHadir"
                                     v-if="dashboard=='paralegal'||dashboard=='kumham'||dashboard=='superadmin'">       
                                     Hapus
-                                </v-btn>                
+                                </v-btn>
                             </v-card-actions>
                         </v-card>   
                     </v-form>
                 </v-col>
                 <v-responsive width="100%" v-if="$vuetify.breakpoint.xsOnly"/>
                 <v-col xs="12" sm="6" md="4">   
-                    <v-form v-model="form_valid_dokumentasi_kegiatan" ref="frmuploaddokumentasikegiatan" lazy-validation>                                            
+                    <v-form v-model="form_valid_dokumentasi_kegiatan" ref="frmuploaddokumentasikegiatan" lazy-validation>                            
                         <v-card>
                             <v-card-title>
                                 DOKUMENTASI KEGIATAN
@@ -168,24 +168,24 @@
                                     show-size
                                     v-model="filedokumentasikegiatan"
                                     v-if="dashboard=='paralegal'||dashboard=='kumham'||dashboard=='superadmin'">
-                                </v-file-input>                    
+                                </v-file-input>    
                             </v-card-text>
                             <v-card-actions> 
                                 <v-btn
                                     color="green"
                                     text
                                     :href="this.$api.url+'/'+data_kegiatan.file_dokumentasi_kegiatan"
-                                    v-if="data_kegiatan.file_dokumentasi_kegiatan">                                                          
+                                    v-if="data_kegiatan.file_dokumentasi_kegiatan">                                          
                                     Lihat
                                 </v-btn>               
-                                <v-spacer/>                          
+                                <v-spacer/>          
                                 <v-btn
                                     color="orange"
                                     text
                                     @click="uploadDokumentasiKegiatan"
                                     :loading="btnLoadingUploadDokumentasiKegiatan"                                
                                     :disabled="!form_valid_dokumentasi_kegiatan||btnLoadingUploadDokumentasiKegiatan"
-                                    v-if="dashboard=='paralegal'||dashboard=='kumham'||dashboard=='superadmin'">                       
+                                    v-if="dashboard=='paralegal'||dashboard=='kumham'||dashboard=='superadmin'">       
                                     Upload
                                 </v-btn>
                                 <v-btn
@@ -194,18 +194,18 @@
                                     @click="hapusDokumentasiKegiatan"
                                     :loading="btnLoadingHapusDokumentasiKegiatan"                                
                                     :disabled="btnLoadingHapusDokumentasiKegiatan"
-                                    v-if="dashboard=='paralegal'||dashboard=='kumham'||dashboard=='superadmin'">                                          
+                                    v-if="dashboard=='paralegal'||dashboard=='kumham'||dashboard=='superadmin'">                          
                                     Hapus
-                                </v-btn>                
+                                </v-btn>
                             </v-card-actions>
                         </v-card>   
                     </v-form>
                 </v-col>
                 <v-responsive width="100%" v-if="$vuetify.breakpoint.xsOnly"/>
                 <v-col xs="12" sm="6" md="4"> 
-                    <v-form v-model="form_valid_ktp" ref="frmuploadktp" lazy-validation>                       
+                    <v-form v-model="form_valid_ktp" ref="frmuploadktp" lazy-validation>       
                         <v-card class="mx-auto" max-width="400">
-                            <v-img class="white--text align-end" height="200px" :src="ktpPemohon"></v-img>                
+                            <v-img class="white--text align-end" height="200px" :src="ktpPemohon"></v-img>
                             <v-card-title>
                                 KTP PEMOHON
                             </v-card-title>
@@ -220,15 +220,15 @@
                                     v-if="dashboard=='paralegal'||dashboard=='kumham'||dashboard=='superadmin'">
                                 </v-file-input>
                             </v-card-text>
-                            <v-card-actions>                
-                                <v-spacer/>                          
+                            <v-card-actions>
+                                <v-spacer/>          
                                 <v-btn
                                     color="orange"
                                     text
                                     @click="uploadKtpPemohon"
                                     :loading="btnLoadingUploadKTP"                                
                                     :disabled="!form_valid_ktp||btnLoadingUploadKTP"
-                                    v-if="dashboard=='paralegal'||dashboard=='kumham'||dashboard=='superadmin'">                       
+                                    v-if="dashboard=='paralegal'||dashboard=='kumham'||dashboard=='superadmin'">       
                                     Upload
                                 </v-btn>
                                 <v-btn
@@ -239,7 +239,7 @@
                                     :disabled="btnLoadingHapusKTP"
                                     v-if="dashboard=='paralegal'||dashboard=='kumham'||dashboard=='superadmin'">       
                                     Hapus
-                                </v-btn>                
+                                </v-btn>
                             </v-card-actions>
                         </v-card>   
                     </v-form>
@@ -272,7 +272,7 @@ export default {
                 text: 'KEGIATAN',
                 disabled: false,
                 href: '/konsultasi/kegiatan/' + this.kegiatan_id+'/detail'
-            },  
+            },
             {
                 text: 'FILES',
                 disabled: true,
@@ -280,7 +280,7 @@ export default {
             }
         ];
         this.initialize()
-    },  
+    },
     data: () => ({ 
         dashboard: null,
 
@@ -307,15 +307,15 @@ export default {
         filektppemohon: null,
         
         rule_filedaftarhadir:[
-            value => !!value||"Mohon pilih file daftar hadir !!!",  
+            value => !!value||"Mohon pilih file daftar hadir !!!",
             value =>  !value || value.size < 9000000 || 'File daftar hadir harus kurang dari 9MB.'                
         ],
         rule_filedokumentasikegiatan:[
-            value => !!value||"Mohon pilih file dokumentasi kegiatan !!!",  
+            value => !!value||"Mohon pilih file dokumentasi kegiatan !!!",
             value =>  !value || value.size < 9000000 || 'File dokumentasi kegiatan harus kurang dari 9MB.'                
         ],
         rule_filektp:[
-            value => !!value||"Mohon pilih file ktp pemohon !!!",  
+            value => !!value||"Mohon pilih file ktp pemohon !!!",
             value =>  !value || value.size < 2000000 || 'File ktp pemohon harus kurang dari 2MB.'                
         ],
     }),
@@ -355,7 +355,7 @@ export default {
                     this.btnLoadingUploadKTP=true;
                     var formdata = new FormData();                                        
                     formdata.append('filektppemohon',this.filektppemohon);
-                    await this.$ajax.post('/konsultasi/kegiatan/uploadktppemohon/' + this.kegiatan_id,formdata,           
+                    await this.$ajax.post('/konsultasi/kegiatan/uploadktppemohon/' + this.kegiatan_id,formdata,
                         {
                             headers: {
                                 Authorization:this.$store.getters['auth/Token'],
@@ -386,7 +386,7 @@ export default {
                     this.btnLoadingUploadDaftarHadir=true;
                     var formdata = new FormData();                                        
                     formdata.append('filedaftarhadir',this.filedaftarhadir);
-                    await this.$ajax.post('/konsultasi/kegiatan/uploaddaftarhadir/' + this.kegiatan_id,formdata,           
+                    await this.$ajax.post('/konsultasi/kegiatan/uploaddaftarhadir/' + this.kegiatan_id,formdata,
                         {
                             headers: {
                                 Authorization:this.$store.getters['auth/Token'],
@@ -417,7 +417,7 @@ export default {
                     this.btnLoadingUploadDokumentasiKegiatan=true;
                     var formdata = new FormData();                                        
                     formdata.append('filedokumentasikegiatan',this.filedokumentasikegiatan);
-                    await this.$ajax.post('/konsultasi/kegiatan/uploaddokumentasikegiatan/' + this.kegiatan_id,formdata,           
+                    await this.$ajax.post('/konsultasi/kegiatan/uploaddokumentasikegiatan/' + this.kegiatan_id,formdata,
                         {
                             headers: {
                                 Authorization:this.$store.getters['auth/Token'],
@@ -439,7 +439,7 @@ export default {
         {
             
         }
-    },  
+    },
     computed: {
         ktpPemohon : {
             get ()
@@ -461,7 +461,7 @@ export default {
     },
     components: {
         AdminLayout,
-        ModuleHeader,  
+        ModuleHeader,
     },
 
 }

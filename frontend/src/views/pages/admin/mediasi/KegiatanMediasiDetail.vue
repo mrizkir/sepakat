@@ -5,7 +5,7 @@
         mdi-calendar-blank-multiple
       </template>
       <template v-slot:name>
-        KONSULTASI KEGIATAN MEDIASI
+        KEGIATAN MEDIASI
       </template>
       <template v-slot:breadcrumbs>
         <v-breadcrumbs :items="breadcrumbs" class="pa-0">
@@ -15,13 +15,8 @@
         </v-breadcrumbs>
       </template>
       <template v-slot:desc>
-        <v-alert                                        
-          color="cyan"
-          border="left"                    
-          colored-border
-          type="info"
-          >
-          Halaman ini berisi daftar kegiatan konsultasi hukum paralegal
+        <v-alert color="cyan" border="left" colored-border type="info">
+          Halaman ini berisi daftar kegiatan mediasi yang dilakukan oleh paralegal
         </v-alert>
       </template>
     </ModuleHeader>   
@@ -44,7 +39,7 @@
               <span>Verifikasi</span>
               <v-icon>mdi-lock-open</v-icon>
             </v-btn>
-            <v-btn :to="{path: '/kegiatan/mediasi/'+kegiatan_id+'/files'}">
+            <v-btn :to="{path: '/kegiatan/mediasi/' + kegiatan_id + '/files'}">
               <span>Files</span>
               <v-icon>mdi-file-document</v-icon>
             </v-btn>
@@ -138,7 +133,7 @@
               </v-alert>
             </v-card-text>  
             <v-form ref="frmdata" v-model="form_valid" lazy-validation v-if="data_kegiatan.id_status==0">
-              <v-card-actions>                
+              <v-card-actions>
                 <v-textarea
                   class="mr-2"
                   label="KOMENTAR"                                        
@@ -181,7 +176,7 @@ export default {
         href: '/dashboard/' + this.$store.getters['auth/AccessToken']
       },
       {
-        text: 'KONSULTASI',
+        text: 'KEGIATAN',
         disabled: false,
         href: '#'
       },
@@ -189,7 +184,7 @@ export default {
         text: 'MEDIASI',
         disabled: false,
         href: '/kegiatan/mediasi/'
-      },  
+      },
       {
         text: 'DETAIL',
         disabled: true,
@@ -198,7 +193,7 @@ export default {
     ];
     this.initialize();
     this.fetchKomentar();    
-  },  
+  },
   data: () => ({ 
     dashboard: null,
 
@@ -218,7 +213,7 @@ export default {
       komentar: ''
     },
     rule_komentar:[
-      value => !!value || "Mohon untuk diisi komentar !!!",     
+      value => !!value || "Mohon untuk diisi komentar !!!",
     ]
   }),
   methods: {
@@ -244,19 +239,20 @@ export default {
     savekomentar: async function () {
       if (this.$refs.frmdata.validate())
       {
-        this.btnLoading=true;      
+        this.btnLoading = true      
 
         await this.$ajax.post('/kegiatan/komentar/store',
         {
-          kegiatan_id:this.kegiatan_id,           
-          isi_komentar:this.formdata.komentar,           
+          kegiatan_id:this.kegiatan_id,
+          isi_komentar:this.formdata.komentar,
         },
         {
           headers: {
             Authorization:this.$store.getters['auth/Token']
           }
         }
-        ).then(( )=>{        
+        )
+        .then(()=>{        
           this.btnLoading = false     
           this.formdata.isi_komentar='';          
           this.$refs.frmdata.reset();
@@ -266,14 +262,12 @@ export default {
           this.btnLoading = false
         });                
       }
-    },  
-    verifikasi ()
-    {
+    },
+    verifikasi() {
       this.$root.$confirm.open('Verifikasi', 'Setelah diverifikasi, tidak bisa diberi komentar, diubah, atau dihapus ?', { color: 'green',width:600 }).then((confirm) => {
-        if (confirm)
-        {
-          this.btnLoading=true;
-          this.$ajax.post('/kegiatan/verifikasi/' + this.kegiatan_id,
+        if (confirm) {
+          this.btnLoading = true
+          this.$ajax.post('/kegiatan/mediasi/verifikasi/' + this.kegiatan_id,
             {
               '_method': 'put',
             },
@@ -303,7 +297,7 @@ export default {
       this.$root.$confirm.open('Delete', 'Apakah Anda ingin menghapus komentar kegiatan dengan ID '+item.kegiatan_id+' ?', { color: 'red',width:600 }).then((confirm) => {
         if (confirm)
         {
-          this.btnLoading=true;
+          this.btnLoading = true
           this.$ajax.post('/kegiatan/komentar/'+item.id,
             {
               '_method': 'DELETE',
@@ -321,11 +315,11 @@ export default {
           });
         }                
       });
-    },  
+    },
   },
   components: {
     AdminLayout,
-    ModuleHeader,  
+    ModuleHeader,
     DK
   },
 
