@@ -92,7 +92,7 @@
 </template>
 <script>
 import AdminLayout from '@/views/layouts/AdminLayout'
-import ModuleHeader from '@/components/ModuleHeader';
+import ModuleHeader from '@/components/ModuleHeader'
 export default {
     name: 'UsersProfile',
     created () {
@@ -100,17 +100,17 @@ export default {
             {
                 text: 'HOME',
                 disabled: false,
-                href: '/dashboard/' + this.$store.getters['auth/AccessToken']
+                href: '/dashboard/' + this.$store.getters['auth/AccessToken'],
             },
             {
                 text: 'SYSTEM',
                 disabled: false,
-                href: '#'
+                href: '#',
             },
             {
                 text: 'PROFILE USER',
                 disabled: true,
-                href: '#'
+                href: '#',
             }
         ];
     }, 
@@ -164,21 +164,21 @@ export default {
                 this.$ajax.post('/system/users/updatepassword/' + this.$store.getters['auth/AttributeUser']('id'),
                     {
                         '_method': 'PUT',
-                        password:this.formdata.password,
+                        password: this.formdata.password,
                     },
                     {
                         headers: {
-                            Authorization:this.$store.getters['auth/Token']
+                            Authorization: this.$store.getters['auth/Token']
                         }
                     }
-                ).then(({ data }) => {                                                         
-                    this.$refs.frmdata.reset(); 
-                    this.formdata.foto=data.foto;       
-                    this.formdata=this.formdefault; 
+                ).then(({ data }) => {
+                    this.$refs.frmdata.reset()
+                    this.formdata.foto=data.foto
+                    this.formdata=this.formdefault
                     this.btnLoading = false
-                }).catch(()=>{
+                }).catch(() => {
                     this.btnLoading = false
-                });                     
+                })
             }
         },
         previewImage (e)
@@ -191,7 +191,7 @@ export default {
             {
                 let reader = new FileReader();
                 reader.readAsDataURL(e);
-                reader.onload = img => {                
+                reader.onload = img => {
                     this.photoUser=img.target.result;
                 }
             }            
@@ -202,24 +202,24 @@ export default {
             if (this.$refs.frmuploadfoto.validate())
             {
                 if (this.formdata.foto)
-                {            
+                {
                     this.btnLoading = true
                     var formdata = new FormData();
                     formdata.append('foto',this.formdata.foto);
                     await this.$ajax.post('/setting/users/uploadfoto/' + this.$store.getters.User.id,formdata,
                         {
                             headers: {
-                                Authorization:this.$store.getters['auth/Token'],
+                                Authorization: this.$store.getters['auth/Token'],
                                 'Content-Type': 'multipart/form-data'                      
                             }
                         }
-                    ).then(({ data }) => {        
+                    ).then(({ data }) => {
                         this.btnLoading = false
-                        this.$store.dispatch('updateFoto',data.user.foto);                        
-                    }).catch(()=>{
+                        this.$store.dispatch('updateFoto',data.user.foto)
+                    }).catch(() => {
                         this.btnLoading = false
-                    });    
-                    this.$refs.frmdata.reset(); 
+                    })
+                    this.$refs.frmdata.reset()
                 }   
             }
         },
@@ -229,19 +229,19 @@ export default {
             await this.$ajax.post('/setting/users/resetfoto/' + this.$store.getters.User.id,{},
                 {
                     headers: {
-                        Authorization:this.$store.getters['auth/Token'],
+                        Authorization: this.$store.getters['auth/Token'],
                     }
                 }
-            ).then(({ data }) => {        
+            ).then(({ data }) => {
                 this.btnLoading = false
                 this.$store.dispatch('updateFoto',data.user.foto);
-            }).catch(()=>{
+            }).catch(() => {
                 this.btnLoading = false
-            });    
+            })
         }
         
     },
-    computed: {    
+    computed: {
 		photoUser: {
             get()
             {
@@ -257,7 +257,7 @@ export default {
                 
             },
             set(val)
-            {   
+            {
                 this.avatar = val;
             }
 		}

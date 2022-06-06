@@ -64,9 +64,9 @@
     </SystemConfigLayout>
 </template>
 <script>
-import {mapGetters} from 'vuex';
+import { mapGetters } from 'vuex'
 import SystemConfigLayout from '@/views/layouts/SystemConfigLayout'
-import ModuleHeader from '@/components/ModuleHeader';
+import ModuleHeader from '@/components/ModuleHeader'
 export default {
     name: 'Captcha',
     created()
@@ -85,10 +85,10 @@ export default {
             {
                 text: 'SERVER - CAPTCHA',
                 disabled: true,
-                href: '#'
+                href: '#',
             }
         ];
-        this.initialize();
+        this.initialize()
     },
     data: () => ({
         breadcrumbs: [],
@@ -115,13 +115,13 @@ export default {
             await this.$ajax.get('/system/setting/variables',
             {
                 headers: {
-                    Authorization:this.TOKEN
+                    Authorization: this.TOKEN
                 }
             }).then(({data})=>{
                 let setting = data.setting;
                 this.formdata.siteKey=setting.CAPTCHA_SITE_KEY;
                 this.formdata.privateKey=setting.CAPTCHA_PRIVATE_KEY;
-            });
+            })
 
         },
         save () {
@@ -133,20 +133,20 @@ export default {
                         '_method': 'PUT',
                         'pid': 'captcha google',
                         setting:JSON.stringify({
-                            901:this.formdata.siteKey,
-                            902:this.formdata.privateKey,
+                            901: this.formdata.siteKey,
+                            902: this.formdata.privateKey,
                         }),
                     },
                     {
                         headers: {
-                            Authorization:this.TOKEN
+                            Authorization: this.TOKEN
                         }
                     }
-                ).then(()=>{
+                ).then(() => {
                     this.btnLoading = false
-                }).catch(()=>{
+                }).catch(() => {
                     this.btnLoading = false
-                });
+                })
             }
         }
     },

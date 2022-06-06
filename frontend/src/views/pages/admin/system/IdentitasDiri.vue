@@ -75,9 +75,9 @@
     </SystemConfigLayout>
 </template>
 <script>
-import {mapGetters} from 'vuex';
+import { mapGetters } from 'vuex'
 import SystemConfigLayout from '@/views/layouts/SystemConfigLayout'
-import ModuleHeader from '@/components/ModuleHeader';
+import ModuleHeader from '@/components/ModuleHeader'
 export default {
     name: 'IdentitasDiri',
     created()
@@ -96,10 +96,10 @@ export default {
             {
                 text: 'PERGURUAN TINGGI - IDENTITAS DIRI',
                 disabled: true,
-                href: '#'
+                href: '#',
             }
         ];
-        this.initialize();
+        this.initialize()
     },
     data: () => ({
         breadcrumbs: [],
@@ -132,15 +132,15 @@ export default {
             await this.$ajax.get('/system/setting/variables',
             {
                 headers: {
-                    Authorization:this.TOKEN
+                    Authorization: this.TOKEN
                 }
             }).then(({ data }) => {
-                let setting = data.setting;                           
+                let setting = data.setting
                 this.formdata.nama_pt=setting.NAMA_PT;
                 this.formdata.nama_alias_pt=setting.NAMA_PT_ALIAS;
                 this.formdata.bentuk_pt=setting.BENTUK_PT;
                 this.formdata.kode_pt=setting.KODE_PT;
-            });          
+            })
             
         },
         save () {
@@ -152,27 +152,27 @@ export default {
                         '_method': 'PUT', 
                         'pid': 'Identitas Perguruan Tinggi',
                         setting:JSON.stringify({
-                            101:this.formdata.nama_pt,
-                            102:this.formdata.nama_alias_pt,
-                            103:this.formdata.bentuk_pt,
-                            104:this.formdata.kode_pt,
+                            101: this.formdata.nama_pt,
+                            102: this.formdata.nama_alias_pt,
+                            103: this.formdata.bentuk_pt,
+                            104: this.formdata.kode_pt,
                         }),
                     },
                     {
                         headers: {
-                            Authorization:this.TOKEN
+                            Authorization: this.TOKEN
                         }
                     }
-                ).then(()=>{                   
+                ).then(() => {
                     this.btnLoading = false
-                }).catch(()=>{
+                }).catch(() => {
                     this.btnLoading = false
-                });        
+                })
             }
         }
     },
     computed: { 
-        ...mapGetters('auth', {        
+        ...mapGetters('auth', {
             ACCESS_TOKEN: 'AccessToken', 
             TOKEN: 'Token',
         }),

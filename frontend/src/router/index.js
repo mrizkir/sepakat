@@ -187,6 +187,52 @@ const routes = [
         },
 		component: () => import('../views/pages/admin/konsultasihukum/KegiatanKonsultasiHukumDetail.vue'),		
 	},
+	//kegiatan - investigasi perkara
+	{
+		path: '/kegiatan/investigasiperkara',
+		name: 'KegiatanInvestigasiPerkara',
+		meta:{
+			title: "KEGIATAN - INVESTIGASI PERKARA",
+			requiresAuth:true,
+        },
+		component: () => import('../views/pages/admin/investigasiperkara/KegiatanInvestigasiPerkara.vue'),		
+	},
+	{
+		path: '/kegiatan/investigasiperkara/tambah',
+		name: 'KegiatanInvestigasiPerkaraTambah',
+		meta:{
+			title: "KEGIATAN - INVESTIGASI PERKARA",
+			requiresAuth:true,
+        },
+		component: () => import('../views/pages/admin/investigasiperkara/KegiatanInvestigasiPerkaraTambah.vue'),		
+	},
+	{
+		path: '/kegiatan/investigasiperkara/:kegiatan_id/ubah',
+		name: 'KegiatanInvestigasiPerkaraUbah',
+		meta:{
+			title: "KEGIATAN - INVESTIGASI PERKARA",
+			requiresAuth:true,
+        },
+		component: () => import('../views/pages/admin/investigasiperkara/KegiatanInvestigasiPerkaraUbah.vue'),		
+	},
+	{
+		path: '/kegiatan/investigasiperkara/:kegiatan_id/files',
+		name: 'KegiatanInvestigasiPerkaraFiles',
+		meta:{
+			title: "KEGIATAN - INVESTIGASI PERKARA",
+			requiresAuth:true,
+        },
+		component: () => import('../views/pages/admin/investigasiperkara/KegiatanInvestigasiPerkaraFiles.vue'),		
+	},
+	{
+		path: '/kegiatan/investigasiperkara/:kegiatan_id/detail',
+		name: 'KegiatanInvestigasiPerkaraDetail',
+		meta:{
+			title: "KEGIATAN - INVESTIGASI PERKARA",
+			requiresAuth:true,
+        },
+		component: () => import('../views/pages/admin/investigasiperkara/KegiatanInvestigasiPerkaraDetail.vue'),		
+	},
 	//laporan	
 	{
 		path: '/laporan/kegiatan',

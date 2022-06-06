@@ -188,23 +188,23 @@
 </template>
 <script>
   import AdminLayout from '@/views/layouts/AdminLayout'
-  import ModuleHeader from '@/components/ModuleHeader';
+  import ModuleHeader from '@/components/ModuleHeader'
   import DK from '@/views/pages/admin/penyuluhanhukum/DataKegiatanPenyuluhanHukum';
   export default {
     name: 'KegiatanPenyuluhanHukumFiles',
     created() {
-      this.dashboard = this.$store.getters['uiadmin/getDefaultDashboard']; 
+      this.dashboard = this.$store.getters['uiadmin/getDefaultDashboard']
       this.kegiatan_id=this.$route.params.kegiatan_id;
       this.breadcrumbs = [
         {
           text: 'HOME',
           disabled: false,
-          href: '/dashboard/' + this.$store.getters['auth/AccessToken']
+          href: '/dashboard/' + this.$store.getters['auth/AccessToken'],
         },
         {
           text: 'KEGIATAN',
           disabled: false,
-          href: '#'
+          href: '#',
         },
         {
           text: 'PENYULUHAN HUKUM',
@@ -264,9 +264,9 @@
             Authorization: this.$store.getters['auth/Token']
           }
         })
-        .then(({ data }) => {         
+        .then(({ data }) => {
           this.data_kegiatan=data.kegiatan;
-          this.ktpPemohon=this.$api.storageURL+'/'+data.kegiatan.file_fotocopy_ktp;        
+          this.ktpPemohon=this.$api.storageURL+'/'+data.kegiatan.file_fotocopy_ktp
         })
       },
       async uploadSuratPermohonan() {
@@ -283,7 +283,7 @@
                   'Content-Type': 'multipart/form-data'
                 }
               }
-            ).then(()=>{                                                                                     
+            ).then(() => {
               this.btnLoadingSuratPermohonan = false
               this.btnLoadingHapusSuratPermohonan = false
               this.$router.go() 
@@ -314,7 +314,7 @@
                   'Content-Type': 'multipart/form-data'
                 }
               }
-            ).then(()=>{                                                                                     
+            ).then(() => {
               this.btnLoadingUploadDaftarHadir = false
               this.btnLoadingHapusDaftarHadir = false
               this.$router.go() 

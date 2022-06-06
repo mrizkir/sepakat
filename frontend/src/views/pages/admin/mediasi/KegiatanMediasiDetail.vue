@@ -161,24 +161,24 @@
 </template>
 <script>
 import AdminLayout from '@/views/layouts/AdminLayout'
-import ModuleHeader from '@/components/ModuleHeader';
+import ModuleHeader from '@/components/ModuleHeader'
 import DK from '@/views/pages/admin/mediasi/DataKegiatanMediasi';
 
 export default {
   name: 'KegiatanMediasiDetail',
   created () {
-    this.dashboard = this.$store.getters['uiadmin/getDefaultDashboard']; 
+    this.dashboard = this.$store.getters['uiadmin/getDefaultDashboard']
     this.kegiatan_id=this.$route.params.kegiatan_id;
     this.breadcrumbs = [
       {
         text: 'HOME',
         disabled: false,
-        href: '/dashboard/' + this.$store.getters['auth/AccessToken']
+        href: '/dashboard/' + this.$store.getters['auth/AccessToken'],
       },
       {
         text: 'KEGIATAN',
         disabled: false,
-        href: '#'
+        href: '#',
       },
       {
         text: 'MEDIASI',
@@ -188,11 +188,11 @@ export default {
       {
         text: 'DETAIL',
         disabled: true,
-        href: '#'
+        href: '#',
       }
     ];
-    this.initialize();
-    this.fetchKomentar();    
+    this.initialize()
+    this.fetchKomentar()
   },
   data: () => ({ 
     dashboard: null,
@@ -210,7 +210,7 @@ export default {
     form_valid: true, 
     btnLoading: false,
     formdata: {
-      komentar: ''
+      komentar: null,
     },
     rule_komentar: [
       value => !!value || "Mohon untuk diisi komentar !!!",
@@ -220,47 +220,47 @@ export default {
     initialize: async function() {
       await this.$ajax.get('/kegiatan/mediasi/' + this.kegiatan_id,{
         headers: {
-          Authorization:this.$store.getters['auth/Token']
+          Authorization: this.$store.getters['auth/Token']
         }
-      }).then(({ data }) => {            
-        this.data_kegiatan=data.kegiatan;                
-      });
+      }).then(({ data }) => {
+        this.data_kegiatan=data.kegiatan
+      })
     },
-    async fetchKomentar ()
+    async fetchKomentar()
     {
       await this.$ajax.get('/kegiatan/komentar/' + this.kegiatan_id,{
         headers: {
-          Authorization:this.$store.getters['auth/Token']
+          Authorization: this.$store.getters['auth/Token']
         }
-      }).then(({ data }) => {            
-        this.daftar_komentar=data.daftar_komentar;
+      }).then(({ data }) => {
+        this.daftar_komentar = data.daftar_komentar;
       })
     },
     savekomentar: async function() {
       if (this.$refs.frmdata.validate())
       {
-        this.btnLoading = true      
+        this.btnLoading = true
 
         await this.$ajax.post('/kegiatan/komentar/store',
         {
-          kegiatan_id:this.kegiatan_id,
-          isi_komentar:this.formdata.komentar,
+          kegiatan_id: this.kegiatan_id,
+          isi_komentar: this.formdata.komentar,
         },
         {
           headers: {
-            Authorization:this.$store.getters['auth/Token']
+            Authorization: this.$store.getters['auth/Token']
           }
         }
         )
-        .then(()=>{    
+        .then(() => {
           this.btnLoading = false     
-          this.formdata.isi_komentar='';          
+          this.formdata.isi_komentar=''
           this.$refs.frmdata.reset();
           this.fetchKomentar();
         })
-        .catch(()=>{
+        .catch(() => {
           this.btnLoading = false
-        });                
+        })
       }
     },
     verifikasi() {
@@ -273,27 +273,27 @@ export default {
             },
             {
               headers: {
-                Authorization:this.$store.getters['auth/Token']
+                Authorization: this.$store.getters['auth/Token']
               }
             }
-          ).then(()=>{   
+          ).then(() => {
             this.$router.go()
             this.btnLoading = false
-          }).catch(()=>{
+          }).catch(() => {
             this.btnLoading = false
-          });
+          })
         }                
-      });
+      })
     },
     closedialogkronologis()
     {
-      this.dialogkronologis=false;
+      this.dialogkronologis = false
     },
     closedialogrekomendasi()
     {
-      this.dialogrekomendasi=false;
+      this.dialogrekomendasi = false
     },
-    deleteItem (item) {       
+    deleteItem(item) {
       this.$root.$confirm.open('Delete', 'Apakah Anda ingin menghapus komentar kegiatan dengan ID '+item.kegiatan_id+' ?', { color: 'red',width:600 }).then((confirm) => {
         if (confirm)
         {
@@ -304,17 +304,17 @@ export default {
             },
             {
               headers: {
-                Authorization:this.$store.getters['auth/Token']
+                Authorization: this.$store.getters['auth/Token']
               }
             }
-          ).then(()=>{   
+          ).then(() => {
             this.fetchKomentar();
             this.btnLoading = false
-          }).catch(()=>{
+          }).catch(() => {
             this.btnLoading = false
-          });
+          })
         }                
-      });
+      })
     },
   },
   components: {

@@ -5,7 +5,7 @@
         mdi-calendar-blank-multiple
       </template>
       <template v-slot:name>
-        KEGIATAN PENYULUHAN HUKUM
+        KEGIATAN INVESTIGASI PERKARA
       </template>
       <template v-slot:breadcrumbs>
         <v-breadcrumbs :items="breadcrumbs" class="pa-0">
@@ -15,13 +15,8 @@
         </v-breadcrumbs>
       </template>
       <template v-slot:desc>
-        <v-alert                                        
-          color="cyan"
-          border="left"
-          colored-border
-          type="info"
-          >
-          Halaman ini berisi daftar kegiatan penyuluhan hukum yang dilakukan oleh paralegal
+        <v-alert color="cyan" border="left" colored-border type="info">
+          Halaman ini berisi daftar kegiatan investigasi perkara yang dilakukan oleh paralegal
         </v-alert>
       </template>
     </ModuleHeader> 
@@ -66,7 +61,7 @@
                   vertical
                 ></v-divider>
                 <v-spacer></v-spacer>
-                <v-btn color="primary" dark class="mb-2" to="/kegiatan/penyuluhanhukum/tambah" v-if="dashboard=='paralegal'||dashboard=='kumham'||dashboard=='superadmin'">TAMBAH</v-btn>
+                <v-btn color="primary" dark class="mb-2" to="/kegiatan/investigasiperkara/tambah" v-if="dashboard=='paralegal'||dashboard=='kumham'||dashboard=='superadmin'">TAMBAH</v-btn>
               </v-toolbar>
             </template>
             <template v-slot:item.id="{ item }">  
@@ -81,7 +76,7 @@
               <v-btn
                 small
                 icon
-                @click.stop="$router.push('/kegiatan/penyuluhanhukum/'+item.id+'/detail')">
+                @click.stop="$router.push('/kegiatan/investigasiperkara/'+item.id+'/detail')">
                 <v-icon>
                   mdi-eye
                 </v-icon>
@@ -89,7 +84,7 @@
               <v-btn
                 small      
                 icon                          
-                :to="{path: '/kegiatan/penyuluhanhukum/'+item.id+'/ubah'}"
+                :to="{path: '/kegiatan/investigasiperkara/'+item.id+'/ubah'}"
                 v-if="item.id_status==0 && (dashboard=='paralegal'||dashboard=='kumham'||dashboard=='superadmin')">
                 <v-icon>
                   mdi-pencil
@@ -129,7 +124,7 @@
 import AdminLayout from '@/views/layouts/AdminLayout'
 import ModuleHeader from '@/components/ModuleHeader'
 export default {
-  name: 'KegiatanPenyuluhanHukumPenyuluhanHukum',
+  name: 'KegiatanInvestigasiPerkaraMediasi',
   created () {
     this.dashboard = this.$store.getters['uiadmin/getDefaultDashboard']
     this.breadcrumbs = [
@@ -144,7 +139,7 @@ export default {
         href: '#',
       },
       {
-        text: 'PENYULUHAN HUKUM',
+        text: 'INVESTIGASI PERKARA',
         disabled: true,
         href: '#',
       }
@@ -160,9 +155,8 @@ export default {
     datatable: [],
     headers: [                        
       { text: 'PARALEGAL', value: 'name' },
+      { text: 'PEMOHON', value: 'nama_pemohon' },
       { text: 'NAMA KEGIATAN', value: 'nama_kegiatan' },
-      { text: 'NARA SUMBER', value: 'narasumber' },
-      { text: 'JUMLAH PESERTA', value: 'jumlah_peserta' },
       { text: 'STATUS', value: 'id_status', sortable: false, width:100 },
       { text: 'AKSI', value: 'actions', sortable: false,width:150 },
     ],
@@ -173,7 +167,7 @@ export default {
     initialize: async function() 
     {
       this.datatableLoading=true;
-      await this.$ajax.get('/kegiatan/penyuluhanhukum', {
+      await this.$ajax.get('/kegiatan/investigasiperkara', {
         headers: {
           Authorization: this.$store.getters['auth/Token']
         }
@@ -198,7 +192,7 @@ export default {
     viewItem (item) {
       this.formdata=item
       this.dialogdetailitem=true
-      // this.$ajax.get('/kegiatan/penyuluhanhukum'+item.id,{
+      // this.$ajax.get('/kegiatan/investigasiperkara'+item.id,{
       //     headers: {
       //         Authorization: this.$store.getters['auth/Token']
       //     }
@@ -207,11 +201,11 @@ export default {
       // })
     },
     deleteItem(item) {
-      this.$root.$confirm.open('Delete', 'Apakah Anda ingin menghapus data kegiatan penyuluhan hukum dengan ID '+item.id+' ?', { color: 'red',width:600 }).then((confirm) => {
+      this.$root.$confirm.open('Delete', 'Apakah Anda ingin menghapus data kegiatan investigasi perkara dengan ID '+item.id+' ?', { color: 'red',width:600 }).then((confirm) => {
         if (confirm)
         {
           this.btnLoading = true
-          this.$ajax.post('/kegiatan/penyuluhanhukum/' + item.id,
+          this.$ajax.post('/kegiatan/investigasiperkara/' + item.id,
             {
               '_method': 'DELETE',
             },

@@ -121,7 +121,7 @@ export default {
   name: 'Dashboard',
   created ()
   {
-    this.TOKEN = this.$route.params.token;        
+    this.TOKEN = this.$route.params.token
     this.breadcrumbs = [
       {
         text: 'HOME',
@@ -131,10 +131,10 @@ export default {
       {
         text: 'DASHBOARD',
         disabled: true,
-        href: '#'
+        href: '#',
       }
     ];		
-    this.initialize();
+    this.initialize()
     this.fetchData();
 
   },
@@ -160,12 +160,12 @@ export default {
         headers: {
           Authorization: 'Bearer '+this.TOKEN
         }
-      }).then(({ data }) => {    
-        this.dashboard = data.role[0];    
-        this.$store.dispatch('uiadmin/changeDashboard',this.dashboard);                                       
-      });                 
-      this.$store.dispatch('uiadmin/init',this.$ajax);              
-      this.tahun_pendaftaran = this.$store.getters['uiadmin/getTahunPendaftaran'];            
+      }).then(({ data }) => {
+        this.dashboard = data.role[0]
+        this.$store.dispatch('uiadmin/changeDashboard',this.dashboard)       
+      })
+      this.$store.dispatch('uiadmin/init',this.$ajax)
+      this.tahun_pendaftaran = this.$store.getters['uiadmin/getTahunPendaftaran']
       
     },
     async fetchData ()
@@ -175,14 +175,14 @@ export default {
         headers: {
           Authorization: 'Bearer '+this.TOKEN
         }
-      }).then(({ data }) => {    
+      }).then(({ data }) => {
         this.data_jenis_kegiatan=data.jenis_kegiatan;
         this.jumlah_paralegal=data.jumlah_paralegal;
         this.jumlah_paralegal_laporan=data.jumlah_paralegal_laporan;
         this.jumlah_obh=data.jumlah_obh;
         this.jumlah_kades=data.jumlah_kades;
         
-      });    
+      })
     }
   },
   computed: {

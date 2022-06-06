@@ -240,9 +240,9 @@
     </AdminLayout>
 </template>
 <script>
-import {mapGetters} from 'vuex';
+import { mapGetters } from 'vuex'
 import AdminLayout from '@/views/layouts/AdminLayout'
-import ModuleHeader from '@/components/ModuleHeader';
+import ModuleHeader from '@/components/ModuleHeader'
 export default {
     name: 'UsersSuperAdmin',
     created () {
@@ -260,7 +260,7 @@ export default {
             {
                 text: 'USERS SUPER ADMIN',
                 disabled: true,
-                href: '#'
+                href: '#',
             }
         ];
         this.initialize()
@@ -277,7 +277,7 @@ export default {
             { text: 'NAME', value: 'name',sortable: true },
             { text: 'EMAIL', value: 'email',sortable: true },
             { text: 'NOMOR HP', value: 'nomor_hp',sortable: true },
-            { text: 'AKSI', value: 'actions', sortable: false,width:100 },
+            { text: 'AKSI', value: 'actions', sortable: false, width: 100 },
         ],
         expanded: [],
         search: '',
@@ -358,20 +358,20 @@ export default {
             this.datatableLoading=true;
             await this.$ajax.get('/system/users', {
                 headers: {
-                    Authorization:this.TOKEN
+                    Authorization: this.TOKEN
                 }
             }).then(({ data }) => {
                 this.daftar_users = data.users;
                 this.role_id=data.role.id;
-                this.datatableLoading=false;
-            });          
+                this.datatableLoading=false
+            })
             
         },
         dataTableRowClicked(item)
         {
             if ( item === this.expanded[0])
             {
-                this.expanded=[];                
+                this.expanded=[]
             }
             else
             {
@@ -382,83 +382,83 @@ export default {
         {
             await this.$ajax.get('/system/setting/roles', {
                 headers: {
-                    Authorization:this.TOKEN
+                    Authorization: this.TOKEN
                 }
             }).then(({ data }) => {
                 let roles = data.roles;
                 var daftar_roles=[];
                 roles.forEach(element => {
                     if (element.name=='superadmin')
-                    {                    
+                    {
                         daftar_roles.push({
                             text:element.name,
                             disabled: true,
-                        });                        
+                        })
                     }
                     else
                     {
                         daftar_roles.push({
                             text:element.name,
                             disabled: false,
-                        });                        
+                        })
                     }                    
-                });        
-                this.daftar_roles=daftar_roles;     
-                this.dialog = true;                                    
-            });     
+                })
+                this.daftar_roles=daftar_roles
+                this.dialog = true    
+            })
             
         },
         editItem: async function (item) {
             this.editedIndex = this.daftar_users.indexOf(item)
-            item.password='';            
-            this.editedItem = Object.assign({}, item); 
+            item.password=''
+            this.editedItem = Object.assign({}, item)
 
             await this.$ajax.get('/system/setting/roles', {
                 headers: {
-                    Authorization:this.TOKEN
+                    Authorization: this.TOKEN
                 }
             }).then(({ data }) => {
                 let roles = data.roles;
                 var daftar_roles=[];
                 roles.forEach(element => {
                     if (element.name=='superadmin')
-                    {                    
+                    {
                         daftar_roles.push({
                             text:element.name,
                             disabled: true,
-                        });                        
+                        })
                     }
                     else
                     {
                         daftar_roles.push({
                             text:element.name,
                             disabled: false,
-                        });                        
+                        })
                     }                    
-                });        
-                this.daftar_roles=daftar_roles;                                                
-            });    
+                })
+                this.daftar_roles=daftar_roles                
+            })
 
             this.btnLoading = true
             await this.$ajax.get('/system/users/'+item.id+'/roles',
             {
                 headers: {
-                    Authorization:this.TOKEN
+                    Authorization: this.TOKEN
                 }
             }).then(({ data }) => {
-                this.editedItem.role_id=data.roles;                   
+                this.editedItem.role_id=data.roles
                 this.btnLoading = false
                 this.dialogEdit = true;
-            });   
+            })
         },
-        close () {        
+        close () {
             this.btnLoading = false
-            this.dialog = false;
-            this.dialogEdit = false;            
+            this.dialog = false
+            this.dialogEdit = false
             setTimeout(() => {
                 this.editedItem = Object.assign({}, this.defaultItem)
                 this.editedIndex = -1
-                this.$refs.frmdata.reset(); 
+                this.$refs.frmdata.reset()
                 }, 300
             );
         },
@@ -471,50 +471,50 @@ export default {
                     this.$ajax.post('/system/users/' + this.editedItem.id,
                         {
                             '_method': 'PUT',
-                            name:this.editedItem.name,
-                            email:this.editedItem.email,
-                            nomor_hp:this.editedItem.nomor_hp,
-                            username:this.editedItem.username,
-                            password:this.editedItem.password,
+                            name: this.editedItem.name,
+                            email: this.editedItem.email,
+                            nomor_hp: this.editedItem.nomor_hp,
+                            username: this.editedItem.username,
+                            password: this.editedItem.password,
                             role_id:JSON.stringify(Object.assign({},this.editedItem.role_id)),
                         },
                         {
                             headers: {
-                                Authorization:this.TOKEN
+                                Authorization: this.TOKEN
                             }
                         }
                     ).then(({ data }) => { 
                         Object.assign(this.daftar_users[this.editedIndex],data.user);
                         this.close();
-                    }).catch(()=>{
+                    }).catch(() => {
                         this.btnLoading = false
-                    });                    
+                    })
                     
                 } else {
                     this.$ajax.post('/system/users/store',
                         {
-                            name:this.editedItem.name,
-                            email:this.editedItem.email,
-                            nomor_hp:this.editedItem.nomor_hp,
-                            username:this.editedItem.username,
-                            password:this.editedItem.password, 
+                            name: this.editedItem.name,
+                            email: this.editedItem.email,
+                            nomor_hp: this.editedItem.nomor_hp,
+                            username: this.editedItem.username,
+                            password: this.editedItem.password, 
                             role_id:JSON.stringify(Object.assign({},this.editedItem.role_id)),
                         },
                         {
                             headers: {
-                                Authorization:this.TOKEN
+                                Authorization: this.TOKEN
                             }
                         }
                     ).then(({ data }) => { 
                         this.daftar_users.push(data.user);
                         this.close();
-                    }).catch(()=>{
+                    }).catch(() => {
                         this.btnLoading = false
-                    });
+                    })
                 }
             }
         },
-        deleteItem (item) {       
+        deleteItem(item) {
             this.$root.$confirm.open('Delete', 'Apakah Anda ingin menghapus username '+item.username+' ?', { color: 'red' }).then((confirm) => {
                 if (confirm)
                 {
@@ -525,25 +525,25 @@ export default {
                         },
                         {
                             headers: {
-                                Authorization:this.TOKEN
+                                Authorization: this.TOKEN
                             }
                         }
-                    ).then(()=>{   
+                    ).then(() => {
                         const index = this.daftar_users.indexOf(item);
                         this.daftar_users.splice(index, 1);
                         this.btnLoading = false
-                    }).catch(()=>{
+                    }).catch(() => {
                         this.btnLoading = false
-                    });
+                    })
                 }
-            });
+            })
         },
     },
     computed: {
         formTitle () {
             return this.editedIndex === -1 ? 'TAMBAH USER SUPER ADMIN' : 'EDIT USER SUPER ADMIN'
         },
-        ...mapGetters('auth', {        
+        ...mapGetters('auth', {
             ACCESS_TOKEN: 'AccessToken', 
             TOKEN: 'Token',
         }),

@@ -42,13 +42,13 @@
 		</div>
 </template>
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters } from 'vuex'
 
 export default {
 		name: 'FrontLayout',
 		created ()
 		{
-				this.$store.dispatch('uifront/init',this.$ajax);           
+				this.$store.dispatch('uifront/init',this.$ajax)
 		},
 		computed : {
 				...mapGetters('uifront', {

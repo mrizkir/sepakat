@@ -180,21 +180,21 @@
 </template>
 <script>
 import AdminLayout from '@/views/layouts/AdminLayout'
-import ModuleHeader from '@/components/ModuleHeader';
+import ModuleHeader from '@/components/ModuleHeader'
 export default {
   name: 'KegiatanPenyuluhanHukumTambah',
   created () {
-    this.dashboard = this.$store.getters['uiadmin/getDefaultDashboard']; 
+    this.dashboard = this.$store.getters['uiadmin/getDefaultDashboard']
     this.breadcrumbs = [
       {
         text: 'HOME',
         disabled: false,
-        href: '/dashboard/' + this.$store.getters['auth/AccessToken']
+        href: '/dashboard/' + this.$store.getters['auth/AccessToken'],
       },
       {
         text: 'KEGIATAN',
         disabled: false,
-        href: '#'
+        href: '#',
       },
       {
         text: 'PENYULUHAN HUKUM',
@@ -204,7 +204,7 @@ export default {
       {
         text: 'TAMBAH',
         disabled: true,
-        href: '#'
+        href: '#',
       }
     ];
     this.initialize()
@@ -217,7 +217,7 @@ export default {
     daftar_paralegal: [],
     menuTanggalPelaksanaan: false,
     menuJamPelaksanaan: false, 
-    formdata: {  
+    formdata: {
       user_id: null,
       nama_kegiatan: null,
       tempat_pelaksanaan: null,
@@ -229,7 +229,7 @@ export default {
       uraian_kegiatan: null,
       rekomendasi_kegiatan: null,
     },
-    formdefault: {  
+    formdefault: {
       user_id: null,
       nama_kegiatan: null,
       tempat_pelaksanaan: null,
@@ -274,14 +274,14 @@ export default {
   }),
   methods: {
     initialize: async function() 
-    {  
+    {
       await this.$ajax.get('/system/usersparalegal', {
         headers: {
-          Authorization:this.$store.getters['auth/Token']
+          Authorization: this.$store.getters['auth/Token']
         }
       }).then(({ data }) => {
-        this.daftar_paralegal = data.users;                
-      });          
+        this.daftar_paralegal = data.users
+      })
     },
     save: async function() {
       if (this.$refs.frmdata.validate())
@@ -302,24 +302,24 @@ export default {
           },
           {
             headers: {
-              Authorization:this.$store.getters['auth/Token']
+              Authorization: this.$store.getters['auth/Token']
             }
           }
-        ).then(({ data }) => {  
+        ).then(({ data }) => {
           this.btnLoading = false               
           setTimeout(() => {
-            this.formdata = Object.assign({}, this.formdefault);                                
+            this.formdata = Object.assign({}, this.formdefault)
             this.$router.push('/kegiatan/penyuluhanhukum/' + data.kegiatan.id + '/files')
             }, 300
           );
-        }).catch(()=>{
+        }).catch(() => {
           this.btnLoading = false
-        });                
+        })
       }
     },
-    closedialogfrm () {        
+    closedialogfrm () {
       setTimeout(() => {
-        this.formdata = Object.assign({}, this.formdefault);                                
+        this.formdata = Object.assign({}, this.formdefault)
         this.$router.push('/kegiatan/penyuluhanhukum')
         }, 300
       );

@@ -118,7 +118,7 @@
     </v-card>
 </template>
 <script>
-import {mapGetters} from 'vuex';
+import { mapGetters } from 'vuex'
 export default {
     name: 'RolePermissions',
     data: () => ({
@@ -127,7 +127,7 @@ export default {
         headers: [                        
             { text: 'NAMA PERMISSION', value: 'name' },
             { text: 'GUARD', value: 'guard_name' },
-            { text: 'AKSI', value: 'actions', sortable: false,width:100 }, 
+            { text: 'AKSI', value: 'actions', sortable: false, width: 100 }, 
         ],
         search: '',
         perm_selected: []
@@ -138,40 +138,40 @@ export default {
             this.btnLoading = true
             this.$ajax.post('/system/setting/roles/storerolepermissions',
                 {
-                    role_id:this.role.id,
-                    chkpermission:this.permissions_selected
+                    role_id: this.role.id,
+                    chkpermission: this.permissions_selected
                 },
                 {
                     headers: {
-                        Authorization:this.TOKEN
+                        Authorization: this.TOKEN
                     }
                 }
-            ).then(()=>{   
+            ).then(() => {
                 this.btnLoading = false
-                this.close();                
-            }).catch(()=>{
+                this.close()
+            }).catch(() => {
                 this.btnLoading = false
-            });
+            })
         },
         revoke(item)
-        {   
-            this.btnLoading = true         
+        {
+            this.btnLoading = true   
             this.$ajax.post('/system/setting/roles/revokerolepermissions',
                 {
-                    role_id:this.role.id,
+                    role_id: this.role.id,
                     name:item.name
                 },
                 {
                     headers: {
-                        Authorization:this.TOKEN
+                        Authorization: this.TOKEN
                     }
                 }
-            ).then(()=>{   
+            ).then(() => {
                 this.btnLoading = false
-                this.close();                
-            }).catch(()=>{
+                this.close()
+            }).catch(() => {
                 this.btnLoading = false
-            });
+            })
         },
         close()
         {
@@ -182,21 +182,21 @@ export default {
     },
     props: {
         role:Object,
-        daftarpermissions:Array,
-        permissionsselected:Array,
+        daftarpermissions: Array,
+        permissionsselected: Array,
     },
     computed: {
-        ...mapGetters('auth', {                         
+        ...mapGetters('auth', {
             TOKEN: 'Token',
         }),
         daftar_permissions()
         {
-            return this.daftarpermissions;
+            return this.daftarpermissions
         },
         permissions_selected: {
-            get ()
-            {            
-                if (this.perm_selected.length >0)
+            get()
+            {
+                if (this.perm_selected.length > 0)
                 {
                     return this.perm_selected;
                 }
@@ -205,9 +205,9 @@ export default {
                     return this.permissionsselected;
                 }
             },
-            set (val)
-            {            
-                this.perm_selected=val;                
+            set(val)
+            {
+                this.perm_selected=val
             }
         }
     }

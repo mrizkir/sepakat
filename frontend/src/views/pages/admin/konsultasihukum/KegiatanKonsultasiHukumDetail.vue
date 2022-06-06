@@ -124,11 +124,7 @@
               </v-card>
             </v-card-text>
             <v-card-text v-else>
-              <v-alert
-                text
-                outlined
-                color="info"
-                >
+              <v-alert text outlined color="info">              
                 BELUM ADA KOMENTAR
               </v-alert>
             </v-card-text>
@@ -160,168 +156,166 @@
   </AdminLayout>
 </template>
 <script>
-import AdminLayout from '@/views/layouts/AdminLayout'
-import ModuleHeader from '@/components/ModuleHeader';
-import DK from '@/views/pages/admin/konsultasihukum/DataKegiatanKonsultasiHukum';
+  import AdminLayout from '@/views/layouts/AdminLayout'
+  import ModuleHeader from '@/components/ModuleHeader'
+  import DK from '@/views/pages/admin/konsultasihukum/DataKegiatanKonsultasiHukum'
 
-export default {
-  name: 'KegiatanKonsultasiHukumDetail',
-  created () {
-    this.dashboard = this.$store.getters['uiadmin/getDefaultDashboard']; 
-    this.kegiatan_id=this.$route.params.kegiatan_id;
-    this.breadcrumbs = [
-      {
-        text: 'HOME',
-        disabled: false,
-        href: '/dashboard/' + this.$store.getters['auth/AccessToken']
-      },
-      {
-        text: 'KEGIATAN',
-        disabled: false,
-        href: '#'
-      },
-      {
-        text: 'KONSULTASI HUKUM',
-        disabled: false,
-        href: '/kegiatan/konsultasihukum/'
-      },
-      {
-        text: 'DETAIL',
-        disabled: true,
-        href: '#'
-      }
-    ];
-    this.initialize();
-    this.fetchKomentar();    
-  },
-  data: () => ({ 
-    dashboard: null,
-
-    dialogkronologis: false,
-    dialogrekomendasi: false,
-
-    kegiatan_id: null,
-    data_kegiatan: {},
-    bottomNav: 3,
-    
-    daftar_komentar: [],
-
-    //formdata
-    form_valid: true, 
-    btnLoading: false,
-    formdata: {
-      komentar: ''
-    },
-    rule_komentar: [
-      value => !!value || "Mohon untuk diisi komentar !!!",
-    ]
-  }),
-  methods: {
-    initialize: async function() {
-      await this.$ajax.get('/kegiatan/konsultasihukum/' + this.kegiatan_id,{
-        headers: {
-          Authorization:this.$store.getters['auth/Token']
-        }
-      }).then(({ data }) => {    
-        this.data_kegiatan=data.kegiatan;                
-      });
-    },
-    async fetchKomentar ()
-    {
-      await this.$ajax.get('/kegiatan/komentar/' + this.kegiatan_id,{
-        headers: {
-          Authorization:this.$store.getters['auth/Token']
-        }
-      }).then(({ data }) => {    
-        this.daftar_komentar=data.daftar_komentar;
-      })
-    },
-    savekomentar: async function() {
-      if (this.$refs.frmdata.validate())
-      {
-        this.btnLoading = true      
-
-        await this.$ajax.post('/kegiatan/komentar/store',
+  export default {
+    name: 'KegiatanKonsultasiHukumDetail',
+    created () {
+      this.dashboard = this.$store.getters['uiadmin/getDefaultDashboard']
+      this.kegiatan_id=this.$route.params.kegiatan_id;
+      this.breadcrumbs = [
         {
-          kegiatan_id:this.kegiatan_id,
-          isi_komentar:this.formdata.komentar,
+          text: 'HOME',
+          disabled: false,
+          href: '/dashboard/' + this.$store.getters['auth/AccessToken'],
         },
         {
-          headers: {
-            Authorization:this.$store.getters['auth/Token']
-          }
-        }
-        )
-        .then(()=>{
-          this.btnLoading = false     
-          this.formdata.isi_komentar='';          
-          this.$refs.frmdata.reset();
-          this.fetchKomentar();
-        })
-        .catch(()=>{
-          this.btnLoading = false
-        });                
-      }
-    },
-    verifikasi() {
-      this.$root.$confirm.open('Verifikasi', 'Setelah diverifikasi, tidak bisa diberi komentar, diubah, atau dihapus ?', { color: 'green',width:600 }).then((confirm) => {
-        if (confirm) {
-          this.btnLoading = true
-          this.$ajax.post('/kegiatan/konsultasihukum/verifikasi/' + this.kegiatan_id,
-            {
-              '_method': 'put',
-            },
-            {
-              headers: {
-                Authorization:this.$store.getters['auth/Token']
-              }
-            }
-          ).then(()=>{   
-            this.$router.go()
-            this.btnLoading = false
-          }).catch(()=>{
-            this.btnLoading = false
-          });
-        }                
-      });
-    },
-    closedialogkronologis()
-    {
-      this.dialogkronologis=false;
-    },
-    closedialogrekomendasi()
-    {
-      this.dialogrekomendasi=false;
-    },
-    deleteItem (item) {   
-      this.$root.$confirm.open('Delete', 'Apakah Anda ingin menghapus komentar kegiatan dengan ID '+item.kegiatan_id+' ?', { color: 'red',width:600 }).then((confirm) => {
-        if (confirm)
+          text: 'KEGIATAN',
+          disabled: false,
+          href: '#',
+        },
         {
-          this.btnLoading = true
-          this.$ajax.post('/kegiatan/komentar/'+item.id,
-            {
-              '_method': 'DELETE',
-            },
-            {
-              headers: {
-                Authorization:this.$store.getters['auth/Token']
-              }
-            }
-          ).then(()=>{   
-            this.fetchKomentar();
-            this.btnLoading = false
-          }).catch(()=>{
-            this.btnLoading = false
-          });
-        }                
-      });
+          text: 'KONSULTASI HUKUM',
+          disabled: false,
+          href: '/kegiatan/konsultasihukum/'
+        },
+        {
+          text: 'DETAIL',
+          disabled: true,
+          href: '#',
+        }
+      ];
+      this.initialize()
+      this.fetchKomentar()
     },
-  },
-  components: {
-    AdminLayout,
-    ModuleHeader,
-    DK
-  },
+    data: () => ({ 
+      dashboard: null,
 
-}
+      dialogkronologis: false,
+      dialogrekomendasi: false,
+
+      kegiatan_id: null,
+      data_kegiatan: {},
+      bottomNav: 3,
+      
+      daftar_komentar: [],
+
+      //formdata
+      form_valid: true, 
+      btnLoading: false,
+      formdata: {
+        komentar: null,
+      },
+      rule_komentar: [
+        value => !!value || "Mohon untuk diisi komentar !!!",
+      ]
+    }),
+    methods: {
+      initialize: async function() {
+        await this.$ajax.get('/kegiatan/konsultasihukum/' + this.kegiatan_id,{
+          headers: {
+            Authorization: this.$store.getters['auth/Token']
+          }
+        }).then(({ data }) => {
+          this.data_kegiatan=data.kegiatan
+        })
+      },
+      async fetchKomentar()
+      {
+        await this.$ajax.get('/kegiatan/komentar/' + this.kegiatan_id,{
+          headers: {
+            Authorization: this.$store.getters['auth/Token']
+          }
+        }).then(({ data }) => {
+          this.daftar_komentar = data.daftar_komentar;
+        })
+      },
+      savekomentar: async function() {
+        if (this.$refs.frmdata.validate()) {
+          this.btnLoading = true
+
+          await this.$ajax.post('/kegiatan/komentar/store',
+          {
+            kegiatan_id: this.kegiatan_id,
+            isi_komentar: this.formdata.komentar,
+          },
+          {
+            headers: {
+              Authorization: this.$store.getters['auth/Token']
+            }
+          }
+          )
+          .then(() => {
+            this.btnLoading = false     
+            this.formdata.isi_komentar=''
+            this.$refs.frmdata.reset();
+            this.fetchKomentar();
+          })
+          .catch(() => {
+            this.btnLoading = false
+          })
+        }
+      },
+      verifikasi() {
+        this.$root.$confirm.open('Verifikasi', 'Setelah diverifikasi, tidak bisa diberi komentar, diubah, atau dihapus ?', { color: 'green',width:600 }).then((confirm) => {
+          if (confirm) {
+            this.btnLoading = true
+            this.$ajax.post('/kegiatan/konsultasihukum/verifikasi/' + this.kegiatan_id,
+              {
+                '_method': 'put',
+              },
+              {
+                headers: {
+                  Authorization: this.$store.getters['auth/Token']
+                }
+              }
+            ).then(() => {
+              this.$router.go()
+              this.btnLoading = false
+            }).catch(() => {
+              this.btnLoading = false
+            })
+          }                
+        })
+      },
+      closedialogkronologis()
+      {
+        this.dialogkronologis = false
+      },
+      closedialogrekomendasi()
+      {
+        this.dialogrekomendasi = false
+      },
+      deleteItem(item) {
+        this.$root.$confirm.open('Delete', 'Apakah Anda ingin menghapus komentar kegiatan dengan ID '+item.kegiatan_id+' ?', { color: 'red',width:600 }).then((confirm) => {
+          if (confirm)
+          {
+            this.btnLoading = true
+            this.$ajax.post('/kegiatan/komentar/'+item.id,
+              {
+                '_method': 'DELETE',
+              },
+              {
+                headers: {
+                  Authorization: this.$store.getters['auth/Token']
+                }
+              }
+            ).then(() => {
+              this.fetchKomentar();
+              this.btnLoading = false
+            }).catch(() => {
+              this.btnLoading = false
+            })
+          }                
+        })
+      },
+    },
+    components: {
+      AdminLayout,
+      ModuleHeader,
+      DK
+    },
+  }
 </script>

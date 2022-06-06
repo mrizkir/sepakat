@@ -81,7 +81,7 @@
 export default {
     name: 'DataKegiatan',
     props: {
-        datakegiatan: {        
+        datakegiatan: {
             type:Object,
             required: true
         },

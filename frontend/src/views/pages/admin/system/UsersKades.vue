@@ -309,9 +309,9 @@
     </AdminLayout>
 </template>
 <script>
-import {mapGetters} from 'vuex';
+import { mapGetters } from 'vuex'
 import AdminLayout from '@/views/layouts/AdminLayout'
-import ModuleHeader from '@/components/ModuleHeader';
+import ModuleHeader from '@/components/ModuleHeader'
 import UserPermissions from '@/views/pages/admin/system/UserPermissions';
 export default {
     name: 'UsersKades',
@@ -330,7 +330,7 @@ export default {
             {
                 text: 'USERS KEPALA DESA',
                 disabled: true,
-                href: '#'
+                href: '#',
             }
         ];
         this.initialize()
@@ -348,7 +348,7 @@ export default {
             { text: 'NAME', value: 'name',sortable: true },
             { text: 'EMAIL', value: 'email',sortable: true },
             { text: 'NOMOR HP', value: 'nomor_hp',sortable: true }, 
-            { text: 'AKSI', value: 'actions', sortable: false,width:100 },
+            { text: 'AKSI', value: 'actions', sortable: false, width: 100 },
         ],
         expanded: [],
         search: '',
@@ -424,7 +424,7 @@ export default {
         ],
         rule_desa: [
             value => !!value||"Mohon untuk dipilih desa tempat bertugas para legal !!!",
-            value => {            
+            value => {
                 if (value.length)
                 {
                     
@@ -457,20 +457,20 @@ export default {
             this.datatableLoading=true;
             await this.$ajax.get('/system/userskades', {
                 headers: {
-                    Authorization:this.TOKEN
+                    Authorization: this.TOKEN
                 }
             }).then(({ data }) => {
                 this.daftar_users = data.users;
                 this.role_id=data.role.id;
-                this.datatableLoading=false;
-            });          
+                this.datatableLoading=false
+            })
             
         },
         dataTableRowClicked(item)
         {
             if ( item === this.expanded[0])
             {
-                this.expanded=[];                
+                this.expanded=[]
             }
             else
             {
@@ -486,149 +486,149 @@ export default {
                 },
                 {
                     headers: {
-                        Authorization:this.$store.getters['auth/Token']
+                        Authorization: this.$store.getters['auth/Token']
                     }
                 }
-            ).then(()=>{               
+            ).then(() => {
                 this.btnLoading = false
-            }).catch(()=>{
+            }).catch(() => {
                 this.btnLoading = false
-            });     
+            })
         },
         showDialogTambahUserKades: async function()
         {
             this.$ajax.get('/datamaster/kabupaten/2102/kecamatan').then(({data})=>{
-                this.daftar_kecamatan=data.kecamatan;                
-            });
+                this.daftar_kecamatan=data.kecamatan
+            })
 
             await this.$ajax.get('/system/setting/roles', {
                 headers: {
-                    Authorization:this.TOKEN
+                    Authorization: this.TOKEN
                 }
             }).then(({ data }) => {
                 let roles = data.roles;
                 var daftar_roles=[];
                 roles.forEach(element => {
                     if (element.name=='kades')
-                    {                    
+                    {
                         daftar_roles.push({
                             text:element.name,
                             disabled: true,
-                        });                        
+                        })
                     }                  
-                });        
-                this.daftar_roles=daftar_roles;                                                              
-                this.dialog = true;            
-            });               
+                })
+                this.daftar_roles=daftar_roles                              
+                this.dialog = true
+            })
         },
         editItem: async function (item) {
             this.editedIndex = this.daftar_users.indexOf(item)
-            item.password='';            
-            this.editedItem = Object.assign({}, item);      
+            item.password=''
+            this.editedItem = Object.assign({}, item)
 
             this.$ajax.get('/datamaster/kabupaten/2102/kecamatan').then(({data})=>{
-                this.daftar_kecamatan=data.kecamatan;                
-            });
+                this.daftar_kecamatan=data.kecamatan
+            })
 
             await this.$ajax.get('/system/users/'+item.id+'/desa',
                 {
                     headers: {
-                        Authorization:this.TOKEN
+                        Authorization: this.TOKEN
                     }
                 }
-            ).then(({ data }) => {                
+            ).then(({ data }) => {
                 let daftar_desa = data.daftar_desa;
                 var desa=[];
                 var kecamatan=null;
-                daftar_desa.forEach(element => {                
-                    desa.push(element.desa_id);                                            
+                daftar_desa.forEach(element => {
+                    desa.push(element.desa_id)            
                     kecamatan={
                         id:element.kecamatan_id,
                         nama:element.nama_kecamatan
                     }
-                });   
+                })
                 if (kecamatan !== null)
                 {
-                    this.kecamatan_id=kecamatan;    
-                    this.editedItem.desa_id=desa;                       
+                    this.kecamatan_id=kecamatan
+                    this.editedItem.desa_id=desa
                 }
-            });           
+            })
             await this.$ajax.get('/system/setting/roles', {
                 headers: {
-                    Authorization:this.TOKEN
+                    Authorization: this.TOKEN
                 }
             }).then(({ data }) => {
                 let roles = data.roles;
                 var daftar_roles=[];
                 roles.forEach(element => {
                     if (element.name=='kades')
-                    {                    
+                    {
                         daftar_roles.push({
                             text:element.name,
                             disabled: true,
-                        });                        
+                        })
                     }                              
-                });        
-                this.daftar_roles=daftar_roles;                                                
-            });    
+                })
+                this.daftar_roles=daftar_roles                
+            })
 
             this.btnLoading = true
             await this.$ajax.get('/system/users/'+item.id+'/roles',
             {
                 headers: {
-                    Authorization:this.TOKEN
+                    Authorization: this.TOKEN
                 }
             }).then(({ data }) => {
-                this.editedItem.role_id=data.roles;                   
+                this.editedItem.role_id=data.roles
                 this.btnLoading = false
                 this.dialogEdit = true;
-            });
+            })
 
-            this.firstShowDialogEdit=false;
+            this.firstShowDialogEdit=false
         },
-        setPermission: async function (item) {      
+        setPermission: async function (item) {
             this.btnLoading = true  
             this.$ajax.get('/system/setting/roles/' + this.role_id+'/permission', {
                 headers: {
-                    Authorization:this.TOKEN
+                    Authorization: this.TOKEN
                 }
             }).then(({data})=>{
-                this.daftar_permissions = data.permissions;                           
-            }).catch(()=>{
+                this.daftar_permissions = data.permissions
+            }).catch(() => {
                 this.btnLoading = false
-            });          
+            })
 
             await this.$ajax.get('/system/users/'+item.id+'/permission', {
                 headers: {
-                    Authorization:this.TOKEN
+                    Authorization: this.TOKEN
                 }
             }).then(({data})=>{
                 this.permissions_selected = data.permissions;
                 this.btnLoading = false
                    
-            }).catch(()=>{
+            }).catch(() => {
                 this.btnLoading = false
-            });  
+            })
             this.dialogUserPermission = true;
             this.editedItem=item;
         
         },
-        close () {        
+        close () {
             this.btnLoading = false
-            this.dialog = false;
-            this.dialogEdit = false;      
-            this.firstShowDialogEdit=true;      
+            this.dialog = false
+            this.dialogEdit = false
+            this.firstShowDialogEdit=true
             setTimeout(() => {
                 this.editedItem = Object.assign({}, this.defaultItem)
                 this.editedIndex = -1
-                this.$refs.frmdata.reset(); 
+                this.$refs.frmdata.reset()
                 }, 300
             );
         },
         closeUserPermissions () {
             this.btnLoading = false
             this.permissions_selected=[];
-            this.dialogUserPermission = false;  
+            this.dialogUserPermission = false
         },
         save () {
             if (this.$refs.frmdata.validate())
@@ -639,52 +639,52 @@ export default {
                     this.$ajax.post('/system/userskades/' + this.editedItem.id,
                         {
                             '_method': 'PUT',
-                            name:this.editedItem.name,
-                            email:this.editedItem.email,
-                            nomor_hp:this.editedItem.nomor_hp,
-                            username:this.editedItem.username,
-                            password:this.editedItem.password,
+                            name: this.editedItem.name,
+                            email: this.editedItem.email,
+                            nomor_hp: this.editedItem.nomor_hp,
+                            username: this.editedItem.username,
+                            password: this.editedItem.password,
                             desa_id:JSON.stringify(Object.assign({},this.editedItem.desa_id)),
                             role_id:JSON.stringify(Object.assign({},this.editedItem.role_id)),
                         },
                         {
                             headers: {
-                                Authorization:this.TOKEN
+                                Authorization: this.TOKEN
                             }
                         }
                     ).then(({ data }) => { 
                         Object.assign(this.daftar_users[this.editedIndex],data.user);
                         this.close();
-                    }).catch(()=>{
+                    }).catch(() => {
                         this.btnLoading = false
-                    });                    
+                    })
                     
                 } else {
                     this.$ajax.post('/system/userskades/store',
                         {
-                            name:this.editedItem.name,
-                            email:this.editedItem.email,
-                            nomor_hp:this.editedItem.nomor_hp,
-                            username:this.editedItem.username,
-                            password:this.editedItem.password,
+                            name: this.editedItem.name,
+                            email: this.editedItem.email,
+                            nomor_hp: this.editedItem.nomor_hp,
+                            username: this.editedItem.username,
+                            password: this.editedItem.password,
                             desa_id:JSON.stringify(Object.assign({},this.editedItem.desa_id)),
                             role_id:JSON.stringify(Object.assign({},this.editedItem.role_id)),
                         },
                         {
                             headers: {
-                                Authorization:this.TOKEN
+                                Authorization: this.TOKEN
                             }
                         }
                     ).then(({ data }) => { 
                         this.daftar_users.push(data.user);
                         this.close();
-                    }).catch(()=>{
+                    }).catch(() => {
                         this.btnLoading = false
-                    });
+                    })
                 }
             }
         },
-        deleteItem (item) {       
+        deleteItem(item) {
             this.$root.$confirm.open('Delete', 'Apakah Anda ingin menghapus username '+item.username+' ?', { color: 'red' }).then((confirm) => {
                 if (confirm)
                 {
@@ -695,25 +695,25 @@ export default {
                         },
                         {
                             headers: {
-                                Authorization:this.TOKEN
+                                Authorization: this.TOKEN
                             }
                         }
-                    ).then(()=>{   
+                    ).then(() => {
                         const index = this.daftar_users.indexOf(item);
                         this.daftar_users.splice(index, 1);
                         this.btnLoading = false
-                    }).catch(()=>{
+                    }).catch(() => {
                         this.btnLoading = false
-                    });
+                    })
                 }
-            });
+            })
         },
     },
     computed: {
         formTitle () {
             return this.editedIndex === -1 ? 'TAMBAH USER KADES' : 'EDIT USER KADES'
         },
-        ...mapGetters('auth', {        
+        ...mapGetters('auth', {
             ACCESS_TOKEN: 'AccessToken', 
             TOKEN: 'Token',
         }),
@@ -733,8 +733,8 @@ export default {
                 this.selectLoadingKec=true;
                 this.$ajax.get('/datamaster/kecamatan/'+val.id+'/desa').then(({data})=>{
                     this.daftar_desa=data.desa;
-                    this.selectLoadingKec=false;
-                });
+                    this.selectLoadingKec=false
+                })
                 if (!this.firstShowDialogEdit)
                 {
                     this.editedItem.desa_id=[];

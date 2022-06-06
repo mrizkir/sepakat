@@ -5,7 +5,7 @@
         mdi-calendar-blank-multiple
       </template>
       <template v-slot:name>
-        KEGIATAN KONSULTASI HUKUM
+        KEGIATAN INVESTIGASI PERKARA
       </template>
       <template v-slot:breadcrumbs>
         <v-breadcrumbs :items="breadcrumbs" class="pa-0">
@@ -16,14 +16,14 @@
       </template>
       <template v-slot:desc>
         <v-alert color="cyan" border="left" colored-border type="info">
-          Halaman ini berisi daftar kegiatan konsultasi hukum yang dilakukan oleh paralegal
+          Halaman ini berisi daftar kegiatan investigasi perkara yang dilakukan oleh paralegal
         </v-alert>
       </template>
     </ModuleHeader>
     <v-container fluid v-if="Object.keys(data_kegiatan).length">
       <v-row>
         <v-col cols="12">
-          <DK :datakegiatan="data_kegiatan" path="/kegiatan/konsultasihukum" />
+          <DK :datakegiatan="data_kegiatan" path="/kegiatan/investigasiperkara" />
         </v-col>
       </v-row>
       <v-row>
@@ -183,9 +183,9 @@
 <script>
   import AdminLayout from '@/views/layouts/AdminLayout'
   import ModuleHeader from '@/components/ModuleHeader'
-  import DK from '@/views/pages/admin/konsultasihukum/DataKegiatanKonsultasiHukum';
+  import DK from '@/views/pages/admin/investigasiperkara/DataKegiatanInvestigasiPerkara';
   export default {
-    name: 'KegiatanKonsultasiHukumFiles',
+    name: 'KegiatanInvestigasiPerkaraFiles',
     created() {
       this.dashboard = this.$store.getters['uiadmin/getDefaultDashboard']
       this.kegiatan_id=this.$route.params.kegiatan_id;
@@ -201,9 +201,9 @@
           href: '#',
         },
         {
-          text: 'KONSULTASI HUKUM',
+          text: 'INVESTIGASI PERKARA',
           disabled: false,
-          href: '/kegiatan/konsultasihukum/' + this.kegiatan_id+'/detail'
+          href: '/kegiatan/investigasiperkara/' + this.kegiatan_id+'/detail'
         },
         {
           text: 'FILES',
@@ -253,7 +253,7 @@
     }),
     methods: {
       initialize: async function() {
-        await this.$ajax.get('/kegiatan/konsultasihukum/' + this.kegiatan_id,{
+        await this.$ajax.get('/kegiatan/investigasiperkara/' + this.kegiatan_id,{
           headers: {
             Authorization: this.$store.getters['auth/Token']
           }
@@ -281,7 +281,7 @@
             this.btnLoadingUploadSKTM = true;
             var formdata = new FormData()
             formdata.append('filesktmpemohon', this.filesktmpemohon)
-            await this.$ajax.post('/kegiatan/konsultasihukum/uploadsktmpemohon/' + this.kegiatan_id,formdata,
+            await this.$ajax.post('/kegiatan/investigasiperkara/uploadsktmpemohon/' + this.kegiatan_id,formdata,
               {
                 headers: {
                   Authorization: this.$store.getters['auth/Token'],
@@ -312,7 +312,7 @@
             this.btnLoadingUploadDaftarHadir=true;
             var formdata = new FormData()
             formdata.append('filedaftarhadir', this.filedaftarhadir)
-            await this.$ajax.post('/kegiatan/konsultasihukum/uploaddaftarhadir/' + this.kegiatan_id,formdata,
+            await this.$ajax.post('/kegiatan/investigasiperkara/uploaddaftarhadir/' + this.kegiatan_id,formdata,
               {
                 headers: {
                   Authorization: this.$store.getters['auth/Token'],
@@ -340,7 +340,7 @@
             formdata.append('filedokumentasikegiatan', this.filedokumentasikegiatan)
             await this.$ajax
               .post(
-                '/kegiatan/konsultasihukum/uploaddokumentasikegiatan/' +
+                '/kegiatan/investigasiperkara/uploaddokumentasikegiatan/' +
                   this.kegiatan_id,
                 formdata,
                 {

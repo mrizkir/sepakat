@@ -39,7 +39,7 @@
               </v-card-text>
               <v-card-actions class="justify-center">
                 <v-btn
-                  style="background-color:#1c247c; color:#FFF"
+                  style="background-color:#1c247c;color:#FFF"
                   @click="doLogin"
                   :loading="btnLoading"
                   :disabled="btnLoading"

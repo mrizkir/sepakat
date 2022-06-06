@@ -233,21 +233,21 @@
 </template>
 <script>
 import AdminLayout from '@/views/layouts/AdminLayout'
-import ModuleHeader from '@/components/ModuleHeader';
+import ModuleHeader from '@/components/ModuleHeader'
 export default {
   name: 'KegiatanKonsultasiHukumTambah',
   created () {
-    this.dashboard = this.$store.getters['uiadmin/getDefaultDashboard']; 
+    this.dashboard = this.$store.getters['uiadmin/getDefaultDashboard']
     this.breadcrumbs = [
       {
         text: 'HOME',
         disabled: false,
-        href: '/dashboard/' + this.$store.getters['auth/AccessToken']
+        href: '/dashboard/' + this.$store.getters['auth/AccessToken'],
       },
       {
         text: 'KEGIATAN',
         disabled: false,
-        href: '#'
+        href: '#',
       },
       {
         text: 'KEGIATAN',
@@ -257,7 +257,7 @@ export default {
       {
         text: 'TAMBAH',
         disabled: true,
-        href: '#'
+        href: '#',
       }
     ];
     this.initialize()
@@ -271,7 +271,7 @@ export default {
     menuTanggalLahir: false,
     menuTanggalPelaksanaan: false,
     menuJamPelaksanaan: false, 
-    formdata: {  
+    formdata: {
       user_id: null,
       nama_pemohon: null,
       tempat_lahir: null,
@@ -287,7 +287,7 @@ export default {
       nasihat_hukum: null,
       rekomendasi_kegiatan: null,
     },
-    formdefault: {  
+    formdefault: {
       user_id: null,
       nama_pemohon: null,
       tempat_lahir: null,
@@ -348,14 +348,14 @@ export default {
   }),
   methods: {
     initialize: async function() 
-    {  
+    {
       await this.$ajax.get('/system/usersparalegal', {
         headers: {
-          Authorization:this.$store.getters['auth/Token']
+          Authorization: this.$store.getters['auth/Token']
         }
       }).then(({ data }) => {
-        this.daftar_paralegal = data.users;                
-      });          
+        this.daftar_paralegal = data.users
+      })
     },
     save: async function() {
       if (this.$refs.frmdata.validate())
@@ -380,24 +380,24 @@ export default {
           },
           {
             headers: {
-              Authorization:this.$store.getters['auth/Token']
+              Authorization: this.$store.getters['auth/Token']
             }
           }
         ).then(({data})=>{
           this.btnLoading = false               
           setTimeout(() => {
-            this.formdata = Object.assign({}, this.formdefault);                                
+            this.formdata = Object.assign({}, this.formdefault)
             this.$router.push('/kegiatan/konsultasihukum/' + data.kegiatan.id + '/files')
             }, 300
           );
-        }).catch(()=>{
+        }).catch(() => {
           this.btnLoading = false
-        });                
+        })
       }
     },
     closedialogfrm () {
       setTimeout(() => {
-        this.formdata = Object.assign({}, this.formdefault);                                
+        this.formdata = Object.assign({}, this.formdefault)
         this.$router.push('/kegiatan/konsultasihukum')
         }, 300
       );

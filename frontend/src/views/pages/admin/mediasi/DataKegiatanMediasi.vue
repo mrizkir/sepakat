@@ -81,7 +81,7 @@
 export default {
   name: 'DataKegiatanMediasi',
   props: {
-    datakegiatan: {        
+    datakegiatan: {
       type:Object,
       required: true,
     },

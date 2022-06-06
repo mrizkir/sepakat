@@ -15,12 +15,7 @@
         </v-breadcrumbs>
       </template>
       <template v-slot:desc>
-        <v-alert                                        
-          color="cyan"
-          border="left"
-          colored-border
-          type="info"
-          >
+        <v-alert color="cyan" border="left" colored-border type="info">
           Halaman ini berisi daftar kegiatan konsultasi hukum yang dilakukan oleh paralegal
         </v-alert>
       </template>
@@ -127,26 +122,26 @@
 </template>
 <script>
 import AdminLayout from '@/views/layouts/AdminLayout'
-import ModuleHeader from '@/components/ModuleHeader';
+import ModuleHeader from '@/components/ModuleHeader'
 export default {
   name: 'KegiatanKonsultasiHukumMediasi',
   created () {
-    this.dashboard = this.$store.getters['uiadmin/getDefaultDashboard'];        
+    this.dashboard = this.$store.getters['uiadmin/getDefaultDashboard']
     this.breadcrumbs = [
       {
         text: 'HOME',
         disabled: false,
-        href: '/dashboard/' + this.$store.getters['auth/AccessToken']
+        href: '/dashboard/' + this.$store.getters['auth/AccessToken'],
       },
       {
         text: 'KEGIATAN',
         disabled: false,
-        href: '#'
+        href: '#',
       },
       {
         text: 'KONSULTASI HUKUM',
         disabled: true,
-        href: '#'
+        href: '#',
       }
     ];
     this.initialize()
@@ -174,20 +169,20 @@ export default {
       this.datatableLoading=true;
       await this.$ajax.get('/kegiatan/konsultasihukum', {
         headers: {
-          Authorization:this.$store.getters['auth/Token']
+          Authorization: this.$store.getters['auth/Token']
         }
       }).then(({ data }) => {
         this.datatable = data.daftar_kegiatan;
-        this.datatableLoading=false;
-      }).catch(()=>{
-        this.datatableLoading=false;
-      });  
+        this.datatableLoading=false
+      }).catch(() => {
+        this.datatableLoading=false
+      })
     },
     dataTableRowClicked(item)
     {
       if ( item === this.expanded[0])
       {
-        this.expanded=[];                
+        this.expanded=[]
       }
       else
       {
@@ -195,17 +190,17 @@ export default {
       }               
     },
     viewItem (item) {
-      this.formdata=item;      
-      this.dialogdetailitem=true;              
+      this.formdata=item
+      this.dialogdetailitem=true
       // this.$ajax.get('/kegiatan/konsultasihukum'+item.id,{
       //     headers: {
-      //         Authorization:this.$store.getters['auth/Token']
+      //         Authorization: this.$store.getters['auth/Token']
       //     }
       // }).then(({ data }) => {
                        
-      // });                      
+      // })
     },
-    deleteItem (item) {   
+    deleteItem(item) {
       this.$root.$confirm.open('Delete', 'Apakah Anda ingin menghapus data kegiatan konsultasi hukum dengan ID '+item.id+' ?', { color: 'red',width:600 }).then((confirm) => {
         if (confirm)
         {
@@ -216,19 +211,19 @@ export default {
             },
             {
               headers: {
-                Authorization:this.$store.getters['auth/Token']
+                Authorization: this.$store.getters['auth/Token']
               }
             }
-          ).then(()=>{   
+          ).then(() => {
             const index = this.datatable.indexOf(item);
             this.datatable.splice(index, 1);
             this.btnLoading = false
           })
-          .catch(()=>{
+          .catch(() => {
             this.btnLoading = false
-          });
+          })
         }                
-      });
+      })
     },
   },
   components: {

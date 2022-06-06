@@ -132,14 +132,14 @@
     </div>  
 </template>
 <script>
-import {mapGetters} from 'vuex';
+import { mapGetters } from 'vuex'
 export default {
     name: 'SystemConfigLayout',
     data: () => ({
         loginTime:0,
         drawer: null,
     }), 
-    methods: {    
+    methods: {
         logout ()
         {
             this.loginTime=0;
@@ -161,11 +161,11 @@ export default {
                 this.$store.dispatch('uifront/reinit');	
                 this.$store.dispatch('uiadmin/reinit');	
                 this.$router.push('/');
-            });
+            })
         },
         isBentukPT (bentuk_pt)
         {
-            return this.$store.getters['uifront/getBentukPT']==bentuk_pt?true: false;
+            return this.$store.getters['uifront/getBentukPT']==bentuk_pt?true: false
         }
 	},
     computed: {
@@ -203,7 +203,7 @@ export default {
 			}
 			else
 			{
-				return false;
+				return false
 			}
         },
     },
@@ -215,7 +215,7 @@ export default {
                 if (value >= 0)
                 {
                     setTimeout(() => { 
-                        this.loginTime=this.AUTHENTICATED==true?this.loginTime+1:-1;                                                                     
+                        this.loginTime=this.AUTHENTICATED==true?this.loginTime+1:-1                                     
 					}, 1000);
                 }
                 else

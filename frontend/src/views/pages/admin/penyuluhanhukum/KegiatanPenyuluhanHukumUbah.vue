@@ -190,12 +190,12 @@
         {
           text: 'HOME',
           disabled: false,
-          href: '/dashboard/' + this.$store.getters['auth/AccessToken']
+          href: '/dashboard/' + this.$store.getters['auth/AccessToken'],
         },
         {
           text: 'KEGIATAN',
           disabled: false,
-          href: '#'
+          href: '#',
         },
         {
           text: 'PENYULUHAN HUKUM',
@@ -205,7 +205,7 @@
         {
           text: 'UBAH',
           disabled: true,
-          href: '#'
+          href: '#',
         }
       ]
       this.initialize()
@@ -221,7 +221,7 @@
       daftar_paralegal: [],
       menuTanggalPelaksanaan: false,
       menuJamPelaksanaan: false, 
-      formdata: {    
+      formdata: {
         user_id: null,
         nama_kegiatan: null,
         tempat_pelaksanaan: null,
@@ -233,7 +233,7 @@
         uraian_kegiatan: null,
         rekomendasi_kegiatan: null,
       },
-      formdefault: {    
+      formdefault: {
         user_id: null,
         nama_kegiatan: null,
         tempat_pelaksanaan: null,
@@ -277,10 +277,10 @@
       ],
     }),
     methods: {
-      initialize: async function() {    
+      initialize: async function() {
         await this.$ajax.get('/system/usersparalegal', {
           headers: {
-            Authorization:this.$store.getters['auth/Token']
+            Authorization: this.$store.getters['auth/Token']
           }
         })
         .then(({ data }) => {
@@ -288,7 +288,7 @@
         })          
         await this.$ajax.get('/kegiatan/penyuluhanhukum/' + this.kegiatan_id,{
           headers: {
-            Authorization:this.$store.getters['auth/Token']
+            Authorization: this.$store.getters['auth/Token']
           }
         })
         .then(({ data }) => {
@@ -324,23 +324,23 @@
             },
             {
               headers: {
-                Authorization:this.$store.getters['auth/Token']
+                Authorization: this.$store.getters['auth/Token']
               }
             }
           )
-          .then(({ data }) => {  
+          .then(({ data }) => {
             this.btnLoading = false               
             setTimeout(() => {
               this.formdata = Object.assign({}, this.formdefault)                                
               this.$router.push('/kegiatan/penyuluhanhukum/' + data.kegiatan.id + '/detail')
               }, 300
             )
-          }).catch(()=>{
+          }).catch(() => {
             this.btnLoading = false
           })                
         }
       },
-      closedialogfrm () {        
+      closedialogfrm () {
         setTimeout(() => {
           this.formdata = Object.assign({}, this.formdefault)                                
           this.$router.push('/kegiatan/penyuluhanhukum/' + this.kegiatan_id + '/detail')

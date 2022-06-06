@@ -225,9 +225,9 @@
     </AdminLayout>
 </template>
 <script>
-import {mapGetters} from 'vuex';
+import { mapGetters } from 'vuex'
 import AdminLayout from '@/views/layouts/AdminLayout'
-import ModuleHeader from '@/components/ModuleHeader';
+import ModuleHeader from '@/components/ModuleHeader'
 import RolePermissions from '@/views/pages/admin/system/RolePermissions';
 export default {
     name: 'Roles',
@@ -247,7 +247,7 @@ export default {
             {
                 text: 'ROLES',
                 disabled: true,
-                href: '#'
+                href: '#',
             }
         ];
         this.initialize()
@@ -305,23 +305,23 @@ export default {
             this.datatableLoading=true;
             this.$ajax.get('/system/setting/roles', {
                 headers: {
-                    Authorization:this.TOKEN
+                    Authorization: this.TOKEN
                 }
             }).then(({data,status})=>{
                 if (status==200)
                 {
                     this.datatable = data.roles;
-                    this.datatableLoading=false;
+                    this.datatableLoading=false
                 }     
             
-            });          
+            })
             
         },
         dataTableRowClicked(item)
         {
             if ( item === this.expanded[0])
             {
-                this.expanded=[];                
+                this.expanded=[]
             }
             else
             {
@@ -334,14 +334,14 @@ export default {
 
             this.$ajax.get('/system/setting/roles/'+item.id+'/permission', {
                 headers: {
-                    Authorization:this.TOKEN
+                    Authorization: this.TOKEN
                 }
             }).then(({data,status})=>{
                 if (status==200)
                 {
                     this.permissions_selected = data.permissions;
                 }                 
-            });  
+            })
             
             this.dialogdetail = true;
         },
@@ -350,37 +350,37 @@ export default {
             this.editedItem = Object.assign({}, item)
             this.dialog = true
         },
-        setPermission (item) {        
+        setPermission (item) {
             this.$ajax.get('/system/setting/permissions', {
                 headers: {
-                    Authorization:this.TOKEN
+                    Authorization: this.TOKEN
                 }
             }).then(({data,status})=>{
                 if (status==200)
                 {
                     this.daftar_permissions = data.permissions;
                 }                 
-            });          
+            })
 
             this.$ajax.get('/system/setting/roles/'+item.id+'/permission', {
                 headers: {
-                    Authorization:this.TOKEN
+                    Authorization: this.TOKEN
                 }
             }).then(({data,status})=>{
                 if (status==200)
                 {
                     this.permissions_selected = data.permissions;
                 }                 
-            });  
+            })
             this.dialogRolePermission = true;
             this.editedItem=item;
         
         },
         close () {
             this.btnLoading = false
-            this.dialog = false;
-            this.$refs.frmdata.reset(); 
-            this.form_error_message='';           
+            this.dialog = false
+            this.$refs.frmdata.reset()
+            this.form_error_message=''
             setTimeout(() => {
                 this.editedItem = Object.assign({}, this.defaultItem)
                 this.editedIndex = -1
@@ -389,7 +389,7 @@ export default {
         },
         closeRolePermissions () {
             this.permissions_selected=[];
-            this.dialogRolePermission = false;  
+            this.dialogRolePermission = false
         },
         save () {
             this.form_error_message='';
@@ -401,45 +401,45 @@ export default {
                     this.$ajax.post('/system/setting/roles/' + this.editedItem.id,
                         {
                             '_method': 'PUT',
-                            name:this.editedItem.name.toLowerCase(),
+                            name: this.editedItem.name.toLowerCase(),
                         },
                         {
                             headers: {
-                                Authorization:this.TOKEN
+                                Authorization: this.TOKEN
                             }
                         }
                     ).then(({ data }) => { 
                         Object.assign(this.datatable[this.editedIndex],data.roles);
                         this.close();
-                    }).catch(()=>{
+                    }).catch(() => {
                         this.btnLoading = false
-                    });                    
+                    })
                     
                 } else {
                     this.$ajax.post('/system/setting/roles/store',
                         {
-                            name:this.editedItem.name.toLowerCase()
+                            name: this.editedItem.name.toLowerCase()
                         },
                         {
                             headers: {
-                                Authorization:this.TOKEN
+                                Authorization: this.TOKEN
                             }
                         }
                     ).then(({ data }) => { 
                         this.datatable.push(data.roles);
                         this.close();
-                    }).catch(()=>{
+                    }).catch(() => {
                         this.btnLoading = false
-                    });
+                    })
                 }
             }
         },
     },
-    computed: {    
+    computed: {
         formTitle () {
             return this.editedIndex === -1 ? 'TAMBAH ROLE' : 'EDIT ROLE'
         },
-        ...mapGetters('auth', {        
+        ...mapGetters('auth', {
             ACCESS_TOKEN: 'AccessToken', 
             TOKEN: 'Token',
         }),

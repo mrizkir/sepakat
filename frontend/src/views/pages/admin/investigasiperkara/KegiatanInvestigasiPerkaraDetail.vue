@@ -5,7 +5,7 @@
         mdi-calendar-blank-multiple
       </template>
       <template v-slot:name>
-        KEGIATAN PENYULUHAN HUKUM
+        KEGIATAN INVESTIGASI PERKARA
       </template>
       <template v-slot:breadcrumbs>
         <v-breadcrumbs :items="breadcrumbs" class="pa-0">
@@ -16,14 +16,14 @@
       </template>
       <template v-slot:desc>
         <v-alert color="cyan" border="left" colored-border type="info">
-          Halaman ini berisi daftar kegiatan penyuluhan hukum yang dilakukan oleh paralegal
+          Halaman ini berisi daftar kegiatan investigasi perkara yang dilakukan oleh paralegal
         </v-alert>
       </template>
     </ModuleHeader> 
     <v-container fluid v-if="Object.keys(data_kegiatan).length"> 
       <v-row>
         <v-col cols="12">
-          <DK :datakegiatan="data_kegiatan" path="/kegiatan/penyuluhanhukum"/>
+          <DK :datakegiatan="data_kegiatan" path="/kegiatan/investigasiperkara"/>
         </v-col>
       </v-row>
       <v-row>
@@ -39,7 +39,7 @@
               <span>Verifikasi</span>
               <v-icon>mdi-lock-open</v-icon>
             </v-btn>
-            <v-btn :to="{path: '/kegiatan/penyuluhanhukum/' + kegiatan_id + '/files'}">
+            <v-btn :to="{path: '/kegiatan/investigasiperkara/' + kegiatan_id + '/files'}">
               <span>Files</span>
               <v-icon>mdi-file-document</v-icon>
             </v-btn>
@@ -160,168 +160,162 @@
   </AdminLayout>
 </template>
 <script>
-import AdminLayout from '@/views/layouts/AdminLayout'
-import ModuleHeader from '@/components/ModuleHeader'
-import DK from '@/views/pages/admin/penyuluhanhukum/DataKegiatanPenyuluhanHukum';
+  import AdminLayout from '@/views/layouts/AdminLayout'
+  import ModuleHeader from '@/components/ModuleHeader'
+  import DK from '@/views/pages/admin/investigasiperkara/DataKegiatanInvestigasiPerkara';
 
-export default {
-  name: 'KegiatanPenyuluhanHukumDetail',
-  created () {
-    this.dashboard = this.$store.getters['uiadmin/getDefaultDashboard']
-    this.kegiatan_id=this.$route.params.kegiatan_id;
-    this.breadcrumbs = [
-      {
-        text: 'HOME',
-        disabled: false,
-        href: '/dashboard/' + this.$store.getters['auth/AccessToken'],
-      },
-      {
-        text: 'KEGIATAN',
-        disabled: false,
-        href: '#',
-      },
-      {
-        text: 'PENYULUHAN HUKUM',
-        disabled: false,
-        href: '/kegiatan/penyuluhanhukum/'
-      },
-      {
-        text: 'DETAIL',
-        disabled: true,
-        href: '#',
-      }
-    ];
-    this.initialize()
-    this.fetchKomentar()
-  },
-  data: () => ({ 
-    dashboard: null,
-
-    dialogkronologis: false,
-    dialogrekomendasi: false,
-
-    kegiatan_id: null,
-    data_kegiatan: {},
-    bottomNav: 3,
-    
-    daftar_komentar: [],
-
-    //formdata
-    form_valid: true, 
-    btnLoading: false,
-    formdata: {
-      komentar: null,
-    },
-    rule_komentar: [
-      value => !!value || "Mohon untuk diisi komentar !!!",
-    ]
-  }),
-  methods: {
-    initialize: async function() {
-      await this.$ajax.get('/kegiatan/penyuluhanhukum/' + this.kegiatan_id,{
-        headers: {
-          Authorization: this.$store.getters['auth/Token']
-        }
-      }).then(({ data }) => {
-        this.data_kegiatan=data.kegiatan
-      })
-    },
-    async fetchKomentar()
-    {
-      await this.$ajax.get('/kegiatan/komentar/' + this.kegiatan_id,{
-        headers: {
-          Authorization: this.$store.getters['auth/Token']
-        }
-      }).then(({ data }) => {
-        this.daftar_komentar = data.daftar_komentar;
-      })
-    },
-    savekomentar: async function() {
-      if (this.$refs.frmdata.validate())
-      {
-        this.btnLoading = true
-
-        await this.$ajax.post('/kegiatan/komentar/store',
+  export default {
+    name: 'KegiatanInvestigasiPerkaraDetail',
+    created () {
+      this.dashboard = this.$store.getters['uiadmin/getDefaultDashboard']
+      this.kegiatan_id=this.$route.params.kegiatan_id;
+      this.breadcrumbs = [
         {
-          kegiatan_id: this.kegiatan_id,
-          isi_komentar: this.formdata.komentar,
+          text: 'HOME',
+          disabled: false,
+          href: '/dashboard/' + this.$store.getters['auth/AccessToken'],
         },
         {
+          text: 'KEGIATAN',
+          disabled: false,
+          href: '#',
+        },
+        {
+          text: 'INVESTIGASI PERKARA',
+          disabled: false,
+          href: '/kegiatan/investigasiperkara/'
+        },
+        {
+          text: 'DETAIL',
+          disabled: true,
+          href: '#',
+        }
+      ];
+      this.initialize()
+      this.fetchKomentar()
+    },
+    data: () => ({ 
+      dashboard: null,
+
+      dialogkronologis: false,
+      dialogrekomendasi: false,
+
+      kegiatan_id: null,
+      data_kegiatan: {},
+      bottomNav: 3,
+      
+      daftar_komentar: [],
+
+      //formdata
+      form_valid: true, 
+      btnLoading: false,
+      formdata: {
+        komentar: null,
+      },
+      rule_komentar: [
+        value => !!value || "Mohon untuk diisi komentar !!!",
+      ]
+    }),
+    methods: {
+      initialize: async function() {
+        await this.$ajax.get('/kegiatan/investigasiperkara/' + this.kegiatan_id,{
           headers: {
             Authorization: this.$store.getters['auth/Token']
           }
-        }
-        )
-        .then(() => {
-          this.btnLoading = false     
-          this.formdata.isi_komentar=''
-          this.$refs.frmdata.reset();
-          this.fetchKomentar();
+        }).then(({ data }) => {
+          this.data_kegiatan=data.kegiatan
         })
-        .catch(() => {
-          this.btnLoading = false
+      },
+      async fetchKomentar() {
+        await this.$ajax.get('/kegiatan/komentar/' + this.kegiatan_id,{
+          headers: {
+            Authorization: this.$store.getters['auth/Token']
+          }
+        }).then(({ data }) => {
+          this.daftar_komentar = data.daftar_komentar;
         })
-      }
-    },
-    verifikasi() {
-      this.$root.$confirm.open('Verifikasi', 'Setelah diverifikasi, tidak bisa diberi komentar, diubah, atau dihapus ?', { color: 'green',width:600 }).then((confirm) => {
-        if (confirm) {
+      },
+      savekomentar: async function() {
+        if (this.$refs.frmdata.validate()) {
           this.btnLoading = true
-          this.$ajax.post('/kegiatan/penyuluhanhukum/verifikasi/' + this.kegiatan_id,
-            {
-              '_method': 'put',
-            },
-            {
-              headers: {
-                Authorization: this.$store.getters['auth/Token']
-              }
-            }
-          ).then(() => {
-            this.$router.go()
-            this.btnLoading = false
-          }).catch(() => {
-            this.btnLoading = false
-          })
-        }                
-      })
-    },
-    closedialogkronologis()
-    {
-      this.dialogkronologis = false
-    },
-    closedialogrekomendasi()
-    {
-      this.dialogrekomendasi = false
-    },
-    deleteItem(item) {
-      this.$root.$confirm.open('Delete', 'Apakah Anda ingin menghapus komentar kegiatan dengan ID '+item.kegiatan_id+' ?', { color: 'red',width:600 }).then((confirm) => {
-        if (confirm)
-        {
-          this.btnLoading = true
-          this.$ajax.post('/kegiatan/komentar/'+item.id,
-            {
-              '_method': 'DELETE',
-            },
-            {
-              headers: {
-                Authorization: this.$store.getters['auth/Token']
-              }
-            }
-          ).then(() => {
-            this.fetchKomentar();
-            this.btnLoading = false
-          }).catch(() => {
-            this.btnLoading = false
-          })
-        }                
-      })
-    },
-  },
-  components: {
-    AdminLayout,
-    ModuleHeader,
-    DK
-  },
 
-}
+          await this.$ajax.post('/kegiatan/komentar/store',
+          {
+            kegiatan_id: this.kegiatan_id,
+            isi_komentar: this.formdata.komentar,
+          },
+          {
+            headers: {
+              Authorization: this.$store.getters['auth/Token']
+            }
+          }
+          )
+          .then(() => {
+            this.btnLoading = false     
+            this.formdata.isi_komentar=''
+            this.$refs.frmdata.reset();
+            this.fetchKomentar();
+          })
+          .catch(() => {
+            this.btnLoading = false
+          })
+        }
+      },
+      verifikasi() {
+        this.$root.$confirm.open('Verifikasi', 'Setelah diverifikasi, tidak bisa diberi komentar, diubah, atau dihapus ?', { color: 'green',width:600 }).then((confirm) => {
+          if (confirm) {
+            this.btnLoading = true
+            this.$ajax.post('/kegiatan/investigasiperkara/verifikasi/' + this.kegiatan_id,
+              {
+                '_method': 'put',
+              },
+              {
+                headers: {
+                  Authorization: this.$store.getters['auth/Token']
+                }
+              }
+            ).then(() => {
+              this.$router.go()
+              this.btnLoading = false
+            }).catch(() => {
+              this.btnLoading = false
+            })
+          }                
+        })
+      },
+      closedialogkronologis() {
+        this.dialogkronologis = false
+      },
+      closedialogrekomendasi() {
+        this.dialogrekomendasi = false
+      },
+      deleteItem(item) {
+        this.$root.$confirm.open('Delete', 'Apakah Anda ingin menghapus komentar kegiatan dengan ID '+item.kegiatan_id+' ?', { color: 'red',width:600 }).then((confirm) => {
+          if (confirm) {
+            this.btnLoading = true
+            this.$ajax.post('/kegiatan/komentar/'+item.id,
+              {
+                '_method': 'DELETE',
+              },
+              {
+                headers: {
+                  Authorization: this.$store.getters['auth/Token']
+                }
+              }
+            ).then(() => {
+              this.fetchKomentar();
+              this.btnLoading = false
+            }).catch(() => {
+              this.btnLoading = false
+            })
+          }                
+        })
+      },
+    },
+    components: {
+      AdminLayout,
+      ModuleHeader,
+      DK,
+    },
+  }
 </script>

@@ -132,9 +132,9 @@
     </AdminLayout>
 </template>
 <script>
-import {mapGetters} from 'vuex';
+import { mapGetters } from 'vuex'
 import AdminLayout from '@/views/layouts/AdminLayout'
-import ModuleHeader from '@/components/ModuleHeader';
+import ModuleHeader from '@/components/ModuleHeader'
 export default {
     name: 'Permissions',
     created()
@@ -153,10 +153,10 @@ export default {
             {
                 text: 'PERMISSIONS',
                 disabled: true,
-                href: '#'
+                href: '#',
             }
         ];
-        this.initialize();
+        this.initialize()
     },
     data: () => ({
         breadcrumbs: [],
@@ -168,7 +168,7 @@ export default {
         headers: [                        
             { text: 'NAMA PERMISSION', value: 'name' },
             { text: 'GUARD', value: 'guard_name' },
-            { text: 'AKSI', value: 'actions', sortable: false,width:100 },
+            { text: 'AKSI', value: 'actions', sortable: false, width: 100 },
         ],
         search: '',
         //form
@@ -201,19 +201,19 @@ export default {
             this.datatableLoading=true;
             this.$ajax.get('/system/setting/permissions', {
                 headers: {
-                    Authorization:this.TOKEN
+                    Authorization: this.TOKEN
                 }
             }).then(({ data }) => { 
                 this.daftar_permissions = data.permissions;
-                this.datatableLoading=false;
-            });          
+                this.datatableLoading=false
+            })
             
         },
         dataTableRowClicked(item)
         {
             if ( item === this.expanded[0])
             {
-                this.expanded=[];                
+                this.expanded=[]
             }
             else
             {
@@ -227,8 +227,8 @@ export default {
         },
         close () {
             this.btnLoading = false
-            this.dialog = false;
-            this.$refs.frmdata.reset(); 
+            this.dialog = false
+            this.$refs.frmdata.reset()
             setTimeout(() => {
                 this.editedItem = Object.assign({}, this.defaultItem)
                 this.editedIndex = -1
@@ -243,23 +243,23 @@ export default {
                     this.btnLoading = true
                     this.$ajax.post('/system/setting/permissions/store',
                         {
-                            name:this.editedItem.name.toLowerCase()
+                            name: this.editedItem.name.toLowerCase()
                         },
                         {
                             headers: {
-                                Authorization:this.TOKEN
+                                Authorization: this.TOKEN
                             }
                         }
-                    ).then(()=>{   
-                        this.initialize();
+                    ).then(() => {
+                        this.initialize()
                         this.close();
-                    }).catch(()=>{
+                    }).catch(() => {
                         this.btnLoading = false
-                    });
+                    })
                 }
             }
         },
-        deleteItem (item) {   
+        deleteItem(item) {
             this.$root.$confirm.open('Delete', 'Apakah Anda ingin menghapus permission '+item.name+' ?', { color: 'red' }).then((confirm) => {
                 if (confirm)
                 {
@@ -270,25 +270,25 @@ export default {
                     },
                     {
                         headers: {
-                            Authorization:this.TOKEN
+                            Authorization: this.TOKEN
                         }
                     }
-                    ).then(()=>{   
+                    ).then(() => {
                         const index = this.daftar_permissions.indexOf(item);
                         this.daftar_permissions.splice(index, 1);
                         this.btnLoading = false
-                    }).catch(()=>{
+                    }).catch(() => {
                         this.btnLoading = false
-                    });
+                    })
                 }
-            });      
+            })
         },
     },
     computed: {
         formTitle () {
             return this.editedIndex === -1 ? 'TAMBAH PERMISSION' : 'EDIT PERMISSION'
         },
-        ...mapGetters('auth', {        
+        ...mapGetters('auth', {
             ACCESS_TOKEN: 'AccessToken', 
             TOKEN: 'Token', 
             CAN_ACCESS: 'can',

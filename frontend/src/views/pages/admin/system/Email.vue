@@ -58,9 +58,9 @@
     </SystemConfigLayout>
 </template>
 <script>
-import {mapGetters} from 'vuex';
+import { mapGetters } from 'vuex'
 import SystemConfigLayout from '@/views/layouts/SystemConfigLayout'
-import ModuleHeader from '@/components/ModuleHeader';
+import ModuleHeader from '@/components/ModuleHeader'
 export default {
     name: 'Email',
     created()
@@ -79,10 +79,10 @@ export default {
             {
                 text: 'SERVER - EMAIL',
                 disabled: true,
-                href: '#'
+                href: '#',
             }
         ];
-        this.initialize();
+        this.initialize()
     },
     data: () => ({
         breadcrumbs: [],
@@ -102,12 +102,12 @@ export default {
             await this.$ajax.get('/system/setting/variables',
             {
                 headers: {
-                    Authorization:this.TOKEN
+                    Authorization: this.TOKEN
                 }
-            }).then(({ data }) => {   
-                let setting = data.setting;             
-                this.formdata.email_mhs_isvalid=parseInt(setting.EMAIL_MHS_ISVALID);                
-            });          
+            }).then(({ data }) => {
+                let setting = data.setting
+                this.formdata.email_mhs_isvalid=parseInt(setting.EMAIL_MHS_ISVALID)
+            })
             
         },
         save () {
@@ -119,24 +119,24 @@ export default {
                         '_method': 'PUT', 
                         'pid': 'email',
                         setting:JSON.stringify({
-                            910:this.formdata.email_mhs_isvalid,
+                            910: this.formdata.email_mhs_isvalid,
                         }),
                     },
                     {
                         headers: {
-                            Authorization:this.TOKEN
+                            Authorization: this.TOKEN
                         }
                     }
-                ).then(()=>{                   
+                ).then(() => {
                     this.btnLoading = false
-                }).catch(()=>{
+                }).catch(() => {
                     this.btnLoading = false
-                });        
+                })
             }
         }
     },
     computed: { 
-        ...mapGetters('auth', {        
+        ...mapGetters('auth', {
             ACCESS_TOKEN: 'AccessToken', 
             TOKEN: 'Token',
         }),

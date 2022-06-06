@@ -28,16 +28,16 @@
           <v-card flat>
             <v-card-title>JENIS KEGIATAN:</v-card-title>
             <v-card-subtitle>
-              PENYULUHAN HUKUM
+              INVESTIGASI PERKARA
             </v-card-subtitle>
           </v-card>
         </v-col>
         <v-responsive width="100%" v-if="$vuetify.breakpoint.xsOnly"/>
         <v-col xs="12" sm="6" md="4">      
           <v-card flat>
-            <v-card-title>JUMLAH PESERTA:</v-card-title>
+            <v-card-title>PEMOHON / PESERTA:</v-card-title>
             <v-card-subtitle>
-              {{datakegiatan.jumlah_peserta}}
+              {{datakegiatan.nama_pemohon}}
             </v-card-subtitle>
           </v-card>
         </v-col>
@@ -79,7 +79,7 @@
 </template>
 <script>
 export default {
-  name: 'DataKegiatanPenyuluhanHukum',
+  name: 'DataKegiatanInvestigasiPerkara',
   props: {
     datakegiatan: {
       type:Object,

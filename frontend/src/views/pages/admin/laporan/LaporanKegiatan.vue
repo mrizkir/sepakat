@@ -124,26 +124,26 @@
 </template>
 <script>
 import AdminLayout from '@/views/layouts/AdminLayout'
-import ModuleHeader from '@/components/ModuleHeader';
+import ModuleHeader from '@/components/ModuleHeader'
 export default {
     name: 'LaporanKegiatan',
     created () {
-        this.dashboard = this.$store.getters['uiadmin/getDefaultDashboard'];        
+        this.dashboard = this.$store.getters['uiadmin/getDefaultDashboard']
         this.breadcrumbs = [
             {
                 text: 'HOME',
                 disabled: false,
-                href: '/dashboard/' + this.$store.getters['auth/AccessToken']
+                href: '/dashboard/' + this.$store.getters['auth/AccessToken'],
             },
             {
                 text: 'KONSULTASI',
                 disabled: false,
-                href: '#'
+                href: '#',
             },
             {
                 text: 'KEGIATAN',
                 disabled: true,
-                href: '#'
+                href: '#',
             }
         ];
         this.initialize()
@@ -175,20 +175,20 @@ export default {
             this.datatableLoading=true;
             await this.$ajax.get('/report/kegiatan', {
                 headers: {
-                    Authorization:this.$store.getters['auth/Token']
+                    Authorization: this.$store.getters['auth/Token']
                 }
             }).then(({ data }) => {
                 this.datatable = data.daftar_kegiatan;
-                this.datatableLoading=false;
-            }).catch(()=>{
-                this.datatableLoading=false;
-            });  
+                this.datatableLoading=false
+            }).catch(() => {
+                this.datatableLoading=false
+            })
         },
         dataTableRowClicked(item)
         {
             if ( item === this.expanded[0])
             {
-                this.expanded=[];                
+                this.expanded=[]
             }
             else
             {
@@ -204,22 +204,22 @@ export default {
                 },
                 {
                     headers: {
-                        Authorization:this.$store.getters['auth/Token']
+                        Authorization: this.$store.getters['auth/Token']
                     },
                     
                 }
-            ).then(({ data }) => {           
+            ).then(({ data }) => {
                 this.file_pdf=data.pdf_file;
                 this.dialogprintpdf=true;
                 this.btnLoading = false
-            }).catch(()=>{
+            }).catch(() => {
                 this.btnLoading = false
-            });     
+            })
         },
-        closedialogprintpdf () {              
+        closedialogprintpdf () {
             setTimeout(() => {
                 this.file_pdf=null;
-                this.dialogprintpdf = false;      
+                this.dialogprintpdf = false
                 }, 300
             );
         }, 

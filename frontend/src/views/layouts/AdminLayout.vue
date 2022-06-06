@@ -437,7 +437,7 @@ export default {
           this.$store.dispatch("uifront/reinit");
           this.$store.dispatch("uiadmin/reinit");
           this.$router.push("/");
-        });
+        })
     },
   },
   computed: {

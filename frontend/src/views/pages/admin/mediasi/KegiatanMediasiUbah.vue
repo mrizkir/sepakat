@@ -233,22 +233,22 @@
 </template>
 <script>
   import AdminLayout from '@/views/layouts/AdminLayout'
-  import ModuleHeader from '@/components/ModuleHeader';
+  import ModuleHeader from '@/components/ModuleHeader'
   export default {
     name: 'KegiatanMediasiUbah',
     created () {
-      this.dashboard = this.$store.getters['uiadmin/getDefaultDashboard']; 
+      this.dashboard = this.$store.getters['uiadmin/getDefaultDashboard']
       this.kegiatan_id = this.$route.params.kegiatan_id;
       this.breadcrumbs = [
         {
           text: 'HOME',
           disabled: false,
-          href: '/dashboard/' + this.$store.getters['auth/AccessToken']
+          href: '/dashboard/' + this.$store.getters['auth/AccessToken'],
         },
         {
           text: 'KEGIATAN',
           disabled: false,
-          href: '#'
+          href: '#',
         },
         {
           text: 'KEGIATAN',
@@ -258,7 +258,7 @@
         {
           text: 'UBAH',
           disabled: true,
-          href: '#'
+          href: '#',
         }
       ];
       this.initialize()
@@ -275,7 +275,7 @@
       menuTanggalLahir: false,
       menuTanggalPelaksanaan: false,
       menuJamPelaksanaan: false, 
-      formdata: {    
+      formdata: {
         user_id: null,
         nama_pemohon: null,
         tempat_lahir: null,
@@ -291,7 +291,7 @@
         nama_saksi: null,
         rekomendasi_kegiatan: null,
       },
-      formdefault: {    
+      formdefault: {
         user_id: null,
         nama_pemohon: null,
         tempat_lahir: null,
@@ -351,22 +351,22 @@
       ],
     }),
     methods: {
-      initialize: async function() {    
+      initialize: async function() {
         await this.$ajax.get('/system/usersparalegal', {
           headers: {
-            Authorization:this.$store.getters['auth/Token']
+            Authorization: this.$store.getters['auth/Token']
           }
         })
         .then(({ data }) => {
-          this.daftar_paralegal = data.users;                
-        });          
+          this.daftar_paralegal = data.users
+        })
         await this.$ajax.get('/kegiatan/mediasi/' + this.kegiatan_id,{
           headers: {
-            Authorization:this.$store.getters['auth/Token']
+            Authorization: this.$store.getters['auth/Token']
           }
         })
         .then(({ data }) => {
-          this.datakegiatan = data.kegiatan;                
+          this.datakegiatan = data.kegiatan
           this.formdata.user_id = this.datakegiatan.user_id;
           this.formdata.nama_pemohon = this.datakegiatan.nama_pemohon;
           this.formdata.tempat_lahir = this.datakegiatan.tempat_lahir;
@@ -374,14 +374,14 @@
           this.formdata.pendidikan = this.datakegiatan.pendidikan;
           this.formdata.pekerjaan = this.datakegiatan.pekerjaan;
           this.formdata.alamat = this.datakegiatan.alamat;
-          this.formdata.nama_kegiatan = this.datakegiatan.nama_kegiatan;          
+          this.formdata.nama_kegiatan = this.datakegiatan.nama_kegiatan
           this.formdata.tanggal_pelaksanaan = this.$date(this.datakegiatan.tanggal_pelaksanaan).format('YYYY-MM-DD');
           this.formdata.jam_pelaksanaan = this.$date(this.datakegiatan.tanggal_pelaksanaan).format('HH:mm');
-          this.formdata.tempat_pelaksanaan = this.datakegiatan.tempat_pelaksanaan;                    
+          this.formdata.tempat_pelaksanaan = this.datakegiatan.tempat_pelaksanaan
           this.formdata.uraian_kegiatan = this.datakegiatan.uraian_kegiatan;
           this.formdata.nama_saksi = this.datakegiatan.nama_saksi;
-          this.formdata.rekomendasi_kegiatan = this.datakegiatan.rekomendasi_kegiatan;                                                
-        });          
+          this.formdata.rekomendasi_kegiatan = this.datakegiatan.rekomendasi_kegiatan                
+        })
       },
       save: async function() {
         if (this.$refs.frmdata.validate()) {
@@ -406,27 +406,27 @@
             },
             {
               headers: {
-                Authorization:this.$store.getters['auth/Token']
+                Authorization: this.$store.getters['auth/Token']
               }
             }
           )
-          .then(({ data }) => {  
+          .then(({ data }) => {
             this.btnLoading = false               
             setTimeout(() => {
-              this.formdata = Object.assign({}, this.formdefault);                                
+              this.formdata = Object.assign({}, this.formdefault)
               this.$router.push('/kegiatan/mediasi/' + data.kegiatan.id + '/detail')
               }, 300
             );
-          }).catch(()=>{
+          }).catch(() => {
             this.btnLoading = false
-          });                
+          })
         }
       },
-      closedialogfrm () {        
+      closedialogfrm () {
         setTimeout(() => {
-          this.formdata = Object.assign({}, this.formdefault);                                
+          this.formdata = Object.assign({}, this.formdefault)
           this.$router.push('/kegiatan/mediasi/' + this.kegiatan_id + '/detail')
-          }, 300);
+        }, 300)
       },
     },
     components: {
