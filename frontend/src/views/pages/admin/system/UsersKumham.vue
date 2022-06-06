@@ -24,8 +24,8 @@
                      User dengan role Kanwil Hukum dan HAM bertanggungjawab terhadap proses keseluruhan sistem.
                 </v-alert>
             </template>
-        </ModuleHeader>        
-        <v-container fluid>    
+        </ModuleHeader>      
+        <v-container fluid>  
             <v-row class="mb-4" no-gutters>
                 <v-col cols="12">
                     <v-card>
@@ -65,7 +65,7 @@
                                     inset
                                     vertical
                                 ></v-divider>
-                                <v-spacer></v-spacer>    
+                                <v-spacer></v-spacer>  
                                 <v-btn color="primary"
                                     class="mb-2" 
                                     :loading="btnLoading"
@@ -73,25 +73,25 @@
                                     @click.stop="showDialogTambahUserSuperAdmin">
                                     TAMBAH
                                 </v-btn>
-                                <v-dialog v-model="dialog" max-width="500px" persistent>        
+                                <v-dialog v-model="dialog" max-width="500px" persistent>      
                                     <v-form ref="frmdata" v-model="form_valid" lazy-validation>
                                         <v-card>
                                             <v-card-title>
                                                 <span class="headline">{{ formTitle }}</span>
-                                            </v-card-title>                
-                                            <v-card-text>     
+                                            </v-card-title>              
+                                            <v-card-text> 
                                                 <v-text-field 
                                                     v-model="editedItem.name" 
                                                     label="NAMA USER"
                                                     outlined
                                                     :rules="rule_user_name">
-                                                </v-text-field>                                                                   
+                                                </v-text-field>                                                                 
                                                 <v-text-field 
                                                     v-model="editedItem.email" 
                                                     label="EMAIL"
                                                     outlined
                                                     :rules="rule_user_email">
-                                                </v-text-field>                            
+                                                </v-text-field>                          
                                                 <v-text-field 
                                                     v-model="editedItem.nomor_hp" 
                                                     label="NOMOR HP"
@@ -110,15 +110,15 @@
                                                     :type="'password'"
                                                     outlined
                                                     :rules="rule_user_password">
-                                                </v-text-field>   
+                                                </v-text-field> 
                                                 <v-autocomplete 
                                                     :items="daftar_roles" 
                                                     v-model="editedItem.role_id"
                                                     label="ROLES"
                                                     multiple 
                                                     small-chips
-                                                    outlined>                                                    
-                                                </v-autocomplete>           
+                                                    outlined>                                                  
+                                                </v-autocomplete>         
                                             </v-card-text>
                                             <v-card-actions>
                                                 <v-spacer></v-spacer>
@@ -140,8 +140,8 @@
                                         <v-card>
                                             <v-card-title>
                                                 <span class="headline">{{ formTitle }}</span>
-                                            </v-card-title>                
-                                            <v-card-text>                                                                    
+                                            </v-card-title>              
+                                            <v-card-text>                                                                
                                                 <v-text-field 
                                                     v-model="editedItem.name" 
                                                     label="NAMA USER"
@@ -179,8 +179,8 @@
                                                     label="ROLES"
                                                     multiple 
                                                     small-chips
-                                                    outlined>                                                    
-                                                </v-autocomplete>           
+                                                    outlined>                                                  
+                                                </v-autocomplete>         
                                             </v-card-text>
                                             <v-card-actions>
                                                 <v-spacer></v-spacer>
@@ -194,7 +194,7 @@
                                             </v-card-actions>
                                         </v-card>
                                     </v-form>
-                                </v-dialog>    
+                                </v-dialog>  
                             </v-toolbar>
                         </template>
                         <template v-slot:item.actions="{ item }">
@@ -219,7 +219,7 @@
                         <template v-slot:item.foto="{ item }">
                             <v-avatar size="30">
                                 <v-img :src="$api.storageURL+'/'+item.foto" />
-                            </v-avatar>                                                                      
+                            </v-avatar>                                                                    
                         </template>
                         <template v-slot:expanded-item="{ headers, item }">
                             <td :colspan="headers.length" class="text-center">
@@ -227,7 +227,7 @@
                                     <strong>ID:</strong>{{ item.id }}
                                     <strong>created_at:</strong>{{ $date(item.created_at).format('DD/MM/YYYY HH:mm') }}
                                     <strong>updated_at:</strong>{{ $date(item.updated_at).format('DD/MM/YYYY HH:mm') }}
-                                </v-col>    
+                                </v-col>  
                             </td>
                         </template>
                         <template v-slot:no-data>
@@ -241,7 +241,7 @@
 </template>
 <script>
 import {mapGetters} from 'vuex';
-import AdminLayout from '@/views/layouts/AdminLayout';
+import AdminLayout from '@/views/layouts/AdminLayout'
 import ModuleHeader from '@/components/ModuleHeader';
 export default {
     name: 'UsersKumham',
@@ -296,7 +296,7 @@ export default {
             name: '',
             email: '',
             nomor_hp: '', 
-            role_id:['kumham'],
+            role_id: ['kumham'],
             created_at: '',
             updated_at: '',
         },
@@ -307,28 +307,28 @@ export default {
             name: '',
             email: '',
             nomor_hp: '',
-            role_id:['kumham'],
+            role_id: ['kumham'],
             created_at: '',
             updated_at: '',
         },
         //form rules        
-        rule_user_name:[
+        rule_user_name: [
             value => !!value||"Mohon untuk di isi nama User !!!",
             value => /^[A-Za-z\s]*$/.test(value) || 'Nama User hanya boleh string dan spasi',
         ],
-        rule_user_email:[
+        rule_user_email: [
             value => !!value||"Mohon untuk di isi email User !!!",
             value => /.+@.+\..+/.test(value) || 'Format E-mail harus benar', 
         ],
-        rule_user_nomorhp:[
+        rule_user_nomorhp: [
             value => !!value||"Nomor HP mohon untuk diisi !!!",
             value => /^\+[1-9]{1}[0-9]{1,14}$/.test(value) || 'Nomor HP hanya boleh angka dan gunakan kode negara didepan seperti +6281214553388',
         ],
-        rule_user_username:[
+        rule_user_username: [
             value => !!value||"Mohon untuk di isi username User !!!",
             value => /^[A-Za-z_]*$/.test(value) || 'Username hanya boleh string dan underscore',
         ],
-        rule_user_password:[
+        rule_user_password: [
             value => !!value||"Mohon untuk di isi password User !!!",
             value => {
                 if (value && typeof value !== 'undefined' && value.length > 0){
@@ -340,7 +340,7 @@ export default {
                 }
             }
         ],
-        rule_user_passwordEdit:[
+        rule_user_passwordEdit: [
             value => {
                 if (value && typeof value !== 'undefined' && value.length > 0){
                     return value.length >= 8 || 'Minimial Password 8 karaketer';
@@ -353,7 +353,7 @@ export default {
         ],
     }),
     methods: {
-        initialize: async function () 
+        initialize: async function() 
         {
             this.datatableLoading=true;
             await this.$ajax.get('/system/userskumham', {
@@ -378,18 +378,18 @@ export default {
                 this.expanded=[item];
             }               
         },
-        showDialogTambahUserSuperAdmin: async function ()
+        showDialogTambahUserSuperAdmin: async function()
         {
             await this.$ajax.get('/system/setting/roles', {
                 headers: {
                     Authorization:this.TOKEN
                 }
-            }).then(({data})=>{      
+            }).then(({ data }) => {
                 let roles = data.roles;
                 var daftar_roles=[];
                 roles.forEach(element => {
                     if (element.name=='kumham')
-                    {                        
+                    {                    
                         daftar_roles.push({
                             text:element.name,
                             disabled: true,
@@ -417,12 +417,12 @@ export default {
                 headers: {
                     Authorization:this.TOKEN
                 }
-            }).then(({data})=>{      
+            }).then(({ data }) => {
                 let roles = data.roles;
                 var daftar_roles=[];
                 roles.forEach(element => {
                     if (element.name=='kumham')
-                    {                        
+                    {                    
                         daftar_roles.push({
                             text:element.name,
                             disabled: true,
@@ -445,13 +445,13 @@ export default {
                 headers: {
                     Authorization:this.TOKEN
                 }
-            }).then(({data})=>{  
+            }).then(({ data }) => {
                 this.editedItem.role_id=data.roles;                   
                 this.btnLoading = false
                 this.dialogEdit = true;
             });   
         },
-        close () {            
+        close () {        
             this.btnLoading = false
             this.dialog = false;
             this.dialogEdit = false;            
@@ -483,7 +483,7 @@ export default {
                                 Authorization:this.TOKEN
                             }
                         }
-                    ).then(({data})=>{   
+                    ).then(({ data }) => { 
                         Object.assign(this.daftar_users[this.editedIndex],data.user);
                         this.close();
                     }).catch(()=>{
@@ -505,7 +505,7 @@ export default {
                                 Authorization:this.TOKEN
                             }
                         }
-                    ).then(({data})=>{   
+                    ).then(({ data }) => { 
                         this.daftar_users.push(data.user);
                         this.close();
                     }).catch(()=>{
@@ -514,7 +514,7 @@ export default {
                 }
             }
         },
-        deleteItem (item) {           
+        deleteItem (item) {       
             this.$root.$confirm.open('Delete', 'Apakah Anda ingin menghapus username '+item.username+' ?', { color: 'red' }).then((confirm) => {
                 if (confirm)
                 {
@@ -543,7 +543,7 @@ export default {
         formTitle () {
             return this.editedIndex === -1 ? 'TAMBAH USER KANWIL HUKUM DAN HAM' : 'EDIT USER KANWIL HUKUM DAN HAM'
         },
-        ...mapGetters('auth', {            
+        ...mapGetters('auth', {        
             ACCESS_TOKEN: 'AccessToken', 
             TOKEN: 'Token',
         }),

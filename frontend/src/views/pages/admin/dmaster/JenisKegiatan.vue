@@ -46,7 +46,7 @@
                                     inset
                                     vertical
                                 ></v-divider>
-                                <v-spacer></v-spacer>                                    
+                                <v-spacer></v-spacer>                                  
                             </v-toolbar>
                         </template>
                         <template v-slot:expanded-item="{ headers, item }">
@@ -67,7 +67,7 @@
 </template>
 <script>
 import {mapGetters} from 'vuex';
-import AdminLayout from '@/views/layouts/AdminLayout';
+import AdminLayout from '@/views/layouts/AdminLayout'
 import ModuleHeader from '@/components/ModuleHeader';
 export default {
     name: 'JenisKegiatan',
@@ -102,7 +102,7 @@ export default {
         ],
     }),
     methods: {
-        initialize: async function ()
+        initialize: async function()
         {
             this.datatableLoading=true;
             await this.$ajax.get('/datamaster/jeniskegiatan', {

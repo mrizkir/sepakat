@@ -19,10 +19,10 @@
           Halaman ini berisi daftar kegiatan penyuluhan hukum paralegal
         </v-alert>
       </template>
-    </ModuleHeader>   
+    </ModuleHeader> 
     <v-form ref="frmdata" v-model="form_valid" lazy-validation>
-      <v-container fluid>   
-        <v-row>  
+      <v-container fluid> 
+        <v-row>
           <v-col cols="12"> 
             <v-card>
               <v-card-title>
@@ -91,7 +91,7 @@
                     <v-spacer></v-spacer>
                     <v-btn text color="primary" @click="menuTanggalPelaksanaan = false">Cancel</v-btn>
                     <v-btn text color="primary" @click="$refs.menuTanggalPelaksanaan.save(formdata.tanggal_pelaksanaan)">OK</v-btn>
-                  </v-date-picker>        
+                  </v-date-picker>      
                 </v-menu>
                 <v-menu
                   ref="menuJamPelaksanaan"
@@ -136,21 +136,21 @@
                   :rules="rule_peserta"
                   outlined
                   dense
-                />                             
+                />                         
                 <v-text-field
                   label="JUMLAH PESERTA"
                   v-model="formdata.jumlah_peserta"
                   :rules="rule_jumlah_peserta"
                   outlined
                   dense
-                />                
+                />            
                 <v-textarea
                   label="RINGKASAN PENYULUHAN"
                   v-model="formdata.uraian_kegiatan"
                   :rules="rule_uraian_kegiatan"
                   outlined
                   dense
-                />                
+                />            
                 <v-textarea
                   label="REKOMENDASI PARALEGAL"
                   v-model="formdata.rekomendasi_kegiatan"
@@ -171,15 +171,15 @@
                     SIMPAN
                 </v-btn>
               </v-card-actions>
-            </v-card>            
+            </v-card>          
           </v-col>
-        </v-row>    
+        </v-row>  
       </v-container>
     </v-form>
   </AdminLayout>
 </template>
 <script>
-import AdminLayout from '@/views/layouts/AdminLayout';
+import AdminLayout from '@/views/layouts/AdminLayout'
 import ModuleHeader from '@/components/ModuleHeader';
 export default {
   name: 'KegiatanPenyuluhanHukumTambah',
@@ -214,10 +214,10 @@ export default {
     
     btnLoading: false,
     form_valid: true, 
-    daftar_paralegal: [],    
+    daftar_paralegal: [],
     menuTanggalPelaksanaan: false,
     menuJamPelaksanaan: false, 
-    formdata: {      
+    formdata: {  
       user_id: null,
       nama_kegiatan: null,
       tempat_pelaksanaan: null,
@@ -229,7 +229,7 @@ export default {
       uraian_kegiatan: null,
       rekomendasi_kegiatan: null,
     },
-    formdefault: {      
+    formdefault: {  
       user_id: null,
       nama_kegiatan: null,
       tempat_pelaksanaan: null,
@@ -258,13 +258,13 @@ export default {
     ],
     rule_nara_sumber: [
       value => !!value || "Mohon untuk diisi nama nara sumber penyuluhan hukum !!!", 
-    ],    
+    ],
     rule_peserta: [
 			value => !!value || "Daftar peserta pemohon mohon untuk diisi !!!"
 		],
     rule_jumlah_peserta: [
 			value => !!value || "Jumlah peserta mohon untuk diisi !!!"
-		],       
+		],
     rule_uraian_kegiatan: [
       value => !!value || "Mohon untuk diisi uraian kegiatan penyuluhan hukum !!!", 
     ],
@@ -273,8 +273,8 @@ export default {
     ],
   }),
   methods: {
-    initialize: async function () 
-    {      
+    initialize: async function() 
+    {  
       await this.$ajax.get('/system/usersparalegal', {
         headers: {
           Authorization:this.$store.getters['auth/Token']
@@ -283,10 +283,10 @@ export default {
         this.daftar_paralegal = data.users;                
       });          
     },
-    save: async function () {
+    save: async function() {
       if (this.$refs.frmdata.validate())
       {
-        this.btnLoading = true                
+        this.btnLoading = true
         await this.$ajax.post('/kegiatan/penyuluhanhukum/store',
           {
             user_id: this.formdata.user_id,
@@ -305,7 +305,7 @@ export default {
               Authorization:this.$store.getters['auth/Token']
             }
           }
-        ).then(({data})=>{        
+        ).then(({ data }) => {  
           this.btnLoading = false               
           setTimeout(() => {
             this.formdata = Object.assign({}, this.formdefault);                                
@@ -317,7 +317,7 @@ export default {
         });                
       }
     },
-    closedialogfrm () {            
+    closedialogfrm () {        
       setTimeout(() => {
         this.formdata = Object.assign({}, this.formdefault);                                
         this.$router.push('/kegiatan/penyuluhanhukum')

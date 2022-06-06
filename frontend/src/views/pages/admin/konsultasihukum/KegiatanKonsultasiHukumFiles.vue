@@ -181,7 +181,7 @@
   </AdminLayout>
 </template>
 <script>
-  import AdminLayout from '@/views/layouts/AdminLayout';
+  import AdminLayout from '@/views/layouts/AdminLayout'
   import ModuleHeader from '@/components/ModuleHeader';
   import DK from '@/views/pages/admin/konsultasihukum/DataKegiatanKonsultasiHukum';
   export default {
@@ -238,15 +238,15 @@
       filedokumentasikegiatan: null,
       filesktmpemohon: null,
       
-      rule_filedaftarhadir:[
+      rule_filedaftarhadir: [
         value => !!value || "Mohon pilih file daftar hadir !!!",
         value =>!value || value.size < 9000000 || 'File daftar hadir harus kurang dari 9MB.'                
       ],
-      rule_filedokumentasikegiatan:[
+      rule_filedokumentasikegiatan: [
         value => !!value || "Mohon pilih file dokumentasi kegiatan !!!",
         value =>!value || value.size < 9000000 || 'File dokumentasi kegiatan harus kurang dari 9MB.'                
       ],
-      rule_filesktm:[
+      rule_filesktm: [
         value => !!value || "Mohon pilih file sktm pemohon !!!",
         value =>!value || value.size < 2000000 || 'File sktm pemohon harus kurang dari 2MB.'                
       ],
@@ -258,7 +258,7 @@
             Authorization: this.$store.getters['auth/Token']
           }
         })
-        .then(({ data }) => {             
+        .then(({ data }) => { 
           this.data_kegiatan=data.kegiatan;
           this.sktmPemohon=this.$api.storageURL+'/'+data.kegiatan.file_fotocopy_sktm;        
         })
@@ -269,7 +269,7 @@
         } else {
           let reader = new FileReader()
           reader.readAsDataURL(e)
-          reader.onload = img => {                 
+          reader.onload = img => {     
             this.image_prev=img.target.result;
           }                
         }          
@@ -288,7 +288,7 @@
                   'Content-Type': 'multipart/form-data'
                 }
               }
-            ).then(()=>{                                                                                         
+            ).then(()=>{                                                                             
               this.btnLoadingUploadSKTM = false
               this.btnLoadingHapusSKTM = false
               this.$router.go() 
@@ -319,7 +319,7 @@
                   'Content-Type': 'multipart/form-data'
                 }
               }
-            ).then(()=>{                                                                                         
+            ).then(()=>{                                                                             
               this.btnLoadingUploadDaftarHadir = false
               this.btnLoadingHapusDaftarHadir = false
               this.$router.go() 

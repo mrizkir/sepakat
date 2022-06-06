@@ -24,8 +24,8 @@
                      User dengan role PARALEGAL bertanggungjawab terhadap proses konsultasi hukum.
                 </v-alert>
             </template>
-        </ModuleHeader>        
-        <v-container fluid>    
+        </ModuleHeader>      
+        <v-container fluid>  
             <v-row class="mb-4" no-gutters>
                 <v-col cols="12">
                     <v-card>
@@ -81,7 +81,7 @@
                                     @click.stop="showDialogTambahUserPARALEGAL">
                                     TAMBAH
                                 </v-btn>
-                                <v-dialog v-model="dialog" max-width="500px" persistent>        
+                                <v-dialog v-model="dialog" max-width="500px" persistent>      
                                     <v-form ref="frmdata" v-model="form_valid" lazy-validation>
                                         <v-card>
                                             <v-card-title>
@@ -90,19 +90,19 @@
                                             <v-card-subtitle>
                                                 Bila desa, tidak dipilih artinya user ini tidak dapat mengakses seluruh data desa manapun.
                                             </v-card-subtitle>
-                                            <v-card-text>     
+                                            <v-card-text> 
                                                 <v-text-field 
                                                     v-model="editedItem.name" 
                                                     label="NAMA USER"
                                                     outlined
                                                     :rules="rule_user_name">
-                                                </v-text-field>                                                                   
+                                                </v-text-field>                                                                 
                                                 <v-text-field 
                                                     v-model="editedItem.email" 
                                                     label="EMAIL"
                                                     outlined
                                                     :rules="rule_user_email">
-                                                </v-text-field>                            
+                                                </v-text-field>                          
                                                 <v-text-field 
                                                     v-model="editedItem.nomor_hp" 
                                                     label="NOMOR HP"
@@ -131,7 +131,7 @@
                                                     :loading="selectLoadingKec" 
                                                     return-object                      
                                                     outlined
-                                                />          
+                                                />      
                                                 <v-autocomplete 
                                                     :items="daftar_desa" 
                                                     v-model="editedItem.desa_id"
@@ -141,14 +141,14 @@
                                                     multiple 
                                                     small-chips
                                                     :rules="rule_desa"
-                                                    outlined>                                                    
-                                                </v-autocomplete>   
+                                                    outlined>                                                  
+                                                </v-autocomplete> 
                                                 <v-select 
                                                     :items="daftar_utusan" 
                                                     v-model="editedItem.utusan"
                                                     label="UTUSAN"
-                                                    outlined>                                                    
-                                                </v-select>  
+                                                    outlined>                                                  
+                                                </v-select>
                                                 <v-autocomplete 
                                                     :items="daftar_roles" 
                                                     v-model="editedItem.role_id"
@@ -156,8 +156,8 @@
                                                     multiple 
                                                     small-chips
                                                     :rules="rule_user_roles"
-                                                    outlined>                                                    
-                                                </v-autocomplete>                                                              
+                                                    outlined>                                                  
+                                                </v-autocomplete>                                                            
                                             </v-card-text>
                                             <v-card-actions>
                                                 <v-spacer></v-spacer>
@@ -183,7 +183,7 @@
                                             <v-card-subtitle>
                                                 Bila desa, tidak dipilih artinya user ini tidak dapat mengakses seluruh data desa manapun.
                                             </v-card-subtitle>
-                                            <v-card-text>                                                                    
+                                            <v-card-text>                                                                
                                                 <v-text-field 
                                                     v-model="editedItem.name" 
                                                     label="NAMA USER"
@@ -214,7 +214,7 @@
                                                     :type="'password'"
                                                     outlined
                                                     :rules="rule_user_passwordEdit">
-                                                </v-text-field>   
+                                                </v-text-field> 
                                                 <v-select
                                                     label="KECAMATAN"
                                                     :items="daftar_kecamatan"
@@ -224,7 +224,7 @@
                                                     :loading="selectLoadingKec" 
                                                     return-object                      
                                                     outlined
-                                                />          
+                                                />      
                                                 <v-autocomplete 
                                                     :items="daftar_desa" 
                                                     v-model="editedItem.desa_id"
@@ -233,13 +233,13 @@
                                                     item-value="id"
                                                     multiple 
                                                     small-chips
-                                                    outlined>                                                    
-                                                </v-autocomplete>   
+                                                    outlined>                                                  
+                                                </v-autocomplete> 
                                                 <v-select 
                                                     :items="daftar_utusan" 
                                                     v-model="editedItem.utusan"
                                                     label="UTUSAN"
-                                                    outlined>                                                    
+                                                    outlined>                                                  
                                                 </v-select>
                                                 <v-autocomplete 
                                                     :items="daftar_roles" 
@@ -248,8 +248,8 @@
                                                     multiple 
                                                     small-chips
                                                     :rules="rule_user_roles"
-                                                    outlined>                                                    
-                                                </v-autocomplete>                 
+                                                    outlined>                                                  
+                                                </v-autocomplete>               
                                             </v-card-text>
                                             <v-card-actions>
                                                 <v-spacer></v-spacer>
@@ -264,7 +264,7 @@
                                         </v-card>
                                     </v-form>
                                 </v-dialog>
-                                <v-dialog v-model="dialogUserPermission" max-width="800px" persistent>                                        
+                                <v-dialog v-model="dialogUserPermission" max-width="800px" persistent>                                      
                                     <UserPermissions :user="editedItem" :daftarpermissions="daftar_permissions" :permissionsselected="permissions_selected" v-on:closeUserPermissions="closeUserPermissions" />
                                 </v-dialog>
                             </v-toolbar>
@@ -300,7 +300,7 @@
                         <template v-slot:item.foto="{ item }">
                             <v-avatar size="30">
                                 <v-img :src="$api.storageURL+'/'+item.foto" />
-                            </v-avatar>                                                                      
+                            </v-avatar>                                                                    
                         </template>
                         <template v-slot:expanded-item="{ headers, item }">
                             <td :colspan="headers.length" class="text-center">
@@ -308,7 +308,7 @@
                                     <strong>ID:</strong>{{ item.id }}
                                     <strong>created_at:</strong>{{ $date(item.created_at).format('DD/MM/YYYY HH:mm') }}
                                     <strong>updated_at:</strong>{{ $date(item.updated_at).format('DD/MM/YYYY HH:mm') }}
-                                </v-col>    
+                                </v-col>  
                             </td>
                         </template>
                         <template v-slot:no-data>
@@ -322,7 +322,7 @@
 </template>
 <script>
 import {mapGetters} from 'vuex';
-import AdminLayout from '@/views/layouts/AdminLayout';
+import AdminLayout from '@/views/layouts/AdminLayout'
 import ModuleHeader from '@/components/ModuleHeader';
 import UserPermissions from '@/views/pages/admin/system/UserPermissions';
 export default {
@@ -382,7 +382,7 @@ export default {
         kecamatan_id: null,
 
         daftar_desa: [],
-        daftar_utusan:[
+        daftar_utusan: [
             {
                 value: 'masyarakat',
                 text: 'MASYARAKAT'
@@ -401,7 +401,7 @@ export default {
             nomor_hp: '',
             desa_id: [],
             utusan: 'masyarakat',
-            role_id:['paralegal'],
+            role_id: ['paralegal'],
             created_at: '',
             updated_at: '',
         },
@@ -414,28 +414,28 @@ export default {
             nomor_hp: '',
             desa_id: [],
             utusan: 'masyarakat',
-            role_id:['paralegal'],
+            role_id: ['paralegal'],
             created_at: '',
             updated_at: '',
         },
         //form rules        
-        rule_user_name:[
+        rule_user_name: [
             value => !!value||"Mohon untuk di isi nama User !!!",
             value => /^[A-Za-z\s]*$/.test(value) || 'Nama User hanya boleh string dan spasi',
         ],
-        rule_user_email:[
+        rule_user_email: [
             value => !!value||"Mohon untuk di isi email User !!!",
             value => /.+@.+\..+/.test(value) || 'Format E-mail harus benar', 
         ],
-        rule_user_nomorhp:[
+        rule_user_nomorhp: [
             value => !!value||"Nomor HP mohon untuk diisi !!!",
             value => /^\+[1-9]{1}[0-9]{1,14}$/.test(value) || 'Nomor HP hanya boleh angka dan gunakan kode negara didepan seperti +6281214553388',
         ],
-        rule_user_username:[
+        rule_user_username: [
             value => !!value||"Mohon untuk di isi username User !!!",
             value => /^[A-Za-z_]*$/.test(value) || 'Username hanya boleh string dan underscore',
         ],
-        rule_user_password:[
+        rule_user_password: [
             value => !!value||"Mohon untuk di isi password User !!!",
             value => {
                 if (value && typeof value !== 'undefined' && value.length > 0){
@@ -447,9 +447,9 @@ export default {
                 }
             }
         ],
-        rule_desa:[
+        rule_desa: [
             value => !!value||"Mohon untuk dipilih desa tempat bertugas para legal !!!",
-            value => {                
+            value => {            
                 if (value.length)
                 {
                     
@@ -461,7 +461,7 @@ export default {
                 }
             }
         ],
-        rule_user_passwordEdit:[
+        rule_user_passwordEdit: [
             value => {
                 if (value && typeof value !== 'undefined' && value.length > 0){
                     return value.length >= 8 || 'Minimial Password 8 karaketer';
@@ -472,12 +472,12 @@ export default {
                 }
             }
         ],
-        rule_user_roles:[
+        rule_user_roles: [
             value => !!value||"Mohon untuk dipilih role user ini !!!",
         ]
     }),
     methods: {
-        initialize: async function () 
+        initialize: async function() 
         {
             this.datatableLoading=true;
             await this.$ajax.get('/system/usersparalegal', {
@@ -502,7 +502,7 @@ export default {
                 this.expanded=[item];
             }               
         },
-        syncPermission: async function ()
+        syncPermission: async function()
         {
             this.btnLoading = true
             await this.$ajax.post('/system/users/syncallpermissions',
@@ -514,13 +514,13 @@ export default {
                         Authorization:this.$store.getters['auth/Token']
                     }
                 }
-            ).then(()=>{                   
+            ).then(()=>{               
                 this.btnLoading = false
             }).catch(()=>{
                 this.btnLoading = false
             });     
         },
-        showDialogTambahUserPARALEGAL: async function ()
+        showDialogTambahUserPARALEGAL: async function()
         {
             this.$ajax.get('/datamaster/kabupaten/2102/kecamatan').then(({data})=>{
                 this.daftar_kecamatan=data.kecamatan;                
@@ -530,12 +530,12 @@ export default {
                 headers: {
                     Authorization:this.TOKEN
                 }
-            }).then(({data})=>{      
+            }).then(({ data }) => {
                 let roles = data.roles;
                 var daftar_roles=[];
                 roles.forEach(element => {
                     if (element.name=='paralegal')
-                    {                        
+                    {                    
                         daftar_roles.push({
                             text:element.name,
                             disabled: true,
@@ -561,11 +561,11 @@ export default {
                         Authorization:this.TOKEN
                     }
                 }
-            ).then(({ data }) => {                    
+            ).then(({ data }) => {                
                 let daftar_desa = data.daftar_desa;
                 var desa=[];
                 var kecamatan=null;
-                daftar_desa.forEach(element => {                    
+                daftar_desa.forEach(element => {                
                     desa.push(element.desa_id);                                            
                     kecamatan={
                         id:element.kecamatan_id,
@@ -582,12 +582,12 @@ export default {
                 headers: {
                     Authorization:this.TOKEN
                 }
-            }).then(({data})=>{      
+            }).then(({ data }) => {
                 let roles = data.roles;
                 var daftar_roles=[];
                 roles.forEach(element => {
                     if (element.name=='paralegal')
-                    {                        
+                    {                    
                         daftar_roles.push({
                             text:element.name,
                             disabled: true,
@@ -603,7 +603,7 @@ export default {
                 headers: {
                     Authorization:this.TOKEN
                 }
-            }).then(({data})=>{  
+            }).then(({ data }) => {
                 this.editedItem.role_id=data.roles;                   
                 this.btnLoading = false
                 this.dialogEdit = true;
@@ -611,7 +611,7 @@ export default {
 
             this.firstShowDialogEdit=false;
         },
-        setPermission: async function (item) {          
+        setPermission: async function (item) {      
             this.btnLoading = true  
             this.$ajax.get('/system/setting/roles/' + this.role_id+'/permission', {
                 headers: {
@@ -638,7 +638,7 @@ export default {
             this.editedItem=item;
         
         },
-        close () {            
+        close () {        
             this.btnLoading = false
             this.dialog = false;
             this.dialogEdit = false;      
@@ -678,7 +678,7 @@ export default {
                                 Authorization:this.TOKEN
                             }
                         }
-                    ).then(({data})=>{   
+                    ).then(({ data }) => { 
                         Object.assign(this.daftar_users[this.editedIndex],data.user);
                         this.close();
                     }).catch(()=>{
@@ -702,7 +702,7 @@ export default {
                                 Authorization:this.TOKEN
                             }
                         }
-                    ).then(({data})=>{   
+                    ).then(({ data }) => { 
                         this.daftar_users.push(data.user);
                         this.close();
                     }).catch(()=>{
@@ -711,7 +711,7 @@ export default {
                 }
             }
         },
-        deleteItem (item) {           
+        deleteItem (item) {       
             this.$root.$confirm.open('Delete', 'Apakah Anda ingin menghapus username '+item.username+' ?', { color: 'red' }).then((confirm) => {
                 if (confirm)
                 {
@@ -740,7 +740,7 @@ export default {
         formTitle () {
             return this.editedIndex === -1 ? 'TAMBAH USER PARALEGAL' : 'EDIT USER PARALEGAL'
         },
-        ...mapGetters('auth', {            
+        ...mapGetters('auth', {        
             ACCESS_TOKEN: 'AccessToken', 
             TOKEN: 'Token',
         }),

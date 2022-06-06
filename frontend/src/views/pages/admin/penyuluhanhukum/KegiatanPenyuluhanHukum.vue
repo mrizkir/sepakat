@@ -24,8 +24,8 @@
           Halaman ini berisi daftar kegiatan penyuluhan hukum yang dilakukan oleh paralegal
         </v-alert>
       </template>
-    </ModuleHeader>   
-    <v-container fluid>   
+    </ModuleHeader> 
+    <v-container fluid> 
       <v-row class="mb-4" no-gutters>
         <v-col cols="12">
           <v-card>
@@ -69,7 +69,7 @@
                 <v-btn color="primary" dark class="mb-2" to="/kegiatan/penyuluhanhukum/tambah" v-if="dashboard=='paralegal'||dashboard=='kumham'||dashboard=='superadmin'">TAMBAH</v-btn>
               </v-toolbar>
             </template>
-            <template v-slot:item.id="{ item }">    
+            <template v-slot:item.id="{ item }">  
                {{item.id}}
             </template>
             <template v-slot:item.id_status="{ item }"> 
@@ -85,7 +85,7 @@
                 <v-icon>
                   mdi-eye
                 </v-icon>
-              </v-btn>   
+              </v-btn> 
               <v-btn
                 small      
                 icon                          
@@ -94,7 +94,7 @@
                 <v-icon>
                   mdi-pencil
                 </v-icon>
-              </v-btn>                   
+              </v-btn>                 
               <v-btn
                 small
                 icon
@@ -105,7 +105,7 @@
                 <v-icon>
                   mdi-delete
                 </v-icon>
-              </v-btn>  
+              </v-btn>
             </template>
             <template v-slot:expanded-item="{ headers, item }">
               <td :colspan="headers.length" class="text-center">
@@ -113,7 +113,7 @@
                   <strong>ID:</strong>{{ item.id }}
                   <strong>created_at:</strong>{{ $date(item.created_at).format('DD/MM/YYYY HH:mm') }}
                   <strong>updated_at:</strong>{{ $date(item.updated_at).format('DD/MM/YYYY HH:mm') }}
-                </v-col>    
+                </v-col>  
               </td>
             </template>
             <template v-slot:no-data>
@@ -126,7 +126,7 @@
   </AdminLayout>
 </template>
 <script>
-import AdminLayout from '@/views/layouts/AdminLayout';
+import AdminLayout from '@/views/layouts/AdminLayout'
 import ModuleHeader from '@/components/ModuleHeader';
 export default {
   name: 'KegiatanPenyuluhanHukumPenyuluhanHukum',
@@ -170,7 +170,7 @@ export default {
 
   }),
   methods: {
-    initialize: async function () 
+    initialize: async function() 
     {
       this.datatableLoading=true;
       await this.$ajax.get('/kegiatan/penyuluhanhukum', {
@@ -206,7 +206,7 @@ export default {
                        
       // });                      
     },
-    deleteItem (item) {           
+    deleteItem (item) {       
       this.$root.$confirm.open('Delete', 'Apakah Anda ingin menghapus data kegiatan penyuluhan hukum dengan ID '+item.id+' ?', { color: 'red',width:600 }).then((confirm) => {
         if (confirm)
         {

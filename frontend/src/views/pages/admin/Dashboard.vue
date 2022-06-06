@@ -116,7 +116,7 @@
   </AdminLayout>
 </template>
 <script>
-import AdminLayout from '@/views/layouts/AdminLayout';
+import AdminLayout from '@/views/layouts/AdminLayout'
 export default {
   name: 'Dashboard',
   created ()
@@ -160,7 +160,7 @@ export default {
         headers: {
           Authorization: 'Bearer '+this.TOKEN
         }
-      }).then(({data})=>{          
+      }).then(({ data }) => {    
         this.dashboard = data.role[0];    
         this.$store.dispatch('uiadmin/changeDashboard',this.dashboard);                                       
       });                 
@@ -175,7 +175,7 @@ export default {
         headers: {
           Authorization: 'Bearer '+this.TOKEN
         }
-      }).then(({data})=>{          
+      }).then(({ data }) => {    
         this.data_jenis_kegiatan=data.jenis_kegiatan;
         this.jumlah_paralegal=data.jumlah_paralegal;
         this.jumlah_paralegal_laporan=data.jumlah_paralegal_laporan;

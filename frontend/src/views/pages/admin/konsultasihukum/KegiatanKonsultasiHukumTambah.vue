@@ -19,10 +19,10 @@
           Halaman ini berisi daftar kegiatan konsultasi hukum hukum paralegal
         </v-alert>
       </template>
-    </ModuleHeader>   
+    </ModuleHeader> 
     <v-form ref="frmdata" v-model="form_valid" lazy-validation>
-      <v-container fluid>   
-        <v-row>  
+      <v-container fluid> 
+        <v-row>
           <v-col cols="12"> 
             <v-card>
               <v-card-title>
@@ -151,7 +151,7 @@
                     <v-spacer></v-spacer>
                     <v-btn text color="primary" @click="menuTanggalPelaksanaan = false">Cancel</v-btn>
                     <v-btn text color="primary" @click="$refs.menuTanggalPelaksanaan.save(formdata.tanggal_pelaksanaan)">OK</v-btn>
-                  </v-date-picker>        
+                  </v-date-picker>      
                 </v-menu>
                 <v-menu
                   ref="menuJamPelaksanaan"
@@ -224,15 +224,15 @@
                     SIMPAN
                 </v-btn>
               </v-card-actions>
-            </v-card>            
+            </v-card>          
           </v-col>
-        </v-row>    
+        </v-row>  
       </v-container>
     </v-form>
   </AdminLayout>
 </template>
 <script>
-import AdminLayout from '@/views/layouts/AdminLayout';
+import AdminLayout from '@/views/layouts/AdminLayout'
 import ModuleHeader from '@/components/ModuleHeader';
 export default {
   name: 'KegiatanKonsultasiHukumTambah',
@@ -271,7 +271,7 @@ export default {
     menuTanggalLahir: false,
     menuTanggalPelaksanaan: false,
     menuJamPelaksanaan: false, 
-    formdata: {      
+    formdata: {  
       user_id: null,
       nama_pemohon: null,
       tempat_lahir: null,
@@ -287,7 +287,7 @@ export default {
       nasihat_hukum: null,
       rekomendasi_kegiatan: null,
     },
-    formdefault: {      
+    formdefault: {  
       user_id: null,
       nama_pemohon: null,
       tempat_lahir: null,
@@ -347,8 +347,8 @@ export default {
     ],
   }),
   methods: {
-    initialize: async function () 
-    {      
+    initialize: async function() 
+    {  
       await this.$ajax.get('/system/usersparalegal', {
         headers: {
           Authorization:this.$store.getters['auth/Token']
@@ -357,10 +357,10 @@ export default {
         this.daftar_paralegal = data.users;                
       });          
     },
-    save: async function () {
+    save: async function() {
       if (this.$refs.frmdata.validate())
       {
-        this.btnLoading = true                
+        this.btnLoading = true
         await this.$ajax.post('/kegiatan/konsultasihukum/store',
           {
             user_id: this.formdata.user_id,
@@ -383,7 +383,7 @@ export default {
               Authorization:this.$store.getters['auth/Token']
             }
           }
-        ).then(({data})=>{        
+        ).then(({data})=>{
           this.btnLoading = false               
           setTimeout(() => {
             this.formdata = Object.assign({}, this.formdefault);                                
@@ -395,7 +395,7 @@ export default {
         });                
       }
     },
-    closedialogfrm () {            
+    closedialogfrm () {
       setTimeout(() => {
         this.formdata = Object.assign({}, this.formdefault);                                
         this.$router.push('/kegiatan/konsultasihukum')

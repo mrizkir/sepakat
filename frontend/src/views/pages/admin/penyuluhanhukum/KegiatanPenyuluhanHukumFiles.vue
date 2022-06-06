@@ -132,7 +132,7 @@
         <v-responsive width="100%" v-if="$vuetify.breakpoint.xsOnly" />
         <v-col xs="12" sm="6" md="4">
           <v-form v-model="form_valid_surat_permohonan" ref="frmsuratpermohonan" lazy-validation>
-            <v-card class="mx-auto" max-width="400">              
+            <v-card class="mx-auto" max-width="400">            
               <v-card-title>
                 PERMOHONAN NARA SUMBER
               </v-card-title>
@@ -142,7 +142,7 @@
                   label="(.pdf, .png, atau .jpg)"
                   :rules="rule_surat_permohonan"
                   show-size
-                  v-model="file_surat_permohonan"                  
+                  v-model="file_surat_permohonan"
                   v-if="dashboard=='paralegal'||dashboard=='kumham'||dashboard=='superadmin'"
                 >
                 </v-file-input>
@@ -187,7 +187,7 @@
   </AdminLayout>
 </template>
 <script>
-  import AdminLayout from '@/views/layouts/AdminLayout';
+  import AdminLayout from '@/views/layouts/AdminLayout'
   import ModuleHeader from '@/components/ModuleHeader';
   import DK from '@/views/pages/admin/penyuluhanhukum/DataKegiatanPenyuluhanHukum';
   export default {
@@ -244,15 +244,15 @@
       filedokumentasikegiatan: null,
       file_surat_permohonan: null,
       
-      rule_filedaftarhadir:[
+      rule_filedaftarhadir: [
         value => !!value || "Mohon pilih file daftar hadir !!!",
         value =>!value || value.size < 9000000 || 'File daftar hadir harus kurang dari 9MB.'                
       ],
-      rule_filedokumentasikegiatan:[
+      rule_filedokumentasikegiatan: [
         value => !!value || "Mohon pilih file dokumentasi kegiatan !!!",
         value =>!value || value.size < 9000000 || 'File dokumentasi kegiatan harus kurang dari 9MB.'                
       ],
-      rule_surat_permohonan:[
+      rule_surat_permohonan: [
         value => !!value || "Mohon pilih file ktp pemohon !!!",
         value =>!value || value.size < 2000000 || 'File ktp pemohon harus kurang dari 2MB.'                
       ],
@@ -264,7 +264,7 @@
             Authorization: this.$store.getters['auth/Token']
           }
         })
-        .then(({ data }) => {             
+        .then(({ data }) => {         
           this.data_kegiatan=data.kegiatan;
           this.ktpPemohon=this.$api.storageURL+'/'+data.kegiatan.file_fotocopy_ktp;        
         })
@@ -283,7 +283,7 @@
                   'Content-Type': 'multipart/form-data'
                 }
               }
-            ).then(()=>{                                                                                         
+            ).then(()=>{                                                                                     
               this.btnLoadingSuratPermohonan = false
               this.btnLoadingHapusSuratPermohonan = false
               this.$router.go() 
@@ -314,7 +314,7 @@
                   'Content-Type': 'multipart/form-data'
                 }
               }
-            ).then(()=>{                                                                                         
+            ).then(()=>{                                                                                     
               this.btnLoadingUploadDaftarHadir = false
               this.btnLoadingHapusDaftarHadir = false
               this.$router.go() 

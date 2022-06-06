@@ -28,7 +28,7 @@
                                         </v-card>
                                    </v-col>
                                    <v-responsive width="100%" v-if="$vuetify.breakpoint.xsOnly"/>
-                                </v-row>               
+                                </v-row>             
                                 <v-row no-gutters>
                                    <v-col xs="12" sm="6" md="6">
                                        <v-card flat>
@@ -80,7 +80,7 @@
                             show-select
                             class="elevation-1"
                         >
-                            <template v-slot:item.actions="{ item }">      
+                            <template v-slot:item.actions="{ item }">    
                                 <v-tooltip color="info" bottom>
                                     <template v-slot:activator="{on,attrs}">
                                         <v-btn 
@@ -93,9 +93,9 @@
                                             <v-icon small>
                                                 mdi-delete
                                             </v-icon>
-                                        </v-btn>                                              
+                                        </v-btn>                                            
                                     </template>
-                                    <span>Hapus Permission dari Role ini</span>  
+                                    <span>Hapus Permission dari Role ini</span>
                                 </v-tooltip>
                             </template>
                         </v-data-table>
@@ -186,7 +186,7 @@ export default {
         permissionsselected:Array,
     },
     computed: {
-        ...mapGetters('auth', {                             
+        ...mapGetters('auth', {                         
             TOKEN: 'Token',
         }),
         daftar_permissions()
@@ -195,7 +195,7 @@ export default {
         },
         permissions_selected: {
             get ()
-            {                
+            {            
                 if (this.perm_selected.length >0)
                 {
                     return this.perm_selected;
@@ -206,7 +206,7 @@ export default {
                 }
             },
             set (val)
-            {                
+            {            
                 this.perm_selected=val;                
             }
         }

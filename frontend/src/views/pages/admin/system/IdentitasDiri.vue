@@ -25,7 +25,7 @@
                     </v-alert>
             </template>
         </ModuleHeader> 
-        <v-container fluid>  
+        <v-container fluid>
             <v-row class="mb-4" no-gutters>
                 <v-col cols="12">
                     <v-form ref="frmdata" v-model="form_valid" lazy-validation>
@@ -39,7 +39,7 @@
                                     label="NAMA PERGURUAN TINGGI"
                                     outlined
                                     :rules="rule_nama_pt">
-                                </v-text-field>                                                                   
+                                </v-text-field>                                                                 
                                 <v-text-field 
                                     v-model="formdata.nama_alias_pt" 
                                     label="NAMA SINGKATAN PERGURUAN TINGGI"
@@ -56,10 +56,10 @@
                                     label="KODE PERGURUAN TINGGI (SESUAI FORLAP)"
                                     outlined
                                     :rules="rule_kode_pt">
-                                </v-text-field>                                                                   
+                                </v-text-field>                                                                 
                             </v-card-text>
                             <v-card-actions>
-                                <v-spacer></v-spacer>    
+                                <v-spacer></v-spacer>  
                                 <v-btn 
                                     color="blue darken-1" 
                                     text 
@@ -76,7 +76,7 @@
 </template>
 <script>
 import {mapGetters} from 'vuex';
-import SystemConfigLayout from '@/views/layouts/SystemConfigLayout';
+import SystemConfigLayout from '@/views/layouts/SystemConfigLayout'
 import ModuleHeader from '@/components/ModuleHeader';
 export default {
     name: 'IdentitasDiri',
@@ -114,19 +114,19 @@ export default {
             kode_pt:0,
         },
         //form rules        
-        rule_nama_pt:[
+        rule_nama_pt: [
             value => !!value||"Mohon untuk di isi Nama Perguruan Tinggi !!!", 
         ],
-        rule_nama_singkatan_pt:[
+        rule_nama_singkatan_pt: [
             value => !!value||"Mohon untuk di isi Nama Alias Perguruan Tinggi !!!", 
         ],
-        rule_kode_pt:[
+        rule_kode_pt: [
             value => !!value||"Mohon untuk di isi Kode Perguruan Tinggi !!!",
             value => /^[0-9]+$/.test(value) || 'Kode Perguruan Tinggi hanya boleh angka',
         ]
     }),
     methods: {
-        initialize: async function () 
+        initialize: async function() 
         {
             this.datatableLoading=true;
             await this.$ajax.get('/system/setting/variables',
@@ -134,7 +134,7 @@ export default {
                 headers: {
                     Authorization:this.TOKEN
                 }
-            }).then(({data})=>{  
+            }).then(({ data }) => {
                 let setting = data.setting;                           
                 this.formdata.nama_pt=setting.NAMA_PT;
                 this.formdata.nama_alias_pt=setting.NAMA_PT_ALIAS;
@@ -146,7 +146,7 @@ export default {
         save () {
             if (this.$refs.frmdata.validate())
             {
-                this.btnLoading = true                
+                this.btnLoading = true
                 this.$ajax.post('/system/setting/variables',
                     {
                         '_method': 'PUT', 
@@ -163,7 +163,7 @@ export default {
                             Authorization:this.TOKEN
                         }
                     }
-                ).then(()=>{                       
+                ).then(()=>{                   
                     this.btnLoading = false
                 }).catch(()=>{
                     this.btnLoading = false
@@ -172,7 +172,7 @@ export default {
         }
     },
     computed: { 
-        ...mapGetters('auth', {            
+        ...mapGetters('auth', {        
             ACCESS_TOKEN: 'AccessToken', 
             TOKEN: 'Token',
         }),

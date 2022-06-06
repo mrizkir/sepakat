@@ -24,8 +24,8 @@
                         berisi informasi profile user.
                 </v-alert>
             </template>
-        </ModuleHeader>   
-        <v-container fluid>    
+        </ModuleHeader> 
+        <v-container fluid>  
             <v-row class="mb-4" no-gutters>
                 <v-col md="12">
                     <v-card>
@@ -65,7 +65,7 @@
                             <v-card-title>
                                 <span class="headline">GANTI PASSWORD</span>
                             </v-card-title>
-                            <v-card-text>    
+                            <v-card-text>
                                  <v-text-field 
                                     v-model="formdata.password" 
                                     label="PASSWORD BARU"
@@ -75,7 +75,7 @@
                                 </v-text-field> 
                             </v-card-text>
                             <v-card-actions>
-                                <v-spacer></v-spacer>    
+                                <v-spacer></v-spacer>  
                                 <v-btn 
                                     color="blue darken-1" 
                                     text 
@@ -91,7 +91,7 @@
     </AdminLayout>
 </template>
 <script>
-import AdminLayout from '@/views/layouts/AdminLayout';
+import AdminLayout from '@/views/layouts/AdminLayout'
 import ModuleHeader from '@/components/ModuleHeader';
 export default {
     name: 'UsersProfile',
@@ -137,11 +137,11 @@ export default {
                 updated_at: '', 
             },
             //form rules  
-            rule_foto:[
+            rule_foto: [
                 value => !!value||"Mohon pilih gambar !!!",
-                value =>  !value || value.size < 2000000 || 'File foto harus kurang dari 2MB.'                
+                value =>!value || value.size < 2000000 || 'File foto harus kurang dari 2MB.'                
             ],
-            rule_user_password:[
+            rule_user_password: [
                 value => !!value||"Mohon untuk di isi password User !!!",
                 value => {
                     if (value && typeof value !== 'undefined' && value.length > 0){
@@ -171,7 +171,7 @@ export default {
                             Authorization:this.$store.getters['auth/Token']
                         }
                     }
-                ).then(({ data }) => {                                                             
+                ).then(({ data }) => {                                                         
                     this.$refs.frmdata.reset(); 
                     this.formdata.foto=data.foto;       
                     this.formdata=this.formdefault; 
@@ -191,18 +191,18 @@ export default {
             {
                 let reader = new FileReader();
                 reader.readAsDataURL(e);
-                reader.onload = img => {                    
+                reader.onload = img => {                
                     this.photoUser=img.target.result;
                 }
             }            
             
         },
-        uploadFoto: async function () 
+        uploadFoto: async function() 
         {
             if (this.$refs.frmuploadfoto.validate())
             {
                 if (this.formdata.foto)
-                {                
+                {            
                     this.btnLoading = true
                     var formdata = new FormData();
                     formdata.append('foto',this.formdata.foto);
@@ -213,7 +213,7 @@ export default {
                                 'Content-Type': 'multipart/form-data'                      
                             }
                         }
-                    ).then(({ data }) => {            
+                    ).then(({ data }) => {        
                         this.btnLoading = false
                         this.$store.dispatch('updateFoto',data.user.foto);                        
                     }).catch(()=>{
@@ -223,7 +223,7 @@ export default {
                 }   
             }
         },
-        resetFoto: async function () 
+        resetFoto: async function() 
         {
             this.btnLoading = true
             await this.$ajax.post('/setting/users/resetfoto/' + this.$store.getters.User.id,{},
@@ -232,7 +232,7 @@ export default {
                         Authorization:this.$store.getters['auth/Token'],
                     }
                 }
-            ).then(({ data }) => {            
+            ).then(({ data }) => {        
                 this.btnLoading = false
                 this.$store.dispatch('updateFoto',data.user.foto);
             }).catch(()=>{
@@ -241,7 +241,7 @@ export default {
         }
         
     },
-    computed: {        
+    computed: {    
 		photoUser: {
             get()
             {

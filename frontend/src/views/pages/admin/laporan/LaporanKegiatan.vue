@@ -24,8 +24,8 @@
                     Halaman ini berisi laporan kegiatan konsultasi hukum paralegal
                 </v-alert>
             </template>
-        </ModuleHeader>   
-        <v-container fluid>   
+        </ModuleHeader> 
+        <v-container fluid> 
             <v-row class="mb-4" no-gutters>
                 <v-col cols="12">
                     <v-card>
@@ -65,9 +65,9 @@
                                     inset
                                     vertical
                                 ></v-divider>
-                                <v-spacer></v-spacer>    
+                                <v-spacer></v-spacer>  
                             </v-toolbar>
-                        </template>            
+                        </template>          
                         <template v-slot:item.id_status="{ item }"> 
                             <v-chip :color="item.id_status==1?'success': 'blue-grey lighten-3'" dark>
                                 {{item.id_status==1?'SETUJU': 'DRAFT'}}
@@ -83,7 +83,7 @@
                                 <v-icon>
                                     mdi-printer
                                 </v-icon>
-                            </v-btn>   
+                            </v-btn> 
                         </template>
                         <template v-slot:expanded-item="{ headers, item }">
                             <td :colspan="headers.length" class="text-center">
@@ -91,7 +91,7 @@
                                     <strong>ID:</strong>{{ item.kegiatan_id }}
                                     <strong>created_at:</strong>{{ $date(item.created_at).format('DD/MM/YYYY HH:mm') }}
                                     <strong>updated_at:</strong>{{ $date(item.updated_at).format('DD/MM/YYYY HH:mm') }}
-                                </v-col>    
+                                </v-col>  
                             </td>
                         </template>
                         <template v-slot:no-data>
@@ -100,7 +100,7 @@
                     </v-data-table>
                 </v-col>
             </v-row>
-            <v-dialog v-model="dialogprintpdf" max-width="500px" persistent>    
+            <v-dialog v-model="dialogprintpdf" max-width="500px" persistent>  
                 <v-card>
                     <v-card-title>
                         <span class="headline">Print to PDF</span>
@@ -111,7 +111,7 @@
                             text
                             :href="this.$api.storageURL+'/'+file_pdf">
                             Download
-                        </v-btn>               
+                        </v-btn>             
                     </v-card-text>
                     <v-card-actions>
                         <v-spacer></v-spacer>
@@ -123,7 +123,7 @@
     </AdminLayout>
 </template>
 <script>
-import AdminLayout from '@/views/layouts/AdminLayout';
+import AdminLayout from '@/views/layouts/AdminLayout'
 import ModuleHeader from '@/components/ModuleHeader';
 export default {
     name: 'LaporanKegiatan',
@@ -170,7 +170,7 @@ export default {
 
     }),
     methods: {
-        initialize: async function () 
+        initialize: async function() 
         {
             this.datatableLoading=true;
             await this.$ajax.get('/report/kegiatan', {
@@ -208,7 +208,7 @@ export default {
                     },
                     
                 }
-            ).then(({ data }) => {               
+            ).then(({ data }) => {           
                 this.file_pdf=data.pdf_file;
                 this.dialogprintpdf=true;
                 this.btnLoading = false
@@ -216,7 +216,7 @@ export default {
                 this.btnLoading = false
             });     
         },
-        closedialogprintpdf () {                  
+        closedialogprintpdf () {              
             setTimeout(() => {
                 this.file_pdf=null;
                 this.dialogprintpdf = false;      

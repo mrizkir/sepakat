@@ -24,8 +24,8 @@
                     Daftar aksi-aksi terhadap sebuah modul. Format penulisan permission, NAMAMODULE atau NAMA MODULE. Nama Permission tighly coupling dengan kode sumber.
                     </v-alert>
             </template>
-        </ModuleHeader>        
-        <v-container fluid>    
+        </ModuleHeader>      
+        <v-container fluid>  
             <v-row class="mb-4" no-gutters>
                 <v-col xs="12" sm="12" md="12">
                     <v-card>
@@ -75,7 +75,7 @@
                                             <v-card-title>
                                                 <span class="headline">{{ formTitle }}</span>
                                             </v-card-title>
-                                            <v-card-text>                    
+                                            <v-card-text>                
                                                 <v-container fluid>
                                                     <v-row>
                                                         <v-col cols="12" sm="12" md="12">
@@ -84,7 +84,7 @@
                                                                 label="NAMA PERMISSION"
                                                                 :rules="rule_permission_name">
                                                             </v-text-field>
-                                                        </v-col>                
+                                                        </v-col>              
                                                     </v-row>
                                                 </v-container>
                                             </v-card-text>
@@ -133,7 +133,7 @@
 </template>
 <script>
 import {mapGetters} from 'vuex';
-import AdminLayout from '@/views/layouts/AdminLayout';
+import AdminLayout from '@/views/layouts/AdminLayout'
 import ModuleHeader from '@/components/ModuleHeader';
 export default {
     name: 'Permissions',
@@ -190,7 +190,7 @@ export default {
             updated_at: '',
         },
         //form rules        
-        rule_permission_name:[
+        rule_permission_name: [
             value => !!value||"Mohon untuk di isi nama Permission !!!",
             value => /^[a-zA-Z\\-]+$/.test(value) || 'Nama Permission hanya boleh string',
         ],
@@ -288,7 +288,7 @@ export default {
         formTitle () {
             return this.editedIndex === -1 ? 'TAMBAH PERMISSION' : 'EDIT PERMISSION'
         },
-        ...mapGetters('auth', {            
+        ...mapGetters('auth', {        
             ACCESS_TOKEN: 'AccessToken', 
             TOKEN: 'Token', 
             CAN_ACCESS: 'can',

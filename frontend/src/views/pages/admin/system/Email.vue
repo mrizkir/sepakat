@@ -25,7 +25,7 @@
                     </v-alert>
             </template>
         </ModuleHeader> 
-        <v-container fluid>  
+        <v-container fluid>
             <v-row class="mb-4" no-gutters>
                 <v-col cols="12">
                     <v-form ref="frmdata" v-model="form_valid" lazy-validation>
@@ -35,14 +35,14 @@
                             </v-card-title>
                             <v-card-text>
                                <v-row>
-                                   <v-col xs="12" sm="4" md="3">           
+                                   <v-col xs="12" sm="4" md="3">         
                                        <v-switch v-model="formdata.email_mhs_isvalid" label="Check Email Mahasiswa Valid"></v-switch>
                                    </v-col>
                                    <v-responsive width="100%" v-if="$vuetify.breakpoint.xsOnly"/>
                                </v-row>
                             </v-card-text>
                             <v-card-actions>
-                                <v-spacer></v-spacer>    
+                                <v-spacer></v-spacer>  
                                 <v-btn 
                                     color="blue darken-1" 
                                     text 
@@ -59,7 +59,7 @@
 </template>
 <script>
 import {mapGetters} from 'vuex';
-import SystemConfigLayout from '@/views/layouts/SystemConfigLayout';
+import SystemConfigLayout from '@/views/layouts/SystemConfigLayout'
 import ModuleHeader from '@/components/ModuleHeader';
 export default {
     name: 'Email',
@@ -96,7 +96,7 @@ export default {
         
     }),
     methods: {
-        initialize: async function () 
+        initialize: async function() 
         {
             this.datatableLoading=true;
             await this.$ajax.get('/system/setting/variables',
@@ -127,7 +127,7 @@ export default {
                             Authorization:this.TOKEN
                         }
                     }
-                ).then(()=>{                       
+                ).then(()=>{                   
                     this.btnLoading = false
                 }).catch(()=>{
                     this.btnLoading = false
@@ -136,7 +136,7 @@ export default {
         }
     },
     computed: { 
-        ...mapGetters('auth', {            
+        ...mapGetters('auth', {        
             ACCESS_TOKEN: 'AccessToken', 
             TOKEN: 'Token',
         }),

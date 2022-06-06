@@ -65,7 +65,7 @@
 </template>
 <script>
 import {mapGetters} from 'vuex';
-import SystemConfigLayout from '@/views/layouts/SystemConfigLayout';
+import SystemConfigLayout from '@/views/layouts/SystemConfigLayout'
 import ModuleHeader from '@/components/ModuleHeader';
 export default {
     name: 'Captcha',
@@ -101,15 +101,15 @@ export default {
             privateKey: ''
         },
         //form rules
-        rule_site_key:[
+        rule_site_key: [
             value => !!value||"Mohon untuk di isi site key !!!",
         ],
-        rule_private_key:[
+        rule_private_key: [
             value => !!value||"Mohon untuk di isi private key !!!",
         ],
     }),
     methods: {
-        initialize: async function ()
+        initialize: async function()
         {
             this.datatableLoading=true;
             await this.$ajax.get('/system/setting/variables',

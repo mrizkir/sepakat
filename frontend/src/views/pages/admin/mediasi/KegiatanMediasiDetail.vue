@@ -19,8 +19,8 @@
           Halaman ini berisi daftar kegiatan mediasi yang dilakukan oleh paralegal
         </v-alert>
       </template>
-    </ModuleHeader>   
-    <v-container fluid v-if="Object.keys(data_kegiatan).length">   
+    </ModuleHeader> 
+    <v-container fluid v-if="Object.keys(data_kegiatan).length"> 
       <v-row>
         <v-col cols="12">
           <DK :datakegiatan="data_kegiatan" path="/kegiatan/mediasi"/>
@@ -52,7 +52,7 @@
               <v-icon>mdi-information</v-icon>
             </v-btn>
           </v-bottom-navigation>
-          <v-dialog v-model="dialogkronologis" max-width="500px" persistent>            
+          <v-dialog v-model="dialogkronologis" max-width="500px" persistent>          
             <v-card>
               <v-card-title>
                 <span class="headline">Kronologis Kegiatan</span>
@@ -62,11 +62,11 @@
               </v-card-text>
               <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn color="blue darken-1" text @click.stop="closedialogkronologis">CLOSE</v-btn>    
+                <v-btn color="blue darken-1" text @click.stop="closedialogkronologis">CLOSE</v-btn>  
               </v-card-actions>
-            </v-card>            
+            </v-card>          
           </v-dialog>
-          <v-dialog v-model="dialogrekomendasi" max-width="500px" persistent>            
+          <v-dialog v-model="dialogrekomendasi" max-width="500px" persistent>          
             <v-card>
               <v-card-title>
                 <span class="headline">Rekomendasi Konsultasi</span>
@@ -76,14 +76,14 @@
               </v-card-text>
               <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn color="blue darken-1" text @click.stop="closedialogrekomendasi">CLOSE</v-btn>    
+                <v-btn color="blue darken-1" text @click.stop="closedialogrekomendasi">CLOSE</v-btn>  
               </v-card-actions>
-            </v-card>            
+            </v-card>          
           </v-dialog>
         </v-col>
       </v-row>
       <v-row>
-        <v-col cols="12">        
+        <v-col cols="12">      
           <v-card class="grey lighten-4">
             <v-card-title>
               <v-icon>mdi-comment</v-icon> Komentar
@@ -93,12 +93,12 @@
                 class="mx-auto mb-2"
                 max-width="500"
                 outlined
-                v-for="items in daftar_komentar" v-bind:key="items.id">    
+                v-for="items in daftar_komentar" v-bind:key="items.id">  
                   <v-card-title>
                     {{items.name}}
                     <v-spacer/>
                     <v-chip color="info" outlined>{{items.default_role}}</v-chip>
-                  </v-card-title>    
+                  </v-card-title>  
                   <v-card-text>
                     {{items.isi_komentar}}
                   </v-card-text>'
@@ -122,7 +122,7 @@
                     </v-btn>
                   </v-card-actions>
               </v-card>
-            </v-card-text>  
+            </v-card-text>
             <v-card-text v-else>
               <v-alert
                 text
@@ -131,7 +131,7 @@
                 >
                 BELUM ADA KOMENTAR
               </v-alert>
-            </v-card-text>  
+            </v-card-text>
             <v-form ref="frmdata" v-model="form_valid" lazy-validation v-if="data_kegiatan.id_status==0">
               <v-card-actions>
                 <v-textarea
@@ -145,22 +145,22 @@
                   @click.stop="savekomentar" 
                   :loading="btnLoading"
                   :disabled="!form_valid||btnLoading"
-                  large>    
+                  large>  
                   KIRIM
                   <v-icon>
                     mdi-send
                   </v-icon> 
-                </v-btn>  
+                </v-btn>
               </v-card-actions>
             </v-form>
-          </v-card>        
+          </v-card>      
         </v-col>
       </v-row>
     </v-container>
   </AdminLayout>
 </template>
 <script>
-import AdminLayout from '@/views/layouts/AdminLayout';
+import AdminLayout from '@/views/layouts/AdminLayout'
 import ModuleHeader from '@/components/ModuleHeader';
 import DK from '@/views/pages/admin/mediasi/DataKegiatanMediasi';
 
@@ -212,17 +212,17 @@ export default {
     formdata: {
       komentar: ''
     },
-    rule_komentar:[
+    rule_komentar: [
       value => !!value || "Mohon untuk diisi komentar !!!",
     ]
   }),
   methods: {
-    initialize: async function () {
+    initialize: async function() {
       await this.$ajax.get('/kegiatan/mediasi/' + this.kegiatan_id,{
         headers: {
           Authorization:this.$store.getters['auth/Token']
         }
-      }).then(({ data }) => {                
+      }).then(({ data }) => {            
         this.data_kegiatan=data.kegiatan;                
       });
     },
@@ -232,11 +232,11 @@ export default {
         headers: {
           Authorization:this.$store.getters['auth/Token']
         }
-      }).then(({ data }) => {                
+      }).then(({ data }) => {            
         this.daftar_komentar=data.daftar_komentar;
       })
     },
-    savekomentar: async function () {
+    savekomentar: async function() {
       if (this.$refs.frmdata.validate())
       {
         this.btnLoading = true      
@@ -252,7 +252,7 @@ export default {
           }
         }
         )
-        .then(()=>{        
+        .then(()=>{    
           this.btnLoading = false     
           this.formdata.isi_komentar='';          
           this.$refs.frmdata.reset();
@@ -293,7 +293,7 @@ export default {
     {
       this.dialogrekomendasi=false;
     },
-    deleteItem (item) {           
+    deleteItem (item) {       
       this.$root.$confirm.open('Delete', 'Apakah Anda ingin menghapus komentar kegiatan dengan ID '+item.kegiatan_id+' ?', { color: 'red',width:600 }).then((confirm) => {
         if (confirm)
         {
