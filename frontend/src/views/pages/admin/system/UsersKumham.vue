@@ -24,8 +24,8 @@
                      User dengan role Kanwil Hukum dan HAM bertanggungjawab terhadap proses keseluruhan sistem.
                 </v-alert>
             </template>
-        </ModuleHeader>      
-        <v-container fluid>  
+        </ModuleHeader>
+        <v-container fluid>
             <v-row class="mb-4" no-gutters>
                 <v-col cols="12">
                     <v-card>
@@ -65,7 +65,7 @@
                                     inset
                                     vertical
                                 ></v-divider>
-                                <v-spacer></v-spacer>  
+                                <v-spacer></v-spacer>
                                 <v-btn color="primary"
                                     class="mb-2" 
                                     :loading="btnLoading"
@@ -73,25 +73,25 @@
                                     @click.stop="showDialogTambahUserSuperAdmin">
                                     TAMBAH
                                 </v-btn>
-                                <v-dialog v-model="dialog" max-width="500px" persistent>      
+                                <v-dialog v-model="dialog" max-width="500px" persistent>
                                     <v-form ref="frmdata" v-model="form_valid" lazy-validation>
                                         <v-card>
                                             <v-card-title>
                                                 <span class="headline">{{ formTitle }}</span>
-                                            </v-card-title>              
+                                            </v-card-title>
                                             <v-card-text> 
                                                 <v-text-field 
                                                     v-model="editedItem.name" 
                                                     label="NAMA USER"
                                                     outlined
                                                     :rules="rule_user_name">
-                                                </v-text-field>                                                                 
+                                                </v-text-field>           
                                                 <v-text-field 
                                                     v-model="editedItem.email" 
                                                     label="EMAIL"
                                                     outlined
                                                     :rules="rule_user_email">
-                                                </v-text-field>                          
+                                                </v-text-field>
                                                 <v-text-field 
                                                     v-model="editedItem.nomor_hp" 
                                                     label="NOMOR HP"
@@ -117,8 +117,8 @@
                                                     label="ROLES"
                                                     multiple 
                                                     small-chips
-                                                    outlined>                                                  
-                                                </v-autocomplete>         
+                                                    outlined> 
+                                                </v-autocomplete>
                                             </v-card-text>
                                             <v-card-actions>
                                                 <v-spacer></v-spacer>
@@ -128,7 +128,7 @@
                                                     text 
                                                     @click.stop="save" 
                                                     :loading="btnLoading"
-                                                    :disabled="!form_valid||btnLoading">
+                                                    :disabled="!form_valid || btnLoading">
                                                         SIMPAN
                                                 </v-btn>
                                             </v-card-actions>
@@ -140,8 +140,8 @@
                                         <v-card>
                                             <v-card-title>
                                                 <span class="headline">{{ formTitle }}</span>
-                                            </v-card-title>              
-                                            <v-card-text>                                                                
+                                            </v-card-title>
+                                            <v-card-text>          
                                                 <v-text-field 
                                                     v-model="editedItem.name" 
                                                     label="NAMA USER"
@@ -179,8 +179,8 @@
                                                     label="ROLES"
                                                     multiple 
                                                     small-chips
-                                                    outlined>                                                  
-                                                </v-autocomplete>         
+                                                    outlined> 
+                                                </v-autocomplete>
                                             </v-card-text>
                                             <v-card-actions>
                                                 <v-spacer></v-spacer>
@@ -190,11 +190,11 @@
                                                     text 
                                                     @click.stop="save" 
                                                     :loading="btnLoading"
-                                                    :disabled="!form_valid||btnLoading">SIMPAN</v-btn>
+                                                    :disabled="!form_valid || btnLoading">SIMPAN</v-btn>
                                             </v-card-actions>
                                         </v-card>
                                     </v-form>
-                                </v-dialog>  
+                                </v-dialog>
                             </v-toolbar>
                         </template>
                         <template v-slot:item.actions="{ item }">
@@ -218,8 +218,8 @@
                         </template>
                         <template v-slot:item.foto="{ item }">
                             <v-avatar size="30">
-                                <v-img :src="$api.storageURL+'/'+item.foto" />
-                            </v-avatar>                                                                    
+                                <v-img :src="$api.storageURL + '/'+item.foto" />
+                            </v-avatar>              
                         </template>
                         <template v-slot:expanded-item="{ headers, item }">
                             <td :colspan="headers.length" class="text-center">
@@ -227,7 +227,7 @@
                                     <strong>ID:</strong>{{ item.id }}
                                     <strong>created_at:</strong>{{ $date(item.created_at).format('DD/MM/YYYY HH:mm') }}
                                     <strong>updated_at:</strong>{{ $date(item.updated_at).format('DD/MM/YYYY HH:mm') }}
-                                </v-col>  
+                                </v-col>
                             </td>
                         </template>
                         <template v-slot:no-data>
@@ -245,7 +245,7 @@ import AdminLayout from '@/views/layouts/AdminLayout'
 import ModuleHeader from '@/components/ModuleHeader'
 export default {
     name: 'UsersKumham',
-    created () {
+    created() {
         this.breadcrumbs = [
             {
                 text: 'HOME',
@@ -272,7 +272,7 @@ export default {
         btnLoading: false,
         //tables
         headers: [                        
-            { text: '', value: 'foto' },
+            { text: null, value: 'foto' },
             { text: 'USERNAME', value: 'username',sortable: true },
             { text: 'NAME', value: 'name',sortable: true },
             { text: 'EMAIL', value: 'email',sortable: true },
@@ -280,7 +280,7 @@ export default {
             { text: 'AKSI', value: 'actions', sortable: false, width: 100 },
         ],
         expanded: [],
-        search: '',
+        search: null,
         daftar_users: [],
 
         //form
@@ -291,25 +291,25 @@ export default {
         editedIndex: -1, 
         editedItem: {
             id:0,
-            username: '',
-            password: '',
-            name: '',
-            email: '',
-            nomor_hp: '', 
+            username: null,
+            password: null,
+            name: null,
+            email: null,
+            nomor_hp: null, 
             role_id: ['kumham'],
-            created_at: '',
-            updated_at: '',
+            created_at: null,
+            updated_at: null,
         },
         defaultItem: {
             id:0,
-            username: '',
-            password: '',
-            name: '',
-            email: '',
-            nomor_hp: '',
+            username: null,
+            password: null,
+            name: null,
+            email: null,
+            nomor_hp: null,
             role_id: ['kumham'],
-            created_at: '',
-            updated_at: '',
+            created_at: null,
+            updated_at: null,
         },
         //form rules        
         rule_user_name: [
@@ -376,7 +376,7 @@ export default {
             else
             {
                 this.expanded=[item];
-            }               
+            }
         },
         showDialogTambahUserSuperAdmin: async function()
         {
@@ -401,7 +401,7 @@ export default {
                             text:element.name,
                             disabled: false,
                         })
-                    }                    
+                    } 
                 })
                 this.daftar_roles=daftar_roles
                 this.dialog = true    
@@ -434,7 +434,7 @@ export default {
                             text:element.name,
                             disabled: false,
                         })
-                    }                    
+                    } 
                 })
                 this.daftar_roles=daftar_roles                
             })
@@ -470,7 +470,7 @@ export default {
                 {
                     this.$ajax.post('/system/userskumham/' + this.editedItem.id,
                         {
-                            '_method': 'PUT',
+                            _method: 'PUT',
                             name: this.editedItem.name,
                             email: this.editedItem.email,
                             nomor_hp: this.editedItem.nomor_hp,
@@ -521,7 +521,7 @@ export default {
                     this.btnLoading = true
                     this.$ajax.post('/system/userskumham/'+item.id,
                         {
-                            '_method': 'DELETE',
+                            _method: 'DELETE',
                         },
                         {
                             headers: {

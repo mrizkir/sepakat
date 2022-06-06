@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateKegiatanKonsultasiHukumTable extends Migration
+class CreateKegiatanInvestigasiPerkaraTable extends Migration
 {
 	/**
 	 * Run the migrations.
@@ -13,7 +13,7 @@ class CreateKegiatanKonsultasiHukumTable extends Migration
 	 */
 	public function up()
 	{
-		Schema::create('konsultasi_hukum', function (Blueprint $table) {
+		Schema::create('investigasi_perkara', function (Blueprint $table) {
 			$table->uuid('id')->primary();
 			$table->uuid('user_id');
 			$table->string('nama_pemohon');
@@ -26,8 +26,9 @@ class CreateKegiatanKonsultasiHukumTable extends Migration
 			$table->string('tempat_pelaksanaan');			
 			$table->string('nama_kegiatan');
 			$table->text('uraian_kegiatan');
-			$table->text('nasihat_hukum');
+			$table->text('hasil_investigasi');
 			$table->text('rekomendasi_kegiatan');
+			$table->text('tindak_lanjut');
 
 			$table->string('file_sktm')->nullable();
 			$table->string('file_fotocopy_ktp')->nullable();
@@ -54,6 +55,6 @@ class CreateKegiatanKonsultasiHukumTable extends Migration
 	 */
 	public function down()
 	{
-		Schema::dropIfExists('konsultasi_hukum');
+		Schema::dropIfExists('investigasi_perkara');
 	}
 }

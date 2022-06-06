@@ -151,7 +151,7 @@
                     <v-spacer></v-spacer>
                     <v-btn text color="primary" @click="menuTanggalPelaksanaan = false">Cancel</v-btn>
                     <v-btn text color="primary" @click="$refs.menuTanggalPelaksanaan.save(formdata.tanggal_pelaksanaan)">OK</v-btn>
-                  </v-date-picker>      
+                  </v-date-picker>
                 </v-menu>
                 <v-menu
                   ref="menuJamPelaksanaan"
@@ -220,11 +220,11 @@
                   text 
                   @click.stop="save" 
                   :loading="btnLoading"
-                  :disabled="!form_valid||btnLoading">
+                  :disabled="!form_valid || btnLoading">
                     SIMPAN
                 </v-btn>
               </v-card-actions>
-            </v-card>          
+            </v-card>
           </v-col>
         </v-row>
       </v-container>
@@ -236,9 +236,9 @@
   import ModuleHeader from '@/components/ModuleHeader'
   export default {
     name: 'KegiatanMediasiUbah',
-    created () {
+    created() {
       this.dashboard = this.$store.getters['uiadmin/getDefaultDashboard']
-      this.kegiatan_id = this.$route.params.kegiatan_id;
+      this.kegiatan_id = this.$route.params.kegiatan_id
       this.breadcrumbs = [
         {
           text: 'HOME',
@@ -354,15 +354,15 @@
       initialize: async function() {
         await this.$ajax.get('/system/usersparalegal', {
           headers: {
-            Authorization: this.$store.getters['auth/Token']
+            Authorization: this.$store.getters['auth/Token'],
           }
         })
         .then(({ data }) => {
           this.daftar_paralegal = data.users
         })
-        await this.$ajax.get('/kegiatan/mediasi/' + this.kegiatan_id,{
+        await this.$ajax.get('/kegiatan/mediasi/' + this.kegiatan_id, {
           headers: {
-            Authorization: this.$store.getters['auth/Token']
+            Authorization: this.$store.getters['auth/Token'],
           }
         })
         .then(({ data }) => {
@@ -406,12 +406,12 @@
             },
             {
               headers: {
-                Authorization: this.$store.getters['auth/Token']
+                Authorization: this.$store.getters['auth/Token'],
               }
             }
           )
           .then(({ data }) => {
-            this.btnLoading = false               
+            this.btnLoading = false
             setTimeout(() => {
               this.formdata = Object.assign({}, this.formdefault)
               this.$router.push('/kegiatan/mediasi/' + data.kegiatan.id + '/detail')
@@ -422,7 +422,7 @@
           })
         }
       },
-      closedialogfrm () {
+      closedialogfrm() {
         setTimeout(() => {
           this.formdata = Object.assign({}, this.formdefault)
           this.$router.push('/kegiatan/mediasi/' + this.kegiatan_id + '/detail')

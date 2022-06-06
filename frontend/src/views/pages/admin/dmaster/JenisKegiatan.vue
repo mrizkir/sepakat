@@ -41,7 +41,7 @@
                   inset
                   vertical
                 ></v-divider>
-                <v-spacer></v-spacer>                                  
+                <v-spacer></v-spacer>
               </v-toolbar>
             </template>
             <template v-slot:expanded-item="{ headers, item }">
@@ -66,7 +66,7 @@ import AdminLayout from '@/views/layouts/AdminLayout'
 import ModuleHeader from '@/components/ModuleHeader'
 export default {
   name: 'JenisKegiatan',
-  created () {
+  created() {
     this.breadcrumbs = [
       {
         text: 'HOME',
@@ -104,7 +104,7 @@ export default {
         headers: {
           Authorization: this.TOKEN
         }
-      }).then(({data})=>{
+      }).then(({ data }) => {
         this.datatable = data.jenis_kegiatan;
         this.datatableLoading=false
       }).catch(() => {

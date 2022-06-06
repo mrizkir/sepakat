@@ -46,7 +46,7 @@
                         {{user.theme}}
                       </v-card-text>
                     </v-card>
-                   </v-col>      
+                   </v-col>
                    <v-responsive width="100%" v-if="$vuetify.breakpoint.xsOnly"/>
                 </v-row>
                 <v-row no-gutters>
@@ -62,7 +62,7 @@
                   <v-col xs="12" sm="6" md="6">
                      <v-card flat>
                       <v-card-title>DEFAULT ROLE :</v-card-title>
-                      <v-card-text>                
+                      <v-card-text>
                         {{user.default_role}}
                       </v-card-text>
                     </v-card>
@@ -82,7 +82,7 @@
                    <v-col xs="12" sm="6" md="6">
                      <v-card flat>
                       <v-card-title>CREATED / UPDATED :</v-card-title>
-                      <v-card-text>                
+                      <v-card-text>
                         {{$date(user.created_at).format('DD/MM/YYYY HH:mm')}} / {{$date(user.updated_at).format('DD/MM/YYYY HH:mm')}}
                       </v-card-text>
                     </v-card>
@@ -92,7 +92,7 @@
                </v-card-text>
             </v-card>
           </v-col>
-        </v-row>  
+        </v-row>
         <v-row class="mb-4" no-gutters>
           <v-col cols="12">
             <v-card>
@@ -163,7 +163,7 @@
         { text: 'GUARD', value: 'guard_name' },
         { text: 'AKSI', value: 'actions', sortable: false, width: 100 },
       ],
-      search: '',
+      search: null,
       perm_selected: [],
       perm_revoked: [],
     }),

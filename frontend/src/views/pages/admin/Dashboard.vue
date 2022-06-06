@@ -119,7 +119,7 @@
 import AdminLayout from '@/views/layouts/AdminLayout'
 export default {
   name: 'Dashboard',
-  created ()
+  created()
   {
     this.TOKEN = this.$route.params.token
     this.breadcrumbs = [
@@ -143,7 +143,7 @@ export default {
     TOKEN: null,
     dashboard: null,
 
-    tahun_pendaftaran: '',
+    tahun_pendaftaran: null,
 
     data_jenis_kegiatan: [],
     jumlah_paralegal:0,
@@ -162,7 +162,7 @@ export default {
         }
       }).then(({ data }) => {
         this.dashboard = data.role[0]
-        this.$store.dispatch('uiadmin/changeDashboard',this.dashboard)       
+        this.$store.dispatch('uiadmin/changeDashboard',this.dashboard)
       })
       this.$store.dispatch('uiadmin/init',this.$ajax)
       this.tahun_pendaftaran = this.$store.getters['uiadmin/getTahunPendaftaran']
@@ -193,7 +193,7 @@ export default {
       for (index in this.data_jenis_kegiatan)
       {
         total = total + parseInt(this.data_jenis_kegiatan[index].jumlah);
-      }                        
+      }
       return total;
     }
   },

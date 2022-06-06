@@ -65,9 +65,9 @@
                                     inset
                                     vertical
                                 ></v-divider>
-                                <v-spacer></v-spacer>  
+                                <v-spacer></v-spacer>
                             </v-toolbar>
-                        </template>          
+                        </template>
                         <template v-slot:item.id_status="{ item }"> 
                             <v-chip :color="item.id_status==1?'success': 'blue-grey lighten-3'" dark>
                                 {{item.id_status==1?'SETUJU': 'DRAFT'}}
@@ -91,7 +91,7 @@
                                     <strong>ID:</strong>{{ item.kegiatan_id }}
                                     <strong>created_at:</strong>{{ $date(item.created_at).format('DD/MM/YYYY HH:mm') }}
                                     <strong>updated_at:</strong>{{ $date(item.updated_at).format('DD/MM/YYYY HH:mm') }}
-                                </v-col>  
+                                </v-col>
                             </td>
                         </template>
                         <template v-slot:no-data>
@@ -100,7 +100,7 @@
                     </v-data-table>
                 </v-col>
             </v-row>
-            <v-dialog v-model="dialogprintpdf" max-width="500px" persistent>  
+            <v-dialog v-model="dialogprintpdf" max-width="500px" persistent>
                 <v-card>
                     <v-card-title>
                         <span class="headline">Print to PDF</span>
@@ -109,9 +109,9 @@
                         <v-btn
                             color="green"
                             text
-                            :href="this.$api.storageURL+'/'+file_pdf">
+                            :href="this.$api.storageURL + '/'+file_pdf">
                             Download
-                        </v-btn>             
+                        </v-btn>
                     </v-card-text>
                     <v-card-actions>
                         <v-spacer></v-spacer>
@@ -127,7 +127,7 @@ import AdminLayout from '@/views/layouts/AdminLayout'
 import ModuleHeader from '@/components/ModuleHeader'
 export default {
     name: 'LaporanKegiatan',
-    created () {
+    created() {
         this.dashboard = this.$store.getters['uiadmin/getDefaultDashboard']
         this.breadcrumbs = [
             {
@@ -163,7 +163,7 @@ export default {
             { text: 'STATUS', value: 'id_status', sortable: false, width:100 },
             { text: 'AKSI', value: 'actions', sortable: false,width:80 },
         ],
-        search: '', 
+        search: null, 
 
         dialogprintpdf: false,
         file_pdf: null
@@ -175,7 +175,7 @@ export default {
             this.datatableLoading=true;
             await this.$ajax.get('/report/kegiatan', {
                 headers: {
-                    Authorization: this.$store.getters['auth/Token']
+                    Authorization: this.$store.getters['auth/Token'],
                 }
             }).then(({ data }) => {
                 this.datatable = data.daftar_kegiatan;
@@ -193,7 +193,7 @@ export default {
             else
             {
                 this.expanded=[item];
-            }               
+            }
         },
         async printpdf (item)
         {
@@ -204,7 +204,7 @@ export default {
                 },
                 {
                     headers: {
-                        Authorization: this.$store.getters['auth/Token']
+                        Authorization: this.$store.getters['auth/Token'],
                     },
                     
                 }
@@ -218,7 +218,7 @@ export default {
         },
         closedialogprintpdf () {
             setTimeout(() => {
-                this.file_pdf=null;
+                this.file_pdf=null
                 this.dialogprintpdf = false
                 }, 300
             );

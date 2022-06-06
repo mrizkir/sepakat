@@ -25,7 +25,7 @@
                     </v-alert>
             </template>
         </ModuleHeader>
-         <v-container fluid>  
+         <v-container fluid>
             <v-row class="mb-4" no-gutters>
                 <v-col xs="12" sm="12" md="12">
                     <v-card>
@@ -89,7 +89,7 @@
                                                                 label="NAMA ROLE"
                                                                 :rules="rule_role_name">
                                                             </v-text-field>
-                                                        </v-col>              
+                                                        </v-col>
                                                     </v-row>
                                                 </v-container>
                                             </v-card-text>
@@ -101,14 +101,14 @@
                                                     text 
                                                     @click.stop="save" 
                                                     :loading="btnLoading"
-                                                    :disabled="!form_valid||btnLoading">
+                                                    :disabled="!form_valid || btnLoading">
                                                         SIMPAN
                                                 </v-btn>
                                             </v-card-actions>
                                         </v-card>
                                     </v-form>
-                                </v-dialog>  
-                                <v-dialog v-model="dialogRolePermission" max-width="800px" persistent>                                      
+                                </v-dialog>
+                                <v-dialog v-model="dialogRolePermission" max-width="800px" persistent>
                                     <RolePermissions :role="editedItem" :daftarpermissions="daftar_permissions" :permissionsselected="permissions_selected" v-on:closeRolePermissions="closeRolePermissions" />
                                 </v-dialog>
                             </v-toolbar>
@@ -150,9 +150,9 @@
                         <template v-slot:no-data>
                             Data belum tersedia
                         </template>
-                    </v-data-table>      
+                    </v-data-table>
                 </v-col>
-                <v-dialog v-model="dialogdetail" width="800px">      
+                <v-dialog v-model="dialogdetail" width="800px">
                     <v-card>
                         <v-card-title>
                             <span class="headline">DETAIL ROLE</span>
@@ -218,7 +218,7 @@
                         <v-card-actions>
                             
                         </v-card-actions>
-                    </v-card>      
+                    </v-card>
                 </v-dialog>
             </v-row>
         </v-container>
@@ -271,7 +271,7 @@ export default {
             { text: 'NAMA PERMISSION', value: 'name' },
             { text: 'GUARD', value: 'guard_name' },
         ],
-        search: '',
+        search: null,
         //form
         form_valid: true,
         dialog: false,
@@ -280,24 +280,24 @@ export default {
         editedIndex: -1,
         editedItem: {
             id:0,
-            name: '',
-            guard: '',
-            created_at: '',
-            updated_at: '',
+            name: null,
+            guard: null,
+            created_at: null,
+            updated_at: null,
         },
         defaultItem: {
             id:0,
-            name: '',
+            name: null,
             guard: 'api',
-            created_at: '',
-            updated_at: '',
+            created_at: null,
+            updated_at: null,
         },
         //form rules        
         rule_role_name: [
             value => !!value||"Mohon untuk di isi nama Role !!!",
             value => /^[A-Za-z]*$/.test(value) || 'Nama Role hanya boleh string',
         ],
-        form_error_message: ''
+        form_error_message: null
     }),
     methods: {
         initialize () 
@@ -312,7 +312,7 @@ export default {
                 {
                     this.datatable = data.roles;
                     this.datatableLoading=false
-                }     
+                }
             
             })
             
@@ -326,7 +326,7 @@ export default {
             else
             {
                 this.expanded=[item];
-            }               
+            }
         },
         viewItem (item) {
             this.editedIndex = this.datatable.indexOf(item);
@@ -340,7 +340,7 @@ export default {
                 if (status==200)
                 {
                     this.permissions_selected = data.permissions;
-                }                 
+                }
             })
             
             this.dialogdetail = true;
@@ -359,7 +359,7 @@ export default {
                 if (status==200)
                 {
                     this.daftar_permissions = data.permissions;
-                }                 
+                }
             })
 
             this.$ajax.get('/system/setting/roles/'+item.id+'/permission', {
@@ -370,7 +370,7 @@ export default {
                 if (status==200)
                 {
                     this.permissions_selected = data.permissions;
-                }                 
+                }
             })
             this.dialogRolePermission = true;
             this.editedItem=item;
@@ -400,7 +400,7 @@ export default {
                 {
                     this.$ajax.post('/system/setting/roles/' + this.editedItem.id,
                         {
-                            '_method': 'PUT',
+                            _method: 'PUT',
                             name: this.editedItem.name.toLowerCase(),
                         },
                         {

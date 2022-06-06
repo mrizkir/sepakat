@@ -39,7 +39,7 @@
                                     label="NAMA PERGURUAN TINGGI"
                                     outlined
                                     :rules="rule_nama_pt">
-                                </v-text-field>                                                                 
+                                </v-text-field>           
                                 <v-text-field 
                                     v-model="formdata.nama_alias_pt" 
                                     label="NAMA SINGKATAN PERGURUAN TINGGI"
@@ -56,16 +56,16 @@
                                     label="KODE PERGURUAN TINGGI (SESUAI FORLAP)"
                                     outlined
                                     :rules="rule_kode_pt">
-                                </v-text-field>                                                                 
+                                </v-text-field>           
                             </v-card-text>
                             <v-card-actions>
-                                <v-spacer></v-spacer>  
+                                <v-spacer></v-spacer>
                                 <v-btn 
                                     color="blue darken-1" 
                                     text 
                                     @click.stop="save" 
                                     :loading="btnLoading"
-                                    :disabled="!form_valid||btnLoading">SIMPAN</v-btn>
+                                    :disabled="!form_valid || btnLoading">SIMPAN</v-btn>
                             </v-card-actions>
                         </v-card>
                     </v-form>
@@ -108,9 +108,9 @@ export default {
         //form
         form_valid: true,
         formdata: {
-            nama_pt: '',
-            nama_alias_pt: '',
-            bentuk_pt: '',
+            nama_pt: null,
+            nama_alias_pt: null,
+            bentuk_pt: null,
             kode_pt:0,
         },
         //form rules        
@@ -149,7 +149,7 @@ export default {
                 this.btnLoading = true
                 this.$ajax.post('/system/setting/variables',
                     {
-                        '_method': 'PUT', 
+                        _method: 'PUT', 
                         'pid': 'Identitas Perguruan Tinggi',
                         setting:JSON.stringify({
                             101: this.formdata.nama_pt,

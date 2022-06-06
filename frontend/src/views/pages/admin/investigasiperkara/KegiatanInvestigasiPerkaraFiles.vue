@@ -47,7 +47,7 @@
                 <v-btn
                   color="green"
                   text
-                  :href="this.$api.storageURL+'/'+data_kegiatan.file_daftar_hadir"
+                  :href="this.$api.storageURL + '/'+data_kegiatan.file_daftar_hadir"
                   v-if="data_kegiatan.file_daftar_hadir"
                 >
                   Lihat
@@ -99,7 +99,7 @@
                 <v-btn
                   color="green"
                   text
-                  :href="this.$api.storageURL+'/'+data_kegiatan.file_dokumentasi_kegiatan"
+                  :href="this.$api.storageURL + '/'+data_kegiatan.file_dokumentasi_kegiatan"
                   v-if="data_kegiatan.file_dokumentasi_kegiatan"
                 >
                   Lihat
@@ -188,7 +188,7 @@
     name: 'KegiatanInvestigasiPerkaraFiles',
     created() {
       this.dashboard = this.$store.getters['uiadmin/getDefaultDashboard']
-      this.kegiatan_id=this.$route.params.kegiatan_id;
+      this.kegiatan_id=this.$route.params.kegiatan_id
       this.breadcrumbs = [
         {
           text: 'HOME',
@@ -211,7 +211,7 @@
           href: '#',
         }
       ];
-      this.initialize()    
+      this.initialize()
     },
     data: () => ({ 
       dashboard: null,
@@ -253,26 +253,26 @@
     }),
     methods: {
       initialize: async function() {
-        await this.$ajax.get('/kegiatan/investigasiperkara/' + this.kegiatan_id,{
+        await this.$ajax.get('/kegiatan/investigasiperkara/' + this.kegiatan_id, {
           headers: {
-            Authorization: this.$store.getters['auth/Token']
+            Authorization: this.$store.getters['auth/Token'],
           }
         })
         .then(({ data }) => { 
           this.data_kegiatan=data.kegiatan;
-          this.sktmPemohon=this.$api.storageURL+'/'+data.kegiatan.file_fotocopy_sktm
+          this.sktmPemohon=this.$api.storageURL + '/'+data.kegiatan.file_fotocopy_sktm
         })
       },
       previewImage(e) {
         if (typeof e === 'undefined') {
-          this.image_prev = null;
+          this.image_prev = null
         } else {
           let reader = new FileReader()
           reader.readAsDataURL(e)
           reader.onload = img => {
             this.image_prev=img.target.result;
-          }                
-        }          
+          }
+        }
       }, 
       async uploadSKTMPemohon() {
         if (this.$refs.frmuploadsktm.validate())

@@ -19,11 +19,11 @@
           Halaman ini berisi daftar kegiatan penyuluhan hukum yang dilakukan oleh paralegal
         </v-alert>
       </template>
-    </ModuleHeader> 
+    </ModuleHeader>
     <v-form ref="frmdata" v-model="form_valid" lazy-validation  v-if="Object.keys(datakegiatan).length">
-      <v-container fluid> 
+      <v-container fluid>
        <v-row>
-          <v-col cols="12"> 
+          <v-col cols="12">
             <v-card>
               <v-card-title>
                 <span class="headline">UBAH KEGIATAN</span>
@@ -91,7 +91,7 @@
                     <v-spacer></v-spacer>
                     <v-btn text color="primary" @click="menuTanggalPelaksanaan = false">Cancel</v-btn>
                     <v-btn text color="primary" @click="$refs.menuTanggalPelaksanaan.save(formdata.tanggal_pelaksanaan)">OK</v-btn>
-                  </v-date-picker>      
+                  </v-date-picker>
                 </v-menu>
                 <v-menu
                   ref="menuJamPelaksanaan"
@@ -136,21 +136,21 @@
                   :rules="rule_peserta"
                   outlined
                   dense
-                />                         
+                />
                 <v-text-field
                   label="JUMLAH PESERTA"
                   v-model="formdata.jumlah_peserta"
                   :rules="rule_jumlah_peserta"
                   outlined
                   dense
-                />            
+                />
                 <v-textarea
                   label="RINGKASAN PENYULUHAN"
                   v-model="formdata.uraian_kegiatan"
                   :rules="rule_uraian_kegiatan"
                   outlined
                   dense
-                />            
+                />
                 <v-textarea
                   label="REKOMENDASI PARALEGAL"
                   v-model="formdata.rekomendasi_kegiatan"
@@ -167,11 +167,11 @@
                   text 
                   @click.stop="save" 
                   :loading="btnLoading"
-                  :disabled="!form_valid||btnLoading">
+                  :disabled="!form_valid || btnLoading">
                     SIMPAN
                 </v-btn>
               </v-card-actions>
-            </v-card>          
+            </v-card>
           </v-col>
         </v-row>
       </v-container>
@@ -183,7 +183,7 @@
   import ModuleHeader from '@/components/ModuleHeader'
   export default {
     name: 'KegiatanPenyuluhanHukumUbah',
-    created () {
+    created() {
       this.dashboard = this.$store.getters['uiadmin/getDefaultDashboard'] 
       this.kegiatan_id = this.$route.params.kegiatan_id
       this.breadcrumbs = [
@@ -206,7 +206,7 @@
           text: 'UBAH',
           disabled: true,
           href: '#',
-        }
+        },
       ]
       this.initialize()
     },
@@ -246,105 +246,117 @@
         rekomendasi_kegiatan: null,
       },
       rule_user_id: [
-        value => !!value || "Mohon untuk dipilih paralegal !!!",
+        value => !!value || 'Mohon untuk dipilih paralegal !!!',
       ],
       rule_nama_kegiatan: [
-        value => !!value || "Mohon untuk diisi nama tema penyuluhan hukum !!!", 
+        value => !!value || 'Mohon untuk diisi nama tema penyuluhan hukum !!!', 
       ],
       rule_tempat: [
-        value => !!value || "Mohon untuk diisi tempat kegiatan penyuluhan hukum !!!", 
+        value => !!value || 'Mohon untuk diisi tempat kegiatan penyuluhan hukum !!!', 
       ],
       rule_tanggal_pelaksanaan: [
-        value => !!value || "Mohon untuk diisi tanggal pelaksanaan kegiatan penyuluhan hukum !!!", 
+        value => !!value || 'Mohon untuk diisi tanggal pelaksanaan kegiatan penyuluhan hukum !!!', 
       ],
       rule_jam_pelaksanaan: [
-        value => !!value || "Mohon untuk diisi waktu kegiatan penyuluhan hukum !!!", 
+        value => !!value || 'Mohon untuk diisi waktu kegiatan penyuluhan hukum !!!', 
       ],
       rule_nara_sumber: [
-        value => !!value || "Mohon untuk diisi nama nara sumber penyuluhan hukum !!!", 
+        value => !!value || 'Mohon untuk diisi nama nara sumber penyuluhan hukum !!!', 
       ],
       rule_peserta: [
-        value => !!value || "Daftar peserta pemohon mohon untuk diisi !!!"
+        value => !!value || 'Daftar peserta pemohon mohon untuk diisi !!!'
       ],
       rule_jumlah_peserta: [
-        value => !!value || "Jumlah peserta mohon untuk diisi !!!"
+        value => !!value || 'Jumlah peserta mohon untuk diisi !!!'
       ],
       rule_uraian_kegiatan: [
-        value => !!value || "Mohon untuk diisi uraian kegiatan penyuluhan hukum !!!", 
+        value => !!value || 'Mohon untuk diisi uraian kegiatan penyuluhan hukum !!!', 
       ],
       rule_rekomendasi_kegiatan: [
-        value => !!value || "Mohon untuk diisi rekomendasi kegiatan penyuluhan hukum !!!", 
+        value => !!value || 'Mohon untuk diisi rekomendasi kegiatan penyuluhan hukum !!!', 
       ],
     }),
     methods: {
       initialize: async function() {
-        await this.$ajax.get('/system/usersparalegal', {
-          headers: {
-            Authorization: this.$store.getters['auth/Token']
-          }
-        })
-        .then(({ data }) => {
-          this.daftar_paralegal = data.users                
-        })          
-        await this.$ajax.get('/kegiatan/penyuluhanhukum/' + this.kegiatan_id,{
-          headers: {
-            Authorization: this.$store.getters['auth/Token']
-          }
-        })
-        .then(({ data }) => {
-          this.datakegiatan = data.kegiatan                
-          this.formdata.user_id = this.datakegiatan.user_id
-          this.formdata.nama_kegiatan = this.datakegiatan.nama_kegiatan
-          this.formdata.tempat_pelaksanaan = this.datakegiatan.tempat_pelaksanaan
-          this.formdata.tanggal_pelaksanaan = this.$date(this.datakegiatan.tanggal_pelaksanaan).format('YYYY-MM-DD')
-          this.formdata.jam_pelaksanaan = this.$date(this.datakegiatan.tanggal_pelaksanaan).format('HH:mm')
-          this.formdata.narasumber = this.datakegiatan.narasumber
-          this.formdata.peserta = this.datakegiatan.peserta
-          this.formdata.jumlah_peserta = this.datakegiatan.jumlah_peserta          
-          this.formdata.uraian_kegiatan = this.datakegiatan.uraian_kegiatan
-          this.formdata.rekomendasi_kegiatan = this.datakegiatan.rekomendasi_kegiatan
-        })          
+        await this.$ajax
+          .get('/system/usersparalegal', {
+            headers: {
+              Authorization: this.$store.getters['auth/Token'],
+            },
+          })
+          .then(({ data }) => {
+            this.daftar_paralegal = data.users
+          })
+        await this.$ajax
+          .get('/kegiatan/penyuluhanhukum/' + this.kegiatan_id, {
+            headers: {
+              Authorization: this.$store.getters['auth/Token'],
+            },
+          })
+          .then(({ data }) => {
+            this.datakegiatan = data.kegiatan
+            this.formdata.user_id = this.datakegiatan.user_id
+            this.formdata.nama_kegiatan = this.datakegiatan.nama_kegiatan
+            this.formdata.tempat_pelaksanaan = this.datakegiatan.tempat_pelaksanaan
+            this.formdata.tanggal_pelaksanaan = this.$date(
+              this.datakegiatan.tanggal_pelaksanaan
+            ).format('YYYY-MM-DD')
+            this.formdata.jam_pelaksanaan = this.$date(
+              this.datakegiatan.tanggal_pelaksanaan
+            ).format('HH:mm')
+            this.formdata.narasumber = this.datakegiatan.narasumber
+            this.formdata.peserta = this.datakegiatan.peserta
+            this.formdata.jumlah_peserta = this.datakegiatan.jumlah_peserta
+            this.formdata.uraian_kegiatan = this.datakegiatan.uraian_kegiatan
+            this.formdata.rekomendasi_kegiatan = this.datakegiatan.rekomendasi_kegiatan
+          })
       },
       save: async function() {
         if (this.$refs.frmdata.validate()) {
           this.btnLoading = true
-          await this.$ajax.post('/kegiatan/penyuluhanhukum/' + this.kegiatan_id,
-            {
-              _method: 'put',
-              user_id: this.formdata.user_id,
-              nama_kegiatan: this.formdata.nama_kegiatan,
-              tempat_pelaksanaan: this.formdata.tempat_pelaksanaan,
-              tanggal_pelaksanaan: this.formdata.tanggal_pelaksanaan,
-              jam_pelaksanaan: this.formdata.jam_pelaksanaan,
-              narasumber: this.formdata.narasumber,
-              peserta: this.formdata.peserta,
-              jumlah_peserta: this.formdata.jumlah_peserta,            
-              uraian_kegiatan: this.formdata.uraian_kegiatan,            
-              rekomendasi_kegiatan: this.formdata.rekomendasi_kegiatan,
-            },
-            {
-              headers: {
-                Authorization: this.$store.getters['auth/Token']
+          await this.$ajax
+            .post(
+              '/kegiatan/penyuluhanhukum/' + this.kegiatan_id,
+              {
+                _method: 'put',
+                user_id: this.formdata.user_id,
+                nama_kegiatan: this.formdata.nama_kegiatan,
+                tempat_pelaksanaan: this.formdata.tempat_pelaksanaan,
+                tanggal_pelaksanaan: this.formdata.tanggal_pelaksanaan,
+                jam_pelaksanaan: this.formdata.jam_pelaksanaan,
+                narasumber: this.formdata.narasumber,
+                peserta: this.formdata.peserta,
+                jumlah_peserta: this.formdata.jumlah_peserta,
+                uraian_kegiatan: this.formdata.uraian_kegiatan,
+                rekomendasi_kegiatan: this.formdata.rekomendasi_kegiatan,
+              },
+              {
+                headers: {
+                  Authorization: this.$store.getters['auth/Token'],
+                },
               }
-            }
-          )
-          .then(({ data }) => {
-            this.btnLoading = false               
-            setTimeout(() => {
-              this.formdata = Object.assign({}, this.formdefault)                                
-              this.$router.push('/kegiatan/penyuluhanhukum/' + data.kegiatan.id + '/detail')
-              }, 300
             )
-          }).catch(() => {
-            this.btnLoading = false
-          })                
+            .then(({ data }) => {
+              this.btnLoading = false
+              setTimeout(() => {
+                this.formdata = Object.assign({}, this.formdefault)
+                this.$router.push(
+                  '/kegiatan/penyuluhanhukum/' + data.kegiatan.id + '/detail'
+                )
+              }, 300)
+            })
+            .catch(() => {
+              this.btnLoading = false
+            })
         }
       },
-      closedialogfrm () {
+      closedialogfrm() {
         setTimeout(() => {
-          this.formdata = Object.assign({}, this.formdefault)                                
-          this.$router.push('/kegiatan/penyuluhanhukum/' + this.kegiatan_id + '/detail')
-          }, 300)
+          this.formdata = Object.assign({}, this.formdefault)
+          this.$router.push(
+            '/kegiatan/penyuluhanhukum/' + this.kegiatan_id + '/detail'
+          )
+        }, 300)
       },
     },
     components: {

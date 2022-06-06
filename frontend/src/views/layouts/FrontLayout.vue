@@ -27,7 +27,7 @@
 				</v-app-bar>
 				<v-main>
 						<slot/>
-				</v-main>  
+				</v-main>
 				<v-footer app padless fixed>
 			<v-card class="flex" color="yellow darken-2" flat tile>
 				<v-divider></v-divider>
@@ -38,7 +38,7 @@
 					</v-btn>
 				</v-card-text>
 			</v-card>
-		</v-footer>  
+		</v-footer>
 		</div>
 </template>
 <script>
@@ -46,7 +46,7 @@ import { mapGetters } from 'vuex'
 
 export default {
 		name: 'FrontLayout',
-		created ()
+		created()
 		{
 				this.$store.dispatch('uifront/init',this.$ajax)
 		},

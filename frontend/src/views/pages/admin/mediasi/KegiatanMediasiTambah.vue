@@ -151,7 +151,7 @@
                     <v-spacer></v-spacer>
                     <v-btn text color="primary" @click="menuTanggalPelaksanaan = false">Cancel</v-btn>
                     <v-btn text color="primary" @click="$refs.menuTanggalPelaksanaan.save(formdata.tanggal_pelaksanaan)">OK</v-btn>
-                  </v-date-picker>      
+                  </v-date-picker>
                 </v-menu>
                 <v-menu
                   ref="menuJamPelaksanaan"
@@ -220,13 +220,13 @@
                   text 
                   @click.stop="save" 
                   :loading="btnLoading"
-                  :disabled="!form_valid||btnLoading">
+                  :disabled="!form_valid || btnLoading">
                     SIMPAN
                 </v-btn>
               </v-card-actions>
-            </v-card>          
+            </v-card>
           </v-col>
-        </v-row>  
+        </v-row>
       </v-container>
     </v-form>
   </AdminLayout>
@@ -236,7 +236,7 @@ import AdminLayout from '@/views/layouts/AdminLayout'
 import ModuleHeader from '@/components/ModuleHeader'
 export default {
   name: 'KegiatanMediasiTambah',
-  created () {
+  created() {
     this.dashboard = this.$store.getters['uiadmin/getDefaultDashboard']
     this.breadcrumbs = [
       {
@@ -351,7 +351,7 @@ export default {
     {
       await this.$ajax.get('/system/usersparalegal', {
         headers: {
-          Authorization: this.$store.getters['auth/Token']
+          Authorization: this.$store.getters['auth/Token'],
         }
       }).then(({ data }) => {
         this.daftar_paralegal = data.users
@@ -380,11 +380,11 @@ export default {
           },
           {
             headers: {
-              Authorization: this.$store.getters['auth/Token']
+              Authorization: this.$store.getters['auth/Token'],
             }
           }
         ).then(({ data }) => {
-          this.btnLoading = false               
+          this.btnLoading = false
           setTimeout(() => {
             this.formdata = Object.assign({}, this.formdefault)
             this.$router.push('/kegiatan/mediasi/' + data.kegiatan.id + '/files')
@@ -395,7 +395,7 @@ export default {
         })
       }
     },
-    closedialogfrm () {
+    closedialogfrm() {
       setTimeout(() => {
         this.formdata = Object.assign({}, this.formdefault)
         this.$router.push('/kegiatan/mediasi')

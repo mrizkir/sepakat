@@ -91,7 +91,7 @@
                     <v-spacer></v-spacer>
                     <v-btn text color="primary" @click="menuTanggalPelaksanaan = false">Cancel</v-btn>
                     <v-btn text color="primary" @click="$refs.menuTanggalPelaksanaan.save(formdata.tanggal_pelaksanaan)">OK</v-btn>
-                  </v-date-picker>      
+                  </v-date-picker>
                 </v-menu>
                 <v-menu
                   ref="menuJamPelaksanaan"
@@ -136,21 +136,21 @@
                   :rules="rule_peserta"
                   outlined
                   dense
-                />                         
+                /> 
                 <v-text-field
                   label="JUMLAH PESERTA"
                   v-model="formdata.jumlah_peserta"
                   :rules="rule_jumlah_peserta"
                   outlined
                   dense
-                />            
+                />
                 <v-textarea
                   label="RINGKASAN PENYULUHAN"
                   v-model="formdata.uraian_kegiatan"
                   :rules="rule_uraian_kegiatan"
                   outlined
                   dense
-                />            
+                />
                 <v-textarea
                   label="REKOMENDASI PARALEGAL"
                   v-model="formdata.rekomendasi_kegiatan"
@@ -167,13 +167,13 @@
                   text 
                   @click.stop="save" 
                   :loading="btnLoading"
-                  :disabled="!form_valid||btnLoading">
+                  :disabled="!form_valid || btnLoading">
                     SIMPAN
                 </v-btn>
               </v-card-actions>
-            </v-card>          
+            </v-card>
           </v-col>
-        </v-row>  
+        </v-row>
       </v-container>
     </v-form>
   </AdminLayout>
@@ -183,7 +183,7 @@ import AdminLayout from '@/views/layouts/AdminLayout'
 import ModuleHeader from '@/components/ModuleHeader'
 export default {
   name: 'KegiatanPenyuluhanHukumTambah',
-  created () {
+  created() {
     this.dashboard = this.$store.getters['uiadmin/getDefaultDashboard']
     this.breadcrumbs = [
       {
@@ -277,7 +277,7 @@ export default {
     {
       await this.$ajax.get('/system/usersparalegal', {
         headers: {
-          Authorization: this.$store.getters['auth/Token']
+          Authorization: this.$store.getters['auth/Token'],
         }
       }).then(({ data }) => {
         this.daftar_paralegal = data.users
@@ -296,17 +296,17 @@ export default {
             jam_pelaksanaan: this.formdata.jam_pelaksanaan,
             narasumber: this.formdata.narasumber,
             peserta: this.formdata.peserta,
-            jumlah_peserta: this.formdata.jumlah_peserta,            
-            uraian_kegiatan: this.formdata.uraian_kegiatan,            
+            jumlah_peserta: this.formdata.jumlah_peserta,
+            uraian_kegiatan: this.formdata.uraian_kegiatan,
             rekomendasi_kegiatan: this.formdata.rekomendasi_kegiatan,
           },
           {
             headers: {
-              Authorization: this.$store.getters['auth/Token']
+              Authorization: this.$store.getters['auth/Token'],
             }
           }
         ).then(({ data }) => {
-          this.btnLoading = false               
+          this.btnLoading = false
           setTimeout(() => {
             this.formdata = Object.assign({}, this.formdefault)
             this.$router.push('/kegiatan/penyuluhanhukum/' + data.kegiatan.id + '/files')
@@ -317,7 +317,7 @@ export default {
         })
       }
     },
-    closedialogfrm () {
+    closedialogfrm() {
       setTimeout(() => {
         this.formdata = Object.assign({}, this.formdefault)
         this.$router.push('/kegiatan/penyuluhanhukum')

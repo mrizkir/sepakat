@@ -141,17 +141,19 @@
                       dense
                       :rules="rule_tanggal_pelaksanaan"
                       v-on="on"
-                    ></v-text-field>
+                    />
                   </template>
                   <v-date-picker
                     v-model="formdata.tanggal_pelaksanaan"
                     no-title                                
                     scrollable
-                    >
+                  >
                     <v-spacer></v-spacer>
-                    <v-btn text color="primary" @click="menuTanggalPelaksanaan = false">Cancel</v-btn>
+                    <v-btn text color="primary" @click="menuTanggalPelaksanaan = false">
+                      Cancel
+                    </v-btn>
                     <v-btn text color="primary" @click="$refs.menuTanggalPelaksanaan.save(formdata.tanggal_pelaksanaan)">OK</v-btn>
-                  </v-date-picker>      
+                  </v-date-picker>
                 </v-menu>
                 <v-menu
                   ref="menuJamPelaksanaan"
@@ -216,15 +218,16 @@
                 <v-spacer></v-spacer>
                 <v-btn color="blue darken-1" text @click.stop="closedialogfrm">BATAL</v-btn>
                 <v-btn 
-                  color="blue darken-1" 
+                  color="blue darken-1"
                   text 
-                  @click.stop="save" 
+                  @click.stop="save"
                   :loading="btnLoading"
-                  :disabled="!form_valid||btnLoading">
-                    SIMPAN
+                  :disabled="!form_valid || btnLoading"
+                >
+                  SIMPAN
                 </v-btn>
               </v-card-actions>
-            </v-card>          
+            </v-card>
           </v-col>
         </v-row>
       </v-container>
@@ -236,9 +239,9 @@
   import ModuleHeader from '@/components/ModuleHeader'
   export default {
     name: 'KegiatanInvestigasiPerkaraUbah',
-    created () {
+    created() {
       this.dashboard = this.$store.getters['uiadmin/getDefaultDashboard']
-      this.kegiatan_id = this.$route.params.kegiatan_id;
+      this.kegiatan_id = this.$route.params.kegiatan_id
       this.breadcrumbs = [
         {
           text: 'HOME',
@@ -253,13 +256,13 @@
         {
           text: 'INVESTIGASI PERKARA',
           disabled: false,
-          href: '/kegiatan/investigasiperkara'
+          href: '/kegiatan/investigasiperkara',
         },
         {
           text: 'UBAH',
           disabled: true,
           href: '#',
-        }
+        },
       ];
       this.initialize()
     },
@@ -308,58 +311,58 @@
         rekomendasi_kegiatan: null,
       },
       rule_user_id: [
-        value => !!value || "Mohon untuk dipilih paralegal !!!",
+        value => !!value || 'Mohon untuk dipilih paralegal !!!',
       ],
       rule_nama_pemohon: [
-        value => !!value || "Mohon untuk diisi nama pemohon kegiatan investigasi perkara !!!", 
+        value => !!value || 'Mohon untuk diisi nama pemohon kegiatan investigasi perkara !!!',
       ],
       rule_tempat_lahir: [
-        value => !!value || "Tempat Lahir pemohon mohon untuk diisi !!!"
+        value => !!value || 'Tempat Lahir pemohon mohon untuk diisi !!!'
       ],
       rule_tanggal_lahir: [
-        value => !!value || "Tanggal Lahir pemohon mohon untuk diisi !!!"
+        value => !!value || 'Tanggal Lahir pemohon mohon untuk diisi !!!'
       ],
       rule_pendidikan: [
-        value => !!value || "Tingkat pendidikan pemohon mohon untuk diisi !!!"
+        value => !!value || 'Tingkat pendidikan pemohon mohon untuk diisi !!!'
       ],
       rule_pekerjaan: [
-        value => !!value || "Pekerjaan pemohon mohon untuk diisi !!!"
+        value => !!value || 'Pekerjaan pemohon mohon untuk diisi !!!'
       ],
       rule_alamat: [
-        value => !!value || "Alamat pemohon mohon untuk diisi !!!"
+        value => !!value || 'Alamat pemohon mohon untuk diisi !!!'
       ],
       rule_nama_kegiatan: [
-        value => !!value || "Mohon untuk diisi nama kegiatan investigasi perkara !!!", 
+        value => !!value || 'Mohon untuk diisi nama kegiatan investigasi perkara !!!',
       ],
       rule_tanggal_pelaksanaan: [
-        value => !!value || "Mohon untuk diisi tanggal pelaksanaan kegiatan investigasi perkara !!!", 
+        value => !!value || 'Mohon untuk diisi tanggal pelaksanaan kegiatan investigasi perkara !!!',
       ],
       rule_jam_pelaksanaan: [
-        value => !!value || "Mohon untuk diisi waktu kegiatan investigasi perkara !!!", 
+        value => !!value || 'Mohon untuk diisi waktu kegiatan investigasi perkara !!!',
       ],
       rule_tempat: [
-        value => !!value || "Mohon untuk diisi tempat kegiatan investigasi perkara !!!", 
+        value => !!value || 'Mohon untuk diisi tempat kegiatan investigasi perkara !!!',
       ],
       rule_uraian_kegiatan: [
-        value => !!value || "Mohon untuk diisi uraian kegiatan investigasi perkara !!!", 
+        value => !!value || 'Mohon untuk diisi uraian kegiatan investigasi perkara !!!',
       ],
       rule_rekomendasi_kegiatan: [
-        value => !!value || "Mohon untuk diisi rekomendasi kegiatan investigasi perkara !!!", 
+        value => !!value || 'Mohon untuk diisi rekomendasi kegiatan investigasi perkara !!!',
       ],
     }),
     methods: {
       initialize: async function() {
         await this.$ajax.get('/system/usersparalegal', {
           headers: {
-            Authorization: this.$store.getters['auth/Token']
+            Authorization: this.$store.getters['auth/Token'],
           }
         })
         .then(({ data }) => {
           this.daftar_paralegal = data.users
         })
-        await this.$ajax.get('/kegiatan/investigasiperkara/' + this.kegiatan_id,{
+        await this.$ajax.get('/kegiatan/investigasiperkara/' + this.kegiatan_id, {
           headers: {
-            Authorization: this.$store.getters['auth/Token']
+            Authorization: this.$store.getters['auth/Token'],
           }
         })
         .then(({ data }) => {
@@ -383,47 +386,52 @@
       save: async function() {
         if (this.$refs.frmdata.validate()) {
           this.btnLoading = true
-          await this.$ajax.post('/kegiatan/investigasiperkara/' + this.kegiatan_id,
-            {
-              _method: 'put',
-              user_id: this.formdata.user_id,
-              nama_pemohon: this.formdata.nama_pemohon,
-              tempat_lahir: this.formdata.tempat_lahir,
-              tanggal_lahir: this.formdata.tanggal_lahir,
-              pendidikan: this.formdata.pendidikan,
-              pekerjaan: this.formdata.pekerjaan,
-              alamat: this.formdata.alamat,
-              nama_kegiatan: this.formdata.nama_kegiatan,
-              tanggal_pelaksanaan: this.formdata.tanggal_pelaksanaan,
-              jam_pelaksanaan: this.formdata.jam_pelaksanaan,
-              tempat_pelaksanaan: this.formdata.tempat_pelaksanaan,
-              uraian_kegiatan: this.formdata.uraian_kegiatan,
-              nama_saksi: this.formdata.nama_saksi,
-              rekomendasi_kegiatan: this.formdata.rekomendasi_kegiatan,
-            },
-            {
-              headers: {
-                Authorization: this.$store.getters['auth/Token']
+          await this.$ajax
+            .post('/kegiatan/investigasiperkara/' + this.kegiatan_id,
+              {
+                _method: 'put',
+                user_id: this.formdata.user_id,
+                nama_pemohon: this.formdata.nama_pemohon,
+                tempat_lahir: this.formdata.tempat_lahir,
+                tanggal_lahir: this.formdata.tanggal_lahir,
+                pendidikan: this.formdata.pendidikan,
+                pekerjaan: this.formdata.pekerjaan,
+                alamat: this.formdata.alamat,
+                nama_kegiatan: this.formdata.nama_kegiatan,
+                tanggal_pelaksanaan: this.formdata.tanggal_pelaksanaan,
+                jam_pelaksanaan: this.formdata.jam_pelaksanaan,
+                tempat_pelaksanaan: this.formdata.tempat_pelaksanaan,
+                uraian_kegiatan: this.formdata.uraian_kegiatan,
+                nama_saksi: this.formdata.nama_saksi,
+                rekomendasi_kegiatan: this.formdata.rekomendasi_kegiatan,
+              },
+              {
+                headers: {
+                  Authorization: this.$store.getters['auth/Token'],
+                }
               }
-            }
-          )
-          .then(({data})=>{
-            this.btnLoading = false               
-            setTimeout(() => {
-              this.formdata = Object.assign({}, this.formdefault)
-              this.$router.push('/kegiatan/investigasiperkara/' + data.kegiatan.id + '/detail')
-              }, 300
-            );
-          }).catch(() => {
-            this.btnLoading = false
-          })
+            )
+            .then(({ data }) => {
+              this.btnLoading = false
+              setTimeout(() => {
+                this.formdata = Object.assign({}, this.formdefault)
+                this.$router.push(
+                  '/kegiatan/investigasiperkara/' + data.kegiatan.id + '/detail'
+                )
+              }, 300)
+            })
+            .catch(() => {
+              this.btnLoading = false
+            })
         }
       },
-      closedialogfrm () {
+      closedialogfrm() {
         setTimeout(() => {
           this.formdata = Object.assign({}, this.formdefault)
-          this.$router.push('/kegiatan/investigasiperkara/' + this.kegiatan_id + '/detail')
-          }, 300)
+          this.$router.push(
+            '/kegiatan/investigasiperkara/' + this.kegiatan_id + '/detail'
+          )
+        }, 300)
       },
     },
     components: {

@@ -52,7 +52,7 @@
               <v-icon>mdi-information</v-icon>
             </v-btn>
           </v-bottom-navigation>
-          <v-dialog v-model="dialogkronologis" max-width="500px" persistent>          
+          <v-dialog v-model="dialogkronologis" max-width="500px" persistent>
             <v-card>
               <v-card-title>
                 <span class="headline">Kronologis Kegiatan</span>
@@ -62,11 +62,11 @@
               </v-card-text>
               <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn color="blue darken-1" text @click.stop="closedialogkronologis">CLOSE</v-btn>  
+                <v-btn color="blue darken-1" text @click.stop="closedialogkronologis">CLOSE</v-btn>
               </v-card-actions>
-            </v-card>          
+            </v-card>
           </v-dialog>
-          <v-dialog v-model="dialogrekomendasi" max-width="500px" persistent>          
+          <v-dialog v-model="dialogrekomendasi" max-width="500px" persistent>
             <v-card>
               <v-card-title>
                 <span class="headline">Rekomendasi Konsultasi</span>
@@ -76,14 +76,14 @@
               </v-card-text>
               <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn color="blue darken-1" text @click.stop="closedialogrekomendasi">CLOSE</v-btn>  
+                <v-btn color="blue darken-1" text @click.stop="closedialogrekomendasi">CLOSE</v-btn>
               </v-card-actions>
-            </v-card>          
+            </v-card>
           </v-dialog>
         </v-col>
       </v-row>
       <v-row>
-        <v-col cols="12">      
+        <v-col cols="12">
           <v-card class="grey lighten-4">
             <v-card-title>
               <v-icon>mdi-comment</v-icon> Komentar
@@ -93,12 +93,12 @@
                 class="mx-auto mb-2"
                 max-width="500"
                 outlined
-                v-for="items in daftar_komentar" v-bind:key="items.id">  
+                v-for="items in daftar_komentar" v-bind:key="items.id">
                   <v-card-title>
                     {{items.name}}
                     <v-spacer/>
                     <v-chip color="info" outlined>{{items.default_role}}</v-chip>
-                  </v-card-title>  
+                  </v-card-title>
                   <v-card-text>
                     {{items.isi_komentar}}
                   </v-card-text>'
@@ -144,8 +144,8 @@
                 <v-btn 
                   @click.stop="savekomentar" 
                   :loading="btnLoading"
-                  :disabled="!form_valid||btnLoading"
-                  large>  
+                  :disabled="!form_valid || btnLoading"
+                  large>
                   KIRIM
                   <v-icon>
                     mdi-send
@@ -153,7 +153,7 @@
                 </v-btn>
               </v-card-actions>
             </v-form>
-          </v-card>      
+          </v-card>
         </v-col>
       </v-row>
     </v-container>
@@ -166,9 +166,9 @@ import DK from '@/views/pages/admin/mediasi/DataKegiatanMediasi';
 
 export default {
   name: 'KegiatanMediasiDetail',
-  created () {
+  created() {
     this.dashboard = this.$store.getters['uiadmin/getDefaultDashboard']
-    this.kegiatan_id=this.$route.params.kegiatan_id;
+    this.kegiatan_id=this.$route.params.kegiatan_id
     this.breadcrumbs = [
       {
         text: 'HOME',
@@ -218,9 +218,9 @@ export default {
   }),
   methods: {
     initialize: async function() {
-      await this.$ajax.get('/kegiatan/mediasi/' + this.kegiatan_id,{
+      await this.$ajax.get('/kegiatan/mediasi/' + this.kegiatan_id, {
         headers: {
-          Authorization: this.$store.getters['auth/Token']
+          Authorization: this.$store.getters['auth/Token'],
         }
       }).then(({ data }) => {
         this.data_kegiatan=data.kegiatan
@@ -228,9 +228,9 @@ export default {
     },
     async fetchKomentar()
     {
-      await this.$ajax.get('/kegiatan/komentar/' + this.kegiatan_id,{
+      await this.$ajax.get('/kegiatan/komentar/' + this.kegiatan_id, {
         headers: {
-          Authorization: this.$store.getters['auth/Token']
+          Authorization: this.$store.getters['auth/Token'],
         }
       }).then(({ data }) => {
         this.daftar_komentar = data.daftar_komentar;
@@ -248,7 +248,7 @@ export default {
         },
         {
           headers: {
-            Authorization: this.$store.getters['auth/Token']
+            Authorization: this.$store.getters['auth/Token'],
           }
         }
         )
@@ -269,11 +269,11 @@ export default {
           this.btnLoading = true
           this.$ajax.post('/kegiatan/mediasi/verifikasi/' + this.kegiatan_id,
             {
-              '_method': 'put',
+              _method: 'put',
             },
             {
               headers: {
-                Authorization: this.$store.getters['auth/Token']
+                Authorization: this.$store.getters['auth/Token'],
               }
             }
           ).then(() => {
@@ -282,7 +282,7 @@ export default {
           }).catch(() => {
             this.btnLoading = false
           })
-        }                
+        }
       })
     },
     closedialogkronologis()
@@ -300,11 +300,11 @@ export default {
           this.btnLoading = true
           this.$ajax.post('/kegiatan/komentar/'+item.id,
             {
-              '_method': 'DELETE',
+              _method: 'DELETE',
             },
             {
               headers: {
-                Authorization: this.$store.getters['auth/Token']
+                Authorization: this.$store.getters['auth/Token'],
               }
             }
           ).then(() => {
@@ -313,7 +313,7 @@ export default {
           }).catch(() => {
             this.btnLoading = false
           })
-        }                
+        }
       })
     },
   },

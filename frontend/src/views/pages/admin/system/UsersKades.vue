@@ -24,8 +24,8 @@
                      User dengan role KEPALA DESA bertanggungjawab terhadap proses konsultasi hukum.
                 </v-alert>
             </template>
-        </ModuleHeader>      
-        <v-container fluid>  
+        </ModuleHeader>
+        <v-container fluid>
             <v-row class="mb-4" no-gutters>
                 <v-col cols="12">
                     <v-card>
@@ -81,7 +81,7 @@
                                     @click.stop="showDialogTambahUserKades">
                                     TAMBAH
                                 </v-btn>
-                                <v-dialog v-model="dialog" max-width="500px" persistent>      
+                                <v-dialog v-model="dialog" max-width="500px" persistent>
                                     <v-form ref="frmdata" v-model="form_valid" lazy-validation>
                                         <v-card>
                                             <v-card-title>
@@ -96,13 +96,13 @@
                                                     label="NAMA USER"
                                                     outlined
                                                     :rules="rule_user_name">
-                                                </v-text-field>                                                                 
+                                                </v-text-field>           
                                                 <v-text-field 
                                                     v-model="editedItem.email" 
                                                     label="EMAIL"
                                                     outlined
                                                     :rules="rule_user_email">
-                                                </v-text-field>                          
+                                                </v-text-field>
                                                 <v-text-field 
                                                     v-model="editedItem.nomor_hp" 
                                                     label="NOMOR HP"
@@ -131,7 +131,7 @@
                                                     :loading="selectLoadingKec" 
                                                     return-object                      
                                                     outlined
-                                                />      
+                                                />
                                                 <v-autocomplete 
                                                     :items="daftar_desa" 
                                                     v-model="editedItem.desa_id"
@@ -141,8 +141,8 @@
                                                     multiple                                                 
                                                     small-chips
                                                     :rules="rule_desa"
-                                                    outlined>                                                  
-                                                </v-autocomplete>                     
+                                                    outlined> 
+                                                </v-autocomplete>
                                                 <v-autocomplete 
                                                     :items="daftar_roles" 
                                                     v-model="editedItem.role_id"
@@ -150,8 +150,8 @@
                                                     multiple 
                                                     small-chips
                                                     :rules="rule_user_roles"
-                                                    outlined>                                                  
-                                                </v-autocomplete>                                                            
+                                                    outlined> 
+                                                </v-autocomplete>      
                                             </v-card-text>
                                             <v-card-actions>
                                                 <v-spacer></v-spacer>
@@ -161,7 +161,7 @@
                                                     text 
                                                     @click.stop="save" 
                                                     :loading="btnLoading"
-                                                    :disabled="!form_valid||btnLoading">
+                                                    :disabled="!form_valid || btnLoading">
                                                         SIMPAN
                                                 </v-btn>
                                             </v-card-actions>
@@ -177,7 +177,7 @@
                                             <v-card-subtitle>
                                                 Bila desa, tidak dipilih artinya user ini tidak dapat mengakses seluruh data desa manapun.
                                             </v-card-subtitle>
-                                            <v-card-text>                                                                
+                                            <v-card-text>          
                                                 <v-text-field 
                                                     v-model="editedItem.name" 
                                                     label="NAMA USER"
@@ -218,7 +218,7 @@
                                                     :loading="selectLoadingKec" 
                                                     return-object                      
                                                     outlined
-                                                />      
+                                                />
                                                 <v-autocomplete 
                                                     :items="daftar_desa" 
                                                     v-model="editedItem.desa_id"
@@ -227,8 +227,8 @@
                                                     item-value="id"
                                                     multiple
                                                     small-chips
-                                                    outlined>                                                  
-                                                </v-autocomplete>                     
+                                                    outlined> 
+                                                </v-autocomplete>
                                                 <v-autocomplete 
                                                     :items="daftar_roles" 
                                                     v-model="editedItem.role_id"
@@ -236,8 +236,8 @@
                                                     multiple 
                                                     small-chips
                                                     :rules="rule_user_roles"
-                                                    outlined>                                                  
-                                                </v-autocomplete>               
+                                                    outlined> 
+                                                </v-autocomplete>
                                             </v-card-text>
                                             <v-card-actions>
                                                 <v-spacer></v-spacer>
@@ -247,12 +247,12 @@
                                                     text 
                                                     @click.stop="save" 
                                                     :loading="btnLoading"
-                                                    :disabled="!form_valid||btnLoading">SIMPAN</v-btn>
+                                                    :disabled="!form_valid || btnLoading">SIMPAN</v-btn>
                                             </v-card-actions>
                                         </v-card>
                                     </v-form>
                                 </v-dialog>
-                                <v-dialog v-model="dialogUserPermission" max-width="800px" persistent>                                      
+                                <v-dialog v-model="dialogUserPermission" max-width="800px" persistent>
                                     <UserPermissions :user="editedItem" :daftarpermissions="daftar_permissions" :permissionsselected="permissions_selected" v-on:closeUserPermissions="closeUserPermissions" />
                                 </v-dialog>
                             </v-toolbar>
@@ -287,8 +287,8 @@
                         </template>
                         <template v-slot:item.foto="{ item }">
                             <v-avatar size="30">
-                                <v-img :src="$api.storageURL+'/'+item.foto" />
-                            </v-avatar>                                                                    
+                                <v-img :src="$api.storageURL + '/'+item.foto" />
+                            </v-avatar>              
                         </template>
                         <template v-slot:expanded-item="{ headers, item }">
                             <td :colspan="headers.length" class="text-center">
@@ -296,7 +296,7 @@
                                     <strong>ID:</strong>{{ item.id }}
                                     <strong>created_at:</strong>{{ $date(item.created_at).format('DD/MM/YYYY HH:mm') }}
                                     <strong>updated_at:</strong>{{ $date(item.updated_at).format('DD/MM/YYYY HH:mm') }}
-                                </v-col>  
+                                </v-col>
                             </td>
                         </template>
                         <template v-slot:no-data>
@@ -315,7 +315,7 @@ import ModuleHeader from '@/components/ModuleHeader'
 import UserPermissions from '@/views/pages/admin/system/UserPermissions';
 export default {
     name: 'UsersKades',
-    created () {
+    created() {
         this.breadcrumbs = [
             {
                 text: 'HOME',
@@ -343,7 +343,7 @@ export default {
         btnLoading: false,
         //tables
         headers: [                        
-            { text: '', value: 'foto' },
+            { text: null, value: 'foto' },
             { text: 'USERNAME', value: 'username',sortable: true },
             { text: 'NAME', value: 'name',sortable: true },
             { text: 'EMAIL', value: 'email',sortable: true },
@@ -351,7 +351,7 @@ export default {
             { text: 'AKSI', value: 'actions', sortable: false, width: 100 },
         ],
         expanded: [],
-        search: '',
+        search: null,
         daftar_users: [],
         daftar_permissions: [],
         permissions_selected: [],
@@ -371,27 +371,27 @@ export default {
         daftar_desa: [],
         editedItem: {
             id:0,
-            username: '',
-            password: '',
-            name: '',
-            email: '',
-            nomor_hp: '',
+            username: null,
+            password: null,
+            name: null,
+            email: null,
+            nomor_hp: null,
             desa_id: [],
             role_id: ['kades'],
-            created_at: '',
-            updated_at: '',
+            created_at: null,
+            updated_at: null,
         },
         defaultItem: {
             id:0,
-            username: '',
-            password: '',
-            name: '',
-            email: '',
-            nomor_hp: '',
+            username: null,
+            password: null,
+            name: null,
+            email: null,
+            nomor_hp: null,
             desa_id: [],
             role_id: ['kades'],
-            created_at: '',
-            updated_at: '',
+            created_at: null,
+            updated_at: null,
         },
         //form rules        
         rule_user_name: [
@@ -475,7 +475,7 @@ export default {
             else
             {
                 this.expanded=[item];
-            }               
+            }
         },
         syncPermission: async function()
         {
@@ -486,7 +486,7 @@ export default {
                 },
                 {
                     headers: {
-                        Authorization: this.$store.getters['auth/Token']
+                        Authorization: this.$store.getters['auth/Token'],
                     }
                 }
             ).then(() => {
@@ -497,7 +497,7 @@ export default {
         },
         showDialogTambahUserKades: async function()
         {
-            this.$ajax.get('/datamaster/kabupaten/2102/kecamatan').then(({data})=>{
+            this.$ajax.get('/datamaster/kabupaten/2102/kecamatan').then(({ data }) => {
                 this.daftar_kecamatan=data.kecamatan
             })
 
@@ -515,7 +515,7 @@ export default {
                             text:element.name,
                             disabled: true,
                         })
-                    }                  
+                    }
                 })
                 this.daftar_roles=daftar_roles                              
                 this.dialog = true
@@ -526,7 +526,7 @@ export default {
             item.password=''
             this.editedItem = Object.assign({}, item)
 
-            this.$ajax.get('/datamaster/kabupaten/2102/kecamatan').then(({data})=>{
+            this.$ajax.get('/datamaster/kabupaten/2102/kecamatan').then(({ data }) => {
                 this.daftar_kecamatan=data.kecamatan
             })
 
@@ -539,9 +539,9 @@ export default {
             ).then(({ data }) => {
                 let daftar_desa = data.daftar_desa;
                 var desa=[];
-                var kecamatan=null;
+                var kecamatan=null
                 daftar_desa.forEach(element => {
-                    desa.push(element.desa_id)            
+                    desa.push(element.desa_id)
                     kecamatan={
                         id:element.kecamatan_id,
                         nama:element.nama_kecamatan
@@ -567,7 +567,7 @@ export default {
                             text:element.name,
                             disabled: true,
                         })
-                    }                              
+                    }
                 })
                 this.daftar_roles=daftar_roles                
             })
@@ -592,7 +592,7 @@ export default {
                 headers: {
                     Authorization: this.TOKEN
                 }
-            }).then(({data})=>{
+            }).then(({ data }) => {
                 this.daftar_permissions = data.permissions
             }).catch(() => {
                 this.btnLoading = false
@@ -602,7 +602,7 @@ export default {
                 headers: {
                     Authorization: this.TOKEN
                 }
-            }).then(({data})=>{
+            }).then(({ data }) => {
                 this.permissions_selected = data.permissions;
                 this.btnLoading = false
                    
@@ -638,7 +638,7 @@ export default {
                 {
                     this.$ajax.post('/system/userskades/' + this.editedItem.id,
                         {
-                            '_method': 'PUT',
+                            _method: 'PUT',
                             name: this.editedItem.name,
                             email: this.editedItem.email,
                             nomor_hp: this.editedItem.nomor_hp,
@@ -691,7 +691,7 @@ export default {
                     this.btnLoading = true
                     this.$ajax.post('/system/userskades/'+item.id,
                         {
-                            '_method': 'DELETE',
+                            _method: 'DELETE',
                         },
                         {
                             headers: {
@@ -731,14 +731,14 @@ export default {
             if (val.id != null && val.id != '')
             {
                 this.selectLoadingKec=true;
-                this.$ajax.get('/datamaster/kecamatan/'+val.id+'/desa').then(({data})=>{
+                this.$ajax.get('/datamaster/kecamatan/'+val.id+'/desa').then(({ data }) => {
                     this.daftar_desa=data.desa;
                     this.selectLoadingKec=false
                 })
                 if (!this.firstShowDialogEdit)
                 {
                     this.editedItem.desa_id=[];
-                }                
+                }
             }
         },
     }, 

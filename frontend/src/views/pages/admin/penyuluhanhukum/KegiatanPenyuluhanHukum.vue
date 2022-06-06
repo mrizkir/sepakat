@@ -69,7 +69,7 @@
                 <v-btn color="primary" dark class="mb-2" to="/kegiatan/penyuluhanhukum/tambah" v-if="dashboard=='paralegal'||dashboard=='kumham'||dashboard=='superadmin'">TAMBAH</v-btn>
               </v-toolbar>
             </template>
-            <template v-slot:item.id="{ item }">  
+            <template v-slot:item.id="{ item }">
                {{item.id}}
             </template>
             <template v-slot:item.id_status="{ item }"> 
@@ -94,7 +94,7 @@
                 <v-icon>
                   mdi-pencil
                 </v-icon>
-              </v-btn>                 
+              </v-btn>
               <v-btn
                 small
                 icon
@@ -113,7 +113,7 @@
                   <strong>ID:</strong>{{ item.id }}
                   <strong>created_at:</strong>{{ $date(item.created_at).format('DD/MM/YYYY HH:mm') }}
                   <strong>updated_at:</strong>{{ $date(item.updated_at).format('DD/MM/YYYY HH:mm') }}
-                </v-col>  
+                </v-col>
               </td>
             </template>
             <template v-slot:no-data>
@@ -130,7 +130,7 @@ import AdminLayout from '@/views/layouts/AdminLayout'
 import ModuleHeader from '@/components/ModuleHeader'
 export default {
   name: 'KegiatanPenyuluhanHukumPenyuluhanHukum',
-  created () {
+  created() {
     this.dashboard = this.$store.getters['uiadmin/getDefaultDashboard']
     this.breadcrumbs = [
       {
@@ -166,7 +166,7 @@ export default {
       { text: 'STATUS', value: 'id_status', sortable: false, width:100 },
       { text: 'AKSI', value: 'actions', sortable: false,width:150 },
     ],
-    search: '', 
+    search: null, 
 
   }),
   methods: {
@@ -175,7 +175,7 @@ export default {
       this.datatableLoading=true;
       await this.$ajax.get('/kegiatan/penyuluhanhukum', {
         headers: {
-          Authorization: this.$store.getters['auth/Token']
+          Authorization: this.$store.getters['auth/Token'],
         }
       }).then(({ data }) => {
         this.datatable = data.daftar_kegiatan;
@@ -193,14 +193,14 @@ export default {
       else
       {
         this.expanded=[item];
-      }               
+      }
     },
     viewItem (item) {
       this.formdata=item
       this.dialogdetailitem=true
       // this.$ajax.get('/kegiatan/penyuluhanhukum'+item.id,{
       //     headers: {
-      //         Authorization: this.$store.getters['auth/Token']
+      //         Authorization: this.$store.getters['auth/Token'],
       //     }
       // }).then(({ data }) => {
                        
@@ -213,11 +213,11 @@ export default {
           this.btnLoading = true
           this.$ajax.post('/kegiatan/penyuluhanhukum/' + item.id,
             {
-              '_method': 'DELETE',
+              _method: 'DELETE',
             },
             {
               headers: {
-                Authorization: this.$store.getters['auth/Token']
+                Authorization: this.$store.getters['auth/Token'],
               }
             }
           ).then(() => {
@@ -228,7 +228,7 @@ export default {
           .catch(() => {
             this.btnLoading = false
           })
-        }                
+        }
       })
     },
   },

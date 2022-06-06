@@ -47,7 +47,7 @@
                 <v-btn
                   color="green"
                   text
-                  :href="this.$api.storageURL+'/'+data_kegiatan.file_daftar_hadir"
+                  :href="this.$api.storageURL + '/'+data_kegiatan.file_daftar_hadir"
                   v-if="data_kegiatan.file_daftar_hadir"
                 >
                   Lihat
@@ -99,7 +99,7 @@
                 <v-btn
                   color="green"
                   text
-                  :href="this.$api.storageURL+'/'+data_kegiatan.file_dokumentasi_kegiatan"
+                  :href="this.$api.storageURL + '/'+data_kegiatan.file_dokumentasi_kegiatan"
                   v-if="data_kegiatan.file_dokumentasi_kegiatan"
                 >
                   Lihat
@@ -132,7 +132,7 @@
         <v-responsive width="100%" v-if="$vuetify.breakpoint.xsOnly" />
         <v-col xs="12" sm="6" md="4">
           <v-form v-model="form_valid_surat_permohonan" ref="frmsuratpermohonan" lazy-validation>
-            <v-card class="mx-auto" max-width="400">            
+            <v-card class="mx-auto" max-width="400">
               <v-card-title>
                 PERMOHONAN NARA SUMBER
               </v-card-title>
@@ -151,7 +151,7 @@
                 <v-btn
                   color="green"
                   text
-                  :href="this.$api.storageURL+'/'+data_kegiatan.file_surat_permohonan"
+                  :href="this.$api.storageURL + '/'+data_kegiatan.file_surat_permohonan"
                   v-if="data_kegiatan.file_surat_permohonan"
                 >
                   Lihat
@@ -194,7 +194,7 @@
     name: 'KegiatanPenyuluhanHukumFiles',
     created() {
       this.dashboard = this.$store.getters['uiadmin/getDefaultDashboard']
-      this.kegiatan_id=this.$route.params.kegiatan_id;
+      this.kegiatan_id=this.$route.params.kegiatan_id
       this.breadcrumbs = [
         {
           text: 'HOME',
@@ -217,7 +217,7 @@
           href: '#',
         }
       ];
-      this.initialize()    
+      this.initialize()
     },
     data: () => ({ 
       dashboard: null,
@@ -259,14 +259,14 @@
     }),
     methods: {
       initialize: async function() {
-        await this.$ajax.get('/kegiatan/penyuluhanhukum/' + this.kegiatan_id,{
+        await this.$ajax.get('/kegiatan/penyuluhanhukum/' + this.kegiatan_id, {
           headers: {
-            Authorization: this.$store.getters['auth/Token']
+            Authorization: this.$store.getters['auth/Token'],
           }
         })
         .then(({ data }) => {
           this.data_kegiatan=data.kegiatan;
-          this.ktpPemohon=this.$api.storageURL+'/'+data.kegiatan.file_fotocopy_ktp
+          this.ktpPemohon=this.$api.storageURL + '/'+data.kegiatan.file_fotocopy_ktp
         })
       },
       async uploadSuratPermohonan() {

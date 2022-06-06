@@ -54,7 +54,7 @@
                                     text
                                     @click.stop="save"
                                     :loading="btnLoading"
-                                    :disabled="!form_valid||btnLoading">SIMPAN</v-btn>
+                                    :disabled="!form_valid || btnLoading">SIMPAN</v-btn>
                             </v-card-actions>
                         </v-card>
                     </v-form>
@@ -97,8 +97,8 @@ export default {
         //form
         form_valid: true,
         formdata: {
-            siteKey: '',
-            privateKey: ''
+            siteKey: null,
+            privateKey: null
         },
         //form rules
         rule_site_key: [
@@ -117,7 +117,7 @@ export default {
                 headers: {
                     Authorization: this.TOKEN
                 }
-            }).then(({data})=>{
+            }).then(({ data }) => {
                 let setting = data.setting;
                 this.formdata.siteKey=setting.CAPTCHA_SITE_KEY;
                 this.formdata.privateKey=setting.CAPTCHA_PRIVATE_KEY;
@@ -130,7 +130,7 @@ export default {
                 this.btnLoading = true
                 this.$ajax.post('/system/setting/variables',
                     {
-                        '_method': 'PUT',
+                        _method: 'PUT',
                         'pid': 'captcha google',
                         setting:JSON.stringify({
                             901: this.formdata.siteKey,

@@ -24,8 +24,8 @@
                     Daftar aksi-aksi terhadap sebuah modul. Format penulisan permission, NAMAMODULE atau NAMA MODULE. Nama Permission tighly coupling dengan kode sumber.
                     </v-alert>
             </template>
-        </ModuleHeader>      
-        <v-container fluid>  
+        </ModuleHeader>
+        <v-container fluid>
             <v-row class="mb-4" no-gutters>
                 <v-col xs="12" sm="12" md="12">
                     <v-card>
@@ -75,7 +75,7 @@
                                             <v-card-title>
                                                 <span class="headline">{{ formTitle }}</span>
                                             </v-card-title>
-                                            <v-card-text>                
+                                            <v-card-text>
                                                 <v-container fluid>
                                                     <v-row>
                                                         <v-col cols="12" sm="12" md="12">
@@ -84,7 +84,7 @@
                                                                 label="NAMA PERMISSION"
                                                                 :rules="rule_permission_name">
                                                             </v-text-field>
-                                                        </v-col>              
+                                                        </v-col>
                                                     </v-row>
                                                 </v-container>
                                             </v-card-text>
@@ -96,7 +96,7 @@
                                                     text 
                                                     @click.stop="save" 
                                                     :loading="btnLoading"
-                                                    :disabled="!form_valid||btnLoading">
+                                                    :disabled="!form_valid || btnLoading">
                                                         SIMPAN
                                                 </v-btn>
                                             </v-card-actions>
@@ -170,24 +170,24 @@ export default {
             { text: 'GUARD', value: 'guard_name' },
             { text: 'AKSI', value: 'actions', sortable: false, width: 100 },
         ],
-        search: '',
+        search: null,
         //form
         form_valid: true,
         dialog: false,
         editedIndex: -1,
         editedItem: {
             id:0,
-            name: '',
-            guard: '',
-            created_at: '',
-            updated_at: '',
+            name: null,
+            guard: null,
+            created_at: null,
+            updated_at: null,
         },
         defaultItem: {
             id:0,
-            name: '',
+            name: null,
             guard: 'api',
-            created_at: '',
-            updated_at: '',
+            created_at: null,
+            updated_at: null,
         },
         //form rules        
         rule_permission_name: [
@@ -218,7 +218,7 @@ export default {
             else
             {
                 this.expanded=[item];
-            }               
+            }
         },
         editItem (item) {
             this.editedIndex = this.daftar_permissions.indexOf(item)
@@ -266,7 +266,7 @@ export default {
                     this.btnLoading = true
                     this.$ajax.post('/system/setting/permissions/'+item.id,
                     {
-                        '_method': 'DELETE',
+                        _method: 'DELETE',
                     },
                     {
                         headers: {
