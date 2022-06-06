@@ -5,11 +5,11 @@ namespace App\Http\Controllers\Kegiatan;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-use App\Models\Kegiatan\KegiatanPenyuluhanHukumModel;
+use App\Models\Kegiatan\KegiatanKonsultasiHukumModel;
 
 use Ramsey\Uuid\Uuid;
 
-class KegiatanPenyuluhanHukumController extends Controller
+class KegiatanKonsultasiHukumController extends Controller
 {
 	public function index ()
 	{
@@ -17,40 +17,38 @@ class KegiatanPenyuluhanHukumController extends Controller
 
 		if ($this->hasRole('paralegal'))
 		{
-			$daftar_kegiatan=KegiatanPenyuluhanHukumModel::select(\DB::raw('
-				penyuluhan_hukum.id,
+			$daftar_kegiatan=KegiatanKonsultasiHukumModel::select(\DB::raw('
+				konsultasi_hukum.id,
 				users.name,
-				penyuluhan_hukum.nama_kegiatan,
-				penyuluhan_hukum.narasumber,
-				penyuluhan_hukum.jumlah_peserta,
-				penyuluhan_hukum.id_status,
-				penyuluhan_hukum.created_at,
-				penyuluhan_hukum.updated_at                                                        
+				konsultasi_hukum.nama_kegiatan,
+				konsultasi_hukum.nama_pemohon,                                                                                                                				
+				konsultasi_hukum.id_status,
+				konsultasi_hukum.created_at,
+				konsultasi_hukum.updated_at                                                        
 			'))    
-			->join ('users','users.id','penyuluhan_hukum.user_id')			
+			->join ('users','users.id','konsultasi_hukum.user_id')			
 			->where('user_id',$this->getUserid())                                                                                                    
 			->get();
 		}
 		else
 		{        
-			$daftar_kegiatan=KegiatanPenyuluhanHukumModel::select(\DB::raw('
-				penyuluhan_hukum.id,
+			$daftar_kegiatan=KegiatanKonsultasiHukumModel::select(\DB::raw('
+				konsultasi_hukum.id,
 				users.name,
-				penyuluhan_hukum.nama_kegiatan,
-				penyuluhan_hukum.narasumber,
-				penyuluhan_hukum.jumlah_peserta,
-				penyuluhan_hukum.id_status,
-				penyuluhan_hukum.created_at,
-				penyuluhan_hukum.updated_at
+				konsultasi_hukum.nama_kegiatan,
+				konsultasi_hukum.nama_pemohon,                                                                                                                				
+				konsultasi_hukum.id_status,
+				konsultasi_hukum.created_at,
+				konsultasi_hukum.updated_at                                                        
 			'))    
-			->join ('users','users.id','penyuluhan_hukum.user_id')    			                                                                         
+			->join ('users','users.id','konsultasi_hukum.user_id')    			                                                                         
 			->get();
 		}
 		return Response()->json([
 			'status'=>1,
 			'pid'=>'fetchdata',
 			'daftar_kegiatan'=>$daftar_kegiatan,
-			'message'=>'Fetch data daftar kegiatan penyuluhan hukum berhasil diperoleh.'
+			'message'=>'Fetch data daftar kegiatan konsultasi hukum berhasil diperoleh.'
 		], 200);
 	}
 	public function show(Request $request,$id)
@@ -59,19 +57,19 @@ class KegiatanPenyuluhanHukumController extends Controller
 
 		if ($this->hasRole('paralegal'))
 		{
-			$kegiatan = KegiatanPenyuluhanHukumModel::where('user_id', $this->getUserid())			
+			$kegiatan = KegiatanKonsultasiHukumModel::where('user_id', $this->getUserid())			
 			->find($id);
 		}
 		else
 		{
-			$kegiatan = KegiatanPenyuluhanHukumModel::find($id);
+			$kegiatan = KegiatanKonsultasiHukumModel::find($id);
 		}
 		if (is_null($kegiatan))
 		{
 			return Response()->json([
 				'status'=>1,
 				'pid'=>'fetchdata',
-				'message'=>["kegiatan penyuluhan hukum dengan ID ($id) gagal diperoleh"]
+				'message'=>["kegiatan konsultasi hukum dengan ID ($id) gagal diperoleh"]
 			],422);
 		}
 		else
@@ -80,7 +78,7 @@ class KegiatanPenyuluhanHukumController extends Controller
 				'status'=>1,
 				'pid'=>'fetchdata',
 				'kegiatan'=>$kegiatan,
-				'message'=>"kegiatan penyuluhan hukum berhasil diperoleh"
+				'message'=>"Kegiatan konsultasi hukum berhasil diperoleh"
 			],200);
 		}
 	}
@@ -90,14 +88,20 @@ class KegiatanPenyuluhanHukumController extends Controller
 
 		$this->validate($request, [					
 			'user_id'=>'required|exists:users,id',
-			'nama_kegiatan'=>'required',			
-			'tempat_pelaksanaan'=>'required',         
+			'nama_pemohon'=>'required',
+			'tempat_lahir'=>'required',
+			'tanggal_lahir'=>'required|date',
+			'pendidikan'=>'required',
+			'pekerjaan'=>'required',
+			'alamat'=>'required',
+			'nama_kegiatan'=>'required',            
 			'tanggal_pelaksanaan'=>'required|date',            
-			'jam_pelaksanaan'=>'required',            
-			'narasumber'=>'required',
-			'peserta'=>'required',
-			'jumlah_peserta'=>'required|numeric',			   
-			'uraian_kegiatan'=>'required',            			        
+			'nama_kegiatan'=>'required',            
+			'tanggal_pelaksanaan'=>'required', 
+			'jam_pelaksanaan'=>'required',                       
+			'tempat_pelaksanaan'=>'required',            
+			'uraian_kegiatan'=>'required',            
+			'nasihat_hukum'=>'required',            
 			'rekomendasi_kegiatan'=>'required',            
 		]);
 		\DB::beginTransaction();
@@ -105,16 +109,20 @@ class KegiatanPenyuluhanHukumController extends Controller
 		$tanggal_pelaksanaan=$request->input('tanggal_pelaksanaan') . ' '.$request->input('jam_pelaksanaan');
 		$uuid = Uuid::uuid4()->toString();
 		
-		$kegiatan=KegiatanPenyuluhanHukumModel::create([
+		$kegiatan=KegiatanKonsultasiHukumModel::create([
 			'id'=>$uuid,
 			'user_id'=>$request->input('user_id'),                
+			'nama_pemohon'=>$request->input('nama_pemohon'),                
+			'tempat_lahir'=>$request->input('tempat_lahir'),                
+			'tanggal_lahir'=>$request->input('tanggal_lahir'),                
+			'pendidikan'=>$request->input('pendidikan'),                
+			'pekerjaan'=>$request->input('pekerjaan'),                
+			'alamat'=>$request->input('alamat'),                
 			'nama_kegiatan'=>$request->input('nama_kegiatan'),       
-			'tempat_pelaksanaan'=>$request->input('tempat_pelaksanaan'),                			             			
 			'tanggal_pelaksanaan'=>$tanggal_pelaksanaan,                
-			'narasumber'=>$request->input('narasumber'),                
-			'peserta'=>$request->input('peserta'),                
-			'jumlah_peserta'=>$request->input('jumlah_peserta'),                
-			'uraian_kegiatan'=>$request->input('uraian_kegiatan'),                			
+			'tempat_pelaksanaan'=>$request->input('tempat_pelaksanaan'),                			             
+			'uraian_kegiatan'=>$request->input('uraian_kegiatan'),                
+			'nasihat_hukum'=>$request->input('nasihat_hukum'),                
 			'rekomendasi_kegiatan'=>$request->input('rekomendasi_kegiatan'),                
 			'id_status'=>0,                            
 		]);
@@ -125,10 +133,10 @@ class KegiatanPenyuluhanHukumController extends Controller
 			'user_id'=>$request->input('user_id'),                
 			'tanggal'=>$tanggal_pelaksanaan,                
 			'tempat'=>$request->input('tempat_pelaksanaan'),                
-			'id_jenis_kegiatan'=>1,                
-			'nama_jenis'=>'Penyuluhan Hukum',                
+			'id_jenis_kegiatan'=>4,                
+			'nama_jenis'=>'Konsultasi Hukum',                
 			'nama_kegiatan'=>$request->input('nama_kegiatan'),                
-			'pemohon'=>$request->input('narasumber'),                
+			'pemohon'=>$request->input('nama_pemohon'),                
 			'uraian_kegiatan'=>$request->input('uraian_kegiatan'),                
 			'rekomendasi_kegiatan'=>$request->input('rekomendasi_kegiatan'),                
 			'id_status'=>0,                            
@@ -140,55 +148,55 @@ class KegiatanPenyuluhanHukumController extends Controller
 			'status'=>1,
 			'pid'=>'store',
 			'kegiatan'=>$kegiatan,
-			'message'=>'Data kegiatan penyuluhan hukum baru berhasil disimpan.'
+			'message'=>'Data kegiatan konsultasi hukum baru berhasil disimpan.'
 		],200);
 	}
-	public function uploadsuratpermohonan (Request $request,$id)
+	public function uploadsktmpemohon (Request $request,$id)
 	{
 		$this->hasAnyPermission('KONSULTASI-KEGIATAN_STORE');
 
-		$kegiatan = KegiatanPenyuluhanHukumModel::find($id); 
+		$kegiatan = KegiatanKonsultasiHukumModel::find($id); 
 		
 		if ($kegiatan == null)
 		{
 			return Response()->json([
 				'status'=>0,
 				'pid'=>'store',                
-				'message'=>["Data kegiatan penyuluhan hukum tidak ditemukan."]
+				'message'=>["Data kegiatan konsultasi hukum tidak ditemukan."]
 			],422);         
 		}
 		else
 		{
 			$this->validate($request, [                      
-				'filesuratpermohonan'=>'required'                        
+				'filesktmpemohon'=>'required'                        
 			]);
 			$name=$kegiatan->nama_pemohon;
-			$filesuratpermohonan = $request->file('filesuratpermohonan');
-			$mime_type=$filesuratpermohonan->getMimeType();
-			if ($mime_type=='application/pdf' || $mime_type=='image/png' || $mime_type=='image/jpeg')
+			$filesktmpemohon = $request->file('filesktmpemohon');
+			$mime_type=$filesktmpemohon->getMimeType();
+			if ($mime_type=='image/png' || $mime_type=='image/jpeg')
 			{
-				$folder=\App\Helpers\Helper::public_path('pdf/suratpermohonan/');
-				$file_name=uniqid('img').".".$filesuratpermohonan->getClientOriginalExtension();
-				if (is_file(\App\Helpers\Helper::public_path($kegiatan->file_surat_permohonan)))                
+				$folder=\App\Helpers\Helper::public_path('images/kegiatan/');
+				$file_name=uniqid('img').".".$filesktmpemohon->getClientOriginalExtension();
+				if (is_file(\App\Helpers\Helper::public_path($kegiatan->file_sktm)))                
 				{
-					unlink(\App\Helpers\Helper::public_path($kegiatan->file_surat_permohonan));
+					unlink(\App\Helpers\Helper::public_path($kegiatan->file_sktm));
 				}                
-				$kegiatan->file_surat_permohonan="storage/pdf/suratpermohonan/$file_name";
+				$kegiatan->file_sktm="storage/images/kegiatan/$file_name";
 				$kegiatan->save();
 
 				\DB::table('kegiatan')
 				->where('kegiatan_id', $kegiatan->id)
 				->update([
-					'file_fotocopy_ktp' => $kegiatan->file_surat_permohonan,
+					'file_sktm' => $kegiatan->file_sktm,
 				]);
 
 
-				$filesuratpermohonan->move($folder,$file_name);
+				$filesktmpemohon->move($folder,$file_name);
 				return Response()->json([
 					'status'=>0,
 					'pid'=>'store',
 					'kegiatan'=>$kegiatan,                
-					'message'=>"Surat Permohonan ($name) berhasil diupload"
+					'message'=>"SKTM ($name) berhasil diupload"
 				],200);    
 			}
 			else
@@ -207,14 +215,14 @@ class KegiatanPenyuluhanHukumController extends Controller
 	{
 		$this->hasAnyPermission('KONSULTASI-KEGIATAN_STORE');
 
-		$kegiatan = KegiatanPenyuluhanHukumModel::find($id); 
+		$kegiatan = KegiatanKonsultasiHukumModel::find($id); 
 		
 		if ($kegiatan == null)
 		{
 			return Response()->json([
 				'status'=>0,
 				'pid'=>'store',                
-				'message'=>["Data kegiatan penyuluhan hukum tidak ditemukan."]
+				'message'=>["Data kegiatan konsultasi hukum tidak ditemukan."]
 			],422);         
 		}
 		else
@@ -247,16 +255,18 @@ class KegiatanPenyuluhanHukumController extends Controller
 					'status'=>0,
 					'pid'=>'store',
 					'kegiatan'=>$kegiatan,                
-					'message'=>"File daftar hadir kegiatan penyuluhan hukum ini berhasil diupload"
+					'message'=>"File daftar hadir kegiatan konsultasi hukum ini berhasil diupload"
 				], 200);    
 			}
 			else
 			{
 				return Response()->json([
-					'status'=>1,
-					'pid'=>'store',
-					'message'=>["Extensi file yang diupload bukan pdf."]
-				],422); 
+										'status'=>1,
+										'pid'=>'store',
+										'message'=>["Extensi file yang diupload bukan pdf."]
+									],422); 
+				
+
 			}
 		}
 	}
@@ -264,14 +274,14 @@ class KegiatanPenyuluhanHukumController extends Controller
 	{
 		$this->hasAnyPermission('KONSULTASI-KEGIATAN_STORE');
 
-		$kegiatan = KegiatanPenyuluhanHukumModel::find($id); 
+		$kegiatan = KegiatanKonsultasiHukumModel::find($id); 
 		
 		if ($kegiatan == null)
 		{
 			return Response()->json([
 									'status'=>0,
 									'pid'=>'store',                
-									'message'=>["Data kegiatan penyuluhan hukum tidak ditemukan."]
+									'message'=>["Data kegiatan konsultasi hukum tidak ditemukan."]
 								],422);         
 		}
 		else
@@ -304,7 +314,7 @@ class KegiatanPenyuluhanHukumController extends Controller
 					'status'=>0,
 					'pid'=>'store',
 					'kegiatan'=>$kegiatan,                
-					'message'=>"File dokumentasi kegiatan penyuluhan hukum ini berhasil diupload"
+					'message'=>"File dokumentasi kegiatan konsultasi hukum ini berhasil diupload"
 				],200);    
 			}
 			else
@@ -325,12 +335,12 @@ class KegiatanPenyuluhanHukumController extends Controller
 
 		if ($this->hasRole('paralegal'))
 		{
-			$kegiatan = KegiatanPenyuluhanHukumModel::where('user_id',$this->getUserid())			
+			$kegiatan = KegiatanKonsultasiHukumModel::where('user_id',$this->getUserid())			
 			->find($id);
 		}
 		else
 		{
-			$kegiatan = KegiatanPenyuluhanHukumModel::find($id); 
+			$kegiatan = KegiatanKonsultasiHukumModel::find($id); 
 		}		
 
 		if (is_null($kegiatan))
@@ -338,35 +348,45 @@ class KegiatanPenyuluhanHukumController extends Controller
 			return Response()->json([
 				'status'=>1,
 				'pid'=>'fetchdata',
-				'message'=>["kegiatan penyuluhan hukum dengan ID ($id) gagal diperoleh"]
+				'message'=>["kegiatan konsultasi hukum dengan ID ($id) gagal diperoleh"]
 			],422);
 		}
 		else
 		{            
 			$this->validate($request, [					
 				'user_id'=>'required|exists:users,id',
-				'nama_kegiatan'=>'required',			
-				'tempat_pelaksanaan'=>'required',         
-				'tanggal_pelaksanaan'=>'required|date',            
-				'jam_pelaksanaan'=>'required',            
-				'narasumber'=>'required',
-				'peserta'=>'required',
-				'jumlah_peserta'=>'required|numeric',			   
-				'uraian_kegiatan'=>'required',            			        
+				'nama_pemohon'=>'required',
+				'tempat_lahir'=>'required',
+				'tanggal_lahir'=>'required|date',
+				'pendidikan'=>'required',
+				'pekerjaan'=>'required',
+				'alamat'=>'required',
+				'nama_kegiatan'=>'required',            
+				'tanggal_pelaksanaan'=>'required|date',  
+				'jam_pelaksanaan'=>'required',                      
+				'nama_kegiatan'=>'required',            
+				'tanggal_pelaksanaan'=>'required',            
+				'tempat_pelaksanaan'=>'required',            
+				'uraian_kegiatan'=>'required',            
+				'nasihat_hukum'=>'required',            
 				'rekomendasi_kegiatan'=>'required',            
 			]);
 
 			$tanggal_pelaksanaan=$request->input('tanggal_pelaksanaan') . ' '.$request->input('jam_pelaksanaan');
 
 			$kegiatan->user_id=$request->input('user_id');             
-			$kegiatan->nama_kegiatan=$request->input('nama_kegiatan');             
+			$kegiatan->nama_pemohon=$request->input('nama_pemohon');             
+			$kegiatan->tempat_lahir=$request->input('tempat_lahir');             
+			$kegiatan->tanggal_lahir=$request->input('tanggal_lahir');             
+			$kegiatan->pendidikan=$request->input('pendidikan');             
+			$kegiatan->pekerjaan=$request->input('pekerjaan');             
+			$kegiatan->alamat=$request->input('alamat');             
+			$kegiatan->nama_kegiatan=$request->input('nama_kegiatan');                
 			$kegiatan->tanggal_pelaksanaan=$tanggal_pelaksanaan;               
-			$kegiatan->tempat_pelaksanaan=$request->input('tempat_pelaksanaan');                						
-			$kegiatan->narasumber=$request->input('narasumber');             
-			$kegiatan->peserta=$request->input('peserta');             
-			$kegiatan->jumlah_peserta=$request->input('jumlah_peserta');             
-			$kegiatan->uraian_kegiatan=$request->input('uraian_kegiatan');             
-			$kegiatan->rekomendasi_kegiatan=$request->input('rekomendasi_kegiatan');                
+			$kegiatan->tempat_pelaksanaan=$request->input('tempat_pelaksanaan');                			
+			$kegiatan->uraian_kegiatan=$request->input('uraian_kegiatan');                
+			$kegiatan->nasihat_hukum=$request->input('nasihat_hukum');                
+			$kegiatan->rekomendasi_kegiatan=$request->input('rekomendasi_kegiatan');
 			
 			$kegiatan->save();
 			
@@ -377,7 +397,7 @@ class KegiatanPenyuluhanHukumController extends Controller
 				'tanggal'=>$tanggal_pelaksanaan,                
 				'tempat'=>$request->input('tempat_pelaksanaan'),                				             
 				'nama_kegiatan'=>$request->input('nama_kegiatan'),                
-				'pemohon'=>$request->input('narasumber'),                
+				'pemohon'=>$request->input('nama_pemohon'),                
 				'uraian_kegiatan'=>$request->input('uraian_kegiatan'),                
 				'rekomendasi_kegiatan'=>$request->input('rekomendasi_kegiatan'),                				                          
 			]);
@@ -386,7 +406,7 @@ class KegiatanPenyuluhanHukumController extends Controller
 				'status'=>1,
 				'pid'=>'update',
 				'kegiatan'=>$kegiatan,
-				'message'=>"Update kegiatan penyuluhan hukum berhasil diperoleh"
+				'message'=>"Update Kegiatan konsultasi hukum berhasil diperoleh"
 			],200);
 		}
 	}
@@ -396,14 +416,14 @@ class KegiatanPenyuluhanHukumController extends Controller
 
 		if ($this->hasRole(['pmb','superadmin','obh','kumham']))
 		{
-			$kegiatan = KegiatanPenyuluhanHukumModel::find($id); 
+			$kegiatan = KegiatanKonsultasiHukumModel::find($id); 
 
 			if (is_null($kegiatan))
 			{
 				return Response()->json([
 									'status'=>0,
 									'pid'=>'store',                
-									'message'=>["Data kegiatan penyuluhan hukum tidak ditemukan."]
+									'message'=>["Data kegiatan konsultasi hukum tidak ditemukan."]
 								],422);     
 
 			}
@@ -422,7 +442,7 @@ class KegiatanPenyuluhanHukumController extends Controller
 										'status'=>1,
 										'pid'=>'update',
 										'kegiatan'=>$kegiatan,
-										'message'=>"Verifikasi kegiatan penyuluhan hukum berhasil dilakukan"
+										'message'=>"Verifikasi Kegiatan konsultasi hukum berhasil dilakukan"
 									],200);
 			}
 		}
@@ -448,12 +468,12 @@ class KegiatanPenyuluhanHukumController extends Controller
 
 		if ($this->hasRole('paralegal'))
 		{
-			$kegiatan = KegiatanPenyuluhanHukumModel::where('user_id',$this->getUserid())			
+			$kegiatan = KegiatanKonsultasiHukumModel::where('user_id',$this->getUserid())			
 			->find($id);
 		}
 		else
 		{
-			$kegiatan = KegiatanPenyuluhanHukumModel::find($id); 
+			$kegiatan = KegiatanKonsultasiHukumModel::find($id); 
 		}		
 
 		if (is_null($kegiatan))
@@ -461,7 +481,7 @@ class KegiatanPenyuluhanHukumController extends Controller
 			return Response()->json([
 									'status'=>1,
 									'pid'=>'destroy',
-									'message'=>["kegiatan penyuluhan hukum dengan ID ($id) gagal dihapus"]
+									'message'=>["kegiatan konsultasi hukum dengan ID ($id) gagal dihapus"]
 								],422);
 		}
 		else
@@ -473,14 +493,14 @@ class KegiatanPenyuluhanHukumController extends Controller
 																'object' => $kegiatan,
 																'object_id' => $kegiatan->id,
 																'user_id' => $this->getUserid(),
-																'message' => 'Menghapus kegiatan penyuluhan hukum ('.$nama_kegiatan.') berhasil'
+																'message' => 'Menghapus Kegiatan konsultasi hukum ('.$nama_kegiatan.') berhasil'
 															]);
 			$kegiatan->delete();
 			
 			return Response()->json([
 										'status'=>1,
 										'pid'=>'destroy',
-										'message'=>"kegiatan penyuluhan hukum ($nama_kegiatan) berhasil dihapus"
+										'message'=>"Kegiatan konsultasi hukum ($nama_kegiatan) berhasil dihapus"
 									],200);
 		}
 

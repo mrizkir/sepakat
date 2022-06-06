@@ -141,6 +141,52 @@ const routes = [
 		component: () => import('../views/pages/admin/penyuluhanhukum/KegiatanPenyuluhanHukumDetail.vue'),		
 	},
 	
+	//kegiatan - konsultasi hukum
+	{
+		path: '/kegiatan/konsultasihukum',
+		name: 'KegiatanKonsultasiHukum',
+		meta:{
+			title: "KEGIATAN - KONSULTASI HUKUM",
+			requiresAuth:true,
+        },
+		component: () => import('../views/pages/admin/konsultasihukum/KegiatanKonsultasiHukum.vue'),		
+	},
+	{
+		path: '/kegiatan/konsultasihukum/tambah',
+		name: 'KegiatanKonsultasiHukumTambah',
+		meta:{
+			title: "KEGIATAN - KONSULTASI HUKUM",
+			requiresAuth:true,
+        },
+		component: () => import('../views/pages/admin/konsultasihukum/KegiatanKonsultasiHukumTambah.vue'),		
+	},
+	{
+		path: '/kegiatan/konsultasihukum/:kegiatan_id/ubah',
+		name: 'KegiatanKonsultasiHukumUbah',
+		meta:{
+			title: "KEGIATAN - KONSULTASI HUKUM",
+			requiresAuth:true,
+        },
+		component: () => import('../views/pages/admin/konsultasihukum/KegiatanKonsultasiHukumUbah.vue'),		
+	},
+	{
+		path: '/kegiatan/konsultasihukum/:kegiatan_id/files',
+		name: 'KegiatanKonsultasiHukumFiles',
+		meta:{
+			title: "KEGIATAN - KONSULTASI HUKUM",
+			requiresAuth:true,
+        },
+		component: () => import('../views/pages/admin/konsultasihukum/KegiatanKonsultasiHukumFiles.vue'),		
+	},
+	{
+		path: '/kegiatan/konsultasihukum/:kegiatan_id/detail',
+		name: 'KegiatanKonsultasiHukumDetail',
+		meta:{
+			title: "KEGIATAN - KONSULTASI HUKUM",
+			requiresAuth:true,
+        },
+		component: () => import('../views/pages/admin/konsultasihukum/KegiatanKonsultasiHukumDetail.vue'),		
+	},
 	//laporan	
 	{
 		path: '/laporan/kegiatan',

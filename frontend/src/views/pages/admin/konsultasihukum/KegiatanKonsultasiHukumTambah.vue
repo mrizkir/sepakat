@@ -5,7 +5,7 @@
         mdi-calendar-blank-multiple
       </template>
       <template v-slot:name>
-        KEGIATAN MEDIASI
+        KEGIATAN KONSULTASI HUKUM
       </template>
       <template v-slot:breadcrumbs>
         <v-breadcrumbs :items="breadcrumbs" class="pa-0">
@@ -16,7 +16,7 @@
       </template>
       <template v-slot:desc>
         <v-alert color="cyan" border="left" colored-border type="info">
-          Halaman ini berisi daftar kegiatan mediasi hukum paralegal
+          Halaman ini berisi daftar kegiatan konsultasi hukum hukum paralegal
         </v-alert>
       </template>
     </ModuleHeader>   
@@ -34,7 +34,7 @@
                 ></v-divider>
                 <v-spacer></v-spacer>
                 <v-icon                
-                  @click.stop="$router.push('/kegiatan/mediasi/')">
+                  @click.stop="$router.push('/kegiatan/konsultasihukum/')">
                   mdi-close-thick
                 </v-icon>
               </v-card-title>
@@ -198,14 +198,14 @@
                   dense
                 />
                 <v-textarea
-                  label="NAMA SAKSI-SAKSI"
-                  v-model="formdata.nama_saksi"
-                  :rules="rule_saksi"
+                  label="NASIHAT HUKUM YANG DIBERIKAN"
+                  v-model="formdata.nasihat_hukum"
+                  :rules="rule_nasihat_hukum"
                   outlined
                   dense
                 />
                 <v-textarea
-                  label="REKOMENDASI PARALEGAL"
+                  label="HASIL AKHIR KONSULTASI HUKUM"
                   v-model="formdata.rekomendasi_kegiatan"
                   :rules="rule_rekomendasi_kegiatan"
                   outlined
@@ -235,7 +235,7 @@
 import AdminLayout from '@/views/layouts/AdminLayout';
 import ModuleHeader from '@/components/ModuleHeader';
 export default {
-  name: 'KegiatanMediasiTambah',
+  name: 'KegiatanKonsultasiHukumTambah',
   created () {
     this.dashboard = this.$store.getters['uiadmin/getDefaultDashboard']; 
     this.breadcrumbs = [
@@ -252,7 +252,7 @@ export default {
       {
         text: 'KEGIATAN',
         disabled: false,
-        href: '/kegiatan/mediasi'
+        href: '/kegiatan/konsultasihukum'
       },
       {
         text: 'TAMBAH',
@@ -284,7 +284,7 @@ export default {
       jam_pelaksanaan: null,
       tempat_pelaksanaan: null,
       uraian_kegiatan: null,
-      nama_saksi: null,
+      nasihat_hukum: null,
       rekomendasi_kegiatan: null,
     },
     formdefault: {      
@@ -300,14 +300,14 @@ export default {
       jam_pelaksanaan: null,
       tempat_pelaksanaan: null,
       uraian_kegiatan: null,
-      nama_saksi: null,
+      nasihat_hukum: null,
       rekomendasi_kegiatan: null,
     },
     rule_user_id: [
       value => !!value || "Mohon untuk dipilih paralegal !!!",
     ],
     rule_nama_pemohon: [
-      value => !!value || "Mohon untuk diisi nama pemohon kegiatan mediasi !!!", 
+      value => !!value || "Mohon untuk diisi nama pemohon kegiatan konsultasi hukum !!!", 
     ],
     rule_tempat_lahir: [
 			value => !!value || "Tempat Lahir pemohon mohon untuk diisi !!!"
@@ -325,25 +325,25 @@ export default {
 			value => !!value || "Alamat pemohon mohon untuk diisi !!!"
 		],
     rule_nama_kegiatan: [
-      value => !!value || "Mohon untuk diisi nama kegiatan mediasi !!!", 
+      value => !!value || "Mohon untuk diisi nama kegiatan konsultasi hukum !!!", 
     ],
     rule_tanggal_pelaksanaan: [
-      value => !!value || "Mohon untuk diisi tanggal pelaksanaan kegiatan mediasi !!!", 
+      value => !!value || "Mohon untuk diisi tanggal pelaksanaan kegiatan konsultasi hukum !!!", 
     ],
     rule_jam_pelaksanaan: [
-      value => !!value || "Mohon untuk diisi waktu kegiatan mediasi !!!", 
+      value => !!value || "Mohon untuk diisi waktu kegiatan konsultasi hukum !!!", 
     ],
     rule_tempat: [
-      value => !!value || "Mohon untuk diisi tempat kegiatan mediasi !!!", 
+      value => !!value || "Mohon untuk diisi tempat kegiatan konsultasi hukum !!!", 
     ],
     rule_uraian_kegiatan: [
-      value => !!value || "Mohon untuk diisi uraian kegiatan mediasi !!!", 
+      value => !!value || "Mohon untuk diisi uraian kegiatan konsultasi hukum !!!", 
     ],
-    rule_saksi: [
-      value => !!value || "Mohon untuk diisi saksi - saksi dari kegiatan mediasi !!!", 
+    rule_nasihat_hukum: [
+      value => !!value || "Mohon untuk diisi nasihat hukum yang diberikan !!!", 
     ],
     rule_rekomendasi_kegiatan: [
-      value => !!value || "Mohon untuk diisi rekomendasi kegiatan mediasi !!!", 
+      value => !!value || "Mohon untuk diisi rekomendasi kegiatan konsultasi hukum !!!", 
     ],
   }),
   methods: {
@@ -361,7 +361,7 @@ export default {
       if (this.$refs.frmdata.validate())
       {
         this.btnLoading = true                
-        await this.$ajax.post('/kegiatan/mediasi/store',
+        await this.$ajax.post('/kegiatan/konsultasihukum/store',
           {
             user_id: this.formdata.user_id,
             nama_pemohon: this.formdata.nama_pemohon,
@@ -375,7 +375,7 @@ export default {
             jam_pelaksanaan: this.formdata.jam_pelaksanaan,
             tempat_pelaksanaan: this.formdata.tempat_pelaksanaan,
             uraian_kegiatan: this.formdata.uraian_kegiatan,
-            nama_saksi: this.formdata.nama_saksi,
+            nasihat_hukum: this.formdata.nasihat_hukum,
             rekomendasi_kegiatan: this.formdata.rekomendasi_kegiatan,
           },
           {
@@ -387,7 +387,7 @@ export default {
           this.btnLoading = false               
           setTimeout(() => {
             this.formdata = Object.assign({}, this.formdefault);                                
-            this.$router.push('/kegiatan/mediasi/' + data.kegiatan.id + '/files')
+            this.$router.push('/kegiatan/konsultasihukum/' + data.kegiatan.id + '/files')
             }, 300
           );
         }).catch(()=>{
@@ -398,7 +398,7 @@ export default {
     closedialogfrm () {            
       setTimeout(() => {
         this.formdata = Object.assign({}, this.formdefault);                                
-        this.$router.push('/kegiatan/mediasi')
+        this.$router.push('/kegiatan/konsultasihukum')
         }, 300
       );
     },

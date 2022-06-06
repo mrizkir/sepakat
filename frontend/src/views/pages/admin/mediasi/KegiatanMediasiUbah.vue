@@ -200,7 +200,7 @@
                 <v-textarea
                   label="NAMA SAKSI-SAKSI"
                   v-model="formdata.nama_saksi"
-                  :rules="rule_rekomendasi_kegiatan"
+                  :rules="rule_saksi"
                   outlined
                   dense
                 />
@@ -342,6 +342,9 @@
       ],
       rule_uraian_kegiatan: [
         value => !!value || "Mohon untuk diisi uraian kegiatan mediasi !!!", 
+      ],
+      rule_saksi: [
+        value => !!value || "Mohon untuk diisi saksi - saksi dari kegiatan mediasi !!!", 
       ],
       rule_rekomendasi_kegiatan: [
         value => !!value || "Mohon untuk diisi rekomendasi kegiatan mediasi !!!", 
