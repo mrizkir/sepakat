@@ -28,7 +28,7 @@
           <v-card flat>
             <v-card-title>JENIS KEGIATAN:</v-card-title>
             <v-card-subtitle>
-              MEDIASI
+              NEGOISASI
             </v-card-subtitle>
           </v-card>
         </v-col>
@@ -79,7 +79,7 @@
 </template>
 <script>
   export default {
-    name: 'DataKegiatanMediasi',
+    name: 'DataKegiatanNegoisasi',
     props: {
       datakegiatan: {
         type:Object,

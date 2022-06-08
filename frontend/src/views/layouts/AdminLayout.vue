@@ -189,7 +189,7 @@
             <v-list-item
               link
               to="/kegiatan/negoisasi"
-              v-if="CAN_ACCESS('KONSULTASI-KEGIATAN_BROWSE') && false"
+              v-if="CAN_ACCESS('KONSULTASI-KEGIATAN_BROWSE')"
             >
               <v-list-item-icon class="mr-2">
                 <v-icon>mdi-calendar-blank-multiple</v-icon>

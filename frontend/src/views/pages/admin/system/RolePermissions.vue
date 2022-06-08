@@ -23,7 +23,7 @@
                                        <v-card flat>
                                             <v-card-title>TANGGAL BUAT :</v-card-title>
                                             <v-card-subtitle>
-                                                {{$date(role.created_at).format('DD/MM/YYYY HH:mm')}}
+                                                {{ $date(role.created_at).format('DD/MM/YYYY HH:mm')}}
                                             </v-card-subtitle>
                                         </v-card>
                                    </v-col>
@@ -43,7 +43,7 @@
                                        <v-card flat>
                                             <v-card-title>TANGGAL UBAH :</v-card-title>
                                             <v-card-subtitle>
-                                                {{$date(role.updated_at).format('DD/MM/YYYY HH:mm')}}
+                                                {{ $date(role.updated_at).format('DD/MM/YYYY HH:mm')}}
                                             </v-card-subtitle>
                                         </v-card>
                                    </v-col>

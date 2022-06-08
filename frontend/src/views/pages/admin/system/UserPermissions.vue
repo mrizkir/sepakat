@@ -83,7 +83,7 @@
                      <v-card flat>
                       <v-card-title>CREATED / UPDATED :</v-card-title>
                       <v-card-text>
-                        {{$date(user.created_at).format('DD/MM/YYYY HH:mm')}} / {{$date(user.updated_at).format('DD/MM/YYYY HH:mm')}}
+                        {{ $date(user.created_at).format('DD/MM/YYYY HH:mm')}} / {{ $date(user.updated_at).format('DD/MM/YYYY HH:mm')}}
                       </v-card-text>
                     </v-card>
                    </v-col>

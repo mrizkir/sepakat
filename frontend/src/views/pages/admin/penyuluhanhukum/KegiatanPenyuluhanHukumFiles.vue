@@ -280,7 +280,7 @@
               {
                 headers: {
                   Authorization: this.$store.getters['auth/Token'],
-                  'Content-Type': 'multipart/form-data'
+                  'Content-Type': 'multipart/form-data',
                 }
               }
             ).then(() => {
@@ -311,7 +311,7 @@
               {
                 headers: {
                   Authorization: this.$store.getters['auth/Token'],
-                  'Content-Type': 'multipart/form-data'
+                  'Content-Type': 'multipart/form-data',
                 }
               }
             ).then(() => {

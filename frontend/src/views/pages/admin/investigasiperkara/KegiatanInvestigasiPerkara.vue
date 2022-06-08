@@ -19,7 +19,7 @@
           Halaman ini berisi daftar kegiatan investigasi perkara yang dilakukan oleh paralegal
         </v-alert>
       </template>
-    </ModuleHeader> 
+    </ModuleHeader>
     <v-container fluid> 
       <v-row class="mb-4" no-gutters>
         <v-col cols="12">

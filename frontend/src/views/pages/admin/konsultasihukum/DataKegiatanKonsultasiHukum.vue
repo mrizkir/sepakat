@@ -68,7 +68,7 @@
           <v-card flat>
             <v-card-title>CREATED / UPDATED:</v-card-title>
             <v-card-subtitle>
-              {{$date(datakegiatan.created_at).format('DD/MM/YYYY HH:mm')}} / {{$date(datakegiatan.updated_at).format('DD/MM/YYYY HH:mm')}}
+              {{ $date(datakegiatan.created_at).format('DD/MM/YYYY HH:mm')}} / {{ $date(datakegiatan.updated_at).format('DD/MM/YYYY HH:mm')}}
             </v-card-subtitle>
           </v-card>
         </v-col>

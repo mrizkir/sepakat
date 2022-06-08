@@ -19,7 +19,7 @@
           Halaman ini berisi daftar kegiatan konsultasi hukum yang dilakukan oleh paralegal
         </v-alert>
       </template>
-    </ModuleHeader> 
+    </ModuleHeader>
     <v-container fluid v-if="Object.keys(data_kegiatan).length"> 
       <v-row>
         <v-col cols="12">
@@ -104,7 +104,7 @@
                   </v-card-text>'
                   <v-divider class="mx-4"></v-divider>
                   <v-card-text>
-                    <v-chip color="info">{{$date(items.created_at).format('DD/MM/YYYY HH:mm')}}</v-chip>
+                    <v-chip color="info">{{ $date(items.created_at).format('DD/MM/YYYY HH:mm')}}</v-chip>
                   </v-card-text>
 
                   <v-card-actions>

@@ -19,7 +19,7 @@
           Halaman ini berisi daftar kegiatan investigasi perkara hukum paralegal
         </v-alert>
       </template>
-    </ModuleHeader> 
+    </ModuleHeader>
     <v-form ref="frmdata" v-model="form_valid" lazy-validation>
       <v-container fluid> 
         <v-row>

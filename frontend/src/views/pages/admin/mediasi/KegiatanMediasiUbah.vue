@@ -19,7 +19,7 @@
           Halaman ini berisi daftar kegiatan mediasi yang dilakukan oleh paralegal
         </v-alert>
       </template>
-    </ModuleHeader> 
+    </ModuleHeader>
     <v-form ref="frmdata" v-model="form_valid" lazy-validation  v-if="Object.keys(datakegiatan).length">
       <v-container fluid> 
        <v-row>

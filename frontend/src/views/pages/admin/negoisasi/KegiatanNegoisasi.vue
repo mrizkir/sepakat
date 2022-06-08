@@ -5,7 +5,7 @@
         mdi-calendar-blank-multiple
       </template>
       <template v-slot:name>
-        KEGIATAN KONSULTASI HUKUM
+        KEGIATAN NEGOISASI
       </template>
       <template v-slot:breadcrumbs>
         <v-breadcrumbs :items="breadcrumbs" class="pa-0">
@@ -15,8 +15,13 @@
         </v-breadcrumbs>
       </template>
       <template v-slot:desc>
-        <v-alert color="cyan" border="left" colored-border type="info">
-          Halaman ini berisi daftar kegiatan konsultasi hukum yang dilakukan oleh paralegal
+        <v-alert                                        
+          color="cyan"
+          border="left"
+          colored-border
+          type="info"
+          >
+          Halaman ini berisi daftar kegiatan negoisasi yang dilakukan oleh paralegal
         </v-alert>
       </template>
     </ModuleHeader>
@@ -61,7 +66,7 @@
                   vertical
                 ></v-divider>
                 <v-spacer></v-spacer>
-                <v-btn color="primary" dark class="mb-2" to="/kegiatan/konsultasihukum/tambah" v-if="dashboard=='paralegal'||dashboard=='kumham'||dashboard=='superadmin'">TAMBAH</v-btn>
+                <v-btn color="primary" dark class="mb-2" to="/kegiatan/negoisasi/tambah" v-if="dashboard=='paralegal'||dashboard=='kumham'||dashboard=='superadmin'">TAMBAH</v-btn>
               </v-toolbar>
             </template>
             <template v-slot:item.id="{ item }">
@@ -76,7 +81,7 @@
               <v-btn
                 small
                 icon
-                @click.stop="$router.push('/kegiatan/konsultasihukum/' + item.id + '/detail')">
+                @click.stop="$router.push('/kegiatan/negoisasi/' + item.id + '/detail')">
                 <v-icon>
                   mdi-eye
                 </v-icon>
@@ -84,7 +89,7 @@
               <v-btn
                 small      
                 icon                          
-                :to="{path: '/kegiatan/konsultasihukum/' + item.id + '/ubah'}"
+                :to="{path: '/kegiatan/negoisasi/' + item.id + '/ubah'}"
                 v-if="item.id_status==0 && (dashboard=='paralegal'||dashboard=='kumham'||dashboard=='superadmin')">
                 <v-icon>
                   mdi-pencil
@@ -124,7 +129,7 @@
 import AdminLayout from '@/views/layouts/AdminLayout'
 import ModuleHeader from '@/components/ModuleHeader'
 export default {
-  name: 'KegiatanKonsultasiHukumMediasi',
+  name: 'KegiatanNegoisasiNegoisasi',
   created() {
     this.dashboard = this.$store.getters['uiadmin/getDefaultDashboard']
     this.breadcrumbs = [
@@ -139,7 +144,7 @@ export default {
         href: '#',
       },
       {
-        text: 'KONSULTASI HUKUM',
+        text: 'NEGOISASI',
         disabled: true,
         href: '#',
       }
@@ -167,7 +172,7 @@ export default {
     initialize: async function() 
     {
       this.datatableLoading = true
-      await this.$ajax.get('/kegiatan/konsultasihukum', {
+      await this.$ajax.get('/kegiatan/negoisasi', {
         headers: {
           Authorization: this.$store.getters['auth/Token'],
         }
@@ -178,17 +183,21 @@ export default {
         this.datatableLoading = false
       })
     },
-    dataTableRowClicked(item) {
-      if (item === this.expanded[0]) {
+    dataTableRowClicked(item)
+    {
+      if (item === this.expanded[0])
+      {
         this.expanded = []
-      } else {
+      }
+      else
+      {
         this.expanded = [item]
       }
     },
     viewItem (item) {
       this.formdata=item
       this.dialogdetailitem=true
-      // this.$ajax.get('/kegiatan/konsultasihukum' + item.id,{
+      // this.$ajax.get('/kegiatan/negoisasi' + item.id,{
       //     headers: {
       //         Authorization: this.$store.getters['auth/Token'],
       //     }
@@ -197,11 +206,11 @@ export default {
       // })
     },
     deleteItem(item) {
-      this.$root.$confirm.open('Delete', 'Apakah Anda ingin menghapus data kegiatan konsultasi hukum dengan ID ' + item.id + ' ?', { color: 'red',width:600 }).then(confirm => {
+      this.$root.$confirm.open('Delete', 'Apakah Anda ingin menghapus data kegiatan negoisasi dengan ID ' + item.id + ' ?', { color: 'red',width:600 }).then(confirm => {
         if (confirm)
         {
           this.btnLoading = true
-          this.$ajax.post('/kegiatan/konsultasihukum/' + item.id,
+          this.$ajax.post('/kegiatan/negoisasi/' + item.id,
             {
               _method: 'DELETE',
             },
