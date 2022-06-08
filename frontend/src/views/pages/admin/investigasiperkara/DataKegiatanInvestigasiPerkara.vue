@@ -79,16 +79,16 @@
 </template>
 <script>
 export default {
-  name: 'DataKegiatanInvestigasiPerkara',
-  props: {
-    datakegiatan: {
-      type:Object,
-      required: true,
-    },
-    path: {
-      type: String,
-      required: true,
+    name: 'DataKegiatanInvestigasiPerkara',
+    props: {
+      datakegiatan: {
+        type:Object,
+        required: true,
+      },
+      path: {
+        type: String,
+        required: true,
+      }
     }
   }
-}
 </script>

@@ -85,7 +85,7 @@
                                                     label="NAMA USER"
                                                     outlined
                                                     :rules="rule_user_name">
-                                                </v-text-field>           
+                                                </v-text-field>
                                                 <v-text-field 
                                                     v-model="editedItem.email" 
                                                     label="EMAIL"
@@ -110,7 +110,7 @@
                                                     :type="'password'"
                                                     outlined
                                                     :rules="rule_user_password">
-                                                </v-text-field> 
+                                                </v-text-field>
                                                 <v-autocomplete 
                                                     :items="daftar_roles" 
                                                     v-model="editedItem.role_id"
@@ -141,7 +141,7 @@
                                             <v-card-title>
                                                 <span class="headline">{{ formTitle }}</span>
                                             </v-card-title>
-                                            <v-card-text>          
+                                            <v-card-text>
                                                 <v-text-field 
                                                     v-model="editedItem.name" 
                                                     label="NAMA USER"
@@ -172,7 +172,7 @@
                                                     :type="'password'"
                                                     outlined
                                                     :rules="rule_user_passwordEdit">
-                                                </v-text-field> 
+                                                </v-text-field>
                                                 <v-autocomplete 
                                                     :items="daftar_roles" 
                                                     v-model="editedItem.role_id"
@@ -218,8 +218,8 @@
                         </template>
                         <template v-slot:item.foto="{ item }">
                             <v-avatar size="30">
-                                <v-img :src="$api.storageURL + '/'+item.foto" />
-                            </v-avatar>              
+                                <v-img :src="$api.storageURL + '/' + item.foto" />
+                            </v-avatar>
                         </template>
                         <template v-slot:expanded-item="{ headers, item }">
                             <td :colspan="headers.length" class="text-center">
@@ -250,7 +250,7 @@ export default {
             {
                 text: 'HOME',
                 disabled: false,
-                href: '/dashboard/' + this.ACCESS_TOKEN
+                href: '/dashboard/' + this.ACCESS_TOKEN,
             },
             {
                 text: 'USER SISTEM',
@@ -262,21 +262,21 @@ export default {
                 disabled: true,
                 href: '#',
             }
-        ];
+        ]
         this.initialize()
     },
    
-    data: () => ({ 
-        role_id:0,
+    data: () => ({
+        role_id: 0,
         datatableLoading: false,
         btnLoading: false,
         //tables
-        headers: [                        
+        headers: [
             { text: null, value: 'foto' },
-            { text: 'USERNAME', value: 'username',sortable: true },
-            { text: 'NAME', value: 'name',sortable: true },
-            { text: 'EMAIL', value: 'email',sortable: true },
-            { text: 'NOMOR HP', value: 'nomor_hp',sortable: true },
+            { text: 'USERNAME', value: 'username', sortable: true },
+            { text: 'NAME', value: 'name', sortable: true },
+            { text: 'EMAIL', value: 'email', sortable: true },
+            { text: 'NOMOR HP', value: 'nomor_hp', sortable: true },
             { text: 'AKSI', value: 'actions', sortable: false, width: 100 },
         ],
         expanded: [],
@@ -290,7 +290,7 @@ export default {
         dialogEdit: false,
         editedIndex: -1, 
         editedItem: {
-            id:0,
+            id: 0,
             username: null,
             password: null,
             name: null,
@@ -301,7 +301,7 @@ export default {
             updated_at: null,
         },
         defaultItem: {
-            id:0,
+            id: 0,
             username: null,
             password: null,
             name: null,
@@ -313,41 +313,41 @@ export default {
         },
         //form rules        
         rule_user_name: [
-            value => !!value||"Mohon untuk di isi nama User !!!",
+            value => !!value || "Mohon untuk di isi nama User !!!",
             value => /^[A-Za-z\s]*$/.test(value) || 'Nama User hanya boleh string dan spasi',
         ],
         rule_user_email: [
-            value => !!value||"Mohon untuk di isi email User !!!",
+            value => !!value || "Mohon untuk di isi email User !!!",
             value => /.+@.+\..+/.test(value) || 'Format E-mail harus benar', 
         ],
         rule_user_nomorhp: [
-            value => !!value||"Nomor HP mohon untuk diisi !!!",
+            value => !!value || "Nomor HP mohon untuk diisi !!!",
             value => /^\+[1-9]{1}[0-9]{1,14}$/.test(value) || 'Nomor HP hanya boleh angka dan gunakan kode negara didepan seperti +6281214553388',
         ],
         rule_user_username: [
-            value => !!value||"Mohon untuk di isi username User !!!",
+            value => !!value || "Mohon untuk di isi username User !!!",
             value => /^[A-Za-z_]*$/.test(value) || 'Username hanya boleh string dan underscore',
         ],
         rule_user_password: [
-            value => !!value||"Mohon untuk di isi password User !!!",
+            value => !!value || "Mohon untuk di isi password User !!!",
             value => {
-                if (value && typeof value !== 'undefined' && value.length > 0){
-                    return value.length >= 8 || 'Minimial Password 8 karaketer';
+                if (value && typeof value !== 'undefined' && value.length > 0) {
+                    return value.length >= 8 || 'Minimial Password 8 karakter'
                 }
                 else
                 {
-                    return true;
+                    return true
                 }
             }
         ],
         rule_user_passwordEdit: [
             value => {
-                if (value && typeof value !== 'undefined' && value.length > 0){
-                    return value.length >= 8 || 'Minimial Password 8 karaketer';
+                if (value && typeof value !== 'undefined' && value.length > 0) {
+                    return value.length >= 8 || 'Minimial Password 8 karakter'
                 }
                 else
                 {
-                    return true;
+                    return true
                 }
             }
         ],
@@ -355,103 +355,99 @@ export default {
     methods: {
         initialize: async function() 
         {
-            this.datatableLoading=true;
+            this.datatableLoading = true
             await this.$ajax.get('/system/userskumham', {
                 headers: {
-                    Authorization: this.TOKEN
+                    Authorization: this.TOKEN,
                 }
             }).then(({ data }) => {
-                this.daftar_users = data.users;
-                this.role_id=data.role.id;
-                this.datatableLoading=false
+                this.daftar_users = data.users
+                this.role_id = data.role.id
+                this.datatableLoading = false
             })
             
         },
-        dataTableRowClicked(item)
-        {
-            if ( item === this.expanded[0])
-            {
-                this.expanded=[]
-            }
-            else
-            {
-                this.expanded=[item];
-            }
-        },
+        dataTableRowClicked(item) {
+      if (item === this.expanded[0]) {
+        this.expanded = []
+      } else {
+        this.expanded = [item]
+      }
+    },
         showDialogTambahUserSuperAdmin: async function()
         {
             await this.$ajax.get('/system/setting/roles', {
                 headers: {
-                    Authorization: this.TOKEN
+                    Authorization: this.TOKEN,
                 }
             }).then(({ data }) => {
-                let roles = data.roles;
-                var daftar_roles=[];
+                let roles = data.roles
+                var daftar_roles = []
                 roles.forEach(element => {
-                    if (element.name=='kumham')
+                    if (element.name == 'kumham')
                     {
                         daftar_roles.push({
-                            text:element.name,
+                            text: element.name,
                             disabled: true,
                         })
                     }
                     else
                     {
                         daftar_roles.push({
-                            text:element.name,
+                            text: element.name,
                             disabled: false,
                         })
                     } 
                 })
-                this.daftar_roles=daftar_roles
-                this.dialog = true    
+                this.daftar_roles = daftar_roles
+                this.dialog = true
             })
             
         },
-        editItem: async function (item) {
+        editItem: async function(item) {
             this.editedIndex = this.daftar_users.indexOf(item)
-            item.password=''
+            item.password = ''
             this.editedItem = Object.assign({}, item)
 
             await this.$ajax.get('/system/setting/roles', {
                 headers: {
-                    Authorization: this.TOKEN
+                    Authorization: this.TOKEN,
                 }
             }).then(({ data }) => {
-                let roles = data.roles;
-                var daftar_roles=[];
+                let roles = data.roles
+                var daftar_roles = []
                 roles.forEach(element => {
-                    if (element.name=='kumham')
+                    if (element.name == 'kumham')
                     {
                         daftar_roles.push({
-                            text:element.name,
+                            text: element.name,
                             disabled: true,
                         })
                     }
                     else if (element.name!='superadmin')
                     {
                         daftar_roles.push({
-                            text:element.name,
+                            text: element.name,
                             disabled: false,
                         })
                     } 
                 })
-                this.daftar_roles=daftar_roles                
+                this.daftar_roles = daftar_roles
             })
 
             this.btnLoading = true
-            await this.$ajax.get('/system/users/'+item.id+'/roles',
+            await this.$ajax.get('/system/users/' + item.id + '/roles',
             {
                 headers: {
-                    Authorization: this.TOKEN
+                    Authorization: this.TOKEN,
                 }
             }).then(({ data }) => {
-                this.editedItem.role_id=data.roles
+                this.editedItem.role_id = data.roles
                 this.btnLoading = false
-                this.dialogEdit = true;
+                this.dialogEdit = true
             })
         },
-        close () {
+        close() {
             this.btnLoading = false
             this.dialog = false
             this.dialogEdit = false
@@ -462,7 +458,7 @@ export default {
                 }, 300
             );
         },
-        save () {
+        save() {
             if (this.$refs.frmdata.validate())
             {
                 this.btnLoading = true
@@ -476,16 +472,16 @@ export default {
                             nomor_hp: this.editedItem.nomor_hp,
                             username: this.editedItem.username,
                             password: this.editedItem.password,
-                            role_id:JSON.stringify(Object.assign({},this.editedItem.role_id)),
+                            role_id: JSON.stringify(Object.assign({}, this.editedItem.role_id)),
                         },
                         {
                             headers: {
-                                Authorization: this.TOKEN
+                                Authorization: this.TOKEN,
                             }
                         }
-                    ).then(({ data }) => { 
-                        Object.assign(this.daftar_users[this.editedIndex],data.user);
-                        this.close();
+                    ).then(({ data }) => {
+                        Object.assign(this.daftar_users[this.editedIndex], data.user)
+                        this.close()
                     }).catch(() => {
                         this.btnLoading = false
                     })
@@ -498,16 +494,16 @@ export default {
                             nomor_hp: this.editedItem.nomor_hp,
                             username: this.editedItem.username,
                             password: this.editedItem.password, 
-                            role_id:JSON.stringify(Object.assign({},this.editedItem.role_id)),
+                            role_id: JSON.stringify(Object.assign({}, this.editedItem.role_id)),
                         },
                         {
                             headers: {
-                                Authorization: this.TOKEN
+                                Authorization: this.TOKEN,
                             }
                         }
-                    ).then(({ data }) => { 
-                        this.daftar_users.push(data.user);
-                        this.close();
+                    ).then(({ data }) => {
+                        this.daftar_users.push(data.user)
+                        this.close()
                     }).catch(() => {
                         this.btnLoading = false
                     })
@@ -515,22 +511,22 @@ export default {
             }
         },
         deleteItem(item) {
-            this.$root.$confirm.open('Delete', 'Apakah Anda ingin menghapus username '+item.username+' ?', { color: 'red' }).then((confirm) => {
+            this.$root.$confirm.open('Delete', 'Apakah Anda ingin menghapus username ' + item.username + ' ?', { color: 'red' }).then(confirm => {
                 if (confirm)
                 {
                     this.btnLoading = true
-                    this.$ajax.post('/system/userskumham/'+item.id,
+                    this.$ajax.post('/system/userskumham/' + item.id,
                         {
                             _method: 'DELETE',
                         },
                         {
                             headers: {
-                                Authorization: this.TOKEN
+                                Authorization: this.TOKEN,
                             }
                         }
                     ).then(() => {
-                        const index = this.daftar_users.indexOf(item);
-                        this.daftar_users.splice(index, 1);
+                        const index = this.daftar_users.indexOf(item)
+                        this.daftar_users.splice(index, 1)
                         this.btnLoading = false
                     }).catch(() => {
                         this.btnLoading = false
@@ -540,7 +536,7 @@ export default {
         },
     },
     computed: {
-        formTitle () {
+        formTitle() {
             return this.editedIndex === -1 ? 'TAMBAH USER KANWIL HUKUM DAN HAM' : 'EDIT USER KANWIL HUKUM DAN HAM'
         },
         ...mapGetters('auth', {
@@ -550,10 +546,10 @@ export default {
     },
 
     watch: {
-        dialog (val) {
+        dialog(val) {
             val || this.close()
         },
-        dialogEdit (val) {
+        dialogEdit(val) {
             val || this.close()
         },
     }, 

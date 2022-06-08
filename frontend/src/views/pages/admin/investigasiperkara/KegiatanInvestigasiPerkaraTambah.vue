@@ -266,10 +266,10 @@
           disabled: true,
           href: '#',
         }
-      ];
+      ]
       this.initialize()
     },
-    data: () => ({ 
+    data: () => ({
       dashboard: null,
       
       btnLoading: false,
@@ -412,7 +412,7 @@
         setTimeout(() => {
           this.formdata = Object.assign({}, this.formdefault)
           this.$router.push('/kegiatan/investigasiperkara')
-        }, 300);
+        }, 300)
       },
     },
     components: {

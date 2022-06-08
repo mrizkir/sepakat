@@ -133,7 +133,7 @@ export default {
         disabled: true,
         href: '#',
       }
-    ];		
+    ]		
     this.initialize()
     this.fetchData();
 
@@ -146,10 +146,10 @@ export default {
     tahun_pendaftaran: null,
 
     data_jenis_kegiatan: [],
-    jumlah_paralegal:0,
-    jumlah_paralegal_laporan:0,
-    jumlah_obh:0,
-    jumlah_kades:0,
+    jumlah_paralegal: 0,
+    jumlah_paralegal_laporan: 0,
+    jumlah_obh: 0,
+    jumlah_kades: 0,
   }),
   methods : {
     initialize: async function()

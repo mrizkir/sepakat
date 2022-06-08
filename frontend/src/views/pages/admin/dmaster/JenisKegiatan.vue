@@ -71,7 +71,7 @@ export default {
       {
         text: 'HOME',
         disabled: false,
-        href: '/dashboard/' + this.ACCESS_TOKEN
+        href: '/dashboard/' + this.ACCESS_TOKEN,
       },
       {
         text: 'DATA MASTER',
@@ -83,7 +83,7 @@ export default {
         disabled: true,
         href: '#',
       }
-    ];
+    ]
     this.initialize()
   },
   data: () => ({
@@ -99,36 +99,32 @@ export default {
   methods: {
     initialize: async function()
     {
-      this.datatableLoading=true;
+      this.datatableLoading = true
       await this.$ajax.get('/datamaster/jeniskegiatan', {
         headers: {
-          Authorization: this.TOKEN
+          Authorization: this.TOKEN,
         }
       }).then(({ data }) => {
         this.datatable = data.jenis_kegiatan;
-        this.datatableLoading=false
+        this.datatableLoading = false
       }).catch(() => {
-        this.datatableLoading=false
+        this.datatableLoading = false
       })
     },
-    dataTableRowClicked(item)
-    {
-      if ( item === this.expanded[0])
-      {
-        this.expanded=[];
+    dataTableRowClicked(item) {
+      if (item === this.expanded[0]) {
+        this.expanded = []
+      } else {
+        this.expanded = [item]
       }
-      else
-      {
-        this.expanded=[item];
-      }
-    }, 
+    },
   },
   computed: {
     ...mapGetters('auth', {
       ACCESS_TOKEN: 'AccessToken',
       TOKEN: 'Token',
     }),
-    formTitle () {
+    formTitle() {
       return this.editedIndex === -1 ? 'TAMBAH DATA' : 'UBAH DATA'
     },
   },

@@ -76,7 +76,7 @@
               <v-btn
                 small
                 icon
-                @click.stop="$router.push('/kegiatan/investigasiperkara/'+item.id+'/detail')">
+                @click.stop="$router.push('/kegiatan/investigasiperkara/' + item.id + '/detail')">
                 <v-icon>
                   mdi-eye
                 </v-icon>
@@ -84,7 +84,7 @@
               <v-btn
                 small      
                 icon                          
-                :to="{path: '/kegiatan/investigasiperkara/'+item.id+'/ubah'}"
+                :to="{path: '/kegiatan/investigasiperkara/' + item.id + '/ubah'}"
                 v-if="item.id_status==0 && (dashboard=='paralegal'||dashboard=='kumham'||dashboard=='superadmin')">
                 <v-icon>
                   mdi-pencil
@@ -143,17 +143,17 @@ export default {
         disabled: true,
         href: '#',
       }
-    ];
+    ]
     this.initialize()
   },
-  data: () => ({ 
+  data: () => ({
     dashboard: null,
 
     btnLoading: false,
     datatableLoading: false,
     expanded: [],
     datatable: [],
-    headers: [                        
+    headers: [
       { text: 'PARALEGAL', value: 'name' },
       { text: 'PEMOHON', value: 'nama_pemohon' },
       { text: 'NAMA KEGIATAN', value: 'nama_kegiatan' },
@@ -166,33 +166,29 @@ export default {
   methods: {
     initialize: async function() 
     {
-      this.datatableLoading=true;
+      this.datatableLoading = true
       await this.$ajax.get('/kegiatan/investigasiperkara', {
         headers: {
           Authorization: this.$store.getters['auth/Token'],
         }
       }).then(({ data }) => {
         this.datatable = data.daftar_kegiatan;
-        this.datatableLoading=false
+        this.datatableLoading = false
       }).catch(() => {
-        this.datatableLoading=false
+        this.datatableLoading = false
       })
     },
-    dataTableRowClicked(item)
-    {
-      if ( item === this.expanded[0])
-      {
-        this.expanded=[]
-      }
-      else
-      {
-        this.expanded=[item];
+    dataTableRowClicked(item) {
+      if (item === this.expanded[0]) {
+        this.expanded = []
+      } else {
+        this.expanded = [item]
       }
     },
     viewItem (item) {
       this.formdata=item
       this.dialogdetailitem=true
-      // this.$ajax.get('/kegiatan/investigasiperkara'+item.id,{
+      // this.$ajax.get('/kegiatan/investigasiperkara' + item.id,{
       //     headers: {
       //         Authorization: this.$store.getters['auth/Token'],
       //     }
@@ -201,7 +197,7 @@ export default {
       // })
     },
     deleteItem(item) {
-      this.$root.$confirm.open('Delete', 'Apakah Anda ingin menghapus data kegiatan investigasi perkara dengan ID '+item.id+' ?', { color: 'red',width:600 }).then((confirm) => {
+      this.$root.$confirm.open('Delete', 'Apakah Anda ingin menghapus data kegiatan investigasi perkara dengan ID ' + item.id + ' ?', { color: 'red',width:600 }).then(confirm => {
         if (confirm)
         {
           this.btnLoading = true
@@ -215,8 +211,8 @@ export default {
               }
             }
           ).then(() => {
-            const index = this.datatable.indexOf(item);
-            this.datatable.splice(index, 1);
+            const index = this.datatable.indexOf(item)
+            this.datatable.splice(index, 1)
             this.btnLoading = false
           })
           .catch(() => {

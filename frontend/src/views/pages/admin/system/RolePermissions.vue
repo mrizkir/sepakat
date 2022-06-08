@@ -124,7 +124,7 @@ export default {
     data: () => ({
         btnLoading: false,
         //tables
-        headers: [                        
+        headers: [
             { text: 'NAMA PERMISSION', value: 'name' },
             { text: 'GUARD', value: 'guard_name' },
             { text: 'AKSI', value: 'actions', sortable: false, width: 100 }, 
@@ -143,7 +143,7 @@ export default {
                 },
                 {
                     headers: {
-                        Authorization: this.TOKEN
+                        Authorization: this.TOKEN,
                     }
                 }
             ).then(() => {
@@ -163,7 +163,7 @@ export default {
                 },
                 {
                     headers: {
-                        Authorization: this.TOKEN
+                        Authorization: this.TOKEN,
                     }
                 }
             ).then(() => {
@@ -176,7 +176,7 @@ export default {
         close()
         {
             this.btnLoading = false
-            this.permissions_selected=[];
+            this.permissions_selected=[]
             this.$emit('closeRolePermissions',this.role.id);
         }
     },

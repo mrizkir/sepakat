@@ -206,10 +206,10 @@ export default {
         disabled: true,
         href: '#',
       }
-    ];
+    ]
     this.initialize()
   },
-  data: () => ({ 
+  data: () => ({
     dashboard: null,
     
     btnLoading: false,

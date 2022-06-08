@@ -136,7 +136,7 @@ import { mapGetters } from 'vuex'
 export default {
     name: 'SystemConfigLayout',
     data: () => ({
-        loginTime:0,
+        loginTime: 0,
         drawer: null,
     }), 
     methods: {
@@ -150,7 +150,7 @@ export default {
                         'Authorization': this.TOKEN,
                     }
                 }
-            ).then(()=> { 
+            ).then(()=> {
                 this.$store.dispatch('auth/logout');	
                 this.$store.dispatch('uifront/reinit');	
                 this.$store.dispatch('uiadmin/reinit');	
@@ -187,7 +187,7 @@ export default {
 			var photo;
 			if (img == '')
 			{
-				photo = this.$api.storageURL+'/storage/images/users/no_photo.png';	
+				photo = this.$api.storageURL + '/storage/images/users/no_photo.png';	
 			}
 			else
 			{
@@ -197,9 +197,9 @@ export default {
         },
         isReportPage ()
 		{
-			if (this.$route.name=='ReportFormBMurni')
+			if (this.$route.name == 'ReportFormBMurni')
 			{
-				return true;
+				return true
 			}
 			else
 			{
@@ -214,7 +214,7 @@ export default {
                 
                 if (value >= 0)
                 {
-                    setTimeout(() => { 
+                    setTimeout(() => {
                         this.loginTime=this.AUTHENTICATED==true?this.loginTime+1:-1                                     
 					}, 1000);
                 }

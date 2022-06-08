@@ -237,19 +237,19 @@ export default {
             {
                 text: 'HOME',
                 disabled: false,
-                href: '/dashboard/' + this.ACCESS_TOKEN
+                href: '/dashboard/' + this.ACCESS_TOKEN,
             },
             {
                 text: 'USER SISTEM',
                 disabled: false,
-                href: '/system-users'
+                href: '/system-users',
             },
             {
                 text: 'ROLES',
                 disabled: true,
                 href: '#',
             }
-        ];
+        ]
         this.initialize()
     }, 
     data: () => ({
@@ -261,13 +261,13 @@ export default {
         daftar_permissions: [],
         permissions_selected: [],
         //tables
-        headers: [                        
+        headers: [
             { text: 'NAMA ROLE', value: 'name' },
             { text: 'GUARD', value: 'guard_name' },
             { text: 'AKSI', value: 'actions', sortable: false,width:130 },
         ],
         //tables
-        headersdetail: [                        
+        headersdetail: [
             { text: 'NAMA PERMISSION', value: 'name' },
             { text: 'GUARD', value: 'guard_name' },
         ],
@@ -279,14 +279,14 @@ export default {
         dialogRolePermission: false,
         editedIndex: -1,
         editedItem: {
-            id:0,
+            id: 0,
             name: null,
             guard: null,
             created_at: null,
             updated_at: null,
         },
         defaultItem: {
-            id:0,
+            id: 0,
             name: null,
             guard: 'api',
             created_at: null,
@@ -294,7 +294,7 @@ export default {
         },
         //form rules        
         rule_role_name: [
-            value => !!value||"Mohon untuk di isi nama Role !!!",
+            value => !!value || "Mohon untuk di isi nama Role !!!",
             value => /^[A-Za-z]*$/.test(value) || 'Nama Role hanya boleh string',
         ],
         form_error_message: null
@@ -302,39 +302,35 @@ export default {
     methods: {
         initialize () 
         {
-            this.datatableLoading=true;
+            this.datatableLoading = true
             this.$ajax.get('/system/setting/roles', {
                 headers: {
-                    Authorization: this.TOKEN
+                    Authorization: this.TOKEN,
                 }
             }).then(({data,status})=>{
                 if (status==200)
                 {
-                    this.datatable = data.roles;
-                    this.datatableLoading=false
+                    this.datatable = data.roles
+                    this.datatableLoading = false
                 }
             
             })
             
         },
-        dataTableRowClicked(item)
-        {
-            if ( item === this.expanded[0])
-            {
-                this.expanded=[]
-            }
-            else
-            {
-                this.expanded=[item];
-            }
-        },
+        dataTableRowClicked(item) {
+      if (item === this.expanded[0]) {
+        this.expanded = []
+      } else {
+        this.expanded = [item]
+      }
+    },
         viewItem (item) {
-            this.editedIndex = this.datatable.indexOf(item);
-            this.editedItem = Object.assign({}, item);
+            this.editedIndex = this.datatable.indexOf(item)
+            this.editedItem = Object.assign({}, item)
 
-            this.$ajax.get('/system/setting/roles/'+item.id+'/permission', {
+            this.$ajax.get('/system/setting/roles/' + item.id + '/permission', {
                 headers: {
-                    Authorization: this.TOKEN
+                    Authorization: this.TOKEN,
                 }
             }).then(({data,status})=>{
                 if (status==200)
@@ -343,7 +339,7 @@ export default {
                 }
             })
             
-            this.dialogdetail = true;
+            this.dialogdetail = true
         },
         editItem (item) {
             this.editedIndex = this.datatable.indexOf(item)
@@ -353,7 +349,7 @@ export default {
         setPermission (item) {
             this.$ajax.get('/system/setting/permissions', {
                 headers: {
-                    Authorization: this.TOKEN
+                    Authorization: this.TOKEN,
                 }
             }).then(({data,status})=>{
                 if (status==200)
@@ -362,9 +358,9 @@ export default {
                 }
             })
 
-            this.$ajax.get('/system/setting/roles/'+item.id+'/permission', {
+            this.$ajax.get('/system/setting/roles/' + item.id + '/permission', {
                 headers: {
-                    Authorization: this.TOKEN
+                    Authorization: this.TOKEN,
                 }
             }).then(({data,status})=>{
                 if (status==200)
@@ -372,11 +368,11 @@ export default {
                     this.permissions_selected = data.permissions;
                 }
             })
-            this.dialogRolePermission = true;
+            this.dialogRolePermission = true
             this.editedItem=item;
         
         },
-        close () {
+        close() {
             this.btnLoading = false
             this.dialog = false
             this.$refs.frmdata.reset()
@@ -388,10 +384,10 @@ export default {
             );
         },
         closeRolePermissions () {
-            this.permissions_selected=[];
+            this.permissions_selected=[]
             this.dialogRolePermission = false
         },
-        save () {
+        save() {
             this.form_error_message='';
             if (this.$refs.frmdata.validate())
             {
@@ -405,12 +401,12 @@ export default {
                         },
                         {
                             headers: {
-                                Authorization: this.TOKEN
+                                Authorization: this.TOKEN,
                             }
                         }
-                    ).then(({ data }) => { 
-                        Object.assign(this.datatable[this.editedIndex],data.roles);
-                        this.close();
+                    ).then(({ data }) => {
+                        Object.assign(this.datatable[this.editedIndex], data.roles);
+                        this.close()
                     }).catch(() => {
                         this.btnLoading = false
                     })
@@ -422,12 +418,12 @@ export default {
                         },
                         {
                             headers: {
-                                Authorization: this.TOKEN
+                                Authorization: this.TOKEN,
                             }
                         }
-                    ).then(({ data }) => { 
+                    ).then(({ data }) => {
                         this.datatable.push(data.roles);
-                        this.close();
+                        this.close()
                     }).catch(() => {
                         this.btnLoading = false
                     })
@@ -436,7 +432,7 @@ export default {
         },
     },
     computed: {
-        formTitle () {
+        formTitle() {
             return this.editedIndex === -1 ? 'TAMBAH ROLE' : 'EDIT ROLE'
         },
         ...mapGetters('auth', {
@@ -445,7 +441,7 @@ export default {
         }),
     },
     watch: {
-        dialog (val) {
+        dialog(val) {
             val || this.close()
         },
     },

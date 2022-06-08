@@ -190,11 +190,11 @@
           disabled: true,
           href: '#',
         }
-      ];
+      ]
       this.initialize()
       this.fetchKomentar()
     },
-    data: () => ({ 
+    data: () => ({
       dashboard: null,
 
       dialogkronologis: false,
@@ -262,7 +262,7 @@
         }
       },
       verifikasi() {
-        this.$root.$confirm.open('Verifikasi', 'Setelah diverifikasi, tidak bisa diberi komentar, diubah, atau dihapus ?', { color: 'green',width:600 }).then((confirm) => {
+        this.$root.$confirm.open('Verifikasi', 'Setelah diverifikasi, tidak bisa diberi komentar, diubah, atau dihapus ?', { color: 'green',width:600 }).then(confirm => {
           if (confirm) {
             this.btnLoading = true
             this.$ajax.post('/kegiatan/investigasiperkara/verifikasi/' + this.kegiatan_id,
@@ -290,10 +290,10 @@
         this.dialogrekomendasi = false
       },
       deleteItem(item) {
-        this.$root.$confirm.open('Delete', 'Apakah Anda ingin menghapus komentar kegiatan dengan ID '+item.kegiatan_id+' ?', { color: 'red',width:600 }).then((confirm) => {
+        this.$root.$confirm.open('Delete', 'Apakah Anda ingin menghapus komentar kegiatan dengan ID ' + item.kegiatan_id + ' ?', { color: 'red',width:600 }).then(confirm => {
           if (confirm) {
             this.btnLoading = true
-            this.$ajax.post('/kegiatan/komentar/'+item.id,
+            this.$ajax.post('/kegiatan/komentar/' + item.id,
               {
                 _method: 'DELETE',
               },

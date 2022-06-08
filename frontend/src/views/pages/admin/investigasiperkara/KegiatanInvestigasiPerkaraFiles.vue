@@ -26,7 +26,7 @@
           <DK :datakegiatan="data_kegiatan" :path="'/kegiatan/investigasiperkara/' + kegiatan_id + '/detail'" />
         </v-col>
       </v-row>
-      <v-row>        
+      <v-row>
         <v-col xs="12" sm="6" md="4">
           <v-form v-model="form_valid_dokumentasi_kegiatan" ref="frmuploaddokumentasikegiatan" lazy-validation>
             <v-card>
@@ -206,17 +206,17 @@
         {
           text: 'INVESTIGASI PERKARA',
           disabled: false,
-          href: '/kegiatan/investigasiperkara/' + this.kegiatan_id+'/detail'
+          href: '/kegiatan/investigasiperkara/' + this.kegiatan_id + '/detail'
         },
         {
           text: 'FILES',
           disabled: true,
           href: '#',
         }
-      ];
+      ]
       this.initialize()
     },
-    data: () => ({ 
+    data: () => ({
       dashboard: null,
 
       kegiatan_id: null,
@@ -248,7 +248,7 @@
           if (value && typeof value !== 'undefined' && value.length > 0) {
             return value.size < 2000000 || 'File ktp pemohon harus kurang dari 2MB.'
           } else {
-            return true;
+            return true
           }
         }
       ],
@@ -262,7 +262,7 @@
           if (value && typeof value !== 'undefined' && value.length > 0) {
             return value.size < 2000000 || 'File sktm pemohon harus kurang dari 2MB.'
           } else {
-            return true;
+            return true
           }
         }
       ],
@@ -274,7 +274,7 @@
             Authorization: this.$store.getters['auth/Token'],
           }
         })
-        .then(({ data }) => { 
+        .then(({ data }) => {
           this.data_kegiatan = data.kegiatan          
           this.sktmPemohon=this.$api.storageURL + '/' + data.kegiatan.file_fotocopy_sktm
           this.filektppemohon=this.$api.storageURL + '/' + data.kegiatan.file_fotocopy_ktp
@@ -307,7 +307,7 @@
         if (this.$refs.frmuploadsktm.validate())
         {
           if (typeof this.filesktmpemohon !== 'undefined' && this.filesktmpemohon !== null){
-            this.btnLoadingUploadSKTM = true;
+            this.btnLoadingUploadSKTM = true
             var formdata = new FormData()
             formdata.append('filesktmpemohon', this.filesktmpemohon)
             await this.$ajax.post('/kegiatan/investigasiperkara/uploadsktmpemohon/' + this.kegiatan_id,formdata,
@@ -336,7 +336,7 @@
         if (this.$refs.frmuploadktp.validate())
         {
           if (typeof this.filektppemohon !== 'undefined' && this.filektppemohon !== null){
-            this.btnLoadingUploadKTP = true;
+            this.btnLoadingUploadKTP = true
             var formdata = new FormData()
             formdata.append('filektppemohon', this.filektppemohon)
             await this.$ajax.post('/kegiatan/investigasiperkara/uploadktppemohon/' + this.kegiatan_id,formdata,
@@ -362,7 +362,7 @@
         if (this.$refs.frmuploaddokumentasikegiatan.validate()) {
           if (typeof this.filedokumentasikegiatan !== 'undefined' && this.filedokumentasikegiatan !== null )
           {
-            this.btnLoadingUploadDokumentasiKegiatan=true;
+            this.btnLoadingUploadDokumentasiKegiatan=true
             var formdata = new FormData()
             formdata.append('filedokumentasikegiatan', this.filedokumentasikegiatan)
             await this.$ajax

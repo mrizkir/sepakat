@@ -211,17 +211,17 @@
         {
           text: 'MEDIASI',
           disabled: false,
-          href: '/kegiatan/mediasi/' + this.kegiatan_id+'/detail'
+          href: '/kegiatan/mediasi/' + this.kegiatan_id + '/detail'
         },
         {
           text: 'FILES',
           disabled: true,
           href: '#',
         }
-      ];
+      ]
       this.initialize()
     },
-    data: () => ({ 
+    data: () => ({
       dashboard: null,
 
       kegiatan_id: null,
@@ -277,7 +277,7 @@
         } else {
           let reader = new FileReader()
           reader.readAsDataURL(e)
-          reader.onload = img => { 
+          reader.onload = img => {
             this.image_prev = img.target.result
           }
         }
@@ -286,7 +286,7 @@
         if (this.$refs.frmuploadktp.validate())
         {
           if (typeof this.filektppemohon !== 'undefined' && this.filektppemohon !== null){
-            this.btnLoadingUploadKTP = true;
+            this.btnLoadingUploadKTP = true
             var formdata = new FormData()
             formdata.append('filektppemohon', this.filektppemohon)
             await this.$ajax.post('/kegiatan/mediasi/uploadktppemohon/' + this.kegiatan_id,formdata,
@@ -317,7 +317,7 @@
         {
           if (typeof this.filedaftarhadir !== 'undefined' && this.filedaftarhadir !== null )
           {
-            this.btnLoadingUploadDaftarHadir=true;
+            this.btnLoadingUploadDaftarHadir=true
             var formdata = new FormData()
             formdata.append('filedaftarhadir', this.filedaftarhadir)
             await this.$ajax.post('/kegiatan/mediasi/uploaddaftarhadir/' + this.kegiatan_id,formdata,
@@ -343,7 +343,7 @@
         if (this.$refs.frmuploaddokumentasikegiatan.validate()) {
           if (typeof this.filedokumentasikegiatan !== 'undefined' && this.filedokumentasikegiatan !== null )
           {
-            this.btnLoadingUploadDokumentasiKegiatan=true;
+            this.btnLoadingUploadDokumentasiKegiatan=true
             var formdata = new FormData()
             formdata.append('filedokumentasikegiatan', this.filedokumentasikegiatan)
             await this.$ajax

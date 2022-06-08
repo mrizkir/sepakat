@@ -211,17 +211,17 @@
         {
           text: 'KONSULTASI HUKUM',
           disabled: false,
-          href: '/kegiatan/konsultasihukum/' + this.kegiatan_id+'/detail'
+          href: '/kegiatan/konsultasihukum/' + this.kegiatan_id + '/detail'
         },
         {
           text: 'FILES',
           disabled: true,
           href: '#',
         }
-      ];
+      ]
       this.initialize()
     },
-    data: () => ({ 
+    data: () => ({
       dashboard: null,
 
       kegiatan_id: null,
@@ -266,7 +266,7 @@
             Authorization: this.$store.getters['auth/Token'],
           }
         })
-        .then(({ data }) => { 
+        .then(({ data }) => {
           this.data_kegiatan = data.kegiatan
           this.sktmPemohon=this.$api.storageURL + '/' + data.kegiatan.file_fotocopy_sktm
         })
@@ -286,7 +286,7 @@
         if (this.$refs.frmuploadsktm.validate())
         {
           if (typeof this.filesktmpemohon !== 'undefined' && this.filesktmpemohon !== null){
-            this.btnLoadingUploadSKTM = true;
+            this.btnLoadingUploadSKTM = true
             var formdata = new FormData()
             formdata.append('filesktmpemohon', this.filesktmpemohon)
             await this.$ajax.post('/kegiatan/konsultasihukum/uploadsktmpemohon/' + this.kegiatan_id,formdata,
@@ -317,7 +317,7 @@
         {
           if (typeof this.filedaftarhadir !== 'undefined' && this.filedaftarhadir !== null )
           {
-            this.btnLoadingUploadDaftarHadir=true;
+            this.btnLoadingUploadDaftarHadir=true
             var formdata = new FormData()
             formdata.append('filedaftarhadir', this.filedaftarhadir)
             await this.$ajax.post('/kegiatan/konsultasihukum/uploaddaftarhadir/' + this.kegiatan_id,formdata,
@@ -343,7 +343,7 @@
         if (this.$refs.frmuploaddokumentasikegiatan.validate()) {
           if (typeof this.filedokumentasikegiatan !== 'undefined' && this.filedokumentasikegiatan !== null )
           {
-            this.btnLoadingUploadDokumentasiKegiatan=true;
+            this.btnLoadingUploadDokumentasiKegiatan=true
             var formdata = new FormData()
             formdata.append('filedokumentasikegiatan', this.filedokumentasikegiatan)
             await this.$ajax

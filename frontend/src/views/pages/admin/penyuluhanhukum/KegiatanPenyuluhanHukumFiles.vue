@@ -209,17 +209,17 @@
         {
           text: 'PENYULUHAN HUKUM',
           disabled: false,
-          href: '/kegiatan/penyuluhanhukum/' + this.kegiatan_id+'/detail'
+          href: '/kegiatan/penyuluhanhukum/' + this.kegiatan_id + '/detail'
         },
         {
           text: 'FILES',
           disabled: true,
           href: '#',
         }
-      ];
+      ]
       this.initialize()
     },
-    data: () => ({ 
+    data: () => ({
       dashboard: null,
 
       kegiatan_id: null,
@@ -273,7 +273,7 @@
         if (this.$refs.frmsuratpermohonan.validate())
         {
           if (typeof this.file_surat_permohonan !== 'undefined' && this.file_surat_permohonan !== null){
-            this.btnLoadingSuratPermohonan = true;
+            this.btnLoadingSuratPermohonan = true
             var formdata = new FormData()
             formdata.append('filesuratpermohonan', this.file_surat_permohonan)
             await this.$ajax.post('/kegiatan/penyuluhanhukum/uploadsuratpermohonan/' + this.kegiatan_id,formdata,
@@ -304,7 +304,7 @@
         {
           if (typeof this.filedaftarhadir !== 'undefined' && this.filedaftarhadir !== null )
           {
-            this.btnLoadingUploadDaftarHadir=true;
+            this.btnLoadingUploadDaftarHadir=true
             var formdata = new FormData()
             formdata.append('filedaftarhadir', this.filedaftarhadir)
             await this.$ajax.post('/kegiatan/penyuluhanhukum/uploaddaftarhadir/' + this.kegiatan_id,formdata,
@@ -330,7 +330,7 @@
         if (this.$refs.frmuploaddokumentasikegiatan.validate()) {
           if (typeof this.filedokumentasikegiatan !== 'undefined' && this.filedokumentasikegiatan !== null )
           {
-            this.btnLoadingUploadDokumentasiKegiatan=true;
+            this.btnLoadingUploadDokumentasiKegiatan=true
             var formdata = new FormData()
             formdata.append('filedokumentasikegiatan', this.filedokumentasikegiatan)
             await this.$ajax

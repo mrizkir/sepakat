@@ -39,7 +39,7 @@
                                     label="NAMA PERGURUAN TINGGI"
                                     outlined
                                     :rules="rule_nama_pt">
-                                </v-text-field>           
+                                </v-text-field>
                                 <v-text-field 
                                     v-model="formdata.nama_alias_pt" 
                                     label="NAMA SINGKATAN PERGURUAN TINGGI"
@@ -56,7 +56,7 @@
                                     label="KODE PERGURUAN TINGGI (SESUAI FORLAP)"
                                     outlined
                                     :rules="rule_kode_pt">
-                                </v-text-field>           
+                                </v-text-field>
                             </v-card-text>
                             <v-card-actions>
                                 <v-spacer></v-spacer>
@@ -86,7 +86,7 @@ export default {
             {
                 text: 'HOME',
                 disabled: false,
-                href: '/dashboard/' + this.ACCESS_TOKEN
+                href: '/dashboard/' + this.ACCESS_TOKEN,
             },
             {
                 text: 'KONFIGURASI SISTEM',
@@ -98,7 +98,7 @@ export default {
                 disabled: true,
                 href: '#',
             }
-        ];
+        ]
         this.initialize()
     },
     data: () => ({
@@ -111,28 +111,28 @@ export default {
             nama_pt: null,
             nama_alias_pt: null,
             bentuk_pt: null,
-            kode_pt:0,
+            kode_pt: 0,
         },
         //form rules        
         rule_nama_pt: [
-            value => !!value||"Mohon untuk di isi Nama Perguruan Tinggi !!!", 
+            value => !!value || "Mohon untuk di isi Nama Perguruan Tinggi !!!", 
         ],
         rule_nama_singkatan_pt: [
-            value => !!value||"Mohon untuk di isi Nama Alias Perguruan Tinggi !!!", 
+            value => !!value || "Mohon untuk di isi Nama Alias Perguruan Tinggi !!!", 
         ],
         rule_kode_pt: [
-            value => !!value||"Mohon untuk di isi Kode Perguruan Tinggi !!!",
+            value => !!value || "Mohon untuk di isi Kode Perguruan Tinggi !!!",
             value => /^[0-9]+$/.test(value) || 'Kode Perguruan Tinggi hanya boleh angka',
         ]
     }),
     methods: {
         initialize: async function() 
         {
-            this.datatableLoading=true;
+            this.datatableLoading = true
             await this.$ajax.get('/system/setting/variables',
             {
                 headers: {
-                    Authorization: this.TOKEN
+                    Authorization: this.TOKEN,
                 }
             }).then(({ data }) => {
                 let setting = data.setting
@@ -143,7 +143,7 @@ export default {
             })
             
         },
-        save () {
+        save() {
             if (this.$refs.frmdata.validate())
             {
                 this.btnLoading = true
@@ -151,7 +151,7 @@ export default {
                     {
                         _method: 'PUT', 
                         'pid': 'Identitas Perguruan Tinggi',
-                        setting:JSON.stringify({
+                        setting: JSON.stringify({
                             101: this.formdata.nama_pt,
                             102: this.formdata.nama_alias_pt,
                             103: this.formdata.bentuk_pt,
@@ -160,7 +160,7 @@ export default {
                     },
                     {
                         headers: {
-                            Authorization: this.TOKEN
+                            Authorization: this.TOKEN,
                         }
                     }
                 ).then(() => {

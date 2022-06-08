@@ -68,7 +68,7 @@
                   outlined
                   :rules="rule_user_password"
                 >
-                </v-text-field> 
+                </v-text-field>
               </v-card-text>
               <v-card-actions>
                 <v-spacer></v-spacer>
@@ -111,8 +111,8 @@
           disabled: true,
           href: '#',
         },
-      ];
-    }, 
+      ]
+    },
     data ()
     {
       return {
@@ -122,31 +122,31 @@
         //form data   
         form_valid: true,
         formdata: {
-          id:0,
+          id: 0,
           foto: null,
           password: null,
           created_at: null,
           updated_at: null,
         },
         formdefault: {
-          id:0,
-          foto: null, 
+          id: 0,
+          foto: null,
           password: null,
           created_at: null,
-          updated_at: null, 
+          updated_at: null,
         },
         //form rules  
         rule_foto: [
-          value => !!value||"Mohon pilih gambar !!!",
+          value => !!value || "Mohon pilih gambar !!!",
           value =>!value || value.size < 2000000 || 'File foto harus kurang dari 2MB.'                
         ],
         rule_user_password: [
-          value => !!value||"Mohon untuk di isi password User !!!",
+          value => !!value || "Mohon untuk di isi password User !!!",
           value => {
-            if (value && typeof value !== 'undefined' && value.length > 0){
-              return value.length >= 8 || 'Minimial Password 8 karaketer';
+            if (value && typeof value !== 'undefined' && value.length > 0) {
+              return value.length >= 8 || 'Minimial Password 8 karakter'
             } else {
-              return true;
+              return true
             }
           }
         ],
@@ -156,26 +156,27 @@
       save() {
         if (this.$refs.frmdata.validate()) {
           this.btnLoading = true
-          this.$ajax.post('/system/users/updatepassword/' + this.$store.getters['auth/AttributeUser']('id'),
-            {
-              _method: 'PUT',
-              password: this.formdata.password,
-            },
-            {
-              headers: {
-                Authorization: this.$store.getters['auth/Token'],
+          this.$ajax
+            .post('/system/users/updatepassword/' + this.$store.getters['auth/AttributeUser']('id'),
+              {
+                _method: 'PUT',
+                password: this.formdata.password,
+              },
+              {
+                headers: {
+                  Authorization: this.$store.getters['auth/Token'],
+                }
               }
-            }
-          )
-          .then(({ data }) => {
-            this.$refs.frmdata.reset()
-            this.formdata.foto=data.foto
-            this.formdata=this.formdefault
-            this.btnLoading = false
-          })
-          .catch(() => {
-            this.btnLoading = false
-          })
+            )
+            .then(({ data }) => {
+              this.$refs.frmdata.reset()
+              this.formdata.foto=data.foto
+              this.formdata=this.formdefault
+              this.btnLoading = false
+            })
+            .catch(() => {
+              this.btnLoading = false
+            })
         }
       },
       previewImage(e) {
@@ -183,7 +184,7 @@
           this.avatar = null
         } else {
           let reader = new FileReader()
-          reader.readAsDataURL(e);
+          reader.readAsDataURL(e)
           reader.onload = img => {
             this.photoUser = img.target.result
           }
@@ -193,44 +194,48 @@
         if (this.$refs.frmuploadfoto.validate()) {
           if (this.formdata.foto) {
             this.btnLoading = true
-            var formdata = new FormData();
-            formdata.append('foto',this.formdata.foto);
-            await this.$ajax.post('/setting/users/uploadfoto/' + this.$store.getters.User.id,formdata,
-              {
-                headers: {
-                  Authorization: this.$store.getters['auth/Token'],
-                  'Content-Type': 'multipart/form-data'                      
+            var formdata = new FormData()
+            formdata.append('foto',this.formdata.foto)
+            await this.$ajax
+              .post('/setting/users/uploadfoto/' + this.$store.getters.User.id,formdata,
+                {
+                  headers: {
+                    Authorization: this.$store.getters['auth/Token'],
+                    'Content-Type': 'multipart/form-data'                      
+                  }
                 }
-              }
-            )
-            .then(({ data }) => {
-              this.btnLoading = false
-              this.$store.dispatch('updateFoto',data.user.foto)
-            })
-            .catch(() => {
-              this.btnLoading = false
-            })
+              )
+              .then(({ data }) => {
+                this.btnLoading = false
+                this.$store.dispatch('updateFoto',data.user.foto)
+              })
+              .catch(() => {
+                this.btnLoading = false
+              })
             this.$refs.frmdata.reset()
           }
         }
       },
       resetFoto: async function() {
         this.btnLoading = true
-        await this.$ajax.post('/setting/users/resetfoto/' + this.$store.getters.User.id,{},
-          {
-            headers: {
-              Authorization: this.$store.getters['auth/Token'],
+        await this.$ajax
+          .post('/setting/users/resetfoto/' +
+            this.$store.getters.User.id,
+            {},
+            {
+              headers: {
+                Authorization: this.$store.getters['auth/Token'],
+              },
             }
-          }
-        )
-        .then(({ data }) => {
-          this.btnLoading = false
-          this.$store.dispatch('updateFoto',data.user.foto);
-        })
-        .catch(() => {
-          this.btnLoading = false
-        })
-      }
+          )
+          .then(({ data }) => {
+            this.btnLoading = false
+            this.$store.dispatch('updateFoto', data.user.foto)
+          })
+          .catch(() => {
+            this.btnLoading = false
+          })
+      },
     },
     computed: {
       photoUser: {

@@ -260,10 +260,10 @@
           disabled: true,
           href: '#',
         }
-      ];
+      ]
       this.initialize()
     },
-    data: () => ({ 
+    data: () => ({
       dashboard: null,
 
       kegiatan_id: null,

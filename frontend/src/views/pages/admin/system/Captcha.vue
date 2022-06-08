@@ -75,7 +75,7 @@ export default {
             {
                 text: 'HOME',
                 disabled: false,
-                href: '/dashboard/' + this.ACCESS_TOKEN
+                href: '/dashboard/' + this.ACCESS_TOKEN,
             },
             {
                 text: 'KONFIGURASI SISTEM',
@@ -87,7 +87,7 @@ export default {
                 disabled: true,
                 href: '#',
             }
-        ];
+        ]
         this.initialize()
     },
     data: () => ({
@@ -102,20 +102,20 @@ export default {
         },
         //form rules
         rule_site_key: [
-            value => !!value||"Mohon untuk di isi site key !!!",
+            value => !!value || "Mohon untuk di isi site key !!!",
         ],
         rule_private_key: [
-            value => !!value||"Mohon untuk di isi private key !!!",
+            value => !!value || "Mohon untuk di isi private key !!!",
         ],
     }),
     methods: {
         initialize: async function()
         {
-            this.datatableLoading=true;
+            this.datatableLoading = true
             await this.$ajax.get('/system/setting/variables',
             {
                 headers: {
-                    Authorization: this.TOKEN
+                    Authorization: this.TOKEN,
                 }
             }).then(({ data }) => {
                 let setting = data.setting;
@@ -124,7 +124,7 @@ export default {
             })
 
         },
-        save () {
+        save() {
             if (this.$refs.frmdata.validate())
             {
                 this.btnLoading = true
@@ -132,14 +132,14 @@ export default {
                     {
                         _method: 'PUT',
                         'pid': 'captcha google',
-                        setting:JSON.stringify({
+                        setting: JSON.stringify({
                             901: this.formdata.siteKey,
                             902: this.formdata.privateKey,
                         }),
                     },
                     {
                         headers: {
-                            Authorization: this.TOKEN
+                            Authorization: this.TOKEN,
                         }
                     }
                 ).then(() => {

@@ -78,17 +78,17 @@
   </v-card>
 </template>
 <script>
-export default {
-  name: 'DataKegiatanPenyuluhanHukum',
-  props: {
-    datakegiatan: {
-      type:Object,
-      required: true,
-    },
-    path: {
-      type: String,
-      required: true,
+  export default {
+    name: 'DataKegiatanPenyuluhanHukum',
+    props: {
+      datakegiatan: {
+        type:Object,
+        required: true,
+      },
+      path: {
+        type: String,
+        required: true,
+      }
     }
   }
-}
 </script>
