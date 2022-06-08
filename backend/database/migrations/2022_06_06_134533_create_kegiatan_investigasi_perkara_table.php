@@ -30,9 +30,8 @@ class CreateKegiatanInvestigasiPerkaraTable extends Migration
 			$table->text('rekomendasi_kegiatan');
 			$table->text('tindak_lanjut');
 
-			$table->string('file_sktm')->nullable();
 			$table->string('file_fotocopy_ktp')->nullable();
-			
+			$table->string('file_sktm')->nullable();			
 			$table->string('file_dokumentasi_kegiatan')->nullable();
 			$table->tinyInteger('id_status');
 			$table->timestamps();

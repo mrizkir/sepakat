@@ -18,30 +18,30 @@ class KegiatanInvestigasiPerkaraController extends Controller
 		if ($this->hasRole('paralegal'))
 		{
 			$daftar_kegiatan=KegiatanInvestigasiPerkaraModel::select(\DB::raw('
-				konsultasi_hukum.id,
+				investigasi_perkara.id,
 				users.name,
-				konsultasi_hukum.nama_kegiatan,
-				konsultasi_hukum.nama_pemohon,                                                                                                                				
-				konsultasi_hukum.id_status,
-				konsultasi_hukum.created_at,
-				konsultasi_hukum.updated_at                                                        
+				investigasi_perkara.nama_kegiatan,
+				investigasi_perkara.nama_pemohon,                                                                                                                				
+				investigasi_perkara.id_status,
+				investigasi_perkara.created_at,
+				investigasi_perkara.updated_at                                                        
 			'))    
-			->join ('users','users.id','konsultasi_hukum.user_id')			
+			->join ('users','users.id','investigasi_perkara.user_id')			
 			->where('user_id',$this->getUserid())                                                                                                    
 			->get();
 		}
 		else
 		{        
 			$daftar_kegiatan=KegiatanInvestigasiPerkaraModel::select(\DB::raw('
-				konsultasi_hukum.id,
+				investigasi_perkara.id,
 				users.name,
-				konsultasi_hukum.nama_kegiatan,
-				konsultasi_hukum.nama_pemohon,                                                                                                                				
-				konsultasi_hukum.id_status,
-				konsultasi_hukum.created_at,
-				konsultasi_hukum.updated_at                                                        
+				investigasi_perkara.nama_kegiatan,
+				investigasi_perkara.nama_pemohon,                                                                                                                				
+				investigasi_perkara.id_status,
+				investigasi_perkara.created_at,
+				investigasi_perkara.updated_at                                                        
 			'))    
-			->join ('users','users.id','konsultasi_hukum.user_id')    			                                                                         
+			->join ('users','users.id','investigasi_perkara.user_id')    			                                                                         
 			->get();
 		}
 		return Response()->json([
@@ -95,14 +95,13 @@ class KegiatanInvestigasiPerkaraController extends Controller
 			'pekerjaan'=>'required',
 			'alamat'=>'required',
 			'nama_kegiatan'=>'required',            
-			'tanggal_pelaksanaan'=>'required|date',            
-			'nama_kegiatan'=>'required',            
-			'tanggal_pelaksanaan'=>'required', 
+			'tanggal_pelaksanaan'=>'required|date',            			
 			'jam_pelaksanaan'=>'required',                       
 			'tempat_pelaksanaan'=>'required',            
 			'uraian_kegiatan'=>'required',            
-			'nasihat_hukum'=>'required',            
+			'hasil_investigasi'=>'required',            
 			'rekomendasi_kegiatan'=>'required',            
+			'tindak_lanjut'=>'required',            
 		]);
 		\DB::beginTransaction();
 		
@@ -122,8 +121,9 @@ class KegiatanInvestigasiPerkaraController extends Controller
 			'tanggal_pelaksanaan'=>$tanggal_pelaksanaan,                
 			'tempat_pelaksanaan'=>$request->input('tempat_pelaksanaan'),                			             
 			'uraian_kegiatan'=>$request->input('uraian_kegiatan'),                
-			'nasihat_hukum'=>$request->input('nasihat_hukum'),                
+			'hasil_investigasi'=>$request->input('hasil_investigasi'),                
 			'rekomendasi_kegiatan'=>$request->input('rekomendasi_kegiatan'),                
+			'tindak_lanjut'=>$request->input('tindak_lanjut'),                
 			'id_status'=>0,                            
 		]);
 		
@@ -133,8 +133,8 @@ class KegiatanInvestigasiPerkaraController extends Controller
 			'user_id'=>$request->input('user_id'),                
 			'tanggal'=>$tanggal_pelaksanaan,                
 			'tempat'=>$request->input('tempat_pelaksanaan'),                
-			'id_jenis_kegiatan'=>4,                
-			'nama_jenis'=>'Konsultasi Hukum',                
+			'id_jenis_kegiatan'=>9,                
+			'nama_jenis'=>'Investigasi Perkara',                
 			'nama_kegiatan'=>$request->input('nama_kegiatan'),                
 			'pemohon'=>$request->input('nama_pemohon'),                
 			'uraian_kegiatan'=>$request->input('uraian_kegiatan'),                
@@ -211,7 +211,7 @@ class KegiatanInvestigasiPerkaraController extends Controller
 			}
 		}
 	}
-	public function uploaddaftarhadir (Request $request,$id)
+	public function uploadktppemohon (Request $request,$id)
 	{
 		$this->hasAnyPermission('KONSULTASI-KEGIATAN_STORE');
 
@@ -222,49 +222,50 @@ class KegiatanInvestigasiPerkaraController extends Controller
 			return Response()->json([
 				'status'=>0,
 				'pid'=>'store',                
-				'message'=>["Data kegiatan investigasi perkara tidak ditemukan."]
+				'message'=>["Data kegiatan mediasi tidak ditemukan."]
 			],422);         
 		}
 		else
 		{
 			$this->validate($request, [                      
-				'filedaftarhadir'=>'required'                        
+				'filektppemohon'=>'required'                        
 			]);
 			$name=$kegiatan->nama_pemohon;
-			$filedaftarhadir = $request->file('filedaftarhadir');
-			$mime_type=$filedaftarhadir->getMimeType();
-			if ($mime_type=='application/pdf' || $mime_type=='image/png' || $mime_type=='image/jpeg')
+			$filektppemohon = $request->file('filektppemohon');
+			$mime_type=$filektppemohon->getMimeType();
+			if ($mime_type=='image/png' || $mime_type=='image/jpeg')
 			{
-				$folder=\App\Helpers\Helper::public_path('pdf/daftarhadir/');
-				$file_name=uniqid('pdfdh').".".$filedaftarhadir->getClientOriginalExtension();
-				if (is_file(\App\Helpers\Helper::public_path($kegiatan->file_daftar_hadir)))                
+				$folder=\App\Helpers\Helper::public_path('images/kegiatan/');
+				$file_name=uniqid('img').".".$filektppemohon->getClientOriginalExtension();
+				if (is_file(\App\Helpers\Helper::public_path($kegiatan->file_fotocopy_ktp)))                
 				{
-					unlink(\App\Helpers\Helper::public_path($kegiatan->file_daftar_hadir));
+					unlink(\App\Helpers\Helper::public_path($kegiatan->file_fotocopy_ktp));
 				}                
-				$kegiatan->file_daftar_hadir="storage/pdf/daftarhadir/$file_name";
+				$kegiatan->file_fotocopy_ktp="storage/images/kegiatan/$file_name";
 				$kegiatan->save();
-				
+
 				\DB::table('kegiatan')
 				->where('kegiatan_id', $kegiatan->id)
 				->update([
-					'file_daftar_hadir' => $kegiatan->file_daftar_hadir,
+					'file_fotocopy_ktp' => $kegiatan->file_fotocopy_ktp,
 				]);
 
-				$filedaftarhadir->move($folder,$file_name);
+
+				$filektppemohon->move($folder,$file_name);
 				return Response()->json([
 					'status'=>0,
 					'pid'=>'store',
 					'kegiatan'=>$kegiatan,                
-					'message'=>"File daftar hadir kegiatan investigasi perkara ini berhasil diupload"
-				], 200);    
+					'message'=>"KTP Pemohon/Peserta ($name) berhasil diupload"
+				],200);    
 			}
 			else
 			{
 				return Response()->json([
-										'status'=>1,
-										'pid'=>'store',
-										'message'=>["Extensi file yang diupload bukan pdf."]
-									],422); 
+					'status'=>1,
+					'pid'=>'store',
+					'message'=>["Extensi file yang diupload bukan jpg atau png."]
+				],422); 
 				
 
 			}

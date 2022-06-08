@@ -407,5 +407,5 @@ export default {
     AdminLayout,
     ModuleHeader,
   },
-};
+}
 </script>

@@ -191,23 +191,30 @@
                   dense
                 />
                 <v-textarea
-                  label="URAIAN SINGKAT PERMASALAHAN"
+                  label="URAIAN SINGKAT INVESTIGASI"
                   v-model="formdata.uraian_kegiatan"
                   :rules="rule_uraian_kegiatan"
                   outlined
                   dense
                 />
                 <v-textarea
-                  label="NASIHAT HUKUM YANG DIBERIKAN"
-                  v-model="formdata.nasihat_hukum"
-                  :rules="rule_nasihat_hukum"
+                  label="HASIL INVESTIGASI"
+                  v-model="formdata.hasil_investigasi"
+                  :rules="rule_hasil_investigasi"
                   outlined
                   dense
                 />
                 <v-textarea
-                  label="HASIL AKHIR INVESTIGASI PERKARA"
+                  label="REKOMENDASI PARALEGAL"
                   v-model="formdata.rekomendasi_kegiatan"
                   :rules="rule_rekomendasi_kegiatan"
+                  outlined
+                  dense
+                />
+                <v-textarea
+                  label="RENCANA TINDAK LANJUT PASCA INVESTIGASI"
+                  v-model="formdata.tindak_lanjut"
+                  :rules="rule_tindak_lanjut"
                   outlined
                   dense
                 />
@@ -232,180 +239,185 @@
   </AdminLayout>
 </template>
 <script>
-import AdminLayout from '@/views/layouts/AdminLayout'
-import ModuleHeader from '@/components/ModuleHeader'
-export default {
-  name: 'KegiatanInvestigasiPerkaraTambah',
-  created() {
-    this.dashboard = this.$store.getters['uiadmin/getDefaultDashboard']
-    this.breadcrumbs = [
-      {
-        text: 'HOME',
-        disabled: false,
-        href: '/dashboard/' + this.$store.getters['auth/AccessToken'],
-      },
-      {
-        text: 'KEGIATAN',
-        disabled: false,
-        href: '#',
-      },
-      {
-        text: 'KEGIATAN',
-        disabled: false,
-        href: '/kegiatan/investigasiperkara'
-      },
-      {
-        text: 'TAMBAH',
-        disabled: true,
-        href: '#',
-      }
-    ];
-    this.initialize()
-  },
-  data: () => ({ 
-    dashboard: null,
-    
-    btnLoading: false,
-    form_valid: true, 
-    daftar_paralegal: [],
-    menuTanggalLahir: false,
-    menuTanggalPelaksanaan: false,
-    menuJamPelaksanaan: false, 
-    formdata: {
-      user_id: null,
-      nama_pemohon: null,
-      tempat_lahir: null,
-      tanggal_lahir: null,
-      pendidikan: null,
-      pekerjaan: null,
-      alamat: null,
-      nama_kegiatan: null,
-      tanggal_pelaksanaan: null,
-      jam_pelaksanaan: null,
-      tempat_pelaksanaan: null,
-      uraian_kegiatan: null,
-      nasihat_hukum: null,
-      rekomendasi_kegiatan: null,
-    },
-    formdefault: {
-      user_id: null,
-      nama_pemohon: null,
-      tempat_lahir: null,
-      tanggal_lahir: null,
-      pendidikan: null,
-      pekerjaan: null,
-      alamat: null,
-      nama_kegiatan: null,
-      tanggal_pelaksanaan: null,
-      jam_pelaksanaan: null,
-      tempat_pelaksanaan: null,
-      uraian_kegiatan: null,
-      nasihat_hukum: null,
-      rekomendasi_kegiatan: null,
-    },
-    rule_user_id: [
-      value => !!value || "Mohon untuk dipilih paralegal !!!",
-    ],
-    rule_nama_pemohon: [
-      value => !!value || "Mohon untuk diisi nama pemohon kegiatan investigasi perkara !!!", 
-    ],
-    rule_tempat_lahir: [
-			value => !!value || "Tempat Lahir pemohon mohon untuk diisi !!!"
-		],
-    rule_tanggal_lahir: [
-			value => !!value || "Tanggal Lahir pemohon mohon untuk diisi !!!"
-		],
-    rule_pendidikan: [
-			value => !!value || "Tingkat pendidikan pemohon mohon untuk diisi !!!"
-		],
-    rule_pekerjaan: [
-			value => !!value || "Pekerjaan pemohon mohon untuk diisi !!!"
-		],
-    rule_alamat: [
-			value => !!value || "Alamat pemohon mohon untuk diisi !!!"
-		],
-    rule_nama_kegiatan: [
-      value => !!value || "Mohon untuk diisi nama kegiatan investigasi perkara !!!", 
-    ],
-    rule_tanggal_pelaksanaan: [
-      value => !!value || "Mohon untuk diisi tanggal pelaksanaan kegiatan investigasi perkara !!!", 
-    ],
-    rule_jam_pelaksanaan: [
-      value => !!value || "Mohon untuk diisi waktu kegiatan investigasi perkara !!!", 
-    ],
-    rule_tempat: [
-      value => !!value || "Mohon untuk diisi tempat kegiatan investigasi perkara !!!", 
-    ],
-    rule_uraian_kegiatan: [
-      value => !!value || "Mohon untuk diisi uraian kegiatan investigasi perkara !!!", 
-    ],
-    rule_nasihat_hukum: [
-      value => !!value || "Mohon untuk diisi nasihat hukum yang diberikan !!!", 
-    ],
-    rule_rekomendasi_kegiatan: [
-      value => !!value || "Mohon untuk diisi rekomendasi kegiatan investigasi perkara !!!", 
-    ],
-  }),
-  methods: {
-    initialize: async function() 
-    {
-      await this.$ajax.get('/system/usersparalegal', {
-        headers: {
-          Authorization: this.$store.getters['auth/Token'],
+  import AdminLayout from '@/views/layouts/AdminLayout'
+  import ModuleHeader from '@/components/ModuleHeader'
+  export default {
+    name: 'KegiatanInvestigasiPerkaraTambah',
+    created() {
+      this.dashboard = this.$store.getters['uiadmin/getDefaultDashboard']
+      this.breadcrumbs = [
+        {
+          text: 'HOME',
+          disabled: false,
+          href: '/dashboard/' + this.$store.getters['auth/AccessToken'],
+        },
+        {
+          text: 'KEGIATAN',
+          disabled: false,
+          href: '#',
+        },
+        {
+          text: 'KEGIATAN',
+          disabled: false,
+          href: '/kegiatan/investigasiperkara'
+        },
+        {
+          text: 'TAMBAH',
+          disabled: true,
+          href: '#',
         }
-      }).then(({ data }) => {
-        this.daftar_paralegal = data.users
-      })
+      ];
+      this.initialize()
     },
-    save: async function() {
-      if (this.$refs.frmdata.validate())
+    data: () => ({ 
+      dashboard: null,
+      
+      btnLoading: false,
+      form_valid: true, 
+      daftar_paralegal: [],
+      menuTanggalLahir: false,
+      menuTanggalPelaksanaan: false,
+      menuJamPelaksanaan: false, 
+      formdata: {
+        user_id: null,
+        nama_pemohon: null,
+        tempat_lahir: null,
+        tanggal_lahir: null,
+        pendidikan: null,
+        pekerjaan: null,
+        alamat: null,
+        nama_kegiatan: null,
+        tanggal_pelaksanaan: null,
+        jam_pelaksanaan: null,
+        tempat_pelaksanaan: null,
+        uraian_kegiatan: null,
+        hasil_investigasi: null,
+        rekomendasi_kegiatan: null,
+        tindak_lanjut: null,
+      },
+      formdefault: {
+        user_id: null,
+        nama_pemohon: null,
+        tempat_lahir: null,
+        tanggal_lahir: null,
+        pendidikan: null,
+        pekerjaan: null,
+        alamat: null,
+        nama_kegiatan: null,
+        tanggal_pelaksanaan: null,
+        jam_pelaksanaan: null,
+        tempat_pelaksanaan: null,
+        uraian_kegiatan: null,
+        hasil_investigasi: null,
+        rekomendasi_kegiatan: null,
+        tindak_lanjut: null,
+      },
+      rule_user_id: [
+        value => !!value || "Mohon untuk dipilih paralegal !!!",
+      ],
+      rule_nama_pemohon: [
+        value => !!value || "Mohon untuk diisi nama pemohon kegiatan investigasi perkara !!!", 
+      ],
+      rule_tempat_lahir: [
+        value => !!value || "Tempat Lahir pemohon mohon untuk diisi !!!"
+      ],
+      rule_tanggal_lahir: [
+        value => !!value || "Tanggal Lahir pemohon mohon untuk diisi !!!"
+      ],
+      rule_pendidikan: [
+        value => !!value || "Tingkat pendidikan pemohon mohon untuk diisi !!!"
+      ],
+      rule_pekerjaan: [
+        value => !!value || "Pekerjaan pemohon mohon untuk diisi !!!"
+      ],
+      rule_alamat: [
+        value => !!value || "Alamat pemohon mohon untuk diisi !!!"
+      ],
+      rule_nama_kegiatan: [
+        value => !!value || "Mohon untuk diisi nama kegiatan investigasi perkara !!!", 
+      ],
+      rule_tanggal_pelaksanaan: [
+        value => !!value || "Mohon untuk diisi tanggal pelaksanaan kegiatan investigasi perkara !!!", 
+      ],
+      rule_jam_pelaksanaan: [
+        value => !!value || "Mohon untuk diisi waktu kegiatan investigasi perkara !!!", 
+      ],
+      rule_tempat: [
+        value => !!value || "Mohon untuk diisi tempat kegiatan investigasi perkara !!!", 
+      ],
+      rule_uraian_kegiatan: [
+        value => !!value || "Mohon untuk diisi uraian kegiatan investigasi perkara !!!", 
+      ],
+      rule_hasil_investigasi: [
+        value => !!value || "Mohon untuk diisi hasil investigasi perkara yang diberikan !!!", 
+      ],
+      rule_rekomendasi_kegiatan: [
+        value => !!value || "Mohon untuk diisi rekomendasi kegiatan investigasi perkara !!!", 
+      ],
+      rule_tindak_lanjut: [
+        value => !!value || "Mohon untuk diisi tindak lanjut investigasi perkara !!!", 
+      ],
+    }),
+    methods: {
+      initialize: async function() 
       {
-        this.btnLoading = true
-        await this.$ajax.post('/kegiatan/investigasiperkara/store',
-          {
-            user_id: this.formdata.user_id,
-            nama_pemohon: this.formdata.nama_pemohon,
-            tempat_lahir: this.formdata.tempat_lahir,
-            tanggal_lahir: this.formdata.tanggal_lahir,
-            pendidikan: this.formdata.pendidikan,
-            pekerjaan: this.formdata.pekerjaan,
-            alamat: this.formdata.alamat,
-            nama_kegiatan: this.formdata.nama_kegiatan,
-            tanggal_pelaksanaan: this.formdata.tanggal_pelaksanaan,
-            jam_pelaksanaan: this.formdata.jam_pelaksanaan,
-            tempat_pelaksanaan: this.formdata.tempat_pelaksanaan,
-            uraian_kegiatan: this.formdata.uraian_kegiatan,
-            nasihat_hukum: this.formdata.nasihat_hukum,
-            rekomendasi_kegiatan: this.formdata.rekomendasi_kegiatan,
-          },
-          {
-            headers: {
-              Authorization: this.$store.getters['auth/Token'],
-            }
+        await this.$ajax.get('/system/usersparalegal', {
+          headers: {
+            Authorization: this.$store.getters['auth/Token'],
           }
-        ).then(({ data }) => {
-          this.btnLoading = false
-          setTimeout(() => {
-            this.formdata = Object.assign({}, this.formdefault)
-            this.$router.push('/kegiatan/investigasiperkara/' + data.kegiatan.id + '/files')
-            }, 300
-          );
-        }).catch(() => {
-          this.btnLoading = false
+        }).then(({ data }) => {
+          this.daftar_paralegal = data.users
         })
-      }
+      },
+      save: async function() {
+        if (this.$refs.frmdata.validate())
+        {
+          this.btnLoading = true
+          await this.$ajax.post('/kegiatan/investigasiperkara/store',
+            {
+              user_id: this.formdata.user_id,
+              nama_pemohon: this.formdata.nama_pemohon,
+              tempat_lahir: this.formdata.tempat_lahir,
+              tanggal_lahir: this.formdata.tanggal_lahir,
+              pendidikan: this.formdata.pendidikan,
+              pekerjaan: this.formdata.pekerjaan,
+              alamat: this.formdata.alamat,
+              nama_kegiatan: this.formdata.nama_kegiatan,
+              tanggal_pelaksanaan: this.formdata.tanggal_pelaksanaan,
+              jam_pelaksanaan: this.formdata.jam_pelaksanaan,
+              tempat_pelaksanaan: this.formdata.tempat_pelaksanaan,
+              uraian_kegiatan: this.formdata.uraian_kegiatan,
+              hasil_investigasi: this.formdata.hasil_investigasi,
+              rekomendasi_kegiatan: this.formdata.rekomendasi_kegiatan,
+              tindak_lanjut: this.formdata.tindak_lanjut,
+            },
+            {
+              headers: {
+                Authorization: this.$store.getters['auth/Token'],
+              }
+            }
+          ).then(({ data }) => {
+            this.btnLoading = false
+            setTimeout(() => {
+              this.formdata = Object.assign({}, this.formdefault)
+              this.$router.push('/kegiatan/investigasiperkara/' + data.kegiatan.id + '/files')
+              }, 300
+            );
+          }).catch(() => {
+            this.btnLoading = false
+          })
+        }
+      },
+      closedialogfrm() {
+        setTimeout(() => {
+          this.formdata = Object.assign({}, this.formdefault)
+          this.$router.push('/kegiatan/investigasiperkara')
+        }, 300);
+      },
     },
-    closedialogfrm() {
-      setTimeout(() => {
-        this.formdata = Object.assign({}, this.formdefault)
-        this.$router.push('/kegiatan/investigasiperkara')
-        }, 300
-      );
+    components: {
+      AdminLayout,
+      ModuleHeader,
     },
-  },
-  components: {
-    AdminLayout,
-    ModuleHeader,
-  },
-};
+  }
 </script>

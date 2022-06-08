@@ -11,7 +11,7 @@
         @click.stop="
           $router
             .push('/dashboard/' + $store.getters['auth/AccessToken'])
-            .catch((err) => {})
+            .catch(err => {})
         "
       >
         <span class="hidden-sm-and-down"
@@ -40,7 +40,7 @@
             </v-list-item-avatar>
             <v-list-item-content>
               <v-list-item-title class="title">
-                {{ ATTRIBUTE_USER("username") }}
+                {{ ATTRIBUTE_USER('username') }}
               </v-list-item-title>
               <v-list-item-subtitle>
                 {{ ROLE }}
@@ -82,7 +82,7 @@
         </v-list-item-avatar>
         <v-list-item-content>
           <v-list-item-title class="title">
-            {{ ATTRIBUTE_USER("username") }}
+            {{ ATTRIBUTE_USER('username') }}
           </v-list-item-title>
           <v-list-item-subtitle>
             {{ ROLE }}
@@ -121,105 +121,121 @@
             <v-list-item-title> JENIS KEGIATAN </v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-        <v-subheader v-if="CAN_ACCESS('KONSULTASI-GROUP')"
-          >KEGIATAN</v-subheader
+        <v-subheader v-if="CAN_ACCESS('KONSULTASI-GROUP')">DATA PARALEGAL</v-subheader>
+        <v-list-group
+          group="/kegiatan"
+          active-class="yellow"
+          no-action
+          v-if="CAN_ACCESS('KONSULTASI-GROUP')"
+          color="green"
         >
-        <v-list-item
-          link
-          to="/kegiatan/penyuluhanhukum"
-          v-if="CAN_ACCESS('KONSULTASI-KEGIATAN_BROWSE')"
-        >
-          <v-list-item-icon class="mr-2">
-            <v-icon>mdi-calendar-blank-multiple</v-icon>
-          </v-list-item-icon>
-          <v-list-item-content>
-            <v-list-item-title> PENYULUHAN HUKUM </v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-        <v-list-item
-          link
-          to="/kegiatan/konsultasihukum"
-          v-if="CAN_ACCESS('KONSULTASI-KEGIATAN_BROWSE')"
-        >
-          <v-list-item-icon class="mr-2">
-            <v-icon>mdi-calendar-blank-multiple</v-icon>
-          </v-list-item-icon>
-          <v-list-item-content>
-            <v-list-item-title> KONSULTASI HUKUM </v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-        <v-list-item
-          link
-          to="/kegiatan/investigasiperkara"
-          v-if="CAN_ACCESS('KONSULTASI-KEGIATAN_BROWSE')"
-        >
-          <v-list-item-icon class="mr-2">
-            <v-icon>mdi-calendar-blank-multiple</v-icon>
-          </v-list-item-icon>
-          <v-list-item-content>
-            <v-list-item-title> INVESTIGASI PERKARA </v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-        <v-list-item
-          link
-          to="/kegiatan/mediasi"
-          v-if="CAN_ACCESS('KONSULTASI-KEGIATAN_BROWSE')"
-        >
-          <v-list-item-icon class="mr-2">
-            <v-icon>mdi-calendar-blank-multiple</v-icon>
-          </v-list-item-icon>
-          <v-list-item-content>
-            <v-list-item-title> MEDIASI </v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-        <v-list-item
-          link
-          to="/kegiatan/negoisasi"
-          v-if="CAN_ACCESS('KONSULTASI-KEGIATAN_BROWSE')"
-        >
-          <v-list-item-icon class="mr-2">
-            <v-icon>mdi-calendar-blank-multiple</v-icon>
-          </v-list-item-icon>
-          <v-list-item-content>
-            <v-list-item-title> NEGOISASI </v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-        <v-list-item
-          link
-          to="/kegiatan/pembinaanmasyarakat"
-          v-if="CAN_ACCESS('KONSULTASI-KEGIATAN_BROWSE')"
-        >
-          <v-list-item-icon class="mr-2">
-            <v-icon>mdi-calendar-blank-multiple</v-icon>
-          </v-list-item-icon>
-          <v-list-item-content>
-            <v-list-item-title> PEMB. MASYARAKAT </v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-        <v-list-item
-          link
-          to="/kegiatan/pendampingan"
-          v-if="CAN_ACCESS('KONSULTASI-KEGIATAN_BROWSE')"
-        >
-          <v-list-item-icon class="mr-2">
-            <v-icon>mdi-calendar-blank-multiple</v-icon>
-          </v-list-item-icon>
-          <v-list-item-content>
-            <v-list-item-title> PENDAMPINGAN </v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-        <v-list-item
-          link
-          to="/kegiatan/draftingdokumen"
-          v-if="CAN_ACCESS('KONSULTASI-KEGIATAN_BROWSE')"
-        >
-          <v-list-item-icon class="mr-2">
-            <v-icon>mdi-calendar-blank-multiple</v-icon>
-          </v-list-item-icon>
-          <v-list-item-content>
-            <v-list-item-title> DRAFTING DOKUMEN </v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
+          <template v-slot:activator>
+            <v-list-item-icon class="mr-2">
+              <v-icon>mdi-calendar-blank-multiple</v-icon>
+            </v-list-item-icon>
+            <v-list-item-content>
+              <v-list-item-title>KEGIATAN</v-list-item-title>
+            </v-list-item-content>
+          </template>
+          <div>
+            <v-list-item
+              link
+              to="/kegiatan/penyuluhanhukum"
+              v-if="CAN_ACCESS('KONSULTASI-KEGIATAN_BROWSE')"
+            >
+              <v-list-item-icon class="mr-2">
+                <v-icon>mdi-calendar-blank-multiple</v-icon>
+              </v-list-item-icon>
+              <v-list-item-content>
+                <v-list-item-title> PENYULUHAN HUKUM </v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+            <v-list-item
+              link
+              to="/kegiatan/konsultasihukum"
+              v-if="CAN_ACCESS('KONSULTASI-KEGIATAN_BROWSE')"
+            >
+              <v-list-item-icon class="mr-2">
+                <v-icon>mdi-calendar-blank-multiple</v-icon>
+              </v-list-item-icon>
+              <v-list-item-content>
+                <v-list-item-title> KONSULTASI HUKUM </v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+            <v-list-item
+              link
+              to="/kegiatan/investigasiperkara"
+              v-if="CAN_ACCESS('KONSULTASI-KEGIATAN_BROWSE')"
+            >
+              <v-list-item-icon class="mr-2">
+                <v-icon>mdi-calendar-blank-multiple</v-icon>
+              </v-list-item-icon>
+              <v-list-item-content>
+                <v-list-item-title> INVESTIGASI PERKARA </v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+            <v-list-item
+              link
+              to="/kegiatan/mediasi"
+              v-if="CAN_ACCESS('KONSULTASI-KEGIATAN_BROWSE')"
+            >
+              <v-list-item-icon class="mr-2">
+                <v-icon>mdi-calendar-blank-multiple</v-icon>
+              </v-list-item-icon>
+              <v-list-item-content>
+                <v-list-item-title> MEDIASI </v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+            <v-list-item
+              link
+              to="/kegiatan/negoisasi"
+              v-if="CAN_ACCESS('KONSULTASI-KEGIATAN_BROWSE') && false"
+            >
+              <v-list-item-icon class="mr-2">
+                <v-icon>mdi-calendar-blank-multiple</v-icon>
+              </v-list-item-icon>
+              <v-list-item-content>
+                <v-list-item-title> NEGOISASI </v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+            <v-list-item
+              link
+              to="/kegiatan/pembinaanmasyarakat"
+              v-if="CAN_ACCESS('KONSULTASI-KEGIATAN_BROWSE') && false"
+            >
+              <v-list-item-icon class="mr-2">
+                <v-icon>mdi-calendar-blank-multiple</v-icon>
+              </v-list-item-icon>
+              <v-list-item-content>
+                <v-list-item-title> PEMB. MASYARAKAT </v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+            <v-list-item
+              link
+              to="/kegiatan/pendampingan"
+              v-if="CAN_ACCESS('KONSULTASI-KEGIATAN_BROWSE') && false"
+            >
+              <v-list-item-icon class="mr-2">
+                <v-icon>mdi-calendar-blank-multiple</v-icon>
+              </v-list-item-icon>
+              <v-list-item-content>
+                <v-list-item-title> PENDAMPINGAN </v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+            <v-list-item
+              link
+              to="/kegiatan/draftingdokumen"
+              v-if="CAN_ACCESS('KONSULTASI-KEGIATAN_BROWSE') && false"
+            >
+              <v-list-item-icon class="mr-2">
+                <v-icon>mdi-calendar-blank-multiple</v-icon>
+              </v-list-item-icon>
+              <v-list-item-content>
+                <v-list-item-title> DRAFTING DOKUMEN </v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+          </div>
+        </v-list-group>
         <v-subheader v-if="CAN_ACCESS('REPORT-GROUP')">LAPORAN</v-subheader>
         <v-list-item
           link
@@ -389,7 +405,7 @@
       <v-card class="flex" color="yellow darken-2" flat tile>
         <v-divider></v-divider>
         <v-card-text class="py-2 black--text text-center">
-          <strong>{{ APP_NAME }} (2020-2021)</strong> dikembangkan oleh LPPM STT
+          <strong>{{ APP_NAME }} (2020-2022)</strong> dikembangkan oleh LPPM STT
           INDONESIA TANJUNGPINANG
           <v-btn icon href="https://github.com/mrizkir/sepakat">
             <v-icon>mdi-github</v-icon>
@@ -400,87 +416,87 @@
   </div>
 </template>
 <script>
-import { mapGetters } from "vuex";
-export default {
-  name: "AdminLayout",
-  created() {
-    this.dashboard = this.$store.getters["uiadmin/getDefaultDashboard"];
-  },
-  data: () => ({
-    loginTime: 0,
-    drawer: null,
-    drawerRight: null,
+  import { mapGetters } from 'vuex'
+  export default {
+    name: 'AdminLayout',
+    created() {
+      this.dashboard = this.$store.getters['uiadmin/getDefaultDashboard']
+    },
+    data: () => ({
+      loginTime: 0,
+      drawer: null,
+      drawerRight: null,
 
-    dashboard: null,
-  }),
-  methods: {
-    logout() {
-      this.loginTime = 0;
-      this.$ajax
-        .post(
-          "/auth/logout",
-          {},
-          {
-            headers: {
-              Authorization: this.TOKEN,
-            },
-          }
-        )
-        .then(() => {
-          this.$store.dispatch("auth/logout");
-          this.$store.dispatch("uifront/reinit");
-          this.$store.dispatch("uiadmin/reinit");
-          this.$router.push("/");
-        })
-        .catch(() => {
-          this.$store.dispatch("auth/logout");
-          this.$store.dispatch("uifront/reinit");
-          this.$store.dispatch("uiadmin/reinit");
-          this.$router.push("/");
-        })
-    },
-  },
-  computed: {
-    ...mapGetters("auth", {
-      AUTHENTICATED: "Authenticated",
-      ACCESS_TOKEN: "AccessToken",
-      TOKEN: "Token",
-      ROLE: "Role",
-      CAN_ACCESS: "can",
-      ATTRIBUTE_USER: "AttributeUser",
+      dashboard: null,
     }),
-    APP_NAME() {
-      return process.env.VUE_APP_NAME;
-    },
-    photoUser() {
-      let img = this.ATTRIBUTE_USER("foto");
-      var photo;
-      if (img == "") {
-        photo = this.$api.storageURL + "/storage/images/users/no_photo.png";
-      } else {
-        photo = this.$api.storageURL + "/" + img;
-      }
-      return photo;
-    },
-    isReportPage() {
-      return true;
-    },
-  },
-  watch: {
-    loginTime: {
-      handler(value) {
-        if (value >= 0) {
-          setTimeout(() => {
-            this.loginTime =
-              this.AUTHENTICATED == true ? this.loginTime + 1 : -1;
-          }, 1000);
-        } else {
-          this.$store.dispatch("auth/logout");
-          this.$router.replace("/login");
-        }
+    methods: {
+      logout() {
+        this.loginTime = 0
+        this.$ajax
+          .post(
+            '/auth/logout',
+            {},
+            {
+              headers: {
+                Authorization: this.TOKEN,
+              },
+            }
+          )
+          .then(() => {
+            this.$store.dispatch('auth/logout')
+            this.$store.dispatch('uifront/reinit')
+            this.$store.dispatch('uiadmin/reinit')
+            this.$router.push('/')
+          })
+          .catch(() => {
+            this.$store.dispatch('auth/logout')
+            this.$store.dispatch('uifront/reinit')
+            this.$store.dispatch('uiadmin/reinit')
+            this.$router.push('/')
+          })
       },
-      immediate: true,
     },
-  },
-};
+    computed: {
+      ...mapGetters('auth', {
+        AUTHENTICATED: 'Authenticated',
+        ACCESS_TOKEN: 'AccessToken',
+        TOKEN: 'Token',
+        ROLE: 'Role',
+        CAN_ACCESS: 'can',
+        ATTRIBUTE_USER: 'AttributeUser',
+      }),
+      APP_NAME() {
+        return process.env.VUE_APP_NAME
+      },
+      photoUser() {
+        let img = this.ATTRIBUTE_USER('foto')
+        var photo
+        if (img == '') {
+          photo = this.$api.storageURL + '/storage/images/users/no_photo.png'
+        } else {
+          photo = this.$api.storageURL + '/' + img
+        }
+        return photo
+      },
+      isReportPage() {
+        return true
+      },
+    },
+    watch: {
+      loginTime: {
+        handler(value) {
+          if (value >= 0) {
+            setTimeout(() => {
+              this.loginTime =
+                this.AUTHENTICATED == true ? this.loginTime + 1 : -1
+            }, 1000)
+          } else {
+            this.$store.dispatch('auth/logout')
+            this.$router.replace('/login')
+          }
+        },
+        immediate: true,
+      },
+    },
+  }
 </script>

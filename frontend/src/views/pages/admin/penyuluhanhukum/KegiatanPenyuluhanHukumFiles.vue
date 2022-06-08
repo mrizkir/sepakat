@@ -23,7 +23,7 @@
     <v-container fluid v-if="Object.keys(data_kegiatan).length">
       <v-row>
         <v-col cols="12">
-          <DK :datakegiatan="data_kegiatan" path="/kegiatan/penyuluhanhukum" />
+          <DK :datakegiatan="data_kegiatan" :path="'/kegiatan/penyuluhanhukum/' + kegiatan_id + '/detail'" />
         </v-col>
       </v-row>
       <v-row>
@@ -47,7 +47,7 @@
                 <v-btn
                   color="green"
                   text
-                  :href="this.$api.storageURL + '/'+data_kegiatan.file_daftar_hadir"
+                  :href="this.$api.storageURL + '/' + data_kegiatan.file_daftar_hadir"
                   v-if="data_kegiatan.file_daftar_hadir"
                 >
                   Lihat
@@ -99,7 +99,7 @@
                 <v-btn
                   color="green"
                   text
-                  :href="this.$api.storageURL + '/'+data_kegiatan.file_dokumentasi_kegiatan"
+                  :href="this.$api.storageURL + '/' + data_kegiatan.file_dokumentasi_kegiatan"
                   v-if="data_kegiatan.file_dokumentasi_kegiatan"
                 >
                   Lihat
@@ -151,7 +151,7 @@
                 <v-btn
                   color="green"
                   text
-                  :href="this.$api.storageURL + '/'+data_kegiatan.file_surat_permohonan"
+                  :href="this.$api.storageURL + '/' + data_kegiatan.file_surat_permohonan"
                   v-if="data_kegiatan.file_surat_permohonan"
                 >
                   Lihat
@@ -265,8 +265,8 @@
           }
         })
         .then(({ data }) => {
-          this.data_kegiatan=data.kegiatan;
-          this.ktpPemohon=this.$api.storageURL + '/'+data.kegiatan.file_fotocopy_ktp
+          this.data_kegiatan = data.kegiatan
+          this.ktpPemohon=this.$api.storageURL + '/' + data.kegiatan.file_fotocopy_ktp
         })
       },
       async uploadSuratPermohonan() {

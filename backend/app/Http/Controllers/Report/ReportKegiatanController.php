@@ -19,19 +19,19 @@ class ReportKegiatanController extends Controller
 	{
 		if ($this->hasRole('paralegal'))
 		{
-			$daftar_kegiatan=KonsultasikegiatanModel::select(\DB::raw('
-															kegiatan.kegiatan_id,
-															users.name,
-															kegiatan.nama_kegiatan,
-															kegiatan.pemohon,                                                                                                                
-															kegiatan.nama_jenis,
-															kegiatan.id_status,
-															kegiatan.created_at,
-															kegiatan.updated_at                                                         
-														'))       
-														->join ('users','users.id','kegiatan.user_id')
-														->where('kegiatan.user_id', $this->getUserid())
-														->get();
+			$daftar_kegiatan=KegiatanModel::select(\DB::raw('
+				kegiatan.kegiatan_id,
+				users.name,
+				kegiatan.nama_kegiatan,
+				kegiatan.pemohon,                                                                                                                
+				kegiatan.nama_jenis,
+				kegiatan.id_status,
+				kegiatan.created_at,
+				kegiatan.updated_at                                                         
+			'))       
+			->join ('users','users.id','kegiatan.user_id')
+			->where('kegiatan.user_id', $this->getUserid())
+			->get();
 		}
 		elseif ($this->hasRole('kades'))
 		{
@@ -40,44 +40,44 @@ class ReportKegiatanController extends Controller
 			->pluck('desa_id')
 			->toArray();
 
-			$daftar_kegiatan=KonsultasikegiatanModel::select(\DB::raw('
-															kegiatan.kegiatan_id,
-															users.name,
-															kegiatan.nama_kegiatan,
-															kegiatan.pemohon,                                                                                                                
-															kegiatan.nama_jenis,
-															kegiatan.id_status,
-															kegiatan.created_at,
-															kegiatan.updated_at                                                         
-														'))       
-														->join ('users','users.id','kegiatan.user_id')                                                                                                 
-														->join ('usersdesa','usersdesa.user_id','kegiatan.user_id') 
-														->whereIn('usersdesa.desa_id', $daftar_desa)                                                                                                
-														->get();
+			$daftar_kegiatan=KegiatanModel::select(\DB::raw('
+				kegiatan.kegiatan_id,
+				users.name,
+				kegiatan.nama_kegiatan,
+				kegiatan.pemohon,                                                                                                                
+				kegiatan.nama_jenis,
+				kegiatan.id_status,
+				kegiatan.created_at,
+				kegiatan.updated_at                                                         
+			'))       
+			->join ('users','users.id','kegiatan.user_id')                                                                                                 
+			->join ('usersdesa','usersdesa.user_id','kegiatan.user_id') 
+			->whereIn('usersdesa.desa_id', $daftar_desa)                                                                                                
+			->get();
 
 		}
 		else
 		{
-			$daftar_kegiatan=KonsultasikegiatanModel::select(\DB::raw('
-															kegiatan.kegiatan_id,
-															users.name,
-															kegiatan.nama_kegiatan,
-															kegiatan.pemohon,                                                                                                                
-															kegiatan.nama_jenis,
-															kegiatan.id_status,
-															kegiatan.created_at,
-															kegiatan.updated_at                                                         
-														'))       
-														->join ('users','users.id','kegiatan.user_id')                                                                                                 
-														->get();
+			$daftar_kegiatan=KegiatanModel::select(\DB::raw('
+				kegiatan.kegiatan_id,
+				users.name,
+				kegiatan.nama_kegiatan,
+				kegiatan.pemohon,                                                                                                                
+				kegiatan.nama_jenis,
+				kegiatan.id_status,
+				kegiatan.created_at,
+				kegiatan.updated_at                                                         
+			'))       
+			->join ('users','users.id','kegiatan.user_id')                                                                                                 
+			->get();
 		}
 	
 		return Response()->json([
-									'status'=>1,
-									'pid'=>'fetchdata',
-									'daftar_kegiatan'=>$daftar_kegiatan,
-									'message'=>'Fetch data daftar kegiatan berhasil diperoleh.'
-								],200);
+			'status'=>1,
+			'pid'=>'fetchdata',
+			'daftar_kegiatan'=>$daftar_kegiatan,
+			'message'=>'Fetch data daftar kegiatan berhasil diperoleh.'
+		],200);
 	}
 	public function printpdf (Request $request)
 	{

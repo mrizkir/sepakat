@@ -95,12 +95,12 @@
                 outlined
                 v-for="items in daftar_komentar" v-bind:key="items.id">
                   <v-card-title>
-                    {{items.name}}
+                    {{ items.name }}
                     <v-spacer/>
                     <v-chip color="info" outlined>{{items.default_role}}</v-chip>
                   </v-card-title>
                   <v-card-text>
-                    {{items.isi_komentar}}
+                    {{ items.isi_komentar }}
                   </v-card-text>'
                   <v-divider class="mx-4"></v-divider>
                   <v-card-text>
@@ -219,7 +219,7 @@
             Authorization: this.$store.getters['auth/Token'],
           }
         }).then(({ data }) => {
-          this.data_kegiatan=data.kegiatan
+          this.data_kegiatan = data.kegiatan
         })
       },
       async fetchKomentar()

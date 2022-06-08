@@ -4,7 +4,7 @@ namespace App\Models\Kegiatan;
 
 use Illuminate\Database\Eloquent\Model;
 
-class KegiatanKonsultasiHukumModel extends Model {    
+class KegiatanInvestigasiPerkaraModel extends Model {    
    /**
    * nama tabel model ini.
    *
@@ -35,9 +35,10 @@ class KegiatanKonsultasiHukumModel extends Model {
     'tempat_pelaksanaan',                
     'nama_kegiatan',        
     'uraian_kegiatan',
-    'nasihat_hukum',
+    'hasil_investigasi',
     'rekomendasi_kegiatan',                          
-    'file_daftar_hadir',                    
+    'tindak_lanjut',                          
+    'file_fotocopy_ktp',                    
     'file_sktm',        
     'file_dokumentasi_kegiatan',
     'id_status',       

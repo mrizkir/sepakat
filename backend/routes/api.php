@@ -110,8 +110,8 @@ $router->group(['prefix'=>'v1','middleware'=>'auth:api'], function () use ($rout
     $router->post('/kegiatan/investigasiperkara/uploadsktmpemohon/{id}',['middleware'=>['role:superadmin|paralegal|kumham'],'uses'=>'Kegiatan\KegiatanInvestigasiPerkaraController@uploadsktmpemohon','as'=>'kegiatanmediasi.uploadsktmpemohon']);
     $router->post('/kegiatan/investigasiperkara/hapussktmpemohon/{id}',['middleware'=>['role:superadmin|paralegal|kumham'],'uses'=>'Kegiatan\KegiatanInvestigasiPerkaraController@hapussktmpemohon','as'=>'kegiatanmediasi.hapussktmpemohon']);
     
-    $router->post('/kegiatan/investigasiperkara/uploaddaftarhadir/{id}',['middleware'=>['role:superadmin|paralegal|kumham'],'uses'=>'Kegiatan\KegiatanInvestigasiPerkaraController@uploaddaftarhadir','as'=>'kegiataninvestigasiperkara.uploaddaftarhadir']);
-    $router->post('/kegiatan/investigasiperkara/hapusdaftarhadir/{id}',['middleware'=>['role:superadmin|paralegal|kumham'],'uses'=>'Kegiatan\KegiatanInvestigasiPerkaraController@hapusdaftarhadir','as'=>'kegiataninvestigasiperkara.hapusdaftarhadir']);
+    $router->post('/kegiatan/investigasiperkara/uploadktppemohon/{id}',['middleware'=>['role:superadmin|paralegal|kumham'],'uses'=>'Kegiatan\KegiatanInvestigasiPerkaraController@uploadktppemohon','as'=>'kegiataninvestigasiperkara.uploadktppemohon']);
+    $router->post('/kegiatan/investigasiperkara/hapusktppemohon/{id}',['middleware'=>['role:superadmin|paralegal|kumham'],'uses'=>'Kegiatan\KegiatanInvestigasiPerkaraController@hapusdaftarhadir','as'=>'kegiataninvestigasiperkara.hapusktppemohon']);
     
     $router->post('/kegiatan/investigasiperkara/uploaddokumentasikegiatan/{id}',['middleware'=>['role:superadmin|paralegal|kumham'],'uses'=>'Kegiatan\KegiatanInvestigasiPerkaraController@uploaddokumentasikegiatan','as'=>'kegiataninvestigasiperkara.uploaddokumentasikegiatan']);
     $router->post('/kegiatan/investigasiperkara/hapusdokumentasikegiatan/{id}',['middleware'=>['role:superadmin|paralegal|kumham'],'uses'=>'Kegiatan\KegiatanInvestigasiPerkaraController@hapusdokumentasikegiatan','as'=>'kegiataninvestigasiperkara.hapusdokumentasikegiatan']);
@@ -175,12 +175,6 @@ $router->group(['prefix'=>'v1','middleware'=>'auth:api'], function () use ($rout
     $router->post('/system/userskades/store',['middleware'=>['role:superadmin|kumham'],'uses'=>'System\UsersKadesController@store','as'=>'userskades.store']);
     $router->put('/system/userskades/{id}',['middleware'=>['role:superadmin|kumham'],'uses'=>'System\UsersKadesController@update','as'=>'userskades.update']);
     $router->delete('/system/userskades/{id}',['middleware'=>['role:superadmin|kumham'],'uses'=>'System\UsersKadesController@destroy','as'=>'userskades.destroy']);
-
-    //setting - users pmb
-    $router->get('/system/userspmb',['middleware'=>['role:superadmin|kumham'],'uses'=>'System\UsersPMBController@index','as'=>'userspmb.index']);
-    $router->post('/system/userspmb/store',['middleware'=>['role:superadmin|kumham'],'uses'=>'System\UsersPMBController@store','as'=>'userspmb.store']);
-    $router->put('/system/userspmb/{id}',['middleware'=>['role:superadmin|kumham'],'uses'=>'System\UsersPMBController@update','as'=>'userspmb.update']);
-    $router->delete('/system/userspmb/{id}',['middleware'=>['role:superadmin|kumham'],'uses'=>'System\UsersPMBController@destroy','as'=>'userspmb.destroy']);
 
     //setting - users obh
     $router->get('/system/usersobh',['middleware'=>['role:superadmin'],'uses'=>'System\UsersOBHController@index','as'=>'usersobh.index']);
