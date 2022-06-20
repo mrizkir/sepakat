@@ -99,7 +99,7 @@ export default {
 
         btnSimpan:true,  
         btnHapus:true,  
-        btnVerifikasi:true,       
+        btnVerifikasi:true, 
         btnLoading:false,
         image_prev:null,
 
@@ -144,7 +144,7 @@ export default {
                     formdata.append('persyaratan_id',data.persyaratan_id);
                     formdata.append('persyaratan_pmb_id',data.persyaratan_pmb_id);
                     formdata.append('foto',this.filepersyaratan[index]);
-                    await this.$ajax.post('/spmb/pmbpersyaratan/upload/'+this.user_id,formdata,                    
+                    await this.$ajax.post('/spmb/pmbpersyaratan/upload/'+this.user_id,formdata,              
                         {
                             headers:{
                                 Authorization:this.$store.getters['auth/Token'],
@@ -169,7 +169,7 @@ export default {
                     this.$ajax.post('/spmb/pmbpersyaratan/hapusfilepersyaratan/'+item.persyaratan_pmb_id,
                         {
                             _method:'DELETE'
-                        },                    
+                        },              
                         {
                             headers:{
                                 Authorization:this.$store.getters['auth/Token']                

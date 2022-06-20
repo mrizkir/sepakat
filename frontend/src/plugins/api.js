@@ -12,7 +12,7 @@ export default {
             storageURL : process.env.VUE_APP_STORAGE_URL,
             post : async function (path) {
                 return await ajax.post(path);
-            },            
+            },      
         };        
         Vue.prototype.$ajax = ajax;
     }

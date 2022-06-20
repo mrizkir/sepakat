@@ -83,7 +83,7 @@ const actions = {
         if (!state.loaded && rootGetters['auth/Authenticated'])
         {   
             let token=rootGetters['auth/Token'];                                                     
-            await ajax.get('/system/setting/uiadmin',               
+            await ajax.get('/system/setting/uiadmin',         
                 {
                     headers:{
                         Authorization:token
@@ -134,7 +134,7 @@ const actions = {
 }
 export default {
     namespaced: true,
-    state,        
+    state,  
     mutations,
     getters,
     actions

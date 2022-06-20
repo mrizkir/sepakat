@@ -42,7 +42,7 @@ $router->group(['prefix'=>'v1','middleware'=>'auth:api'], function () use ($rout
     $router->get('/dashboard',['uses'=>'DashboardController@index','as'=>'dashboard.index']);
 
     //data master - dokumen kegiatan
-    $router->post('/datamaster/dokumenkegiatan',['middleware'=>['role:superadmin'],'uses'=>'DMaster\DokumenKegiatanController@index','as'=>'dokumenkegiatan.index']);
+    $router->get('/datamaster/dokumenkegiatan',['middleware'=>['role:superadmin'],'uses'=>'DMaster\DokumenKegiatanController@index','as'=>'dokumenkegiatan.index']);
     $router->post('/datamaster/dokumenkegiatan/store',['middleware'=>['role:superadmin'],'uses'=>'DMaster\DokumenKegiatanController@store','as'=>'dokumenkegiatan.store']);
     $router->put('/datamaster/dokumenkegiatan/{id}',['middleware'=>['role:superadmin'],'uses'=>'DMaster\DokumenKegiatanController@update','as'=>'dokumenkegiatan.update']);
     $router->delete('/datamaster/dokumenkegiatan/{id}',['middleware'=>['role:superadmin'],'uses'=>'DMaster\DokumenKegiatanController@destroy','as'=>'`dokumenkegiatan`.destroy']);

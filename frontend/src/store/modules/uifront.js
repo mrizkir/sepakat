@@ -2,12 +2,12 @@
 const getDefaultState = () => 
 {
     return {      
-        loaded:false,          
-        tahun_data:new Date().getFullYear(),        
+        loaded:false,    
+        tahun_data:new Date().getFullYear(),  
         identitas:{
             nama_app:'',
             nama_app_alias:''
-        },        
+        },  
     }
 }
 const state = getDefaultState();
@@ -68,7 +68,7 @@ const actions = {
 }
 export default {
     namespaced: true,
-    state,        
+    state,  
     mutations,
     getters,
     actions

@@ -121,6 +121,19 @@
             <v-list-item-title> JENIS KEGIATAN </v-list-item-title>
           </v-list-item-content>
         </v-list-item>
+        <v-list-item
+          link
+          active-class="yellow darken-4"
+          to="/dmaster/dokumenkegiatan"
+          v-if="CAN_ACCESS('DMASTER-DOKUMEN-KEGIATAN_BROWSE')"
+        >
+          <v-list-item-icon class="mr-2">
+            <v-icon>mdi-format-list-bulleted-triangle</v-icon>
+          </v-list-item-icon>
+          <v-list-item-content>
+            <v-list-item-title> DOKUMEN KEGIATAN </v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
         <v-subheader v-if="CAN_ACCESS('KONSULTASI-GROUP')">DATA PARALEGAL</v-subheader>
         <v-list-group
           group="/kegiatan"

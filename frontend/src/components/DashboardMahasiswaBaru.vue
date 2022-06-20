@@ -186,7 +186,7 @@ export default {
     },
     data:()=>({
         btnLoading:false,
-        datatableLoading:false,        
+        datatableLoading:false,  
         datatable:[],
         headers: [                                        
             { text: 'NAMA UJIAN', value: 'nama_kegiatan', sortable: true,width:300 },
@@ -207,7 +207,7 @@ export default {
     methods: {
         initialize:async function ()
         {
-            await this.$ajax.get('/spmb/ujianonline/peserta/'+this.$store.getters['auth/AttributeUser']('id'),            
+            await this.$ajax.get('/spmb/ujianonline/peserta/'+this.$store.getters['auth/AttributeUser']('id'),      
             {
                 headers: {
                     Authorization:this.$store.getters['auth/Token']
@@ -260,7 +260,7 @@ export default {
             await this.$ajax.post('/spmb/ujianonline/daftar',
             {
                 user_id:this.$store.getters['auth/AttributeUser']('id'),
-                jadwal_ujian_id:item.id,                
+                jadwal_ujian_id:item.id,          
             },
             {
                 headers: {
@@ -286,7 +286,7 @@ export default {
             await this.$ajax.post('/spmb/ujianonline/mulaiujian',
             {
                 _method:'put',
-                user_id:this.$store.getters['auth/AttributeUser']('id'),                
+                user_id:this.$store.getters['auth/AttributeUser']('id'),          
             },
             {
                 headers: {
@@ -297,7 +297,7 @@ export default {
                 this.$store.dispatch('uiadmin/addToPages',{
                     name:'ujianonline',
                     data_ujian:this.jadwal_ujian,
-                    data_peserta:data.peserta,                
+                    data_peserta:data.peserta,          
                 });
                 this.$router.push('/spmb/ujianonline');                
             }).catch(()=>{

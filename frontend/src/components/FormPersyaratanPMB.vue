@@ -22,12 +22,12 @@ export default {
     },
     data:()=>({
         //form        
-        daftar_persyaratan:[],        
+        daftar_persyaratan:[],  
     }),    
     methods: {
         initialize:async function ()
         {
-            await this.$ajax.get('/spmb/pmbpersyaratan/'+this.user_id,             
+            await this.$ajax.get('/spmb/pmbpersyaratan/'+this.user_id,       
                 {
                     headers:{
                         Authorization:this.$store.getters['auth/Token']
@@ -36,7 +36,7 @@ export default {
             ).then(({data})=>{                   
                 this.daftar_persyaratan=data.persyaratan;
             })
-        },                
+        },          
     },
     components:{
         FileUpload

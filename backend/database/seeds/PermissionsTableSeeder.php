@@ -77,7 +77,9 @@ class PermissionsTableSeeder extends Seeder
 
         $modules = [             
             'DMASTER-TA',        
-                     
+            'DMASTER-JENISKEGIATAN',        
+            'DMASTER-DOKUMEN-KEGIATAN',        
+
             'KONSULTASI-KEGIATAN',  
             'KONSULTASI-KOMENTAR-KEGIATAN',  
 

@@ -248,19 +248,19 @@ export default {
         dialogdetailitem:false,
 
         //form data   
-        form_valid:true,         
+        form_valid:true,   
         formdata: {
-            id:0,                        
-            name:'',                        
-            created_at: '',           
-            updated_at: '',           
+            id:0,                  
+            name:'',                  
+            created_at: '',     
+            updated_at: '',     
 
         },
         formdefault: {
-            id:0,           
-            name:'',                                     
-            created_at: '',           
-            updated_at: '',       
+            id:0,     
+            name:'',                               
+            created_at: '',     
+            updated_at: '', 
         },
         editedIndex: -1,
 
@@ -271,7 +271,7 @@ export default {
         ], 
         rule_name:[
             value => !!value||"Mohon untuk di isi name !!!",  
-            value => /^[A-Za-z\s]*$/.test(value) || 'Name hanya boleh string dan spasi',                
+            value => /^[A-Za-z\s]*$/.test(value) || 'Name hanya boleh string dan spasi',          
         ], 
     }),
     methods: {
@@ -325,7 +325,7 @@ export default {
                     await this.$ajax.post('/path/'+this.formdata.id,
                         {
                             '_method':'PUT',
-                            name:this.formdata.name,                       
+                            name:this.formdata.name,                 
                         },
                         {
                             headers:{
@@ -343,7 +343,7 @@ export default {
                 } else {
                     await this.$ajax.post('/path/store',
                         {
-                            name:this.formdata.name,                            
+                            name:this.formdata.name,                      
                         },
                         {
                             headers:{
@@ -405,11 +405,11 @@ export default {
     computed: {        
         formTitle () {
             return this.editedIndex === -1 ? 'TAMBAH DATA' : 'UBAH DATA'
-        },        
+        },  
     },
     components:{
         AdminLayout,
-        ModuleHeader,        
+        ModuleHeader,  
     },
 
 }

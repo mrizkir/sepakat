@@ -243,7 +243,7 @@
       filesktmpemohon: null,
       
       rule_filektp: [
-        value => !!value || "Mohon pilih file ktp pemohon !!!",        
+        value => !!value || "Mohon pilih file ktp pemohon !!!",  
         value => {
           if (value && typeof value !== 'undefined' && value.length > 0) {
             return value.size < 2000000 || 'File ktp pemohon harus kurang dari 2MB.'
@@ -257,7 +257,7 @@
         value =>!value || value.size < 9000000 || 'File dokumentasi kegiatan harus kurang dari 9MB.'                
       ],
       rule_filesktm: [
-        value => !!value || "Mohon pilih file sktm pemohon !!!",      
+        value => !!value || "Mohon pilih file sktm pemohon !!!",
         value => {
           if (value && typeof value !== 'undefined' && value.length > 0) {
             return value.size < 2000000 || 'File sktm pemohon harus kurang dari 2MB.'
