@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 
 use App\Models\DMaster\DokumenKegiatanModel;
 
+use Ramsey\Uuid\Uuid;
+
 class DokumenKegiatanController extends Controller {  
   /**
    * daftar status mahasiswa
@@ -33,4 +35,34 @@ class DokumenKegiatanController extends Controller {
       'message'=>'Fetch data dokumen kegiatan berhasil.'
     ], 200);     
   }  
+  public function store(Request $request)
+	{
+		$this->hasAnyPermission('DMASTER-DOKUMEN-KEGIATAN_STORE');
+
+		$this->validate($request, [			
+			'nama_dokumen'=>'required',				
+			'id_jenis_kegiatan'=>'required',			
+		]);				
+
+		$nama_dokumen = strtoupper($request->input('nama_dokumen'));	
+		$jenis_kegiatan = $request->input('id_jenis_kegiatan');	
+		
+		foreach ($jenis_kegiatan as $id_jenis_kegiatan)
+		{
+			DokumenKegiatanModel::create([
+				'dokumen_id'=>Uuid::uuid4()->toString(),
+				'nama_dokumen'=>$nama_dokumen,                			
+				'id_jenis_kegiatan'=>$id_jenis_kegiatan,
+				'status'=>1,
+			]);
+		}
+
+		return Response()->json([
+			'status'=>1,
+			'pid'=>'store',
+			'jenis_kegiatan'=>$jenis_kegiatan,
+			'message'=>"Data dokumen $nama_dokumen kegiatan baru berhasil disimpan."
+		],200);
+	}
+
 }

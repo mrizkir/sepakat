@@ -250,15 +250,15 @@ export default {
         //form data   
         form_valid:true,   
         formdata: {
-            id:0,                  
-            name:'',                  
+            id:0,
+            name:'',
             created_at: '',     
             updated_at: '',     
 
         },
         formdefault: {
             id:0,     
-            name:'',                               
+            name:'',             
             created_at: '',     
             updated_at: '', 
         },
@@ -343,7 +343,7 @@ export default {
                 } else {
                     await this.$ajax.post('/path/store',
                         {
-                            name:this.formdata.name,                      
+                            name:this.formdata.name,    
                         },
                         {
                             headers:{

@@ -160,7 +160,7 @@ export default {
       { text: 'PEMOHON', value: 'pemohon' },
       { text: 'JENIS KEGIATAN', value: 'nama_jenis' },
       { text: 'NAMA KEGIATAN', value: 'nama_kegiatan' },
-      { text: 'STATUS', value: 'id_status', sortable: false, width:100 },
+      { text: 'STATUS', value: 'id_status', sortable: false, width: 100 },
       { text: 'AKSI', value: 'actions', sortable: false,width:80 },
     ],
     search: null, 

@@ -54,7 +54,7 @@
           >
             <template v-slot:top>
               <v-toolbar flat color="white">
-                <v-toolbar-title>DAFTAR USERS PEMDA</v-toolbar-title>
+                <v-toolbar-title>DAFTAR DOKUMEN</v-toolbar-title>
                 <v-divider
                   class="mx-4"
                   inset
@@ -89,33 +89,10 @@
                           multiple 
                           small-chips
                           :rules="rule_jenis_kegiatan"
+                          item-text="nama_jenis"
+                          item-value="id_jenis"
                           outlined
-                        />                         
-                        <v-text-field 
-                          v-model="editedItem.email" 
-                          label="EMAIL"
-                          outlined
-                          :rules="rule_user_email">
-                        </v-text-field>
-                        <v-text-field 
-                          v-model="editedItem.nomor_hp" 
-                          label="NOMOR HP"
-                          outlined
-                          :rules="rule_user_nomorhp">
-                        </v-text-field>
-                        <v-text-field 
-                          v-model="editedItem.username" 
-                          label="USERNAME"
-                          outlined
-                          :rules="rule_user_username">
-                        </v-text-field>
-                        <v-text-field 
-                          v-model="editedItem.password" 
-                          label="PASSWORD"
-                          :type="'password'"
-                          outlined
-                          :rules="rule_user_password">
-                        </v-text-field>                        
+                        />
                       </v-card-text>
                       <v-card-actions>
                         <v-spacer></v-spacer>
@@ -135,16 +112,7 @@
                 </v-dialog>                
               </v-toolbar>
             </template>
-            <template v-slot:item.actions="{ item }">
-              <v-icon
-                small
-                class="mr-2"
-                :loading="btnLoading"
-                :disabled="btnLoading"
-                @click.stop="setPermission(item)"
-              >
-                mdi-axis-arrow-lock
-              </v-icon>
+            <template v-slot:item.actions="{ item }">              
               <v-icon
                 small
                 class="mr-2"
@@ -227,9 +195,7 @@
       ],
       expanded: [],
       search: null,
-      datatable: [],
-      daftar_permissions: [],
-      permissions_selected: [],
+      datatable: [],      
 
       //form
       form_valid: true,
@@ -260,22 +226,10 @@
       rule_nama_dokumen: [
         value => !!value || "Mohon untuk di isi nama User !!!",
         value => /^[A-Za-z\s]*$/.test(value) || 'Nama User hanya boleh string dan spasi',
-      ],
-      rule_user_email: [
-        value => !!value || "Mohon untuk di isi email User !!!",
-        value => /.+@.+\..+/.test(value) || 'Format E-mail harus benar', 
-      ],
-      rule_user_nomorhp: [
-        value => !!value || "Nomor HP mohon untuk diisi !!!",
-        value => /^\+[1-9]{1}[0-9]{1,14}$/.test(value) || 'Nomor HP hanya boleh angka dan gunakan kode negara didepan seperti +6281214553388',
-      ],
-      rule_user_username: [
-        value => !!value || "Mohon untuk di isi username User !!!",
-        value => /^[A-Za-z_]*$/.test(value) || 'Username hanya boleh string dan underscore',
-      ],
+      ],      
       rule_jenis_kegiatan: [
         value => !!value || "Mohon untuk dipilih jenis kegiatan ini !!!",
-      ]
+      ],
     }),
     methods: {
       initialize: async function() {
@@ -296,29 +250,17 @@
         } else {
         this.expanded = [item]
         }
-      },
-      syncPermission: async function()
-      {
-        this.btnLoading = true
-        await this.$ajax.post('/system/users/syncallpermissions',
-          {
-            role_name: 'pmb',
-          },
-          {
-            headers: {
-              Authorization: this.$store.getters['auth/Token'],
-            }
+      },      
+      async showDialog() {
+        this.dialog = true
+          await this.$ajax.get('/datamaster/jeniskegiatan', {
+          headers: {
+            Authorization: this.TOKEN,
           }
-        )
-        .then(() => {
-          this.btnLoading = false
         })
-        .catch(() => {
-          this.btnLoading = false
-        })
-      },
-      showDialog() {
-        this.dialog = true        
+        .then(({ data }) => {
+          this.daftar_jenis_kegiatan = data.jenis_kegiatan;          
+        })        
       },
       editItem: async function(item) {
         this.editedIndex = this.datatable.indexOf(item)
@@ -358,33 +300,6 @@
 
         this.firstShowDialogEdit=false
       },
-      setPermission: async function(item) {
-        this.btnLoading = true  
-        this.$ajax.get('/system/setting/roles/' + this.role_id + '/permission', {
-          headers: {
-            Authorization: this.TOKEN,
-          }
-        }).then(({ data }) => {
-          this.daftar_permissions = data.permissions
-        }).catch(() => {
-          this.btnLoading = false
-        })
-
-        await this.$ajax.get('/system/users/' + item.id + '/permission', {
-          headers: {
-            Authorization: this.TOKEN,
-          }
-        }).then(({ data }) => {
-          this.permissions_selected = data.permissions;
-          this.btnLoading = false
-            
-        }).catch(() => {
-          this.btnLoading = false
-        })
-        this.dialogUserPermission = true
-        this.editedItem=item;
-      
-      },
       close() {
         this.btnLoading = false
         this.dialog = false
@@ -396,95 +311,93 @@
           this.$refs.frmdata.reset()
           }, 300
         );
-      },
-      closeUserPermissions () {
-        this.btnLoading = false
-        this.permissions_selected=[]
-        this.dialogUserPermission = false
-      },
+      },   
       save() {
-        if (this.$refs.frmdata.validate())
-        {
+        if (this.$refs.frmdata.validate()) {
           this.btnLoading = true
-          if (this.editedIndex > -1) 
-          {
+          if (this.editedIndex > -1) {
             this.$ajax.post('/datamaster/dokumenkegiatan/' + this.editedItem.id,
               {
                 _method: 'PUT',
-                name: this.editedItem.name,
-                email: this.editedItem.email,
-                nomor_hp: this.editedItem.nomor_hp,
-                username: this.editedItem.username,
-                password: this.editedItem.password,
-                role_id: JSON.stringify(Object.assign({}, this.editedItem.role_id)),
+                id_jenis_kegiatan: this.editedItem.id_jenis_kegiatan,
+                nama_dokumen: this.editedItem.nama_dokumen,                  
+                status: this.editedItem.status,
               },
               {
                 headers: {
                   Authorization: this.TOKEN,
                 }
               }
-            ).then(({ data }) => {
+            )
+            .then(({ data }) => {
               Object.assign(this.datatable[this.editedIndex], data.user)
               this.close()
-            }).catch(() => {
+            })
+            .catch(() => {
               this.btnLoading = false
             })
-            
           } else {
-            this.$ajax.post('/datamaster/dokumenkegiatan/store',
-              {
-                name: this.editedItem.name,
-                email: this.editedItem.email,
-                nomor_hp: this.editedItem.nomor_hp,
-                username: this.editedItem.username,
-                password: this.editedItem.password,
-                role_id: JSON.stringify(Object.assign({}, this.editedItem.role_id)),
-              },
-              {
-                headers: {
-                  Authorization: this.TOKEN,
+            this.$ajax
+              .post(
+                '/datamaster/dokumenkegiatan/store',
+                {
+                  id_jenis_kegiatan: this.editedItem.id_jenis_kegiatan,
+                  nama_dokumen: this.editedItem.nama_dokumen,
+                },
+                {
+                  headers: {
+                    Authorization: this.TOKEN,
+                  },
                 }
-              }
-            ).then(({ data }) => {
-              this.datatable.push(data.user)
-              this.close()
-            }).catch(() => {
-              this.btnLoading = false
-            })
+              )
+              .then(() => {
+                this.$router.go()
+              })
+              .catch(() => {
+                this.btnLoading = false
+              })
           }
         }
       },
       deleteItem(item) {
-        this.$root.$confirm.open('Delete', 'Apakah Anda ingin menghapus username ' + item.username + ' ?', { color: 'red' }).then(confirm => {
-          if (confirm)
-          {
-            this.btnLoading = true
-            this.$ajax.post('/datamaster/dokumenkegiatan/' + item.id,
-              {
-                _method: 'DELETE',
-              },
-              {
-                headers: {
-                  Authorization: this.TOKEN,
-                }
-              }
-            ).then(() => {
-              const index = this.datatable.indexOf(item)
-              this.datatable.splice(index, 1)
-              this.btnLoading = false
-            }).catch(() => {
-              this.btnLoading = false
-            })
-          }
-        })
+        this.$root.$confirm
+          .open(
+            'Delete',
+            'Apakah Anda ingin menghapus dokumen ' + item.nama_dokumen + ' ?',
+            { color: 'red' }
+          )
+          .then(confirm => {
+            if (confirm) {
+              this.btnLoading = true
+              this.$ajax
+                .post(
+                  '/datamaster/dokumenkegiatan/' + item.dokumen_id,
+                  {
+                    _method: 'DELETE',
+                  },
+                  {
+                    headers: {
+                      Authorization: this.TOKEN,
+                    },
+                  }
+                )
+                .then(() => {
+                  this.$router.go()
+                  this.btnLoading = false
+                })
+                .catch(() => {
+                  this.btnLoading = false
+                })
+            }
+          })
       },
     },
     computed: {
       formTitle() {
-        return this.editedIndex === -1 ? 'TAMBAH USER PEMDA' : 'EDIT USER PEMDA'
+        return this.editedIndex === -1 ? 'TAMBAH DOKUMEN' : 'EDIT DOKUMEN'
       },
       ...mapGetters('auth', {
-        ACCESS_TOKEN: 'AccessToken', 
+        ACCESS_TOKEN: 'AccessToken',
         TOKEN: 'Token',
       }),
     },

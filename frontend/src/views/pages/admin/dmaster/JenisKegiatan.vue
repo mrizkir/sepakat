@@ -61,77 +61,78 @@
   </AdminLayout>
 </template>
 <script>
-import { mapGetters } from 'vuex'
-import AdminLayout from '@/views/layouts/AdminLayout'
-import ModuleHeader from '@/components/ModuleHeader'
-export default {
-  name: 'JenisKegiatan',
-  created() {
-    this.breadcrumbs = [
-      {
-        text: 'HOME',
-        disabled: false,
-        href: '/dashboard/' + this.ACCESS_TOKEN,
-      },
-      {
-        text: 'DATA MASTER',
-        disabled: false,
-        href: '#',
-      },
-      {
-        text: 'JENIS KEGIATAN',
-        disabled: true,
-        href: '#',
-      }
-    ]
-    this.initialize()
-  },
-  data: () => ({
-    btnLoading: false,
-    datatableLoading: false,
-    expanded: [],
-    datatable: [],
-    headers: [
-      { text: 'ID JENIS', value: 'id_jenis',width:150 },
-      { text: 'NAMA JENIS', value: 'nama_jenis' },
-    ],
-  }),
-  methods: {
-    initialize: async function()
-    {
-      this.datatableLoading = true
-      await this.$ajax.get('/datamaster/jeniskegiatan', {
-        headers: {
-          Authorization: this.TOKEN,
+  import { mapGetters } from 'vuex'
+  import AdminLayout from '@/views/layouts/AdminLayout'
+  import ModuleHeader from '@/components/ModuleHeader'
+  export default {
+    name: 'JenisKegiatan',
+    created() {
+      this.breadcrumbs = [
+        {
+          text: 'HOME',
+          disabled: false,
+          href: '/dashboard/' + this.ACCESS_TOKEN,
+        },
+        {
+          text: 'DATA MASTER',
+          disabled: false,
+          href: '#',
+        },
+        {
+          text: 'JENIS KEGIATAN',
+          disabled: true,
+          href: '#',
         }
-      }).then(({ data }) => {
-        this.datatable = data.jenis_kegiatan;
-        this.datatableLoading = false
-      }).catch(() => {
-        this.datatableLoading = false
-      })
+      ]
+      this.initialize()
     },
-    dataTableRowClicked(item) {
-      if (item === this.expanded[0]) {
-        this.expanded = []
-      } else {
-        this.expanded = [item]
-      }
-    },
-  },
-  computed: {
-    ...mapGetters('auth', {
-      ACCESS_TOKEN: 'AccessToken',
-      TOKEN: 'Token',
+    data: () => ({
+      btnLoading: false,
+      datatableLoading: false,
+      expanded: [],
+      datatable: [],
+      headers: [
+        { text: 'ID JENIS', value: 'id_jenis', width: 150 },
+        { text: 'NAMA JENIS', value: 'nama_jenis' },
+      ],
     }),
-    formTitle() {
-      return this.editedIndex === -1 ? 'TAMBAH DATA' : 'UBAH DATA'
+    methods: {
+      initialize: async function() {
+        this.datatableLoading = true
+        await this.$ajax
+          .get('/datamaster/jeniskegiatan', {
+            headers: {
+              Authorization: this.TOKEN,
+            },
+          })
+          .then(({ data }) => {
+            this.datatable = data.jenis_kegiatan
+            this.datatableLoading = false
+          })
+          .catch(() => {
+            this.datatableLoading = false
+          })
+      },
+      dataTableRowClicked(item) {
+        if (item === this.expanded[0]) {
+          this.expanded = []
+        } else {
+          this.expanded = [item]
+        }
+      },
     },
-  },
-  components: {
-    AdminLayout,
-    ModuleHeader,
-  },
-
-}
+    computed: {
+      ...mapGetters('auth', {
+        ACCESS_TOKEN: 'AccessToken',
+        TOKEN: 'Token',
+      }),
+      formTitle() {
+        return this.editedIndex === -1 ? 'TAMBAH DATA' : 'UBAH DATA'
+      },
+    },
+    components: {
+      AdminLayout,
+      ModuleHeader,
+    },
+  }
 </script>

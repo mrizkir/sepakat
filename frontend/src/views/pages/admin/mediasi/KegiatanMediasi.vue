@@ -162,8 +162,8 @@ export default {
       { text: 'PARALEGAL', value: 'name' },
       { text: 'PEMOHON', value: 'nama_pemohon' },
       { text: 'NAMA KEGIATAN', value: 'nama_kegiatan' },
-      { text: 'STATUS', value: 'id_status', sortable: false, width:100 },
-      { text: 'AKSI', value: 'actions', sortable: false,width:150 },
+      { text: 'STATUS', value: 'id_status', sortable: false, width: 100 },
+      { text: 'AKSI', value: 'actions', sortable: false,width: 150 },
     ],
     search: null, 
 
