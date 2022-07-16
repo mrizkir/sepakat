@@ -79,7 +79,7 @@ class KegiatanKonsultasiHukumController extends Controller
 				'pid'=>'fetchdata',
 				'kegiatan'=>$kegiatan,
 				'message'=>"Kegiatan konsultasi hukum berhasil diperoleh"
-			],200);
+			], 200);
 		}
 	}
 	public function store(Request $request)
@@ -149,7 +149,7 @@ class KegiatanKonsultasiHukumController extends Controller
 			'pid'=>'store',
 			'kegiatan'=>$kegiatan,
 			'message'=>'Data kegiatan konsultasi hukum baru berhasil disimpan.'
-		],200);
+		], 200);
 	}
 	public function uploadsktmpemohon (Request $request,$id)
 	{
@@ -197,7 +197,7 @@ class KegiatanKonsultasiHukumController extends Controller
 					'pid'=>'store',
 					'kegiatan'=>$kegiatan,                
 					'message'=>"SKTM ($name) berhasil diupload"
-				],200);    
+				], 200);    
 			}
 			else
 			{
@@ -315,7 +315,7 @@ class KegiatanKonsultasiHukumController extends Controller
 					'pid'=>'store',
 					'kegiatan'=>$kegiatan,                
 					'message'=>"File dokumentasi kegiatan konsultasi hukum ini berhasil diupload"
-				],200);    
+				], 200);    
 			}
 			else
 			{
@@ -407,7 +407,7 @@ class KegiatanKonsultasiHukumController extends Controller
 				'pid'=>'update',
 				'kegiatan'=>$kegiatan,
 				'message'=>"Update Kegiatan konsultasi hukum berhasil diperoleh"
-			],200);
+			], 200);
 		}
 	}
 	public function verifikasi(Request $request,$id)
@@ -443,7 +443,7 @@ class KegiatanKonsultasiHukumController extends Controller
 										'pid'=>'update',
 										'kegiatan'=>$kegiatan,
 										'message'=>"Verifikasi Kegiatan konsultasi hukum berhasil dilakukan"
-									],200);
+									], 200);
 			}
 		}
 		else
@@ -501,7 +501,7 @@ class KegiatanKonsultasiHukumController extends Controller
 										'status'=>1,
 										'pid'=>'destroy',
 										'message'=>"Kegiatan konsultasi hukum ($nama_kegiatan) berhasil dihapus"
-									],200);
+									], 200);
 		}
 
 	}

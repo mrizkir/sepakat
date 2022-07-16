@@ -79,7 +79,7 @@ class KegiatanNegoisasiController extends Controller
 				'pid'=>'fetchdata',
 				'kegiatan'=>$kegiatan,
 				'message'=>"Kegiatan negoisasi berhasil diperoleh"
-			],200);
+			], 200);
 		}
 	}
 	public function store(Request $request)
@@ -149,7 +149,7 @@ class KegiatanNegoisasiController extends Controller
 			'pid'=>'store',
 			'kegiatan'=>$kegiatan,
 			'message'=>'Data kegiatan negoisasi baru berhasil disimpan.'
-		],200);
+		], 200);
 	}
 	public function uploadktppemohon (Request $request,$id)
 	{
@@ -197,7 +197,7 @@ class KegiatanNegoisasiController extends Controller
 					'pid'=>'store',
 					'kegiatan'=>$kegiatan,                
 					'message'=>"KTP Pemohon/Peserta ($name) berhasil diupload"
-				],200);    
+				], 200);    
 			}
 			else
 			{
@@ -315,7 +315,7 @@ class KegiatanNegoisasiController extends Controller
 					'pid'=>'store',
 					'kegiatan'=>$kegiatan,                
 					'message'=>"File dokumentasi kegiatan negoisasi ini berhasil diupload"
-				],200);    
+				], 200);    
 			}
 			else
 			{
@@ -407,7 +407,7 @@ class KegiatanNegoisasiController extends Controller
 				'pid'=>'update',
 				'kegiatan'=>$kegiatan,
 				'message'=>"Update Kegiatan negoisasi berhasil diperoleh"
-			],200);
+			], 200);
 		}
 	}
 	public function verifikasi(Request $request,$id)
@@ -443,7 +443,7 @@ class KegiatanNegoisasiController extends Controller
 										'pid'=>'update',
 										'kegiatan'=>$kegiatan,
 										'message'=>"Verifikasi Kegiatan negoisasi berhasil dilakukan"
-									],200);
+									], 200);
 			}
 		}
 		else
@@ -501,7 +501,7 @@ class KegiatanNegoisasiController extends Controller
 										'status'=>1,
 										'pid'=>'destroy',
 										'message'=>"Kegiatan negoisasi ($nama_kegiatan) berhasil dihapus"
-									],200);
+									], 200);
 		}
 
 	}

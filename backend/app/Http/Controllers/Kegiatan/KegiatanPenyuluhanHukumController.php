@@ -81,7 +81,7 @@ class KegiatanPenyuluhanHukumController extends Controller
 				'pid'=>'fetchdata',
 				'kegiatan'=>$kegiatan,
 				'message'=>"kegiatan penyuluhan hukum berhasil diperoleh"
-			],200);
+			], 200);
 		}
 	}
 	public function store(Request $request)
@@ -141,7 +141,7 @@ class KegiatanPenyuluhanHukumController extends Controller
 			'pid'=>'store',
 			'kegiatan'=>$kegiatan,
 			'message'=>'Data kegiatan penyuluhan hukum baru berhasil disimpan.'
-		],200);
+		], 200);
 	}
 	public function uploadsuratpermohonan (Request $request,$id)
 	{
@@ -189,7 +189,7 @@ class KegiatanPenyuluhanHukumController extends Controller
 					'pid'=>'store',
 					'kegiatan'=>$kegiatan,                
 					'message'=>"Surat Permohonan ($name) berhasil diupload"
-				],200);    
+				], 200);    
 			}
 			else
 			{
@@ -305,7 +305,7 @@ class KegiatanPenyuluhanHukumController extends Controller
 					'pid'=>'store',
 					'kegiatan'=>$kegiatan,                
 					'message'=>"File dokumentasi kegiatan penyuluhan hukum ini berhasil diupload"
-				],200);    
+				], 200);    
 			}
 			else
 			{
@@ -387,7 +387,7 @@ class KegiatanPenyuluhanHukumController extends Controller
 				'pid'=>'update',
 				'kegiatan'=>$kegiatan,
 				'message'=>"Update kegiatan penyuluhan hukum berhasil diperoleh"
-			],200);
+			], 200);
 		}
 	}
 	public function verifikasi(Request $request,$id)
@@ -423,7 +423,7 @@ class KegiatanPenyuluhanHukumController extends Controller
 										'pid'=>'update',
 										'kegiatan'=>$kegiatan,
 										'message'=>"Verifikasi kegiatan penyuluhan hukum berhasil dilakukan"
-									],200);
+									], 200);
 			}
 		}
 		else
@@ -481,7 +481,7 @@ class KegiatanPenyuluhanHukumController extends Controller
 										'status'=>1,
 										'pid'=>'destroy',
 										'message'=>"kegiatan penyuluhan hukum ($nama_kegiatan) berhasil dihapus"
-									],200);
+									], 200);
 		}
 
 	}

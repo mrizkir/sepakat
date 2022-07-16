@@ -41,7 +41,7 @@ class UsersParaLegalController extends Controller {
 								'role'=>$role,
 								'users'=>$data,
 								'message'=>'Fetch data users LEGAL berhasil diperoleh'
-							],200);  
+							], 200);  
 	}    
 	/**
 	 * Store a newly created resource in storage.
@@ -129,7 +129,7 @@ class UsersParaLegalController extends Controller {
 									'pid'=>'store',
 									'user'=>$user,                                    
 									'message'=>'Data user LEGAL berhasil disimpan.'
-								],200); 
+								], 200); 
 
 	}
 	/**
@@ -155,7 +155,7 @@ class UsersParaLegalController extends Controller {
 									'pid'=>'fetchdata',
 									'user'=>$user,                                       
 									'message'=>'Data user '.$user->username.' berhasil diperoleh.'
-								],200); 
+								], 200); 
 		}
 
 	}
@@ -250,7 +250,7 @@ class UsersParaLegalController extends Controller {
 									'pid'=>'update',
 									'user'=>$user,      
 									'message'=>'Data user LEGAL '.$user->username.' berhasil diubah.'
-								],200); 
+								], 200); 
 		}
 	}
 	/**
@@ -290,7 +290,7 @@ class UsersParaLegalController extends Controller {
 										'status'=>1,
 										'pid'=>'destroy',                
 										'message'=>"User LEGAL ($username) berhasil dihapus"
-									],200);         
+									], 200);         
 		}
 				  
 	}

@@ -24,7 +24,7 @@ class UIController extends Controller {
                                     'tahun_data'=>$tahun_data,                                    
                                     'identitas'=>$identitas,
                                     'message'=>'Fetch data ui untuk front berhasil diperoleh'
-                                ],200);  
+                                ], 200);  
     }
     /**
      * digunakan untuk mendapatkan Identitas Perguruan Tinggi
@@ -40,6 +40,6 @@ class UIController extends Controller {
                                     'daftar_ta'=>$daftar_ta,    
                                     'tahun_data'=>$tahun_data,                                    
                                     'message'=>'Fetch data ui untuk admin berhasil diperoleh'
-                                ],200);  
+                                ], 200);  
     }
 }               

@@ -77,7 +77,7 @@ class ReportKegiatanController extends Controller
 			'pid'=>'fetchdata',
 			'daftar_kegiatan'=>$daftar_kegiatan,
 			'message'=>'Fetch data daftar kegiatan berhasil diperoleh.'
-		],200);
+		], 200);
 	}
 	public function printpdf (Request $request)
 	{
@@ -120,6 +120,6 @@ class ReportKegiatanController extends Controller
 									'pid'=>'fetchdata',
 									'kegiatan'=>$kegiatan,                                    
 									'pdf_file'=>$pdf_file                                    
-								],200);
+								], 200);
 	}
 }

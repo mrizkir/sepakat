@@ -79,7 +79,7 @@ class KegiatanInvestigasiPerkaraController extends Controller
 				'pid'=>'fetchdata',
 				'kegiatan'=>$kegiatan,
 				'message'=>"Kegiatan investigasi perkara berhasil diperoleh"
-			],200);
+			], 200);
 		}
 	}
 	public function store(Request $request)
@@ -149,7 +149,7 @@ class KegiatanInvestigasiPerkaraController extends Controller
 			'pid'=>'store',
 			'kegiatan'=>$kegiatan,
 			'message'=>'Data kegiatan investigasi perkara baru berhasil disimpan.'
-		],200);
+		], 200);
 	}
 	public function uploadsktmpemohon (Request $request,$id)
 	{
@@ -197,7 +197,7 @@ class KegiatanInvestigasiPerkaraController extends Controller
 					'pid'=>'store',
 					'kegiatan'=>$kegiatan,                
 					'message'=>"SKTM ($name) berhasil diupload"
-				],200);    
+				], 200);    
 			}
 			else
 			{
@@ -257,7 +257,7 @@ class KegiatanInvestigasiPerkaraController extends Controller
 					'pid'=>'store',
 					'kegiatan'=>$kegiatan,                
 					'message'=>"KTP Pemohon/Peserta ($name) berhasil diupload"
-				],200);    
+				], 200);    
 			}
 			else
 			{
@@ -316,7 +316,7 @@ class KegiatanInvestigasiPerkaraController extends Controller
 					'pid'=>'store',
 					'kegiatan'=>$kegiatan,                
 					'message'=>"File dokumentasi kegiatan investigasi perkara ini berhasil diupload"
-				],200);    
+				], 200);    
 			}
 			else
 			{
@@ -408,7 +408,7 @@ class KegiatanInvestigasiPerkaraController extends Controller
 				'pid'=>'update',
 				'kegiatan'=>$kegiatan,
 				'message'=>"Update Kegiatan investigasi perkara berhasil diperoleh"
-			],200);
+			], 200);
 		}
 	}
 	public function verifikasi(Request $request,$id)
@@ -444,7 +444,7 @@ class KegiatanInvestigasiPerkaraController extends Controller
 										'pid'=>'update',
 										'kegiatan'=>$kegiatan,
 										'message'=>"Verifikasi Kegiatan investigasi perkara berhasil dilakukan"
-									],200);
+									], 200);
 			}
 		}
 		else
@@ -502,7 +502,7 @@ class KegiatanInvestigasiPerkaraController extends Controller
 										'status'=>1,
 										'pid'=>'destroy',
 										'message'=>"Kegiatan investigasi perkara ($nama_kegiatan) berhasil dihapus"
-									],200);
+									], 200);
 		}
 
 	}

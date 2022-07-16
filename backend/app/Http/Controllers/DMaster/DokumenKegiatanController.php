@@ -62,7 +62,47 @@ class DokumenKegiatanController extends Controller {
 			'pid'=>'store',
 			'jenis_kegiatan'=>$jenis_kegiatan,
 			'message'=>"Data dokumen $nama_dokumen kegiatan baru berhasil disimpan."
-		],200);
+		], 200);
 	}
+  /**
+	 * Menghapus kegiatan
+	 *
+	 * @param  int  $id
+	 * @return \Illuminate\Http\Response
+	 */
+	public function destroy(Request $request,$id)
+	{
+		$this->hasAnyPermission('DMASTER-DOKUMEN-KEGIATAN_DESTROY');
 
+		$dokumen = DokumenKegiatanModel::find($id); 
+
+		if (is_null($dokumen))
+		{
+			return Response()->json([
+        'status'=>1,
+        'pid'=>'destroy',
+        'message'=>["Dokumen kegiatan dengan ID ($id) gagal dihapus"]
+      ],422);
+		}
+		else
+		{
+			$nama_dokumen=$dokumen->nama_dokumen;			
+
+			\App\Models\System\ActivityLog::log($request,[
+        'object' => $dokumen,
+        'object_id' => $dokumen->dokumen_id,
+        'user_id' => $this->getUserid(),
+        'message' => 'Menghapus Dokumen Kegiatan ('.$nama_dokumen.') berhasil'
+      ]);
+
+			$dokumen->delete();
+			
+			return Response()->json([
+        'status'=>1,
+        'pid'=>'destroy',
+        'message'=>"Menghapus Dokumen Kegiatan ($dokumen) berhasil dihapus"
+      ], 200);
+		}
+
+	}
 }

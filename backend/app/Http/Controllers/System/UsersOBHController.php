@@ -41,7 +41,7 @@ class UsersOBHController extends Controller {
 								'role'=>$role,
 								'users'=>$data,
 								'message'=>'Fetch data users OBH berhasil diperoleh'
-							],200);  
+							], 200);  
 	}    
 	/**
 	 * Store a newly created resource in storage.
@@ -96,7 +96,7 @@ class UsersOBHController extends Controller {
 									'pid'=>'store',
 									'user'=>$user,                                    
 									'message'=>'Data user OBH berhasil disimpan.'
-								],200); 
+								], 200); 
 
 	}
 	/**
@@ -122,7 +122,7 @@ class UsersOBHController extends Controller {
 									'pid'=>'fetchdata',
 									'user'=>$user,                                       
 									'message'=>'Data user '.$user->username.' berhasil diperoleh.'
-								],200); 
+								], 200); 
 		}
 
 	}
@@ -185,7 +185,7 @@ class UsersOBHController extends Controller {
 									'pid'=>'update',
 									'user'=>$user,      
 									'message'=>'Data user OBH '.$user->username.' berhasil diubah.'
-								],200); 
+								], 200); 
 		}
 	}
 	/**
@@ -225,7 +225,7 @@ class UsersOBHController extends Controller {
 										'status'=>1,
 										'pid'=>'destroy',                
 										'message'=>"User OBH ($username) berhasil dihapus"
-									],200);         
+									], 200);         
 		}
 				  
 	}

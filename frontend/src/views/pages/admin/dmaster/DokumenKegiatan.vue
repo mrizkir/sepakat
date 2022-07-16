@@ -55,14 +55,11 @@
             <template v-slot:top>
               <v-toolbar flat color="white">
                 <v-toolbar-title>DAFTAR DOKUMEN</v-toolbar-title>
-                <v-divider
-                  class="mx-4"
-                  inset
-                  vertical
-                ></v-divider>
-                <v-spacer></v-spacer>                
-                <v-btn color="primary"
-                  class="mb-2" 
+                <v-divider class="mx-4" inset vertical></v-divider>
+                <v-spacer></v-spacer>
+                <v-btn
+                  color="primary"
+                  class="mb-2"
                   :loading="btnLoading"
                   :disabled="btnLoading"
                   @click.stop="showDialog"
@@ -75,18 +72,18 @@
                       <v-card-title>
                         <span class="headline">{{ formTitle }}</span>
                       </v-card-title>
-                      <v-card-text> 
-                        <v-text-field 
-                          v-model="editedItem.nama_dokumen" 
+                      <v-card-text>
+                        <v-text-field
+                          v-model="editedItem.nama_dokumen"
                           label="NAMA DOKUMEN"
                           outlined
                           :rules="rule_nama_dokumen"
                         />
-                        <v-autocomplete 
-                          :items="daftar_jenis_kegiatan" 
+                        <v-autocomplete
+                          :items="daftar_jenis_kegiatan"
                           v-model="editedItem.id_jenis_kegiatan"
                           label="JENIS KEGIATAN"
-                          multiple 
+                          multiple
                           small-chips
                           :rules="rule_jenis_kegiatan"
                           item-text="nama_jenis"
@@ -96,11 +93,13 @@
                       </v-card-text>
                       <v-card-actions>
                         <v-spacer></v-spacer>
-                        <v-btn color="blue darken-1" text @click.stop="close">BATAL</v-btn>
-                        <v-btn 
-                          color="blue darken-1" 
-                          text 
-                          @click.stop="save" 
+                        <v-btn color="blue darken-1" text @click.stop="close">
+                          BATAL
+                        </v-btn>
+                        <v-btn
+                          color="blue darken-1"
+                          text
+                          @click.stop="save"
                           :loading="btnLoading"
                           :disabled="!form_valid || btnLoading"
                         >
@@ -109,19 +108,10 @@
                       </v-card-actions>
                     </v-card>
                   </v-form>
-                </v-dialog>                
+                </v-dialog>
               </v-toolbar>
             </template>
-            <template v-slot:item.actions="{ item }">              
-              <v-icon
-                small
-                class="mr-2"
-                :loading="btnLoading"
-                :disabled="btnLoading"
-                @click.stop="editItem(item)"
-              >
-                mdi-pencil
-              </v-icon>
+            <template v-slot:item.actions="{ item }">
               <v-icon
                 small
                 :loading="btnLoading"
@@ -131,17 +121,14 @@
                 mdi-delete
               </v-icon>
             </template>
-            <template v-slot:item.foto="{ item }">
-              <v-avatar size="30">
-                <v-img :src="$api.storageURL + '/' + item.foto" />
-              </v-avatar>
-            </template>
             <template v-slot:expanded-item="{ headers, item }">
               <td :colspan="headers.length" class="text-center">
                 <v-col cols="12">
                   <strong>ID:</strong>{{ item.id }}
-                  <strong>created_at:</strong>{{ $date(item.created_at).format('DD/MM/YYYY HH:mm') }}
-                  <strong>updated_at:</strong>{{ $date(item.updated_at).format('DD/MM/YYYY HH:mm') }}
+                  <strong>created_at:</strong>
+                  {{ $date(item.created_at).format('DD/MM/YYYY HH:mm') }}
+                  <strong>updated_at:</strong>
+                  {{ $date(item.updated_at).format('DD/MM/YYYY HH:mm') }}
                 </v-col>
               </td>
             </template>
@@ -157,7 +144,7 @@
 <script>
   import { mapGetters } from 'vuex'
   import AdminLayout from '@/views/layouts/AdminLayout'
-  import ModuleHeader from '@/components/ModuleHeader'  
+  import ModuleHeader from '@/components/ModuleHeader'
   export default {
     name: 'DokumenKegiatan',
     created() {
@@ -176,11 +163,10 @@
           text: 'DOKUMEN KEGIATAN',
           disabled: true,
           href: '#',
-        }
+        },
       ]
       this.initialize()
     },
-    
     data: () => ({
       role_id: 0,
       datatableLoading: false,
@@ -195,22 +181,18 @@
       ],
       expanded: [],
       search: null,
-      datatable: [],      
+      datatable: [],
 
       //form
       form_valid: true,
       daftar_jenis_kegiatan: [],
       dialog: false,
-      dialogEdit: false,
-      firstShowDialogEdit: true,
-      dialogUserPermission: false,
       editedIndex: -1,
-      
       editedItem: {
         dokumen_id: null,
         id_jenis_kegiatan: null,
         nama_dokumen: null,
-        status: null,        
+        status: null,
         created_at: null,
         updated_at: null,
       },
@@ -218,145 +200,85 @@
         dokumen_id: null,
         id_jenis_kegiatan: null,
         nama_dokumen: null,
-        status: null,        
+        status: null,
         created_at: null,
         updated_at: null,
       },
-      //form rules        
+      //form rules
       rule_nama_dokumen: [
-        value => !!value || "Mohon untuk di isi nama User !!!",
-        value => /^[A-Za-z\s]*$/.test(value) || 'Nama User hanya boleh string dan spasi',
-      ],      
+        value => !!value || 'Mohon untuk di isi nama User !!!',
+        value =>
+          /^[A-Za-z\s]*$/.test(value) ||
+          'Nama User hanya boleh string dan spasi',
+      ],
       rule_jenis_kegiatan: [
-        value => !!value || "Mohon untuk dipilih jenis kegiatan ini !!!",
+        value => !!value || 'Mohon untuk dipilih jenis kegiatan ini !!!',
       ],
     }),
     methods: {
       initialize: async function() {
         this.datatableLoading = true
-        await this.$ajax.get('/datamaster/dokumenkegiatan', {
-          headers: {
-            Authorization: this.TOKEN,
-          }
-        }).then(({ data }) => {
-          this.datatable = data.dokumen_kegiatan          
-          this.datatableLoading = false
-        })
-        
+        await this.$ajax
+          .get('/datamaster/dokumenkegiatan', {
+            headers: {
+              Authorization: this.TOKEN,
+            },
+          })
+          .then(({ data }) => {
+            this.datatable = data.dokumen_kegiatan
+            this.datatableLoading = false
+          })
       },
       dataTableRowClicked(item) {
         if (item === this.expanded[0]) {
-        this.expanded = []
+          this.expanded = []
         } else {
-        this.expanded = [item]
+          this.expanded = [item]
         }
-      },      
+      },
       async showDialog() {
         this.dialog = true
-          await this.$ajax.get('/datamaster/jeniskegiatan', {
-          headers: {
-            Authorization: this.TOKEN,
-          }
-        })
-        .then(({ data }) => {
-          this.daftar_jenis_kegiatan = data.jenis_kegiatan;          
-        })        
-      },
-      editItem: async function(item) {
-        this.editedIndex = this.datatable.indexOf(item)
-        item.password = ''
-        this.editedItem = Object.assign({}, item)
-
-        await this.$ajax.get('/system/setting/roles', {
-          headers: {
-            Authorization: this.TOKEN,
-          }
-        }).then(({ data }) => {
-          let roles = data.roles
-          var daftar_jenis_kegiatan = []
-          roles.forEach(element => {
-            if (element.name == 'pmb')
-            {
-              daftar_jenis_kegiatan.push({
-                text: element.name,
-                disabled: true,
-              })
-            }
+        await this.$ajax
+          .get('/datamaster/jeniskegiatan', {
+            headers: {
+              Authorization: this.TOKEN,
+            },
           })
-          this.daftar_jenis_kegiatan = daftar_jenis_kegiatan
-        })
-
-        this.btnLoading = true
-        await this.$ajax.get('/system/users/' + item.id + '/roles',
-        {
-          headers: {
-            Authorization: this.TOKEN,
-          }
-        }).then(({ data }) => {
-          this.editedItem.role_id = data.roles
-          this.btnLoading = false
-          this.dialogEdit = true
-        })
-
-        this.firstShowDialogEdit=false
+          .then(({ data }) => {
+            this.daftar_jenis_kegiatan = data.id_jenis_kegiatan
+          })
       },
       close() {
         this.btnLoading = false
         this.dialog = false
-        this.dialogEdit = false
-        this.firstShowDialogEdit=true
         setTimeout(() => {
           this.editedItem = Object.assign({}, this.defaultItem)
           this.editedIndex = -1
           this.$refs.frmdata.reset()
-          }, 300
-        );
-      },   
+        }, 300)
+      },
       save() {
         if (this.$refs.frmdata.validate()) {
           this.btnLoading = true
-          if (this.editedIndex > -1) {
-            this.$ajax.post('/datamaster/dokumenkegiatan/' + this.editedItem.id,
+          this.$ajax
+            .post(
+              '/datamaster/dokumenkegiatan/store',
               {
-                _method: 'PUT',
                 id_jenis_kegiatan: this.editedItem.id_jenis_kegiatan,
-                nama_dokumen: this.editedItem.nama_dokumen,                  
-                status: this.editedItem.status,
+                nama_dokumen: this.editedItem.nama_dokumen,
               },
               {
                 headers: {
                   Authorization: this.TOKEN,
-                }
+                },
               }
             )
-            .then(({ data }) => {
-              Object.assign(this.datatable[this.editedIndex], data.user)
-              this.close()
+            .then(() => {
+              this.$router.go()
             })
             .catch(() => {
               this.btnLoading = false
             })
-          } else {
-            this.$ajax
-              .post(
-                '/datamaster/dokumenkegiatan/store',
-                {
-                  id_jenis_kegiatan: this.editedItem.id_jenis_kegiatan,
-                  nama_dokumen: this.editedItem.nama_dokumen,
-                },
-                {
-                  headers: {
-                    Authorization: this.TOKEN,
-                  },
-                }
-              )
-              .then(() => {
-                this.$router.go()
-              })
-              .catch(() => {
-                this.btnLoading = false
-              })
-          }
         }
       },
       deleteItem(item) {
@@ -364,7 +286,7 @@
           .open(
             'Delete',
             'Apakah Anda ingin menghapus dokumen ' + item.nama_dokumen + ' ?',
-            { color: 'red' }
+            { color: 'red', width: '400px' }
           )
           .then(confirm => {
             if (confirm) {
@@ -404,9 +326,6 @@
 
     watch: {
       dialog(val) {
-        val || this.close()
-      },
-      dialogEdit(val) {
         val || this.close()
       },
     },

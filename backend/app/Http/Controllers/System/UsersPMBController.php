@@ -41,7 +41,7 @@ class UsersPMBController extends Controller {
 								'role'=>$role,
 								'users'=>$data,
 								'message'=>'Fetch data users PMD berhasil diperoleh'
-							],200);  
+							], 200);  
 	}    
 	/**
 	 * Store a newly created resource in storage.
@@ -96,7 +96,7 @@ class UsersPMBController extends Controller {
 									'pid'=>'store',
 									'user'=>$user,                                    
 									'message'=>'Data user PMD berhasil disimpan.'
-								],200); 
+								], 200); 
 
 	}
 	/**
@@ -122,7 +122,7 @@ class UsersPMBController extends Controller {
 									'pid'=>'fetchdata',
 									'user'=>$user,                                       
 									'message'=>'Data user '.$user->username.' berhasil diperoleh.'
-								],200); 
+								], 200); 
 		}
 
 	}
@@ -185,7 +185,7 @@ class UsersPMBController extends Controller {
 									'pid'=>'update',
 									'user'=>$user,      
 									'message'=>'Data user PMD '.$user->username.' berhasil diubah.'
-								],200); 
+								], 200); 
 		}
 	}
 	/**
@@ -225,7 +225,7 @@ class UsersPMBController extends Controller {
 										'status'=>1,
 										'pid'=>'destroy',                
 										'message'=>"User PMD ($username) berhasil dihapus"
-									],200);         
+									], 200);         
 		}
 				  
 	}

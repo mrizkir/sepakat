@@ -42,7 +42,7 @@ class KomentarKegiatanController extends Controller
                     'pid'=>'fetchdata',
                     'daftar_komentar'=>$daftar_komentar,
                     'message'=>'Fetch data daftar komentar berhasil diperoleh.'
-                  ],200);
+                  ], 200);
     }
   }    
   public function store(Request $request)
@@ -64,7 +64,7 @@ class KomentarKegiatanController extends Controller
                 'status'=>1,
                 'pid'=>'store',                                
                 'message'=>'Data komentar baru berhasil disimpan.'
-              ],200);
+              ], 200);
   }    
   public function update(Request $request,$id)
   {
@@ -115,7 +115,7 @@ class KomentarKegiatanController extends Controller
                     'status'=>1,
                     'pid'=>'destroy',
                     'message' => 'Menghapus komentar Kegiatan Konsultasi berhasil'
-                  ],200);
+                  ], 200);
     }
 
   }

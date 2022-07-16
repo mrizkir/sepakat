@@ -32,7 +32,7 @@ class UsersKumhamController extends Controller {
 								'role'=>$role,
 								'users'=>$data,
 								'message'=>'Fetch data users berhasil diperoleh'
-							],200);  
+							], 200);  
 	}    
 	/**
 	 * Store a newly created resource in storage.
@@ -98,7 +98,7 @@ class UsersKumhamController extends Controller {
 									'pid'=>'store',
 									'user'=>$user,                                    
 									'message'=>'Data user berhasil disimpan.'
-								],200); 
+								], 200); 
 
 	}
 	/**
@@ -186,7 +186,7 @@ class UsersKumhamController extends Controller {
 											'pid'=>'update',
 											'user'=>$user,                                    
 											'message'=>'Data user '.$user->username.' berhasil diubah.'
-										],200); 
+										], 200); 
 			});
 		}
 	}       
@@ -228,7 +228,7 @@ class UsersKumhamController extends Controller {
 									'pid'=>'destroy',  
 									'user'=>$user,              
 									'message'=>"User ($username) berhasil dihapus"
-								],200);    
+								], 200);    
 		}
 			 
 				  
