@@ -66,7 +66,7 @@
                   vertical
                 ></v-divider>
                 <v-spacer></v-spacer>
-                <v-btn color="primary" dark class="mb-2" to="/kegiatan/negoisasi/tambah" v-if="dashboard=='paralegal'||dashboard=='kumham'||dashboard=='superadmin'">TAMBAH</v-btn>
+                <v-btn color="primary" dark class="mb-2" to="/kegiatan/pemberdayaanmasyarakat/tambah" v-if="dashboard=='paralegal'||dashboard=='kumham'||dashboard=='superadmin'">TAMBAH</v-btn>
               </v-toolbar>
             </template>
             <template v-slot:item.id="{ item }">
@@ -81,7 +81,7 @@
               <v-btn
                 small
                 icon
-                @click.stop="$router.push('/kegiatan/negoisasi/' + item.id + '/detail')">
+                @click.stop="$router.push('/kegiatan/pemberdayaanmasyarakat/' + item.id + '/detail')">
                 <v-icon>
                   mdi-eye
                 </v-icon>
@@ -89,7 +89,7 @@
               <v-btn
                 small      
                 icon                          
-                :to="{path: '/kegiatan/negoisasi/' + item.id + '/ubah'}"
+                :to="{path: '/kegiatan/pemberdayaanmasyarakat/' + item.id + '/ubah'}"
                 v-if="item.id_status==0 && (dashboard=='paralegal'||dashboard=='kumham'||dashboard=='superadmin')">
                 <v-icon>
                   mdi-pencil
@@ -172,7 +172,7 @@ export default {
     initialize: async function() 
     {
       this.datatableLoading = true
-      await this.$ajax.get('/kegiatan/negoisasi', {
+      await this.$ajax.get('/kegiatan/pemberdayaanmasyarakat', {
         headers: {
           Authorization: this.$store.getters['auth/Token'],
         }
@@ -197,7 +197,7 @@ export default {
     viewItem (item) {
       this.formdata=item
       this.dialogdetailitem=true
-      // this.$ajax.get('/kegiatan/negoisasi' + item.id,{
+      // this.$ajax.get('/kegiatan/pemberdayaanmasyarakat' + item.id,{
       //     headers: {
       //         Authorization: this.$store.getters['auth/Token'],
       //     }
@@ -210,7 +210,7 @@ export default {
         if (confirm)
         {
           this.btnLoading = true
-          this.$ajax.post('/kegiatan/negoisasi/' + item.id,
+          this.$ajax.post('/kegiatan/pemberdayaanmasyarakat/' + item.id,
             {
               _method: 'DELETE',
             },

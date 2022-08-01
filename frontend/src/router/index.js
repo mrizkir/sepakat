@@ -151,6 +151,53 @@ const routes = [
 		component: () => import('../views/pages/admin/negoisasi/KegiatanNegoisasiDetail.vue'),		
 	},
 
+	//kegiatan - pemberdayaan masyarakat
+	{
+		path: '/kegiatan/pemberdayaanmasyarakat',
+		name: 'KegiatanPemberdayaanMasyarakat',
+		meta:{
+			title: "KEGIATAN - PEMBERDAYAAN MASYARAKAT",
+			requiresAuth:true,
+        },
+		component: () => import('../views/pages/admin/pemberdayaanmasyarakat/KegiatanPemberdayaanMasyarakat.vue'),		
+	},
+	{
+		path: '/kegiatan/pemberdayaanmasyarakat/tambah',
+		name: 'KegiatanPemberdayaanMasyarakatTambah',
+		meta:{
+			title: "KEGIATAN - PEMBERDAYAAN MASYARAKAT",
+			requiresAuth:true,
+        },
+		component: () => import('../views/pages/admin/pemberdayaanmasyarakat/KegiatanPemberdayaanMasyarakatTambah.vue'),		
+	},
+	{
+		path: '/kegiatan/pemberdayaanmasyarakat/:kegiatan_id/ubah',
+		name: 'KegiatanPemberdayaanMasyarakatUbah',
+		meta:{
+			title: "KEGIATAN - PEMBERDAYAAN MASYARAKAT",
+			requiresAuth:true,
+        },
+		component: () => import('../views/pages/admin/pemberdayaanmasyarakat/KegiatanPemberdayaanMasyarakatUbah.vue'),		
+	},
+	{
+		path: '/kegiatan/pemberdayaanmasyarakat/:kegiatan_id/files',
+		name: 'KegiatanPemberdayaanMasyarakatFiles',
+		meta:{
+			title: "KEGIATAN - PEMBERDAYAAN MASYARAKAT",
+			requiresAuth:true,
+        },
+		component: () => import('../views/pages/admin/pemberdayaanmasyarakat/KegiatanPemberdayaanMasyarakatFiles.vue'),		
+	},
+	{
+		path: '/kegiatan/pemberdayaanmasyarakat/:kegiatan_id/detail',
+		name: 'KegiatanPemberdayaanMasyarakatDetail',
+		meta:{
+			title: "KEGIATAN - PEMBERDAYAAN MASYARAKAT",
+			requiresAuth:true,
+        },
+		component: () => import('../views/pages/admin/pemberdayaanmasyarakat/KegiatanPemberdayaanMasyarakatDetail.vue'),		
+	},
+
 	//kegiatan - penyuluhan hukum
 	{
 		path: '/kegiatan/penyuluhanhukum',

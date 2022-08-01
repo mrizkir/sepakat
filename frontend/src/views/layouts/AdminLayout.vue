@@ -213,8 +213,8 @@
             </v-list-item>
             <v-list-item
               link
-              to="/kegiatan/pembinaanmasyarakat"
-              v-if="CAN_ACCESS('KONSULTASI-KEGIATAN_BROWSE') && false"
+              to="/kegiatan/pemberdayaanmasyarakat"
+              v-if="CAN_ACCESS('KONSULTASI-KEGIATAN_BROWSE')"
             >
               <v-list-item-icon class="mr-2">
                 <v-icon>mdi-calendar-blank-multiple</v-icon>

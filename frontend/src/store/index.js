@@ -6,15 +6,16 @@ import Uiadmin from "./modules/uiadmin";
 import Auth from "./modules/auth";
 
 const vuexStorage = new VuexPersistence({
-		storage: localStorage,
+	key: "sepakat",
+	storage: localStorage,
 });
 Vue.use(Vuex);
 
 export default new Vuex.Store({
-		modules: {
-		uifront:Uifront,
-		auth:Auth,
-		uiadmin:Uiadmin,
+	modules: {
+		uifront: Uifront,
+		auth: Auth,
+		uiadmin: Uiadmin,
 	},
 	plugins: [vuexStorage.plugin],
 });
